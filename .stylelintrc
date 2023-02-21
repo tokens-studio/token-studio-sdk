@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-prettier/recommended",
+    "stylelint-config-rational-order"
+  ],
+  "plugins": [
+    "stylelint-order",
+    "stylelint-config-rational-order/plugin"
+  ],
+  "syntax": "scss",
+  "rules": {
+    "prettier/prettier": true,
+    "property-no-unknown": [
+      true,
+      { "ignoreProperties": ["composes", "compose-with"] }
+    ],
+    "at-rule-no-unknown": [
+      true,
+      { "ignoreAtRules": ["value", "include", "mixin", "extend","function","return","use"] }
+    ]
+  },
+  "ignoreFiles": [
+    "**/*.png",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.json"
+  ]
+}

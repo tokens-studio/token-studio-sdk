@@ -1,0 +1,402 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+interface ResolvedTokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+}
+
+interface TokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  set: String
+  type: TokenType
+  urn: String
+}
+
+union RawToken = Raw_Token_color | Token_Composition | Token_Other | Token_Typography | Token_sizing
+
+union Token = Token_Composition | Token_Other | Token_Typography | Token_color | Token_sizing
+
+type APIKeyOutput {
+  description: String
+  name: String
+  value: String
+}
+
+type ColorValue {
+  hex: String
+  hsla: [Int]
+  raw: String
+  rgba: [Int]
+}
+
+type DeletedResource {
+  urn: String
+}
+
+type Group {
+  created: AWSDateTime!
+  description: String
+  members: [User]
+  name: String!
+  policy: Policy
+}
+
+type Identity @aws_api_key @aws_cognito_user_pools @aws_lambda {
+  #  Whether your identity is authenticated or not
+  authenticated: Boolean!
+  #  The urn of the underlying identity you are operation as 
+  urn: String
+}
+
+type Invitation {
+  #  Organization urn
+  organization: String!
+  status: InvitationStatus
+  #  User urn
+  user: String!
+}
+
+type Metadata {
+  #  Time of creation of the resource
+  created: AWSDateTime
+  #   The user who initially created this token
+  createdBy: User
+  #   The last user to update the token directly.
+  lastUpdatedBy: User
+}
+
+type Mutation {
+  # ## Updates
+  ###### Adds a member that already exists as part of your organization to a group
+  addMemberToGroup(group: String!, user: String!): String
+  #  Creates a new API Key
+  createAPIKey(name: String, organization: String!): APIKeyOutput
+  #  Creates a new group that can have an associated policy to control it 
+  createGroup(input: GroupInput!, organization: String!): Group
+  #  Creates a new organization
+  createOrganization(input: OrganizationInput!): Organization
+  #  Creates a new policy for the organization
+  createPolicy(input: PolicyInput!, organization: String!): Policy
+  # ## Creation
+  ###### Creates a new project for the organization
+  createProject(input: ProjectInput!, organization: String!): Project
+  #  Creates a new Resolver
+  createResolver(input: ResolverInput!, project: String!): Resolver
+  #  Creates a new Token
+  createToken(input: TokenInput!, set: String!): Token
+  #  Creates a new token set 
+  createTokenSet(input: TokenSetInput!, project: String!): TokenSet
+  deleteGroup(urn: String!): DeletedResource
+  # ## Deletion
+  ###### Deletes a token from a set
+  deletePolicy(urn: String!): DeletedResource
+  deleteProject(urn: String!): DeletedResource
+  deleteResolver(urn: String!): DeletedResource
+  deleteToken(urn: String!): DeletedResource
+  deleteTokenSet(urn: String!): DeletedResource
+  #  request that a member join your organization if they haven't already
+  inviteToOrganization(organization: String!, user: String!): Invitation
+}
+
+type Organization @aws_api_key @aws_cognito_user_pools @aws_lambda {
+  name: String
+  urn: String
+}
+
+type OrganizationAdmin {
+  #  The account id 
+  account: String
+  #  Time that the org was created
+  created: AWSTimestamp
+  #  Optional description
+  description: String
+  #  Optional icon
+  icon: String
+  #  Name is not unique
+  name: String
+  #  The stripe account id. Might be null if user is on free tier
+  payment: String
+  #  Whether or not SSO is enabled
+  ssoEnabled: Boolean
+  #  The tier associated with the organization
+  tier: OrgTier
+  #  Visibility of the org to the public
+  visibility: Visibility
+}
+
+type OrganizationMemberShip {
+  created: AWSDateTime!
+}
+
+type Policy {
+  created: AWSDateTime
+  description: String
+  name: String!
+  value: PolicyDoc!
+}
+
+type PolicyDoc {
+  statement: PolicyStatement!
+  version: String!
+}
+
+type PolicyStatement {
+  action: [String]!
+  effect: String!
+  resource: [String]!
+}
+
+type Project {
+  created: AWSDateTime!
+  name: String!
+  urn: String!
+}
+
+type Query {
+  #  Retrieves all projects for an organization
+  groups(organization: String!): [Group]
+  #  Retrieves a specific organization 
+  organization(organization: String!): Organization
+  #  Retrieve administrative details of an organization
+  organizationAdmin(organization: String): OrganizationAdmin
+  #  Retrieves all publicly available organizations
+  organizations(offset: Int): [Organization] @aws_api_key @aws_cognito_user_pools @aws_lambda
+  #  queries policies available to the org. The organization is the organization urn
+  policies(first: Int, organization: String!): [Policy]
+  #  Retrieves all projects for an organization
+  projects(organization: String!): [Project]
+  #  Resolves the resolver and returns the expected tokens 
+  resolve(resolver: String!): [Token]
+  # Returns all resolvers for a project
+  resolvers(project: String!): [Resolver]
+  #  Gets the callers identity
+  self: Identity @aws_api_key @aws_cognito_user_pools @aws_lambda
+  #   Retrieves a single token
+  token(urn: String): Token
+  #   Retrieves a specific token set based on a known token set urn
+  tokenSet(urn: String): TokenSet
+  #   Retrieves all accessible tokensets for the current project
+  tokenSets(project: String!): [TokenSet!]!
+  #  Retrieves all tokens of the current set 
+  tokens(set: String!): [Token!]!
+  #  Retrieves all invitations in the context of your user
+  userInvitations: [Invitation]
+}
+
+type Raw_Token_color implements TokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  set: String
+  type: TokenType
+  urn: String
+  value: String
+}
+
+type Resolver {
+  description: String
+  name: String
+  urn: String
+}
+
+type Subscription {
+  #   Subscribe to all new groups created for the organization
+  onNewGroup(organization: String!): Group @aws_subscribe(mutations : ["createGroup"])
+  #   Subscribe to all new tokens created in a token set
+  onNewToken(set: String!): Token @aws_subscribe(mutations : ["createToken"])
+  #   Subscribe to all new tokens sets created by an organization
+  onNewTokenSet(project: String!): TokenSet @aws_subscribe(mutations : ["createTokenSet"])
+  onTokenDeleted(urn: String!): DeletedResource @aws_subscribe(mutations : ["deleteToken"])
+}
+
+type TokenSet {
+  metadata: Metadata
+  name: String
+  project: Project!
+  tokens: [Token!]!
+  urn: String
+}
+
+type Token_Composition implements ResolvedTokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  value: String
+}
+
+type Token_Other implements ResolvedTokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  value: String
+}
+
+type Token_Typography implements ResolvedTokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  value: String
+}
+
+type Token_color implements ResolvedTokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  value: String
+}
+
+type Token_sizing implements ResolvedTokenInterface {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  value: String
+}
+
+type Typography {
+  fontFamily: String
+  fontWeight: String
+  letterSpacing: String
+  lineHeight: String
+  paragraphIndent: String
+  paragraphSpacing: String
+  textCase: String
+  textDecoration: String
+}
+
+type User {
+  name: String
+  urn: String
+}
+
+enum InvitationStatus {
+  ACCEPTED
+  DECLINED
+  PENDING
+}
+
+enum OrgTier {
+  ENTERPRISE
+  FREE
+}
+
+enum OrganizationTier {
+  ENTERPRISE
+  FREE
+  STARTER
+  STUDIO
+}
+
+enum TokenType {
+  ANY
+  ASSETS
+  BORDER
+  BORDER_RADIUS
+  BORDER_WIDTH
+  DIMENSION
+  FONT_FAMILY
+  FONT_WEIGHT
+  LETTER_SPACING
+  LINE_HEIGHT
+  OTHER
+  PARAGRAPH_SPACING
+  SIZING
+  SPACING
+  TEXT_CASE
+  TEXT_DECORATION
+  TYPOGRAPHY
+  boxShadow
+  color
+  composition
+  fontSize
+  opacity
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
+}
+
+input AliasTokenSetInput {
+  #  The name of the alias
+  alias: String!
+  #  The urn of the set we want to alias
+  set: String!
+}
+
+input GroupInput {
+  description: String
+  icon: String
+  name: String!
+}
+
+input OrganizationInput {
+  description: String
+  icon: String
+  name: String!
+  tier: OrganizationTier!
+  visibility: Visibility!
+}
+
+input PolicyDocInput {
+  statement: [PolicyStatementInput!]!
+  version: String!
+}
+
+input PolicyInput {
+  description: String
+  name: String!
+  value: PolicyDocInput!
+}
+
+input PolicyStatementInput {
+  action: [String]!
+  effect: String!
+  resource: [String]!
+}
+
+input ProjectInput {
+  #  Optional description of the project
+  description: String
+  #  Icon associated with your project
+  icon: String
+  #  Unique name of the project
+  name: String!
+  #  Visibility of the project
+  visibility: Visibility!
+}
+
+input ResolverInput {
+  #  Multiple potential aliases to resolve
+  alias: [AliasTokenSetInput!]
+  #  Optional description of the resolver
+  description: String
+  #  Name of the resolver
+  name: String!
+  # Src tokens sets
+  src: [String!]!
+}
+
+input TokenInput {
+  description: String
+  name: String!
+  type: TokenType
+  value: String
+}
+
+input TokenSetInput {
+  description: String
+  name: String!
+}
