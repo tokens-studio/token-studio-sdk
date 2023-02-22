@@ -15,7 +15,6 @@ export namespace UserAuth {
         }
     }
 
-
     /**
      * Signs an existing user into Tokens Studio
      * @param username 
@@ -34,9 +33,6 @@ export namespace UserAuth {
     }
 
 
-
-
-    // export const 
     /**
      * Send MFA code to confirm sign in
      * @param {Object} user - The CognitoUser object
@@ -55,6 +51,34 @@ export namespace UserAuth {
         return await API.Auth.signUp(params);
     }
 
+    /**
+     * Confirms the signup process with the verification code sent to the user
+     * @param username The username that was used for signup
+     * @param code Code received at the provided email address
+     * @returns 
+     */
+    export const confirmSignUp = async (username: string, code: string): Promise<any> => {
+        return await API.Auth.confirmSignUp(username, code);
+    }
+
+    /**
+     * Resends the verification from the signup process if not recieved
+     */
+    export const resendSignUp = async (username: string): Promise<any> => {
+        return await API.Auth.resendSignUp(username);
+    }
+
+
+    /**
+     * Changes the current password of the user 
+     * @param user 
+     * @param oldPassword 
+     * @param newPassword 
+     * @returns 
+     */
+    export const changePassword = async (user: CognitoUser, oldPassword: string, newPassword: string) => {
+        return await API.Auth.changePassword(user, oldPassword, newPassword);
+    }
 }
 
 

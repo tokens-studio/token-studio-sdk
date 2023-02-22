@@ -8,6 +8,12 @@ import Observable from 'zen-observable-ts';
  * Simplifies subscriptions and realtime data 
  * 
  * Use the utilities of this namespace in tandem with the {@link Subscriptions} GraphQL subscriptions to get realtime updates
+ * 
+ * @remarks
+ * To ensure that realtime data works as expected, always return the values used in your filter for the subscription when performing  {@link Mutations}.
+ * 
+ * Also be prepared for data loss. The return of the realtime push of data will be the projection of attributes requested by the user who performed the mutation, hence not all properties might be populated. You can generate an additional request to ask for all the properties to ensure nothing was lost during the project for resiliency
+ * 
  */
 export namespace Subscription {
 
