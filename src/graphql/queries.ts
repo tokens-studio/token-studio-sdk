@@ -3,13 +3,22 @@
 // this is an auto generated file. This will be overwritten
 
 export const groups = /* GraphQL */ `
-  query Groups($organization: String!) {
-    groups(organization: $organization) {
+  query Groups($limit: Int, $organization: String!) {
+    groups(limit: $limit, organization: $organization) {
       created
       description
       members {
-        name
-        urn
+        ... on APIKeyIdentity {
+          name
+          urn
+        }
+        ... on User {
+          description
+          icon
+          name
+          urn
+          visibility
+        }
       }
       name
       policy {
@@ -23,37 +32,68 @@ export const groups = /* GraphQL */ `
 export const organization = /* GraphQL */ `
   query Organization($organization: String!) {
     organization(organization: $organization) {
-      name
-      urn
-    }
-  }
-`;
-export const organizationAdmin = /* GraphQL */ `
-  query OrganizationAdmin($organization: String) {
-    organizationAdmin(organization: $organization) {
       account
       created
       description
+      groups {
+        created
+        description
+        name
+      }
       icon
       name
       payment
+      projects {
+        created
+        description
+        icon
+        name
+        urn
+        visibility
+      }
       ssoEnabled
       tier
+      urn
       visibility
     }
   }
 `;
 export const organizations = /* GraphQL */ `
-  query Organizations($offset: Int) {
-    organizations(offset: $offset) {
+  query Organizations(
+    $filter: OrganizationFilterInput
+    $limit: Int
+    $offset: Int
+  ) {
+    organizations(filter: $filter, limit: $limit, offset: $offset) {
+      account
+      created
+      description
+      groups {
+        created
+        description
+        name
+      }
+      icon
       name
+      payment
+      projects {
+        created
+        description
+        icon
+        name
+        urn
+        visibility
+      }
+      ssoEnabled
+      tier
       urn
+      visibility
     }
   }
 `;
 export const policies = /* GraphQL */ `
-  query Policies($first: Int, $organization: String!) {
-    policies(first: $first, organization: $organization) {
+  query Policies($first: Int, $limit: Int, $organization: String!) {
+    policies(first: $first, limit: $limit, organization: $organization) {
       created
       description
       name
@@ -64,17 +104,29 @@ export const policies = /* GraphQL */ `
   }
 `;
 export const projects = /* GraphQL */ `
-  query Projects($organization: String!) {
-    projects(organization: $organization) {
+  query Projects(
+    $filter: ProjectFilterInput
+    $limit: Int
+    $organization: String!
+  ) {
+    projects(filter: $filter, limit: $limit, organization: $organization) {
       created
+      description
+      icon
       name
+      sets {
+        name
+        projectUrn
+        urn
+      }
       urn
+      visibility
     }
   }
 `;
 export const resolve = /* GraphQL */ `
-  query Resolve($resolver: String!) {
-    resolve(resolver: $resolver) {
+  query Resolve($aliases: [AliasTuple], $resolver: String!) {
+    resolve(aliases: $aliases, resolver: $resolver) {
       ... on Token_Composition {
         description
         metadata {
@@ -124,8 +176,8 @@ export const resolve = /* GraphQL */ `
   }
 `;
 export const resolvers = /* GraphQL */ `
-  query Resolvers($project: String!) {
-    resolvers(project: $project) {
+  query Resolvers($limit: Int, $project: String!) {
+    resolvers(limit: $limit, project: $project) {
       description
       name
       urn
@@ -200,9 +252,13 @@ export const tokenSet = /* GraphQL */ `
       name
       project {
         created
+        description
+        icon
         name
         urn
+        visibility
       }
+      projectUrn
       tokens {
         ... on Token_Composition {
           description
@@ -240,17 +296,21 @@ export const tokenSet = /* GraphQL */ `
   }
 `;
 export const tokenSets = /* GraphQL */ `
-  query TokenSets($project: String!) {
-    tokenSets(project: $project) {
+  query TokenSets($limit: Int, $project: String!) {
+    tokenSets(limit: $limit, project: $project) {
       metadata {
         created
       }
       name
       project {
         created
+        description
+        icon
         name
         urn
+        visibility
       }
+      projectUrn
       tokens {
         ... on Token_Composition {
           description
@@ -288,8 +348,8 @@ export const tokenSets = /* GraphQL */ `
   }
 `;
 export const tokens = /* GraphQL */ `
-  query Tokens($set: String!) {
-    tokens(set: $set) {
+  query Tokens($limit: Int, $set: String!) {
+    tokens(limit: $limit, set: $set) {
       ... on Token_Composition {
         description
         metadata {
@@ -339,8 +399,8 @@ export const tokens = /* GraphQL */ `
   }
 `;
 export const userInvitations = /* GraphQL */ `
-  query UserInvitations {
-    userInvitations {
+  query UserInvitations($limit: Int) {
+    userInvitations(limit: $limit) {
       organization
       status
       user

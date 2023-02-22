@@ -16,6 +16,39 @@ export namespace UserAuth {
     }
 
     /**
+     * Returns the current session if it exists
+     */
+    export const currentSession = async () => {
+        return await API.Auth.currentSession();
+    }
+
+
+      /**
+     * Returns the current authenticated user if it exists
+     */
+      export const currentAuthenticatedUser = async (): Promise<CognitoUser| undefined> => {
+        return await API.Auth.currentAuthenticatedUser();
+    }
+
+    /**
+     * Initiate a forgot password request. This should send a one time code to the users registered email
+     */
+    export const forgotPassword = async (username: string) => {
+        return await API.Auth.forgotPassword(username);
+    }
+
+    /**
+     * Completes a forgot password flow to generate a new password based on the one time code
+     * @param username 
+     * @param code 
+     * @param newPassword 
+     * @returns 
+     */
+    export const forgotPasswordSubmit = async (username: string,code:string,newPassword:string) => {
+        return await API.Auth.forgotPasswordSubmit(username,code,newPassword);
+    }
+
+    /**
      * Signs an existing user into Tokens Studio
      * @param username 
      * @param password 
@@ -31,8 +64,6 @@ export namespace UserAuth {
     export const signOut = async (): Promise<void> => {
         await API.Auth.signOut();
     }
-
-
     /**
      * Send MFA code to confirm sign in
      * @param {Object} user - The CognitoUser object
