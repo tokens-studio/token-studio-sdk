@@ -19,7 +19,7 @@
   "author": "andrew@hyma.io",
   "license": "MIT",
   "dependencies": {
-    "aws-amplify": "^5.0.9"
+    "aws-amplify": "^5.0.12"
   },
   "keywords": [
     "tokens",
