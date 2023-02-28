@@ -47,34 +47,20 @@ export const onDeleteTokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }
@@ -154,34 +140,20 @@ export const onNewTokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }
@@ -234,34 +206,20 @@ export const onUpdateTokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }

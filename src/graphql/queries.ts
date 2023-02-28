@@ -3,8 +3,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const groups = /* GraphQL */ `
-  query Groups($limit: Int, $organization: String!) {
-    groups(limit: $limit, organization: $organization) {
+  query Groups($filter: GroupFilterInput, $limit: Int, $organization: String!) {
+    groups(filter: $filter, limit: $limit, organization: $organization) {
       created
       description
       members {
@@ -33,6 +33,11 @@ export const organization = /* GraphQL */ `
   query Organization($organization: String!) {
     organization(organization: $organization) {
       account
+      apiKeys {
+        description
+        name
+        urn
+      }
       created
       description
       groups {
@@ -43,6 +48,11 @@ export const organization = /* GraphQL */ `
       icon
       name
       payment
+      policies {
+        created
+        description
+        name
+      }
       projects {
         created
         description
@@ -54,6 +64,13 @@ export const organization = /* GraphQL */ `
       ssoEnabled
       tier
       urn
+      users {
+        description
+        icon
+        name
+        urn
+        visibility
+      }
       visibility
     }
   }
@@ -66,6 +83,11 @@ export const organizations = /* GraphQL */ `
   ) {
     organizations(filter: $filter, limit: $limit, offset: $offset) {
       account
+      apiKeys {
+        description
+        name
+        urn
+      }
       created
       description
       groups {
@@ -76,6 +98,11 @@ export const organizations = /* GraphQL */ `
       icon
       name
       payment
+      policies {
+        created
+        description
+        name
+      }
       projects {
         created
         description
@@ -87,6 +114,13 @@ export const organizations = /* GraphQL */ `
       ssoEnabled
       tier
       urn
+      users {
+        description
+        icon
+        name
+        urn
+        visibility
+      }
       visibility
     }
   }
@@ -114,6 +148,11 @@ export const projects = /* GraphQL */ `
       description
       icon
       name
+      resolvers {
+        description
+        name
+        urn
+      }
       sets {
         name
         projectUrn
@@ -127,24 +166,6 @@ export const projects = /* GraphQL */ `
 export const resolve = /* GraphQL */ `
   query Resolve($aliases: [AliasTuple], $resolver: String!) {
     resolve(aliases: $aliases, resolver: $resolver) {
-      ... on Token_Composition {
-        description
-        metadata {
-          created
-        }
-        name
-        type
-        value
-      }
-      ... on Token_Other {
-        description
-        metadata {
-          created
-        }
-        name
-        type
-        value
-      }
       ... on Token_Typography {
         description
         metadata {
@@ -163,7 +184,7 @@ export const resolve = /* GraphQL */ `
         type
         value
       }
-      ... on Token_sizing {
+      ... on Token_scalar {
         description
         metadata {
           created
@@ -180,6 +201,31 @@ export const resolvers = /* GraphQL */ `
     resolvers(limit: $limit, project: $project) {
       description
       name
+      release {
+        created
+        urn
+        version
+      }
+      tokens {
+        ... on Token_Typography {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_color {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_scalar {
+          description
+          name
+          type
+          value
+        }
+      }
       urn
     }
   }
@@ -187,57 +233,48 @@ export const resolvers = /* GraphQL */ `
 export const self = /* GraphQL */ `
   query Self {
     self {
-      authenticated
-      urn
+      identity {
+        authenticated
+        urn
+      }
+      invitations {
+        organization
+        status
+        user
+      }
+      user {
+        description
+        icon
+        name
+        urn
+        visibility
+      }
     }
   }
 `;
 export const token = /* GraphQL */ `
   query Token($urn: String) {
     token(urn: $urn) {
-      ... on Token_Composition {
+      ... on Raw_Token_color {
         description
         metadata {
           created
         }
         name
+        setUrn
         type
+        urn
         value
       }
-      ... on Token_Other {
+      ... on Raw_Token_scalar {
         description
         metadata {
           created
         }
         name
+        setUrn
         type
-        value
-      }
-      ... on Token_Typography {
-        description
-        metadata {
-          created
-        }
-        name
-        type
-        value
-      }
-      ... on Token_color {
-        description
-        metadata {
-          created
-        }
-        name
-        type
-        value
-      }
-      ... on Token_sizing {
-        description
-        metadata {
-          created
-        }
-        name
-        type
+        urn
         value
       }
     }
@@ -260,34 +297,20 @@ export const tokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }
@@ -312,34 +335,20 @@ export const tokenSets = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }
@@ -350,49 +359,26 @@ export const tokenSets = /* GraphQL */ `
 export const tokens = /* GraphQL */ `
   query Tokens($limit: Int, $set: String!) {
     tokens(limit: $limit, set: $set) {
-      ... on Token_Composition {
+      ... on Raw_Token_color {
         description
         metadata {
           created
         }
         name
+        setUrn
         type
+        urn
         value
       }
-      ... on Token_Other {
+      ... on Raw_Token_scalar {
         description
         metadata {
           created
         }
         name
+        setUrn
         type
-        value
-      }
-      ... on Token_Typography {
-        description
-        metadata {
-          created
-        }
-        name
-        type
-        value
-      }
-      ... on Token_color {
-        description
-        metadata {
-          created
-        }
-        name
-        type
-        value
-      }
-      ... on Token_sizing {
-        description
-        metadata {
-          created
-        }
-        name
-        type
+        urn
         value
       }
     }

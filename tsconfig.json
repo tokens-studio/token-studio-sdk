@@ -4,6 +4,7 @@
       "declaration": true,
       "declarationMap": true,
       "noEmit": true,
+      "jsx": "react",
       "target": "ES6",
       "strict": true,
       "rootDir": "./",
@@ -17,7 +18,7 @@
       "forceConsistentCasingInFileNames": true, 
       "isolatedModules": true, 
       "typeRoots": ["node_modules/@types"],
-      "types": [ "jest","node"]
+      "types": [ "jest","cypress","node"]
     },
     "exclude": ["node_modules", "**/*.test.ts"]
   }

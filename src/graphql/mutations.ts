@@ -12,11 +12,40 @@ export const addMemberToGroup = /* GraphQL */ `
     addMemberToGroup(group: $group, user: $user)
   }
 `;
+export const bulkCreateToken = /* GraphQL */ `
+  mutation BulkCreateToken($input: [TokenInput]!, $set: String!) {
+    bulkCreateToken(input: $input, set: $set) {
+      ... on Raw_Token_color {
+        description
+        metadata {
+          created
+        }
+        name
+        setUrn
+        type
+        urn
+        value
+      }
+      ... on Raw_Token_scalar {
+        description
+        metadata {
+          created
+        }
+        name
+        setUrn
+        type
+        urn
+        value
+      }
+    }
+  }
+`;
 export const createAPIKey = /* GraphQL */ `
-  mutation CreateAPIKey($name: String, $organization: String!) {
-    createAPIKey(name: $name, organization: $organization) {
+  mutation CreateAPIKey($input: APIKeyInput!, $organization: String!) {
+    createAPIKey(input: $input, organization: $organization) {
       description
       name
+      urn
       value
     }
   }
@@ -52,6 +81,11 @@ export const createOrganization = /* GraphQL */ `
   mutation CreateOrganization($input: OrganizationInput!) {
     createOrganization(input: $input) {
       account
+      apiKeys {
+        description
+        name
+        urn
+      }
       created
       description
       groups {
@@ -62,6 +96,11 @@ export const createOrganization = /* GraphQL */ `
       icon
       name
       payment
+      policies {
+        created
+        description
+        name
+      }
       projects {
         created
         description
@@ -73,6 +112,13 @@ export const createOrganization = /* GraphQL */ `
       ssoEnabled
       tier
       urn
+      users {
+        description
+        icon
+        name
+        urn
+        visibility
+      }
       visibility
     }
   }
@@ -96,6 +142,11 @@ export const createProject = /* GraphQL */ `
       description
       icon
       name
+      resolvers {
+        description
+        name
+        urn
+      }
       sets {
         name
         projectUrn
@@ -124,18 +175,6 @@ export const createRelease = /* GraphQL */ `
         }
       }
       tokens {
-        ... on Token_Composition {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_Other {
-          description
-          name
-          type
-          value
-        }
         ... on Token_Typography {
           description
           name
@@ -148,7 +187,7 @@ export const createRelease = /* GraphQL */ `
           type
           value
         }
-        ... on Token_sizing {
+        ... on Token_scalar {
           description
           name
           type
@@ -165,6 +204,31 @@ export const createResolver = /* GraphQL */ `
     createResolver(input: $input, project: $project) {
       description
       name
+      release {
+        created
+        urn
+        version
+      }
+      tokens {
+        ... on Token_Typography {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_color {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_scalar {
+          description
+          name
+          type
+          value
+        }
+      }
       urn
     }
   }
@@ -214,34 +278,20 @@ export const createTokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }
@@ -259,6 +309,7 @@ export const deleteAPIKey = /* GraphQL */ `
     deleteAPIKey(urn: $urn) {
       description
       name
+      urn
       value
     }
   }
@@ -318,6 +369,11 @@ export const deleteProject = /* GraphQL */ `
       description
       icon
       name
+      resolvers {
+        description
+        name
+        urn
+      }
       sets {
         name
         projectUrn
@@ -333,6 +389,31 @@ export const deleteResolver = /* GraphQL */ `
     deleteResolver(urn: $urn) {
       description
       name
+      release {
+        created
+        urn
+        version
+      }
+      tokens {
+        ... on Token_Typography {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_color {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_scalar {
+          description
+          name
+          type
+          value
+        }
+      }
       urn
     }
   }
@@ -382,34 +463,20 @@ export const deleteTokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }
@@ -431,6 +498,7 @@ export const regenerateApiKey = /* GraphQL */ `
     regenerateApiKey(urn: $urn) {
       description
       name
+      urn
       value
     }
   }
@@ -464,6 +532,11 @@ export const updateProject = /* GraphQL */ `
       description
       icon
       name
+      resolvers {
+        description
+        name
+        urn
+      }
       sets {
         name
         projectUrn
@@ -479,6 +552,31 @@ export const updateResolver = /* GraphQL */ `
     updateResolver(input: $input, urn: $urn) {
       description
       name
+      release {
+        created
+        urn
+        version
+      }
+      tokens {
+        ... on Token_Typography {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_color {
+          description
+          name
+          type
+          value
+        }
+        ... on Token_scalar {
+          description
+          name
+          type
+          value
+        }
+      }
       urn
     }
   }
@@ -528,34 +626,20 @@ export const updateTokenSet = /* GraphQL */ `
       }
       projectUrn
       tokens {
-        ... on Token_Composition {
+        ... on Raw_Token_color {
           description
           name
+          setUrn
           type
+          urn
           value
         }
-        ... on Token_Other {
+        ... on Raw_Token_scalar {
           description
           name
+          setUrn
           type
-          value
-        }
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_sizing {
-          description
-          name
-          type
+          urn
           value
         }
       }

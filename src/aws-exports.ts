@@ -7,4 +7,12 @@ const awsmobile = {
     "aws_user_pools_web_client_id": "4sp4dlvarnslglg2feth8b07qh"
 }
 
+export const oauth = {
+    domain: 'dev-tokensstudio.auth.eu-central-1.amazoncognito.com',
+    redirectSignIn: 'https://dev.tokens.studio/signin',
+    redirectSignOut: 'https://dev.tokens.studio/signout',
+    scope:['email','openid','profile'],
+    responseType: 'code'
+}
+
 export default awsmobile;

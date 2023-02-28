@@ -2,26 +2,79 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type APIKey = {
-  __typename: "APIKey",
+export type TokenInput = {
   description?: string | null,
+  name: string,
+  type: TokenType,
+  value: string,
+};
+
+export enum TokenType {
+  any = "any",
+  assets = "assets",
+  border = "border",
+  borderRadius = "borderRadius",
+  borderWidth = "borderWidth",
+  boxShadow = "boxShadow",
+  color = "color",
+  composition = "composition",
+  dimension = "dimension",
+  fontFamily = "fontFamily",
+  fontSize = "fontSize",
+  fontWeight = "fontWeight",
+  letterSpacing = "letterSpacing",
+  lineHeight = "lineHeight",
+  opacity = "opacity",
+  other = "other",
+  paragraphSpacing = "paragraphSpacing",
+  sizing = "sizing",
+  spacing = "spacing",
+  textCase = "textCase",
+  textDecoration = "textDecoration",
+  typography = "typography",
+}
+
+
+export type RawToken = Raw_Token_color | Raw_Token_scalar
+
+
+export type Raw_Token_color = {
+  __typename: "Raw_Token_color",
+  description?: string | null,
+  metadata?: Metadata | null,
   name?: string | null,
+  setUrn?: string | null,
+  type?: TokenType | null,
+  urn?: string | null,
   value?: string | null,
 };
 
-export type GroupInput = {
+export type TokenInterface = {
+  __typename: "TokenInterface",
   description?: string | null,
-  icon?: string | null,
-  name: string,
+  metadata?: Metadata | null,
+  name?: string | null,
+  setUrn?: string | null,
+  type?: TokenType | null,
+  urn?: string | null,
 };
 
-export type Group = {
-  __typename: "Group",
-  created: string,
+export type Raw_Token_scalar = {
+  __typename: "Raw_Token_scalar",
   description?: string | null,
-  members?:  Array<Entity | null > | null,
-  name: string,
-  policy?: Policy | null,
+  metadata?: Metadata | null,
+  name?: string | null,
+  setUrn?: string | null,
+  type?: TokenType | null,
+  urn?: string | null,
+  value?: string | null,
+};
+
+export type Metadata = {
+  __typename: "Metadata",
+  created?: string | null,
+  createdBy?: Entity | null,
+  lastUpdatedBy?: Entity | null,
 };
 
 export type Entity = APIKeyIdentity | User
@@ -47,6 +100,34 @@ export enum Visibility {
   PUBLIC = "PUBLIC",
 }
 
+
+export type APIKeyInput = {
+  description?: string | null,
+  name: string,
+};
+
+export type APIKey = {
+  __typename: "APIKey",
+  description?: string | null,
+  name?: string | null,
+  urn?: string | null,
+  value?: string | null,
+};
+
+export type GroupInput = {
+  description?: string | null,
+  icon?: string | null,
+  name: string,
+};
+
+export type Group = {
+  __typename: "Group",
+  created: string,
+  description?: string | null,
+  members?:  Array<Entity | null > | null,
+  name: string,
+  policy?: Policy | null,
+};
 
 export type Policy = {
   __typename: "Policy",
@@ -88,17 +169,27 @@ export enum OrganizationTier {
 export type Organization = {
   __typename: "Organization",
   account?: string | null,
-  created?: number | null,
+  apiKeys?:  Array<APIKeyWithoutValue | null > | null,
+  created?: string | null,
   description?: string | null,
   groups?:  Array<Group | null > | null,
   icon?: string | null,
   name?: string | null,
   payment?: string | null,
+  policies?:  Array<Policy | null > | null,
   projects?:  Array<Project | null > | null,
   ssoEnabled?: boolean | null,
   tier?: OrgTier | null,
   urn?: string | null,
+  users?:  Array<User | null > | null,
   visibility?: Visibility | null,
+};
+
+export type APIKeyWithoutValue = {
+  __typename: "APIKeyWithoutValue",
+  description?: string | null,
+  name?: string | null,
+  urn?: string | null,
 };
 
 export type Project = {
@@ -107,33 +198,35 @@ export type Project = {
   description?: string | null,
   icon?: string | null,
   name: string,
+  resolvers?:  Array<Resolver | null > | null,
   sets?:  Array<TokenSet | null > | null,
   urn: string,
   visibility?: Visibility | null,
 };
 
-export type TokenSet = {
-  __typename: "TokenSet",
-  metadata?: Metadata | null,
+export type Resolver = {
+  __typename: "Resolver",
+  description?: string | null,
   name?: string | null,
-  project: Project,
-  projectUrn?: string | null,
-  tokens:  Array<Token >,
+  release?:  Array<Release | null > | null,
+  tokens?:  Array<Token | null > | null,
   urn?: string | null,
 };
 
-export type Metadata = {
-  __typename: "Metadata",
+export type Release = {
+  __typename: "Release",
   created?: string | null,
-  createdBy?: Entity | null,
-  lastUpdatedBy?: Entity | null,
+  releasedBy?: Entity | null,
+  tokens?:  Array<Token | null > | null,
+  urn?: string | null,
+  version?: string | null,
 };
 
-export type Token = Token_Composition | Token_Other | Token_Typography | Token_color | Token_sizing
+export type Token = Token_Typography | Token_color | Token_scalar
 
 
-export type Token_Composition = {
-  __typename: "Token_Composition",
+export type Token_Typography = {
+  __typename: "Token_Typography",
   description?: string | null,
   metadata?: Metadata | null,
   name?: string | null,
@@ -149,50 +242,6 @@ export type ResolvedTokenInterface = {
   type?: TokenType | null,
 };
 
-export type Token_Other = {
-  __typename: "Token_Other",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  type?: TokenType | null,
-  value?: string | null,
-};
-
-export enum TokenType {
-  any = "any",
-  assets = "assets",
-  border = "border",
-  borderRadius = "borderRadius",
-  borderWidth = "borderWidth",
-  boxShadow = "boxShadow",
-  color = "color",
-  composition = "composition",
-  dimension = "dimension",
-  fontFamily = "fontFamily",
-  fontSize = "fontSize",
-  fontWeight = "fontWeight",
-  letterSpacing = "letterSpacing",
-  lineHeight = "lineHeight",
-  opacity = "opacity",
-  other = "other",
-  paragraphSpacing = "paragraphSpacing",
-  sizing = "sizing",
-  spacing = "spacing",
-  textCase = "textCase",
-  textDecoration = "textDecoration",
-  typography = "typography",
-}
-
-
-export type Token_Typography = {
-  __typename: "Token_Typography",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  type?: TokenType | null,
-  value?: string | null,
-};
-
 export type Token_color = {
   __typename: "Token_color",
   description?: string | null,
@@ -202,13 +251,41 @@ export type Token_color = {
   value?: string | null,
 };
 
-export type Token_sizing = {
-  __typename: "Token_sizing",
+export type Token_scalar = {
+  __typename: "Token_scalar",
   description?: string | null,
   metadata?: Metadata | null,
   name?: string | null,
   type?: TokenType | null,
   value?: string | null,
+};
+
+export type Token_Composition = {
+  __typename: "Token_Composition",
+  description?: string | null,
+  metadata?: Metadata | null,
+  name?: string | null,
+  type?: TokenType | null,
+  value?: string | null,
+};
+
+export type Token_Other = {
+  __typename: "Token_Other",
+  description?: string | null,
+  metadata?: Metadata | null,
+  name?: string | null,
+  type?: TokenType | null,
+  value?: string | null,
+};
+
+export type TokenSet = {
+  __typename: "TokenSet",
+  metadata?: Metadata | null,
+  name?: string | null,
+  project: Project,
+  projectUrn?: string | null,
+  tokens:  Array<RawToken >,
+  urn?: string | null,
 };
 
 export enum OrgTier {
@@ -246,15 +323,6 @@ export type ReleaseInput = {
   version: string,
 };
 
-export type Release = {
-  __typename: "Release",
-  created?: string | null,
-  releasedBy?: Entity | null,
-  tokens?:  Array<Token | null > | null,
-  urn?: string | null,
-  version?: string | null,
-};
-
 export type ResolverInput = {
   alias?: Array< AliasTokenSetInput > | null,
   description?: string | null,
@@ -265,55 +333,6 @@ export type ResolverInput = {
 export type AliasTokenSetInput = {
   alias: string,
   set: string,
-};
-
-export type Resolver = {
-  __typename: "Resolver",
-  description?: string | null,
-  name?: string | null,
-  urn?: string | null,
-};
-
-export type TokenInput = {
-  description?: string | null,
-  name: string,
-  type?: TokenType | null,
-  value?: string | null,
-};
-
-export type RawToken = Raw_Token_color | Raw_Token_scalar
-
-
-export type Raw_Token_color = {
-  __typename: "Raw_Token_color",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  setUrn?: string | null,
-  type?: TokenType | null,
-  urn?: string | null,
-  value?: string | null,
-};
-
-export type TokenInterface = {
-  __typename: "TokenInterface",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  setUrn?: string | null,
-  type?: TokenType | null,
-  urn?: string | null,
-};
-
-export type Raw_Token_scalar = {
-  __typename: "Raw_Token_scalar",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  setUrn?: string | null,
-  type?: TokenType | null,
-  urn?: string | null,
-  value?: string | null,
 };
 
 export type TokenSetInput = {
@@ -335,28 +354,51 @@ export enum InvitationStatus {
 }
 
 
+export type GroupFilterInput = {
+  name?: GroupStringFilterInput | null,
+  urn?: GroupUrnFilterInput | null,
+};
+
+export type GroupStringFilterInput = {
+  eq?: string | null,
+};
+
+export type GroupUrnFilterInput = {
+  eq?: string | null,
+};
+
 export type OrganizationFilterInput = {
-  projects?: ProjectFilterInput | null,
-  urn?: string | null,
+  name?: StringFilterInput | null,
+  urn?: StringFilterInput | null,
+  visibility?: VisibilityInput | null,
+};
+
+export type StringFilterInput = {
+  beginsWith?: string | null,
+  eq?: string | null,
+  ne?: string | null,
+};
+
+export type VisibilityInput = {
+  eq?: Visibility | null,
 };
 
 export type ProjectFilterInput = {
-  name?: ProjectNameFilterInput | null,
-  urn?: ProjectUrnFilterInput | null,
-};
-
-export type ProjectNameFilterInput = {
-  ProjectFilterInput?: string | null,
-  eq?: string | null,
-};
-
-export type ProjectUrnFilterInput = {
-  eq?: string | null,
+  name?: StringFilterInput | null,
+  urn?: StringFilterInput | null,
+  visibility?: VisibilityInput | null,
 };
 
 export type AliasTuple = {
   name: string,
   value: string,
+};
+
+export type Self = {
+  __typename: "Self",
+  identity?: Identity | null,
+  invitations?:  Array<Invitation | null > | null,
+  user?: User | null,
 };
 
 export type Identity = {
@@ -382,8 +424,42 @@ export type AddMemberToGroupMutation = {
   addMemberToGroup?: string | null,
 };
 
+export type BulkCreateTokenMutationVariables = {
+  input: Array< TokenInput | null >,
+  set: string,
+};
+
+export type BulkCreateTokenMutation = {
+  bulkCreateToken:  Array<( {
+      __typename: "Raw_Token_color",
+      description?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?: string | null,
+    } | {
+      __typename: "Raw_Token_scalar",
+      description?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?: string | null,
+    }
+  ) | null > | null,
+};
+
 export type CreateAPIKeyMutationVariables = {
-  name?: string | null,
+  input: APIKeyInput,
   organization: string,
 };
 
@@ -392,6 +468,7 @@ export type CreateAPIKeyMutation = {
     __typename: "APIKey",
     description?: string | null,
     name?: string | null,
+    urn?: string | null,
     value?: string | null,
   } | null,
 };
@@ -437,7 +514,13 @@ export type CreateOrganizationMutation = {
   createOrganization?:  {
     __typename: "Organization",
     account?: string | null,
-    created?: number | null,
+    apiKeys?:  Array< {
+      __typename: "APIKeyWithoutValue",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
+    created?: string | null,
     description?: string | null,
     groups?:  Array< {
       __typename: "Group",
@@ -448,6 +531,12 @@ export type CreateOrganizationMutation = {
     icon?: string | null,
     name?: string | null,
     payment?: string | null,
+    policies?:  Array< {
+      __typename: "Policy",
+      created?: string | null,
+      description?: string | null,
+      name: string,
+    } | null > | null,
     projects?:  Array< {
       __typename: "Project",
       created: string,
@@ -460,6 +549,14 @@ export type CreateOrganizationMutation = {
     ssoEnabled?: boolean | null,
     tier?: OrgTier | null,
     urn?: string | null,
+    users?:  Array< {
+      __typename: "User",
+      description?: string | null,
+      icon?: string | null,
+      name?: string | null,
+      urn?: string | null,
+      visibility?: Visibility | null,
+    } | null > | null,
     visibility?: Visibility | null,
   } | null,
 };
@@ -494,6 +591,12 @@ export type CreateProjectMutation = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    resolvers?:  Array< {
+      __typename: "Resolver",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
       name?: string | null,
@@ -528,18 +631,6 @@ export type CreateReleaseMutation = {
       }
     ) | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Other",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
         __typename: "Token_Typography",
         description?: string | null,
         name?: string | null,
@@ -552,7 +643,7 @@ export type CreateReleaseMutation = {
         type?: TokenType | null,
         value?: string | null,
       } | {
-        __typename: "Token_sizing",
+        __typename: "Token_scalar",
         description?: string | null,
         name?: string | null,
         type?: TokenType | null,
@@ -574,6 +665,32 @@ export type CreateResolverMutation = {
     __typename: "Resolver",
     description?: string | null,
     name?: string | null,
+    release?:  Array< {
+      __typename: "Release",
+      created?: string | null,
+      urn?: string | null,
+      version?: string | null,
+    } | null > | null,
+    tokens:  Array<( {
+        __typename: "Token_Typography",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_color",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_scalar",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      }
+    ) | null > | null,
     urn?: string | null,
   } | null,
 };
@@ -636,34 +753,20 @@ export type CreateTokenSetMutation = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -688,6 +791,7 @@ export type DeleteAPIKeyMutation = {
     __typename: "APIKey",
     description?: string | null,
     name?: string | null,
+    urn?: string | null,
     value?: string | null,
   } | null,
 };
@@ -765,6 +869,12 @@ export type DeleteProjectMutation = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    resolvers?:  Array< {
+      __typename: "Resolver",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
       name?: string | null,
@@ -785,6 +895,32 @@ export type DeleteResolverMutation = {
     __typename: "Resolver",
     description?: string | null,
     name?: string | null,
+    release?:  Array< {
+      __typename: "Release",
+      created?: string | null,
+      urn?: string | null,
+      version?: string | null,
+    } | null > | null,
+    tokens:  Array<( {
+        __typename: "Token_Typography",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_color",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_scalar",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      }
+    ) | null > | null,
     urn?: string | null,
   } | null,
 };
@@ -845,34 +981,20 @@ export type DeleteTokenSetMutation = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -903,6 +1025,7 @@ export type RegenerateApiKeyMutation = {
     __typename: "APIKey",
     description?: string | null,
     name?: string | null,
+    urn?: string | null,
     value?: string | null,
   } | null,
 };
@@ -955,6 +1078,12 @@ export type UpdateProjectMutation = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    resolvers?:  Array< {
+      __typename: "Resolver",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
       name?: string | null,
@@ -976,6 +1105,32 @@ export type UpdateResolverMutation = {
     __typename: "Resolver",
     description?: string | null,
     name?: string | null,
+    release?:  Array< {
+      __typename: "Release",
+      created?: string | null,
+      urn?: string | null,
+      version?: string | null,
+    } | null > | null,
+    tokens:  Array<( {
+        __typename: "Token_Typography",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_color",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_scalar",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      }
+    ) | null > | null,
     urn?: string | null,
   } | null,
 };
@@ -1038,34 +1193,20 @@ export type UpdateTokenSetMutation = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -1074,6 +1215,7 @@ export type UpdateTokenSetMutation = {
 };
 
 export type GroupsQueryVariables = {
+  filter?: GroupFilterInput | null,
   limit?: number | null,
   organization: string,
 };
@@ -1114,7 +1256,13 @@ export type OrganizationQuery = {
   organization?:  {
     __typename: "Organization",
     account?: string | null,
-    created?: number | null,
+    apiKeys?:  Array< {
+      __typename: "APIKeyWithoutValue",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
+    created?: string | null,
     description?: string | null,
     groups?:  Array< {
       __typename: "Group",
@@ -1125,6 +1273,12 @@ export type OrganizationQuery = {
     icon?: string | null,
     name?: string | null,
     payment?: string | null,
+    policies?:  Array< {
+      __typename: "Policy",
+      created?: string | null,
+      description?: string | null,
+      name: string,
+    } | null > | null,
     projects?:  Array< {
       __typename: "Project",
       created: string,
@@ -1137,6 +1291,14 @@ export type OrganizationQuery = {
     ssoEnabled?: boolean | null,
     tier?: OrgTier | null,
     urn?: string | null,
+    users?:  Array< {
+      __typename: "User",
+      description?: string | null,
+      icon?: string | null,
+      name?: string | null,
+      urn?: string | null,
+      visibility?: Visibility | null,
+    } | null > | null,
     visibility?: Visibility | null,
   } | null,
 };
@@ -1151,7 +1313,13 @@ export type OrganizationsQuery = {
   organizations?:  Array< {
     __typename: "Organization",
     account?: string | null,
-    created?: number | null,
+    apiKeys?:  Array< {
+      __typename: "APIKeyWithoutValue",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
+    created?: string | null,
     description?: string | null,
     groups?:  Array< {
       __typename: "Group",
@@ -1162,6 +1330,12 @@ export type OrganizationsQuery = {
     icon?: string | null,
     name?: string | null,
     payment?: string | null,
+    policies?:  Array< {
+      __typename: "Policy",
+      created?: string | null,
+      description?: string | null,
+      name: string,
+    } | null > | null,
     projects?:  Array< {
       __typename: "Project",
       created: string,
@@ -1174,6 +1348,14 @@ export type OrganizationsQuery = {
     ssoEnabled?: boolean | null,
     tier?: OrgTier | null,
     urn?: string | null,
+    users?:  Array< {
+      __typename: "User",
+      description?: string | null,
+      icon?: string | null,
+      name?: string | null,
+      urn?: string | null,
+      visibility?: Visibility | null,
+    } | null > | null,
     visibility?: Visibility | null,
   } | null > | null,
 };
@@ -1210,6 +1392,12 @@ export type ProjectsQuery = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    resolvers?:  Array< {
+      __typename: "Resolver",
+      description?: string | null,
+      name?: string | null,
+      urn?: string | null,
+    } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
       name?: string | null,
@@ -1228,26 +1416,6 @@ export type ResolveQueryVariables = {
 
 export type ResolveQuery = {
   resolve:  Array<( {
-      __typename: "Token_Composition",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_Other",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
-      value?: string | null,
-    } | {
       __typename: "Token_Typography",
       description?: string | null,
       metadata?:  {
@@ -1268,7 +1436,7 @@ export type ResolveQuery = {
       type?: TokenType | null,
       value?: string | null,
     } | {
-      __typename: "Token_sizing",
+      __typename: "Token_scalar",
       description?: string | null,
       metadata?:  {
         __typename: string,
@@ -1291,15 +1459,58 @@ export type ResolversQuery = {
     __typename: "Resolver",
     description?: string | null,
     name?: string | null,
+    release?:  Array< {
+      __typename: "Release",
+      created?: string | null,
+      urn?: string | null,
+      version?: string | null,
+    } | null > | null,
+    tokens:  Array<( {
+        __typename: "Token_Typography",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_color",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      } | {
+        __typename: "Token_scalar",
+        description?: string | null,
+        name?: string | null,
+        type?: TokenType | null,
+        value?: string | null,
+      }
+    ) | null > | null,
     urn?: string | null,
   } | null > | null,
 };
 
 export type SelfQuery = {
   self?:  {
-    __typename: "Identity",
-    authenticated: boolean,
-    urn?: string | null,
+    __typename: "Self",
+    identity?:  {
+      __typename: "Identity",
+      authenticated: boolean,
+      urn?: string | null,
+    } | null,
+    invitations?:  Array< {
+      __typename: "Invitation",
+      organization: string,
+      status?: InvitationStatus | null,
+      user: string,
+    } | null > | null,
+    user?:  {
+      __typename: "User",
+      description?: string | null,
+      icon?: string | null,
+      name?: string | null,
+      urn?: string | null,
+      visibility?: Visibility | null,
+    } | null,
   } | null,
 };
 
@@ -1309,54 +1520,28 @@ export type TokenQueryVariables = {
 
 export type TokenQuery = {
   token: ( {
-      __typename: "Token_Composition",
+      __typename: "Raw_Token_color",
       description?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
       } | null,
       name?: string | null,
+      setUrn?: string | null,
       type?: TokenType | null,
+      urn?: string | null,
       value?: string | null,
     } | {
-      __typename: "Token_Other",
+      __typename: "Raw_Token_scalar",
       description?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
       } | null,
       name?: string | null,
+      setUrn?: string | null,
       type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_Typography",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_color",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_sizing",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
+      urn?: string | null,
       value?: string | null,
     }
   ) | null,
@@ -1385,34 +1570,20 @@ export type TokenSetQuery = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -1444,34 +1615,20 @@ export type TokenSetsQuery = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -1486,54 +1643,28 @@ export type TokensQueryVariables = {
 
 export type TokensQuery = {
   tokens:  Array<( {
-      __typename: "Token_Composition",
+      __typename: "Raw_Token_color",
       description?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
       } | null,
       name?: string | null,
+      setUrn?: string | null,
       type?: TokenType | null,
+      urn?: string | null,
       value?: string | null,
     } | {
-      __typename: "Token_Other",
+      __typename: "Raw_Token_scalar",
       description?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
       } | null,
       name?: string | null,
+      setUrn?: string | null,
       type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_Typography",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_color",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
-      value?: string | null,
-    } | {
-      __typename: "Token_sizing",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      type?: TokenType | null,
+      urn?: string | null,
       value?: string | null,
     }
   ) >,
@@ -1608,34 +1739,20 @@ export type OnDeleteTokenSetSubscription = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -1731,34 +1848,20 @@ export type OnNewTokenSetSubscription = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,
@@ -1822,34 +1925,20 @@ export type OnUpdateTokenSetSubscription = {
     },
     projectUrn?: string | null,
     tokens:  Array<( {
-        __typename: "Token_Composition",
+        __typename: "Raw_Token_color",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       } | {
-        __typename: "Token_Other",
+        __typename: "Raw_Token_scalar",
         description?: string | null,
         name?: string | null,
+        setUrn?: string | null,
         type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_sizing",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
+        urn?: string | null,
         value?: string | null,
       }
     ) >,

@@ -1,5 +1,8 @@
-import { ISignUpResult, CognitoUser } from 'amazon-cognito-identity-js';
+import { ISignUpResult, CognitoUser, } from 'amazon-cognito-identity-js';
 import { API } from "aws-amplify";
+import type { FederatedSignInOptions } from "@aws-amplify/auth/lib/types/Auth";
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { oauth } from '../aws-exports';
 
 /**
  * Use this namespace to control user authentication controls and workflows
@@ -14,7 +17,6 @@ export namespace UserAuth {
             email: string
         }
     }
-
     /**
      * Returns the current session if it exists
      */
@@ -23,10 +25,10 @@ export namespace UserAuth {
     }
 
 
-      /**
-     * Returns the current authenticated user if it exists
-     */
-      export const currentAuthenticatedUser = async (): Promise<CognitoUser| undefined> => {
+    /**
+   * Returns the current authenticated user if it exists
+   */
+    export const currentAuthenticatedUser = async (): Promise<CognitoUser | undefined> => {
         return await API.Auth.currentAuthenticatedUser();
     }
 
@@ -44,8 +46,8 @@ export namespace UserAuth {
      * @param newPassword 
      * @returns 
      */
-    export const forgotPasswordSubmit = async (username: string,code:string,newPassword:string) => {
-        return await API.Auth.forgotPasswordSubmit(username,code,newPassword);
+    export const forgotPasswordSubmit = async (username: string, code: string, newPassword: string) => {
+        return await API.Auth.forgotPasswordSubmit(username, code, newPassword);
     }
 
     /**
@@ -64,6 +66,42 @@ export namespace UserAuth {
     export const signOut = async (): Promise<void> => {
         await API.Auth.signOut();
     }
+
+    export interface IFederatedSignInOptions {
+        signIn: {
+            provider: FederatedProviders,
+        }
+
+        oauth?: {
+            redirectSignIn: string,
+            redirectSignOut: string
+        }
+    }
+
+    export enum FederatedProviders {
+        Google = CognitoHostedUIIdentityProvider.Google
+    }
+
+
+
+    /**
+       * Signs the current user out of the SDK
+       * @remarks
+       * Currently only `Google` is 
+       */
+    export const federatedSignIn = async (options: IFederatedSignInOptions): Promise<void> => {
+
+        // Configure the oauth flow
+        API.Auth.configure({
+            oauth: {
+                ...oauth,
+                ...(options.oauth || {})
+            }
+        });
+
+        await API.Auth.federatedSignIn(options.signIn as unknown as FederatedSignInOptions);
+    }
+
     /**
      * Send MFA code to confirm sign in
      * @param {Object} user - The CognitoUser object
