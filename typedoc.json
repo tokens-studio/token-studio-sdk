@@ -1,7 +1,14 @@
 {
 	"$schema": "https://typedoc.org/schema.json",
-	"entryPointStrategy": "expand",
-	"entryPoints": ["./src/index.ts"],
+	"entryPointStrategy": "resolve",
+	"entryPoints": [
+		"./src/"
+	],
+	"exclude": ["**/*.test.ts","cypress/**"],
 	"excludeExternals": true,
-	"out": "docs"
+	"out": "docs",
+	"cleanOutputDir": true,
+	"compilerOptions": {
+		"skipLibCheck": true
+	}
 }

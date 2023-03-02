@@ -18,7 +18,7 @@
       "forceConsistentCasingInFileNames": true, 
       "isolatedModules": true, 
       "typeRoots": ["node_modules/@types"],
-      "types": [ "jest","cypress","node"]
+      "types": [ "jest","node"]
     },
-    "exclude": ["node_modules", "**/*.test.ts"]
+    "exclude": ["node_modules", "**/*.test.ts","cypress/**"]
   }

@@ -26,7 +26,7 @@ module.exports = {
                             projectReferences: true,
                             //Do not use rel paths here
                             //https://github.com/TypeStrong/ts-loader/issues/405
-                            configFile: 'tsconfig.cypress.json'
+                            configFile: 'cypress/tsconfig.json'
                         }
                     }
                 ]
