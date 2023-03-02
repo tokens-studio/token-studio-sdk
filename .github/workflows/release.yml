@@ -72,11 +72,12 @@ jobs:
             secret/data/cicd/npm/root TOKEN | NPM_TOKEN;
 
       - name: Deploy package to npm 
-        run: npm run publish
+        run: npm publish
         env:
           NPM_TOKEN: ${{ steps.secrets.outputs.NPM_TOKEN }}
       
-      - run: git tag release\${{ steps.gitversion.outputs.SemVer }}
+      - name: Tag released  
+        run: git tag release\${{ steps.gitversion.outputs.SemVer }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
