@@ -3,8 +3,18 @@
 // this is an auto generated file. This will be overwritten
 
 export const groups = /* GraphQL */ `
-  query Groups($filter: GroupFilterInput, $limit: Int, $organization: String!) {
-    groups(filter: $filter, limit: $limit, organization: $organization) {
+  query Groups(
+    $filter: GroupFilterInput
+    $limit: Int
+    $offset: Int
+    $organization: String!
+  ) {
+    groups(
+      filter: $filter
+      limit: $limit
+      offset: $offset
+      organization: $organization
+    ) {
       created
       description
       members {
@@ -26,52 +36,6 @@ export const groups = /* GraphQL */ `
         description
         name
       }
-    }
-  }
-`;
-export const organization = /* GraphQL */ `
-  query Organization($organization: String!) {
-    organization(organization: $organization) {
-      account
-      apiKeys {
-        description
-        name
-        urn
-      }
-      created
-      description
-      groups {
-        created
-        description
-        name
-      }
-      icon
-      name
-      payment
-      policies {
-        created
-        description
-        name
-      }
-      projects {
-        created
-        description
-        icon
-        name
-        urn
-        visibility
-      }
-      ssoEnabled
-      tier
-      urn
-      users {
-        description
-        icon
-        name
-        urn
-        visibility
-      }
-      visibility
     }
   }
 `;
@@ -108,6 +72,7 @@ export const organizations = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -126,8 +91,8 @@ export const organizations = /* GraphQL */ `
   }
 `;
 export const policies = /* GraphQL */ `
-  query Policies($first: Int, $limit: Int, $organization: String!) {
-    policies(first: $first, limit: $limit, organization: $organization) {
+  query Policies($limit: Int, $offset: Int, $organization: String!) {
+    policies(limit: $limit, offset: $offset, organization: $organization) {
       created
       description
       name
@@ -141,13 +106,20 @@ export const projects = /* GraphQL */ `
   query Projects(
     $filter: ProjectFilterInput
     $limit: Int
+    $offset: Int
     $organization: String!
   ) {
-    projects(filter: $filter, limit: $limit, organization: $organization) {
+    projects(
+      filter: $filter
+      limit: $limit
+      offset: $offset
+      organization: $organization
+    ) {
       created
       description
       icon
       name
+      orgUrn
       resolvers {
         description
         name
@@ -197,8 +169,8 @@ export const resolve = /* GraphQL */ `
   }
 `;
 export const resolvers = /* GraphQL */ `
-  query Resolvers($limit: Int, $project: String!) {
-    resolvers(limit: $limit, project: $project) {
+  query Resolvers($limit: Int, $offset: Int, $project: String!) {
+    resolvers(limit: $limit, offset: $offset, project: $project) {
       description
       name
       release {
@@ -242,6 +214,18 @@ export const self = /* GraphQL */ `
         status
         user
       }
+      organizations {
+        account
+        created
+        description
+        icon
+        name
+        payment
+        ssoEnabled
+        tier
+        urn
+        visibility
+      }
       user {
         description
         icon
@@ -253,7 +237,7 @@ export const self = /* GraphQL */ `
   }
 `;
 export const token = /* GraphQL */ `
-  query Token($urn: String) {
+  query Token($urn: String!) {
     token(urn: $urn) {
       ... on Raw_Token_color {
         description
@@ -281,7 +265,7 @@ export const token = /* GraphQL */ `
   }
 `;
 export const tokenSet = /* GraphQL */ `
-  query TokenSet($urn: String) {
+  query TokenSet($urn: String!) {
     tokenSet(urn: $urn) {
       metadata {
         created
@@ -292,6 +276,7 @@ export const tokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -319,8 +304,8 @@ export const tokenSet = /* GraphQL */ `
   }
 `;
 export const tokenSets = /* GraphQL */ `
-  query TokenSets($limit: Int, $project: String!) {
-    tokenSets(limit: $limit, project: $project) {
+  query TokenSets($limit: Int, $offset: Int, $project: String!) {
+    tokenSets(limit: $limit, offset: $offset, project: $project) {
       metadata {
         created
       }
@@ -330,6 +315,7 @@ export const tokenSets = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -357,8 +343,13 @@ export const tokenSets = /* GraphQL */ `
   }
 `;
 export const tokens = /* GraphQL */ `
-  query Tokens($limit: Int, $set: String!) {
-    tokens(limit: $limit, set: $set) {
+  query Tokens(
+    $filter: TokenFilterInput
+    $limit: Int
+    $offset: Int
+    $set: String!
+  ) {
+    tokens(filter: $filter, limit: $limit, offset: $offset, set: $set) {
       ... on Raw_Token_color {
         description
         metadata {

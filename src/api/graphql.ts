@@ -38,7 +38,7 @@ export namespace Graphql {
     /**
      * A convenience wrapper to create a GraphQLOptions type input for exec
      */
-    export const op=  (query: any, variables?: {}) : GraphQLOptions => ({
+    export const op = <T extends Object>(query: any, variables?: T): GraphQLOptions => ({
         query,
         variables
     });

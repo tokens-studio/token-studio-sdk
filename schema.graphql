@@ -88,7 +88,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   #  Accepts an invitation to join an organization
   acceptInvitation(urn: String!): String
   # ## Membership
-  ## Adds a member that already exists as part of your organization to a group
+  #### Adds a member that already exists as part of your organization to a group
   addMemberToGroup(group: String!, user: String!): String
   #  Bulk token creation. Limit of 50 tokens at a time
   bulkCreateToken(input: [TokenInput]!, set: String!): [RawToken]
@@ -101,7 +101,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   #  Creates a new policy for the organization
   createPolicy(input: PolicyInput!, organization: String!): Policy
   # ## Creation
-  ## Creates a new project for the organization
+  #### Creates a new project for the organization
   createProject(input: ProjectInput!, organization: String!): Project
   #  Creates a release by freezing a resolvers output
   createRelease(input: ReleaseInput!, resolver: String!): Release
@@ -118,7 +118,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   #  Deletes an invitation from your organization to a user
   deleteInvitation(urn: String!): Invitation
   # ## Deletion
-  ## Deletes a token from a set
+  #### Deletes a token from a set
   deletePolicy(urn: String!): Policy
   deleteProject(urn: String!): Project
   deleteResolver(urn: String!): Resolver
@@ -136,9 +136,9 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   updateProject(input: ProjectInput!, urn: String!): Project
   updateResolver(input: ResolverInput!, urn: String!): Resolver
   # ## Updates
-  ## Update the values of an existing token
-  updateToken(input: TokenInput!, urn: String!): RawToken
-  updateTokenSet(input: TokenSetInput!, urn: String!): TokenSet
+  #### Update the values of an existing token
+  updateToken(input: TokenUpdateInput!, urn: String!): RawToken
+  updateTokenSet(input: TokenSetUpdateInput!, urn: String!): TokenSet
 }
 
 type Organization @aws_api_key @aws_cognito_user_pools @aws_lambda {
@@ -165,7 +165,7 @@ type Organization @aws_api_key @aws_cognito_user_pools @aws_lambda {
   #  Whether or not SSO is enabled
   ssoEnabled: Boolean
   #  The tier associated with the organization
-  tier: OrgTier
+  tier: OrganizationTier
   #  Unique id of the organization
   urn: String
   #  User of the organization
@@ -201,6 +201,7 @@ type Project {
   description: String
   icon: String
   name: String!
+  orgUrn: String
   resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
   sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
   urn: String!
@@ -209,29 +210,27 @@ type Project {
 
 type Query @aws_cognito_user_pools @aws_lambda {
   #  Retrieves all projects for an organization
-  groups(filter: GroupFilterInput, limit: Int, organization: String!): [Group]
-  #  Retrieves a specific organization 
-  organization(organization: String!): Organization
+  groups(filter: GroupFilterInput, limit: Int, offset: Int, organization: String!): [Group]
   #  Retrieves information about the organizations
   organizations(filter: OrganizationFilterInput, limit: Int, offset: Int): [Organization] @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  queries policies available to the org. The organization is the organization urn
-  policies(first: Int, limit: Int, organization: String!): [Policy]
-  #  Retrieves all projects for an organization
-  projects(filter: ProjectFilterInput, limit: Int, organization: String!): [Project]
+  policies(limit: Int, offset: Int, organization: String!): [Policy]
+  #  Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources 
+  projects(filter: ProjectFilterInput, limit: Int, offset: Int, organization: String!): [Project]
   #  Resolves the resolver and returns the expected tokens 
   resolve(aliases: [AliasTuple], resolver: String!): [Token]
   # Returns all resolvers for a project
-  resolvers(limit: Int, project: String!): [Resolver]
+  resolvers(limit: Int, offset: Int, project: String!): [Resolver]
   #  Gets the callers identity
-  self: Self @aws_api_key @aws_cognito_user_pools @aws_lambda
-  #   Retrieves a single token
-  token(urn: String): RawToken
-  #   Retrieves a specific token set based on a known token set urn
-  tokenSet(urn: String): TokenSet
+  self: Self @aws_cognito_user_pools @aws_lambda
+  #  Retrieves a specific token
+  token(urn: String!): RawToken
+  #   Retrieves a specific tokenset
+  tokenSet(urn: String!): TokenSet
   #   Retrieves all accessible tokensets for the current project
-  tokenSets(limit: Int, project: String!): [TokenSet!]!
+  tokenSets(limit: Int, offset: Int, project: String!): [TokenSet!]!
   #  Retrieves all tokens of the current set 
-  tokens(limit: Int, set: String!): [RawToken!]!
+  tokens(filter: TokenFilterInput, limit: Int, offset: Int, set: String!): [RawToken!]!
   #  Retrieves all invitations in the context of your user
   userInvitations(limit: Int): [Invitation]
 }
@@ -247,8 +246,8 @@ type Raw_Token_color implements TokenInterface {
 }
 
 #  Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
-## assets - Assumes a string output with a URL
-## opacity - Assumes a simple numeric output
+#### assets - Assumes a string output with a URL
+#### opacity - Assumes a simple numeric output
 type Raw_Token_scalar implements TokenInterface {
   description: String
   metadata: Metadata
@@ -282,7 +281,11 @@ type Resolver {
 
 type Self {
   identity: Identity
+  #  Any invitation of the user when logged in with user auth
   invitations: [Invitation]
+  #  Organizations that the user owns
+  organizations: [Organization]
+  #  information about the user if logged in with user auth
   user: User
 }
 
@@ -293,10 +296,10 @@ type Subscription @aws_cognito_user_pools @aws_lambda {
   #   Subscribe to all new groups created for the organization
   onNewGroup(organization: String!): Group @aws_subscribe(mutations : ["createGroup"])
   # ## Tokens
-  ##  Subscribe to all new tokens created in a token set
+  ####  Subscribe to all new tokens created in a token set
   onNewToken(setUrn: String!): RawToken @aws_subscribe(mutations : ["createToken"])
   # ## TokenSets
-  ##  Subscribe to all new tokens sets created by an organization
+  ####  Subscribe to all new tokens sets created by an organization
   onNewTokenSet(projectUrn: String!): TokenSet @aws_subscribe(mutations : ["createTokenSet"])
   #   Subscribe to token Changes
   onUpdateToken(setUrn: String!): RawToken @aws_subscribe(mutations : ["updateToken"])
@@ -309,7 +312,7 @@ type TokenSet {
   name: String
   project: Project!
   projectUrn: String
-  tokens: [RawToken!]!
+  tokens(filter: TokenFilterInput, limit: Int, offset: Int): [RawToken!]!
   urn: String
 }
 
@@ -383,11 +386,6 @@ enum InvitationStatus {
   PENDING
 }
 
-enum OrgTier {
-  ENTERPRISE
-  FREE
-}
-
 enum OrganizationTier {
   ENTERPRISE
   FREE
@@ -454,19 +452,27 @@ input GroupInput {
 }
 
 input GroupStringFilterInput {
+  #  Equal to 
   eq: String
 }
 
 input GroupUrnFilterInput {
+  #  Equal to 
   eq: String
 }
 
 input IntFilterInput {
+  #  Equal to 
   eq: Int
+  #  greater than or equal to
   ge: Int
+  #  Greater than
   gt: Int
+  #  less than or equal to
   le: Int
+  #  Less than
   lt: Int
+  #  Not equal to
   ne: Int
 }
 
@@ -561,6 +567,12 @@ input StringFilterInput {
   ne: String
 }
 
+input TokenFilterInput {
+  name: StringFilterInput
+  type: TokenTypeFilterInput
+  urn: StringFilterInput
+}
+
 input TokenInput {
   description: String
   name: String!
@@ -578,9 +590,20 @@ input TokenSetInput {
   name: String!
 }
 
-input TokensFilterInput {
-  name: StringFilterInput
-  type: TokenType
+input TokenSetUpdateInput {
+  description: String
+  name: String
+}
+
+input TokenTypeFilterInput {
+  eq: TokenType
+  ne: TokenType
+}
+
+input TokenUpdateInput {
+  description: String
+  name: String
+  value: String
 }
 
 input UserFilterInput {

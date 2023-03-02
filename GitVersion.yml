@@ -1,5 +1,6 @@
 tag-prefix: 'release\/[vV]?'
-increment: Minor
+increment: Inherit
 major-version-bump-message: '(breaking|major):\s?'
-minor-version-bump-message: '(feature|minor|feat|fix):\s?'
+minor-version-bump-message: '(feature|minor|feat):\s?'
+patch-version-bump-message: '\+semver:\s?(fix|patch)'
 no-bump-message: '(none|skip)\s?:'

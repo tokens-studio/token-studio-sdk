@@ -179,7 +179,7 @@ export type Organization = {
   policies?:  Array<Policy | null > | null,
   projects?:  Array<Project | null > | null,
   ssoEnabled?: boolean | null,
-  tier?: OrgTier | null,
+  tier?: OrganizationTier | null,
   urn?: string | null,
   users?:  Array<User | null > | null,
   visibility?: Visibility | null,
@@ -198,6 +198,7 @@ export type Project = {
   description?: string | null,
   icon?: string | null,
   name: string,
+  orgUrn?: string | null,
   resolvers?:  Array<Resolver | null > | null,
   sets?:  Array<TokenSet | null > | null,
   urn: string,
@@ -288,12 +289,6 @@ export type TokenSet = {
   urn?: string | null,
 };
 
-export enum OrgTier {
-  ENTERPRISE = "ENTERPRISE",
-  FREE = "FREE",
-}
-
-
 export type PolicyInput = {
   description?: string | null,
   name: string,
@@ -354,6 +349,17 @@ export enum InvitationStatus {
 }
 
 
+export type TokenUpdateInput = {
+  description?: string | null,
+  name?: string | null,
+  value?: string | null,
+};
+
+export type TokenSetUpdateInput = {
+  description?: string | null,
+  name?: string | null,
+};
+
 export type GroupFilterInput = {
   name?: GroupStringFilterInput | null,
   urn?: GroupUrnFilterInput | null,
@@ -398,6 +404,7 @@ export type Self = {
   __typename: "Self",
   identity?: Identity | null,
   invitations?:  Array<Invitation | null > | null,
+  organizations?:  Array<Organization | null > | null,
   user?: User | null,
 };
 
@@ -405,6 +412,17 @@ export type Identity = {
   __typename: "Identity",
   authenticated: boolean,
   urn?: string | null,
+};
+
+export type TokenFilterInput = {
+  name?: StringFilterInput | null,
+  type?: TokenTypeFilterInput | null,
+  urn?: StringFilterInput | null,
+};
+
+export type TokenTypeFilterInput = {
+  eq?: TokenType | null,
+  ne?: TokenType | null,
 };
 
 export type AcceptInvitationMutationVariables = {
@@ -543,11 +561,12 @@ export type CreateOrganizationMutation = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     } | null > | null,
     ssoEnabled?: boolean | null,
-    tier?: OrgTier | null,
+    tier?: OrganizationTier | null,
     urn?: string | null,
     users?:  Array< {
       __typename: "User",
@@ -591,6 +610,7 @@ export type CreateProjectMutation = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    orgUrn?: string | null,
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
@@ -748,6 +768,7 @@ export type CreateTokenSetMutation = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -869,6 +890,7 @@ export type DeleteProjectMutation = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    orgUrn?: string | null,
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
@@ -976,6 +998,7 @@ export type DeleteTokenSetMutation = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -1078,6 +1101,7 @@ export type UpdateProjectMutation = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    orgUrn?: string | null,
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
@@ -1136,7 +1160,7 @@ export type UpdateResolverMutation = {
 };
 
 export type UpdateTokenMutationVariables = {
-  input: TokenInput,
+  input: TokenUpdateInput,
   urn: string,
 };
 
@@ -1170,7 +1194,7 @@ export type UpdateTokenMutation = {
 };
 
 export type UpdateTokenSetMutationVariables = {
-  input: TokenSetInput,
+  input: TokenSetUpdateInput,
   urn: string,
 };
 
@@ -1188,6 +1212,7 @@ export type UpdateTokenSetMutation = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -1217,6 +1242,7 @@ export type UpdateTokenSetMutation = {
 export type GroupsQueryVariables = {
   filter?: GroupFilterInput | null,
   limit?: number | null,
+  offset?: number | null,
   organization: string,
 };
 
@@ -1246,61 +1272,6 @@ export type GroupsQuery = {
       name: string,
     } | null,
   } | null > | null,
-};
-
-export type OrganizationQueryVariables = {
-  organization: string,
-};
-
-export type OrganizationQuery = {
-  organization?:  {
-    __typename: "Organization",
-    account?: string | null,
-    apiKeys?:  Array< {
-      __typename: "APIKeyWithoutValue",
-      description?: string | null,
-      name?: string | null,
-      urn?: string | null,
-    } | null > | null,
-    created?: string | null,
-    description?: string | null,
-    groups?:  Array< {
-      __typename: "Group",
-      created: string,
-      description?: string | null,
-      name: string,
-    } | null > | null,
-    icon?: string | null,
-    name?: string | null,
-    payment?: string | null,
-    policies?:  Array< {
-      __typename: "Policy",
-      created?: string | null,
-      description?: string | null,
-      name: string,
-    } | null > | null,
-    projects?:  Array< {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      urn: string,
-      visibility?: Visibility | null,
-    } | null > | null,
-    ssoEnabled?: boolean | null,
-    tier?: OrgTier | null,
-    urn?: string | null,
-    users?:  Array< {
-      __typename: "User",
-      description?: string | null,
-      icon?: string | null,
-      name?: string | null,
-      urn?: string | null,
-      visibility?: Visibility | null,
-    } | null > | null,
-    visibility?: Visibility | null,
-  } | null,
 };
 
 export type OrganizationsQueryVariables = {
@@ -1342,11 +1313,12 @@ export type OrganizationsQuery = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     } | null > | null,
     ssoEnabled?: boolean | null,
-    tier?: OrgTier | null,
+    tier?: OrganizationTier | null,
     urn?: string | null,
     users?:  Array< {
       __typename: "User",
@@ -1361,8 +1333,8 @@ export type OrganizationsQuery = {
 };
 
 export type PoliciesQueryVariables = {
-  first?: number | null,
   limit?: number | null,
+  offset?: number | null,
   organization: string,
 };
 
@@ -1382,6 +1354,7 @@ export type PoliciesQuery = {
 export type ProjectsQueryVariables = {
   filter?: ProjectFilterInput | null,
   limit?: number | null,
+  offset?: number | null,
   organization: string,
 };
 
@@ -1392,6 +1365,7 @@ export type ProjectsQuery = {
     description?: string | null,
     icon?: string | null,
     name: string,
+    orgUrn?: string | null,
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
@@ -1451,6 +1425,7 @@ export type ResolveQuery = {
 
 export type ResolversQueryVariables = {
   limit?: number | null,
+  offset?: number | null,
   project: string,
 };
 
@@ -1503,6 +1478,19 @@ export type SelfQuery = {
       status?: InvitationStatus | null,
       user: string,
     } | null > | null,
+    organizations?:  Array< {
+      __typename: "Organization",
+      account?: string | null,
+      created?: string | null,
+      description?: string | null,
+      icon?: string | null,
+      name?: string | null,
+      payment?: string | null,
+      ssoEnabled?: boolean | null,
+      tier?: OrganizationTier | null,
+      urn?: string | null,
+      visibility?: Visibility | null,
+    } | null > | null,
     user?:  {
       __typename: "User",
       description?: string | null,
@@ -1515,7 +1503,7 @@ export type SelfQuery = {
 };
 
 export type TokenQueryVariables = {
-  urn?: string | null,
+  urn: string,
 };
 
 export type TokenQuery = {
@@ -1548,7 +1536,7 @@ export type TokenQuery = {
 };
 
 export type TokenSetQueryVariables = {
-  urn?: string | null,
+  urn: string,
 };
 
 export type TokenSetQuery = {
@@ -1565,6 +1553,7 @@ export type TokenSetQuery = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -1593,6 +1582,7 @@ export type TokenSetQuery = {
 
 export type TokenSetsQueryVariables = {
   limit?: number | null,
+  offset?: number | null,
   project: string,
 };
 
@@ -1610,6 +1600,7 @@ export type TokenSetsQuery = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -1637,7 +1628,9 @@ export type TokenSetsQuery = {
 };
 
 export type TokensQueryVariables = {
+  filter?: TokenFilterInput | null,
   limit?: number | null,
+  offset?: number | null,
   set: string,
 };
 
@@ -1734,6 +1727,7 @@ export type OnDeleteTokenSetSubscription = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -1843,6 +1837,7 @@ export type OnNewTokenSetSubscription = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },
@@ -1920,6 +1915,7 @@ export type OnUpdateTokenSetSubscription = {
       description?: string | null,
       icon?: string | null,
       name: string,
+      orgUrn?: string | null,
       urn: string,
       visibility?: Visibility | null,
     },

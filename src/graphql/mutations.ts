@@ -106,6 +106,7 @@ export const createOrganization = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -142,6 +143,7 @@ export const createProject = /* GraphQL */ `
       description
       icon
       name
+      orgUrn
       resolvers {
         description
         name
@@ -273,6 +275,7 @@ export const createTokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -369,6 +372,7 @@ export const deleteProject = /* GraphQL */ `
       description
       icon
       name
+      orgUrn
       resolvers {
         description
         name
@@ -458,6 +462,7 @@ export const deleteTokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -532,6 +537,7 @@ export const updateProject = /* GraphQL */ `
       description
       icon
       name
+      orgUrn
       resolvers {
         description
         name
@@ -582,7 +588,7 @@ export const updateResolver = /* GraphQL */ `
   }
 `;
 export const updateToken = /* GraphQL */ `
-  mutation UpdateToken($input: TokenInput!, $urn: String!) {
+  mutation UpdateToken($input: TokenUpdateInput!, $urn: String!) {
     updateToken(input: $input, urn: $urn) {
       ... on Raw_Token_color {
         description
@@ -610,7 +616,7 @@ export const updateToken = /* GraphQL */ `
   }
 `;
 export const updateTokenSet = /* GraphQL */ `
-  mutation UpdateTokenSet($input: TokenSetInput!, $urn: String!) {
+  mutation UpdateTokenSet($input: TokenSetUpdateInput!, $urn: String!) {
     updateTokenSet(input: $input, urn: $urn) {
       metadata {
         created
@@ -621,6 +627,7 @@ export const updateTokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }

@@ -42,6 +42,7 @@ export const onDeleteTokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -135,6 +136,7 @@ export const onNewTokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }
@@ -201,6 +203,7 @@ export const onUpdateTokenSet = /* GraphQL */ `
         description
         icon
         name
+        orgUrn
         urn
         visibility
       }

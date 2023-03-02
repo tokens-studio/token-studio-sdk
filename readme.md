@@ -40,6 +40,16 @@ await UserAuth.signIn(username,password);
 
 ```
 
+## Permissions
+
+Note that some of the preconfigured queries are very expansive and attempt to require all properties on a type. This might cause problems with scoped permissions.
+
+In cases like this, it is beneficial to be as specific as possible with the return values if operating with the public mode API or API keys.
+
+## Underlying Graphql documentation
+
+See the documentation for the GraphQL API [here](https://tokens-studio.github.io/tokens-studio-grapqhl-docs/) 
+
 ## Documentation
 
 See the [documentation site](https://tokens-studio.github.io/token-studio-sdk/) for more info

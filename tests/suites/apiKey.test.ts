@@ -9,11 +9,20 @@ describe('API Key', () => {
 
     it('retrieves the self identity', async () => {
         lib.Configuration.setAPIKey(TEST_API_KEY);
-        const result = await lib.Graphql.exec<SelfQuery>(Graphql.op(lib.Queries.self));
+        const result = await lib.Graphql.exec<SelfQuery>(Graphql.op(`
+        query Self {
+                self{
+                    identity{
+                        authenticated
+                        urn
+                    }
+                }
+            }
+        `));
         expect(result).toBeTruthy();
 
         //We should show as unauthenticated
-        expect(result.data?.self?.authenticated).toEqual(false);
+        expect(result.data?.self?.identity?.authenticated).toEqual(false);
     });
 
 });
