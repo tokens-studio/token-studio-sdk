@@ -43,8 +43,20 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.9.15
         with:
           useConfigFile: true
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # caching node_modules
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.cache-name }}-
 
       - name: Install Dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Set package version
@@ -70,10 +82,6 @@ jobs:
           namespace: admin
           secrets: |
             secret/data/cicd/npm/root TOKEN | NPM_TOKEN;
-
-      # Strangely setting the NPM_TOKEN env var does not seem to be working 
-      - name: Set npm token
-        run:  echo "//registry.npmjs.org/:_authToken=\${{ steps.secrets.outputs.NPM_TOKEN }}" >> .npmrc
 
       - name: Deploy package to npm 
         run: npm publish
