@@ -69,12 +69,14 @@ jobs:
           method: jwt
           namespace: admin
           secrets: |
-            secrets/cicd/npm/root TOKEN | NPM_TOKEN;
+            secret/cicd/npm/root TOKEN | NPM_TOKEN;
 
       - name: Deploy package to npm 
         run: npm run publish
         env:
           NPM_TOKEN: ${{ steps.secrets.outputs.NPM_TOKEN }}
+      
+      - run: git tag release\${{ steps.gitversion.outputs.SemVer }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
