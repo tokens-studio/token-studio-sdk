@@ -71,6 +71,10 @@ jobs:
           secrets: |
             secret/data/cicd/npm/root TOKEN | NPM_TOKEN;
 
+      # Strangely setting the NPM_TOKEN env var does not seem to be working 
+      - name: Set npm token
+        run:  echo "//registry.npmjs.org/:_authToken=\${{ steps.secrets.outputs.NPM_TOKEN }}" >> .npmrc
+
       - name: Deploy package to npm 
         run: npm publish
         env:
