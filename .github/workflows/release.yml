@@ -69,7 +69,7 @@ jobs:
           method: jwt
           namespace: admin
           secrets: |
-            secret/cicd/npm/root TOKEN | NPM_TOKEN;
+            secret/data/cicd/npm/root TOKEN | NPM_TOKEN;
 
       - name: Deploy package to npm 
         run: npm run publish
