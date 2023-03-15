@@ -35,7 +35,9 @@ export const groups = /* GraphQL */ `
         created
         description
         name
+        urn
       }
+      urn
     }
   }
 `;
@@ -58,6 +60,7 @@ export const organizations = /* GraphQL */ `
         created
         description
         name
+        urn
       }
       icon
       name
@@ -66,6 +69,7 @@ export const organizations = /* GraphQL */ `
         created
         description
         name
+        urn
       }
       projects {
         created
@@ -96,6 +100,7 @@ export const policies = /* GraphQL */ `
       created
       description
       name
+      urn
       value {
         version
       }
@@ -136,8 +141,8 @@ export const projects = /* GraphQL */ `
   }
 `;
 export const resolve = /* GraphQL */ `
-  query Resolve($aliases: [AliasTuple], $resolver: String!) {
-    resolve(aliases: $aliases, resolver: $resolver) {
+  query Resolve($modifiers: [ResolverModifierValueInput], $resolver: String!) {
+    resolve(modifiers: $modifiers, resolver: $resolver) {
       ... on Token_Typography {
         description
         metadata {
@@ -145,7 +150,17 @@ export const resolve = /* GraphQL */ `
         }
         name
         type
-        value
+        value {
+          fontFamily
+          fontSize
+          fontWeight
+          letterSpacing
+          lineHeight
+          paragraphIndent
+          paragraphSpacing
+          textCase
+          textDecoration
+        }
       }
       ... on Token_color {
         description
@@ -168,35 +183,61 @@ export const resolve = /* GraphQL */ `
     }
   }
 `;
-export const resolvers = /* GraphQL */ `
-  query Resolvers($limit: Int, $offset: Int, $project: String!) {
-    resolvers(limit: $limit, offset: $offset, project: $project) {
+export const resolver = /* GraphQL */ `
+  query Resolver($urn: String!) {
+    resolver(urn: $urn) {
       description
+      modifiers {
+        alias
+        default
+        name
+        type
+      }
       name
       release {
         created
         urn
         version
       }
-      tokens {
-        ... on Token_Typography {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_color {
-          description
-          name
-          type
-          value
-        }
-        ... on Token_scalar {
-          description
-          name
-          type
-          value
-        }
+      sources {
+        branch
+        urn
+        version
+      }
+      urn
+    }
+  }
+`;
+export const resolvers = /* GraphQL */ `
+  query Resolvers(
+    $filter: ResolverFilterInput
+    $limit: Int
+    $offset: Int
+    $project: String!
+  ) {
+    resolvers(
+      filter: $filter
+      limit: $limit
+      offset: $offset
+      project: $project
+    ) {
+      description
+      modifiers {
+        alias
+        default
+        name
+        type
+      }
+      name
+      release {
+        created
+        urn
+        version
+      }
+      sources {
+        branch
+        urn
+        version
       }
       urn
     }
@@ -241,6 +282,7 @@ export const token = /* GraphQL */ `
     token(urn: $urn) {
       ... on Raw_Token_color {
         description
+        extensions
         metadata {
           created
         }
@@ -252,6 +294,7 @@ export const token = /* GraphQL */ `
       }
       ... on Raw_Token_scalar {
         description
+        extensions
         metadata {
           created
         }
@@ -260,6 +303,28 @@ export const token = /* GraphQL */ `
         type
         urn
         value
+      }
+      ... on Raw_Token_typography {
+        description
+        extensions
+        metadata {
+          created
+        }
+        name
+        setUrn
+        type
+        urn
+        value {
+          fontFamily
+          fontSize
+          fontWeight
+          letterSpacing
+          lineHeight
+          paragraphIndent
+          paragraphSpacing
+          textCase
+          textDecoration
+        }
       }
     }
   }
@@ -271,19 +336,11 @@ export const tokenSet = /* GraphQL */ `
         created
       }
       name
-      project {
-        created
-        description
-        icon
-        name
-        orgUrn
-        urn
-        visibility
-      }
       projectUrn
       tokens {
         ... on Raw_Token_color {
           description
+          extensions
           name
           setUrn
           type
@@ -292,11 +349,20 @@ export const tokenSet = /* GraphQL */ `
         }
         ... on Raw_Token_scalar {
           description
+          extensions
           name
           setUrn
           type
           urn
           value
+        }
+        ... on Raw_Token_typography {
+          description
+          extensions
+          name
+          setUrn
+          type
+          urn
         }
       }
       urn
@@ -310,19 +376,11 @@ export const tokenSets = /* GraphQL */ `
         created
       }
       name
-      project {
-        created
-        description
-        icon
-        name
-        orgUrn
-        urn
-        visibility
-      }
       projectUrn
       tokens {
         ... on Raw_Token_color {
           description
+          extensions
           name
           setUrn
           type
@@ -331,11 +389,20 @@ export const tokenSets = /* GraphQL */ `
         }
         ... on Raw_Token_scalar {
           description
+          extensions
           name
           setUrn
           type
           urn
           value
+        }
+        ... on Raw_Token_typography {
+          description
+          extensions
+          name
+          setUrn
+          type
+          urn
         }
       }
       urn
@@ -352,6 +419,7 @@ export const tokens = /* GraphQL */ `
     tokens(filter: $filter, limit: $limit, offset: $offset, set: $set) {
       ... on Raw_Token_color {
         description
+        extensions
         metadata {
           created
         }
@@ -363,6 +431,7 @@ export const tokens = /* GraphQL */ `
       }
       ... on Raw_Token_scalar {
         description
+        extensions
         metadata {
           created
         }
@@ -371,6 +440,28 @@ export const tokens = /* GraphQL */ `
         type
         urn
         value
+      }
+      ... on Raw_Token_typography {
+        description
+        extensions
+        metadata {
+          created
+        }
+        name
+        setUrn
+        type
+        urn
+        value {
+          fontFamily
+          fontSize
+          fontWeight
+          letterSpacing
+          lineHeight
+          paragraphIndent
+          paragraphSpacing
+          textCase
+          textDecoration
+        }
       }
     }
   }

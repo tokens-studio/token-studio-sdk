@@ -2,7 +2,10 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: token-studio-sdk
-  
+  links:
+    - url: https://tokens-studio.github.io/token-studio-sdk/
+      title: Github pages
+      icon: dashboard
   annotations:
     github.com/project-slug: tokens-studio/token-studio-sdk
     backstage.io/techdocs-ref: dir:.

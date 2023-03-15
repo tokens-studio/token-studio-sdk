@@ -88,3 +88,4 @@ env.json
 types/**
 jest-coverage/**
 docs/**
+site/**

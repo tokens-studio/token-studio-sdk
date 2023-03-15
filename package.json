@@ -2,7 +2,7 @@
   "name": "@tokens-studio/sdk",
   "version": "0.0.0-alpha.0",
   "description": "The official SDK for Tokens Studio",
-  "main": "./dist/commonjs.js",
+  "main": "./dist/commonjs.cjs",
   "type": "module",
   "module": "./dist/esm.mjs",
   "jsnext:main": "./dist/esm.mjs",

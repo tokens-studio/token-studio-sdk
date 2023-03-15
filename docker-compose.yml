@@ -1,0 +1,13 @@
+
+
+version: '3.6'
+
+services:
+  techdocs:
+    image: spotify/techdocs
+    command: build
+    working_dir: /development
+    # Needed for chown of local storage
+    volumes:
+      - ./:/development
+

@@ -6,7 +6,7 @@ const defaultEntries = [
 		input: './src/index.ts',
 		output: [
 			{
-				file: './dist/commonjs.js',
+				file: './dist/commonjs.cjs',
 				exports: 'named',
 				sourcemap: true,
 				format: 'cjs'
