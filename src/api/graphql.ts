@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import { API } from '@aws-amplify/api';
 import { GraphQLOptions, GraphQLResult, } from '@aws-amplify/api-graphql';
 import { ApiKey } from "./apiKey";
 import { Configuration } from "./configure";

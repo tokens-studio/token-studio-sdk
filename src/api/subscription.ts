@@ -1,4 +1,4 @@
-import { API, } from "aws-amplify";
+import { API } from '@aws-amplify/api';
 import { AWSAppSyncRealTimeProvider } from '@aws-amplify/pubsub';
 import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
 import { Configuration } from "./configure";

@@ -1,8 +1,7 @@
-import { Amplify, API, Auth } from "aws-amplify";
 import { ApiKey } from "./apiKey";
 import config from '../aws-exports';
-
-
+import { Amplify } from '@aws-amplify/core';
+import { Auth } from '@aws-amplify/auth';
 /**
  * There are 3 authentication modes available. 
  * 1. User Auth (default)

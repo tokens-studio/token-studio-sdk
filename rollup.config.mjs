@@ -12,7 +12,7 @@ const defaultEntries = [
 				format: 'cjs'
 			},
 			{
-				file: './dist/esm.mjs',
+				file: './dist/esm.js',
 				exports: 'named',
 				sourcemap: true,
 				format: 'es'
