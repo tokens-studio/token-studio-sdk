@@ -12,13 +12,29 @@ import { Auth } from '@aws-amplify/auth';
  */
 export namespace Configuration {
 
-    export type IConfiguration = {
+
+    export interface Storage {
+        // set item with the key
+        setItem(key: string, value: string): string;
+        // get item with the key
+        getItem(key: string): string;
+        // remove item with the key
+        removeItem(key: string): void;
+        // clear out the storage
+        clear(): void;
+        // If the storage operations are async(i.e AsyncStorage)
+        // Then you need to sync those items into the memory in this method
+        sync(): Promise<void> 
+      }
+
+    export type IConfiguration = Partial<{
         aws_appsync_graphqlEndpoint: string;
         aws_appsync_region: string;
         aws_user_pools_id: string;
         aws_appsync_authenticationType: string;
         aws_user_pools_web_client_id: string;
-    }
+        storage:Storage
+    }>
 
     let configuration: IConfiguration = config;
 
