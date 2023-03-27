@@ -10,6 +10,7 @@ metadata:
   annotations:
     github.com/project-slug: tokens-studio/token-studio-sdk
     backstage.io/techdocs-ref: dir:.
+    sentry.io/project-slug: tokens-studio-sdk
 spec:
   type: library 
   lifecycle: production
