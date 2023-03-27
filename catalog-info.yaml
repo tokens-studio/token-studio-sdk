@@ -15,4 +15,4 @@ spec:
   lifecycle: production
   owner: guest
   consumesApis:
-    - tokens-studio/graphql
+    - tokens-studio-graphql-api
