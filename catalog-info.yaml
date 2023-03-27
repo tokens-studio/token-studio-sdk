@@ -10,6 +10,6 @@ metadata:
     github.com/project-slug: tokens-studio/token-studio-sdk
     backstage.io/techdocs-ref: dir:.
 spec:
-  type: other
+  type: service
   lifecycle: unknown
   owner: guest
