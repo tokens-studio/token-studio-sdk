@@ -2,6 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: token-studio-sdk
+  description: The SDK for the Tokens Studio system
   links:
     - url: https://tokens-studio.github.io/token-studio-sdk/
       title: Github pages
@@ -10,6 +11,8 @@ metadata:
     github.com/project-slug: tokens-studio/token-studio-sdk
     backstage.io/techdocs-ref: dir:.
 spec:
-  type: service
-  lifecycle: unknown
+  type: library 
+  lifecycle: production
   owner: guest
+  consumesApis:
+    - tokens-studio/graphql
