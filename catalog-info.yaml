@@ -13,6 +13,7 @@ metadata:
 spec:
   type: library 
   lifecycle: production
+  system: tokens-studio
   owner: user:default/3108c792-8441-4c89-bf5f-7b35fdd56839
   consumesApis:
     - tokens-studio-graphql-api
