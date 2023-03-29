@@ -61,6 +61,21 @@ export namespace UserAuth {
     }
 
     /**
+     * Signs an existing user into Tokens Studio
+     * @param username 
+     * @param password 
+     * @returns 
+     */
+    export const signInWithEmail = async (email: string, password: string): Promise<CognitoUser> => {
+        API.Auth.signIn
+        return await API.Auth.signIn({
+            username:email,
+            password
+        });
+    }
+
+
+    /**
      * Signs the current user out of the SDK
      */
     export const signOut = async (): Promise<void> => {
