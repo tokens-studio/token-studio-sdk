@@ -61,7 +61,7 @@ export namespace UserAuth {
     }
 
     /**
-     * Signs an existing user into Tokens Studio
+     * Signs an existing user into Tokens Studio using their email. Note that the email needs to be verified before a user can use this method
      * @param username 
      * @param password 
      * @returns 

@@ -13,6 +13,9 @@ import { Auth } from '@aws-amplify/auth';
 export namespace Configuration {
 
 
+    /**
+     * If you need to externalize session storage you can use the following interface to implement your own
+     */
     export interface Storage {
         // set item with the key
         setItem(key: string, value: string): string;
@@ -24,8 +27,8 @@ export namespace Configuration {
         clear(): void;
         // If the storage operations are async(i.e AsyncStorage)
         // Then you need to sync those items into the memory in this method
-        sync(): Promise<void> 
-      }
+        sync(): Promise<void>
+    }
 
     export type IConfiguration = Partial<{
         aws_appsync_graphqlEndpoint: string;
@@ -33,7 +36,8 @@ export namespace Configuration {
         aws_user_pools_id: string;
         aws_appsync_authenticationType: string;
         aws_user_pools_web_client_id: string;
-        storage:Storage
+        //Custom auth storage
+        storage: Storage
     }>
 
     let configuration: IConfiguration = config;
