@@ -109,6 +109,7 @@ export const createOrganization = /* GraphQL */ `
       account
       apiKeys {
         description
+        lastUsed
         name
         urn
       }

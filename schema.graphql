@@ -41,6 +41,7 @@ type APIKeyIdentity {
 
 type APIKeyWithoutValue @aws_cognito_user_pools @aws_lambda {
   description: String
+  lastUsed: AWSDateTime
   name: String
   urn: String
 }
@@ -211,6 +212,7 @@ type Project @aws_cognito_user_pools @aws_lambda {
 }
 
 type Query @aws_cognito_user_pools @aws_lambda {
+  apiKeys(filter: ApiKeyFilterInput, limit: Int, offset: Int, organization: String!): [APIKeyWithoutValue] @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  Retrieves all projects for an organization
   groups(filter: GroupFilterInput, limit: Int, offset: Int, organization: String!): [Group] @aws_cognito_user_pools @aws_lambda
   #  Retrieves information about the organizations
@@ -488,6 +490,11 @@ input AliasTokenSetInput {
 input AliasTuple {
   name: String!
   value: String!
+}
+
+input ApiKeyFilterInput {
+  name: StringFilterInput
+  urn: StringFilterInput
 }
 
 input GroupFilterInput {

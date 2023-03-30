@@ -2,6 +2,26 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const apiKeys = /* GraphQL */ `
+  query ApiKeys(
+    $filter: ApiKeyFilterInput
+    $limit: Int
+    $offset: Int
+    $organization: String!
+  ) {
+    apiKeys(
+      filter: $filter
+      limit: $limit
+      offset: $offset
+      organization: $organization
+    ) {
+      description
+      lastUsed
+      name
+      urn
+    }
+  }
+`;
 export const groups = /* GraphQL */ `
   query Groups(
     $filter: GroupFilterInput
@@ -51,6 +71,7 @@ export const organizations = /* GraphQL */ `
       account
       apiKeys {
         description
+        lastUsed
         name
         urn
       }
