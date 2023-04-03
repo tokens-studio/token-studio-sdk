@@ -4,6 +4,7 @@
 
 export type TokenInput = {
   description?: string | null,
+  extensions?: string | null,
   name: string,
   type: TokenType,
   value: string,
@@ -19,11 +20,11 @@ export enum TokenType {
   color = "color",
   composition = "composition",
   dimension = "dimension",
-  fontFamily = "fontFamily",
-  fontSize = "fontSize",
-  fontWeight = "fontWeight",
+  fontFamilies = "fontFamilies",
+  fontSizes = "fontSizes",
+  fontWeights = "fontWeights",
   letterSpacing = "letterSpacing",
-  lineHeight = "lineHeight",
+  lineHeights = "lineHeights",
   opacity = "opacity",
   other = "other",
   paragraphSpacing = "paragraphSpacing",
@@ -35,12 +36,13 @@ export enum TokenType {
 }
 
 
-export type RawToken = Raw_Token_color | Raw_Token_scalar
+export type RawToken = Raw_Token_color | Raw_Token_scalar | Raw_Token_typography
 
 
 export type Raw_Token_color = {
   __typename: "Raw_Token_color",
   description?: string | null,
+  extensions?: string | null,
   metadata?: Metadata | null,
   name?: string | null,
   setUrn?: string | null,
@@ -62,6 +64,7 @@ export type TokenInterface = {
 export type Raw_Token_scalar = {
   __typename: "Raw_Token_scalar",
   description?: string | null,
+  extensions?: string | null,
   metadata?: Metadata | null,
   name?: string | null,
   setUrn?: string | null,
@@ -101,6 +104,31 @@ export enum Visibility {
 }
 
 
+export type Raw_Token_typography = {
+  __typename: "Raw_Token_typography",
+  description?: string | null,
+  extensions?: string | null,
+  metadata?: Metadata | null,
+  name?: string | null,
+  setUrn?: string | null,
+  type?: TokenType | null,
+  urn?: string | null,
+  value?: Typography | null,
+};
+
+export type Typography = {
+  __typename: "Typography",
+  fontFamily?: string | null,
+  fontSize?: string | null,
+  fontWeight?: string | null,
+  letterSpacing?: string | null,
+  lineHeight?: string | null,
+  paragraphIndent?: string | null,
+  paragraphSpacing?: string | null,
+  textCase?: string | null,
+  textDecoration?: string | null,
+};
+
 export type APIKeyInput = {
   description?: string | null,
   name: string,
@@ -127,6 +155,7 @@ export type Group = {
   members?:  Array<Entity | null > | null,
   name: string,
   policy?: Policy | null,
+  urn?: string | null,
 };
 
 export type Policy = {
@@ -134,6 +163,7 @@ export type Policy = {
   created?: string | null,
   description?: string | null,
   name: string,
+  urn?: string | null,
   value: PolicyDoc,
 };
 
@@ -188,6 +218,7 @@ export type Organization = {
 export type APIKeyWithoutValue = {
   __typename: "APIKeyWithoutValue",
   description?: string | null,
+  lastUsed?: string | null,
   name?: string | null,
   urn?: string | null,
 };
@@ -208,10 +239,35 @@ export type Project = {
 export type Resolver = {
   __typename: "Resolver",
   description?: string | null,
+  modifiers?:  Array<ResolverModifierOutput | null > | null,
   name?: string | null,
   release?:  Array<Release | null > | null,
-  tokens?:  Array<Token | null > | null,
+  sources?:  Array<ResolverSource | null > | null,
   urn?: string | null,
+};
+
+export type ResolverModifierOutput = {
+  __typename: "ResolverModifierOutput",
+  alias?: string | null,
+  default?: string | null,
+  name: string,
+  type?: ResolverModifierType | null,
+  values?:  Array<ResolverModifierValue | null > | null,
+};
+
+export enum ResolverModifierType {
+  DYNAMIC = "DYNAMIC",
+  ENUMERATED = "ENUMERATED",
+  FIXED = "FIXED",
+}
+
+
+export type ResolverModifierValue = {
+  __typename: "ResolverModifierValue",
+  branch?: string | null,
+  name?: string | null,
+  urn?: string | null,
+  version?: string | null,
 };
 
 export type Release = {
@@ -232,7 +288,7 @@ export type Token_Typography = {
   metadata?: Metadata | null,
   name?: string | null,
   type?: TokenType | null,
-  value?: string | null,
+  value?: Typography | null,
 };
 
 export type ResolvedTokenInterface = {
@@ -241,6 +297,15 @@ export type ResolvedTokenInterface = {
   metadata?: Metadata | null,
   name?: string | null,
   type?: TokenType | null,
+};
+
+export type Token_Composition = {
+  __typename: "Token_Composition",
+  description?: string | null,
+  metadata?: Metadata | null,
+  name?: string | null,
+  type?: TokenType | null,
+  value?: string | null,
 };
 
 export type Token_color = {
@@ -261,29 +326,17 @@ export type Token_scalar = {
   value?: string | null,
 };
 
-export type Token_Composition = {
-  __typename: "Token_Composition",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  type?: TokenType | null,
-  value?: string | null,
-};
-
-export type Token_Other = {
-  __typename: "Token_Other",
-  description?: string | null,
-  metadata?: Metadata | null,
-  name?: string | null,
-  type?: TokenType | null,
-  value?: string | null,
+export type ResolverSource = {
+  __typename: "ResolverSource",
+  branch?: string | null,
+  urn: string,
+  version?: string | null,
 };
 
 export type TokenSet = {
   __typename: "TokenSet",
   metadata?: Metadata | null,
   name?: string | null,
-  project: Project,
   projectUrn?: string | null,
   tokens:  Array<RawToken >,
   urn?: string | null,
@@ -319,15 +372,32 @@ export type ReleaseInput = {
 };
 
 export type ResolverInput = {
-  alias?: Array< AliasTokenSetInput > | null,
   description?: string | null,
+  modifiers?: Array< ResolverModifier | null > | null,
   name: string,
-  src: Array< string >,
+  src: Array< ResolverSourceInput | null >,
 };
 
-export type AliasTokenSetInput = {
-  alias: string,
-  set: string,
+export type ResolverModifier = {
+  alias?: string | null,
+  default?: string | null,
+  name: string,
+  type?: ResolverModifierType | null,
+  values?: Array< ResolverModifierValueInput | null > | null,
+};
+
+export type ResolverModifierValueInput = {
+  alias?: string | null,
+  branch?: string | null,
+  name: string,
+  urn?: string | null,
+  version?: string | null,
+};
+
+export type ResolverSourceInput = {
+  branch?: string | null,
+  urn: string,
+  version?: string | null,
 };
 
 export type TokenSetInput = {
@@ -360,6 +430,17 @@ export type TokenSetUpdateInput = {
   name?: string | null,
 };
 
+export type ApiKeyFilterInput = {
+  name?: StringFilterInput | null,
+  urn?: StringFilterInput | null,
+};
+
+export type StringFilterInput = {
+  beginsWith?: string | null,
+  eq?: string | null,
+  ne?: string | null,
+};
+
 export type GroupFilterInput = {
   name?: GroupStringFilterInput | null,
   urn?: GroupUrnFilterInput | null,
@@ -379,12 +460,6 @@ export type OrganizationFilterInput = {
   visibility?: VisibilityInput | null,
 };
 
-export type StringFilterInput = {
-  beginsWith?: string | null,
-  eq?: string | null,
-  ne?: string | null,
-};
-
 export type VisibilityInput = {
   eq?: Visibility | null,
 };
@@ -395,9 +470,9 @@ export type ProjectFilterInput = {
   visibility?: VisibilityInput | null,
 };
 
-export type AliasTuple = {
-  name: string,
-  value: string,
+export type ResolverFilterInput = {
+  name?: StringFilterInput | null,
+  urn?: StringFilterInput | null,
 };
 
 export type Self = {
@@ -434,8 +509,8 @@ export type AcceptInvitationMutation = {
 };
 
 export type AddMemberToGroupMutationVariables = {
+  entity: string,
   group: string,
-  user: string,
 };
 
 export type AddMemberToGroupMutation = {
@@ -451,9 +526,36 @@ export type BulkCreateTokenMutation = {
   bulkCreateToken:  Array<( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -463,15 +565,92 @@ export type BulkCreateTokenMutation = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null > | null,
 };
@@ -520,7 +699,19 @@ export type CreateGroupMutation = {
       created?: string | null,
       description?: string | null,
       name: string,
+      urn?: string | null,
+      value:  {
+        __typename: "PolicyDoc",
+        statement:  {
+          __typename: "PolicyStatement",
+          action: Array< string | null >,
+          effect: string,
+          resource: Array< string | null >,
+        },
+        version: string,
+      },
     } | null,
+    urn?: string | null,
   } | null,
 };
 
@@ -535,6 +726,7 @@ export type CreateOrganizationMutation = {
     apiKeys?:  Array< {
       __typename: "APIKeyWithoutValue",
       description?: string | null,
+      lastUsed?: string | null,
       name?: string | null,
       urn?: string | null,
     } | null > | null,
@@ -544,7 +736,38 @@ export type CreateOrganizationMutation = {
       __typename: "Group",
       created: string,
       description?: string | null,
+      members:  Array<( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null > | null,
       name: string,
+      policy?:  {
+        __typename: "Policy",
+        created?: string | null,
+        description?: string | null,
+        name: string,
+        urn?: string | null,
+        value:  {
+          __typename: "PolicyDoc",
+          statement:  {
+            __typename: "PolicyStatement",
+            action: Array< string | null >,
+            effect: string,
+            resource: Array< string | null >,
+          },
+          version: string,
+        },
+      } | null,
+      urn?: string | null,
     } | null > | null,
     icon?: string | null,
     name?: string | null,
@@ -554,6 +777,17 @@ export type CreateOrganizationMutation = {
       created?: string | null,
       description?: string | null,
       name: string,
+      urn?: string | null,
+      value:  {
+        __typename: "PolicyDoc",
+        statement:  {
+          __typename: "PolicyStatement",
+          action: Array< string | null >,
+          effect: string,
+          resource: Array< string | null >,
+        },
+        version: string,
+      },
     } | null > | null,
     projects?:  Array< {
       __typename: "Project",
@@ -562,6 +796,158 @@ export type CreateOrganizationMutation = {
       icon?: string | null,
       name: string,
       orgUrn?: string | null,
+      resolvers?:  Array< {
+        __typename: "Resolver",
+        description?: string | null,
+        modifiers?:  Array< {
+          __typename: "ResolverModifierOutput",
+          alias?: string | null,
+          default?: string | null,
+          name: string,
+          type?: ResolverModifierType | null,
+          values?:  Array< {
+            __typename: "ResolverModifierValue",
+            branch?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            version?: string | null,
+          } | null > | null,
+        } | null > | null,
+        name?: string | null,
+        release?:  Array< {
+          __typename: "Release",
+          created?: string | null,
+          releasedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          tokens:  Array<( {
+              __typename: "Token_Typography",
+              description?: string | null,
+              name?: string | null,
+              type?: TokenType | null,
+            } | {
+              __typename: "Token_color",
+              description?: string | null,
+              name?: string | null,
+              type?: TokenType | null,
+              value?: string | null,
+            } | {
+              __typename: "Token_scalar",
+              description?: string | null,
+              name?: string | null,
+              type?: TokenType | null,
+              value?: string | null,
+            }
+          ) | null > | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+        sources?:  Array< {
+          __typename: "ResolverSource",
+          branch?: string | null,
+          urn: string,
+          version?: string | null,
+        } | null > | null,
+        urn?: string | null,
+      } | null > | null,
+      sets?:  Array< {
+        __typename: "TokenSet",
+        metadata?:  {
+          __typename: "Metadata",
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        projectUrn?: string | null,
+        tokens:  Array<( {
+            __typename: "Raw_Token_color",
+            description?: string | null,
+            extensions?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            setUrn?: string | null,
+            type?: TokenType | null,
+            urn?: string | null,
+            value?: string | null,
+          } | {
+            __typename: "Raw_Token_scalar",
+            description?: string | null,
+            extensions?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            setUrn?: string | null,
+            type?: TokenType | null,
+            urn?: string | null,
+            value?: string | null,
+          } | {
+            __typename: "Raw_Token_typography",
+            description?: string | null,
+            extensions?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            setUrn?: string | null,
+            type?: TokenType | null,
+            urn?: string | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          }
+        ) >,
+        urn?: string | null,
+      } | null > | null,
       urn: string,
       visibility?: Visibility | null,
     } | null > | null,
@@ -591,8 +977,15 @@ export type CreatePolicyMutation = {
     created?: string | null,
     description?: string | null,
     name: string,
+    urn?: string | null,
     value:  {
       __typename: "PolicyDoc",
+      statement:  {
+        __typename: "PolicyStatement",
+        action: Array< string | null >,
+        effect: string,
+        resource: Array< string | null >,
+      },
       version: string,
     },
   } | null,
@@ -614,13 +1007,255 @@ export type CreateProjectMutation = {
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
+      modifiers?:  Array< {
+        __typename: "ResolverModifierOutput",
+        alias?: string | null,
+        default?: string | null,
+        name: string,
+        type?: ResolverModifierType | null,
+        values?:  Array< {
+          __typename: "ResolverModifierValue",
+          branch?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+      } | null > | null,
       name?: string | null,
+      release?:  Array< {
+        __typename: "Release",
+        created?: string | null,
+        releasedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        tokens:  Array<( {
+            __typename: "Token_Typography",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          } | {
+            __typename: "Token_color",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          } | {
+            __typename: "Token_scalar",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          }
+        ) | null > | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+      sources?:  Array< {
+        __typename: "ResolverSource",
+        branch?: string | null,
+        urn: string,
+        version?: string | null,
+      } | null > | null,
       urn?: string | null,
     } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
+      metadata?:  {
+        __typename: "Metadata",
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
       name?: string | null,
       projectUrn?: string | null,
+      tokens:  Array<( {
+          __typename: "Raw_Token_color",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_scalar",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_typography",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        }
+      ) >,
       urn?: string | null,
     } | null > | null,
     urn: string,
@@ -653,18 +1288,119 @@ export type CreateReleaseMutation = {
     tokens:  Array<( {
         __typename: "Token_Typography",
         description?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         type?: TokenType | null,
-        value?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       } | {
         __typename: "Token_color",
         description?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         type?: TokenType | null,
         value?: string | null,
       } | {
         __typename: "Token_scalar",
         description?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         type?: TokenType | null,
         value?: string | null,
@@ -684,33 +1420,167 @@ export type CreateResolverMutation = {
   createResolver?:  {
     __typename: "Resolver",
     description?: string | null,
+    modifiers?:  Array< {
+      __typename: "ResolverModifierOutput",
+      alias?: string | null,
+      default?: string | null,
+      name: string,
+      type?: ResolverModifierType | null,
+      values?:  Array< {
+        __typename: "ResolverModifierValue",
+        branch?: string | null,
+        name?: string | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+    } | null > | null,
     name?: string | null,
     release?:  Array< {
       __typename: "Release",
       created?: string | null,
+      releasedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      tokens:  Array<( {
+          __typename: "Token_Typography",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        } | {
+          __typename: "Token_color",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        } | {
+          __typename: "Token_scalar",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        }
+      ) | null > | null,
       urn?: string | null,
       version?: string | null,
     } | null > | null,
-    tokens:  Array<( {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_scalar",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      }
-    ) | null > | null,
+    sources?:  Array< {
+      __typename: "ResolverSource",
+      branch?: string | null,
+      urn: string,
+      version?: string | null,
+    } | null > | null,
     urn?: string | null,
   } | null,
 };
@@ -724,9 +1594,36 @@ export type CreateTokenMutation = {
   createToken: ( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -736,15 +1633,92 @@ export type CreateTokenMutation = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null,
 };
@@ -760,22 +1734,69 @@ export type CreateTokenSetMutation = {
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -784,11 +1805,92 @@ export type CreateTokenSetMutation = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,
@@ -845,7 +1947,19 @@ export type DeleteGroupMutation = {
       created?: string | null,
       description?: string | null,
       name: string,
+      urn?: string | null,
+      value:  {
+        __typename: "PolicyDoc",
+        statement:  {
+          __typename: "PolicyStatement",
+          action: Array< string | null >,
+          effect: string,
+          resource: Array< string | null >,
+        },
+        version: string,
+      },
     } | null,
+    urn?: string | null,
   } | null,
 };
 
@@ -872,8 +1986,15 @@ export type DeletePolicyMutation = {
     created?: string | null,
     description?: string | null,
     name: string,
+    urn?: string | null,
     value:  {
       __typename: "PolicyDoc",
+      statement:  {
+        __typename: "PolicyStatement",
+        action: Array< string | null >,
+        effect: string,
+        resource: Array< string | null >,
+      },
       version: string,
     },
   } | null,
@@ -894,13 +2015,255 @@ export type DeleteProjectMutation = {
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
+      modifiers?:  Array< {
+        __typename: "ResolverModifierOutput",
+        alias?: string | null,
+        default?: string | null,
+        name: string,
+        type?: ResolverModifierType | null,
+        values?:  Array< {
+          __typename: "ResolverModifierValue",
+          branch?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+      } | null > | null,
       name?: string | null,
+      release?:  Array< {
+        __typename: "Release",
+        created?: string | null,
+        releasedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        tokens:  Array<( {
+            __typename: "Token_Typography",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          } | {
+            __typename: "Token_color",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          } | {
+            __typename: "Token_scalar",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          }
+        ) | null > | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+      sources?:  Array< {
+        __typename: "ResolverSource",
+        branch?: string | null,
+        urn: string,
+        version?: string | null,
+      } | null > | null,
       urn?: string | null,
     } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
+      metadata?:  {
+        __typename: "Metadata",
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
       name?: string | null,
       projectUrn?: string | null,
+      tokens:  Array<( {
+          __typename: "Raw_Token_color",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_scalar",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_typography",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        }
+      ) >,
       urn?: string | null,
     } | null > | null,
     urn: string,
@@ -916,33 +2279,167 @@ export type DeleteResolverMutation = {
   deleteResolver?:  {
     __typename: "Resolver",
     description?: string | null,
+    modifiers?:  Array< {
+      __typename: "ResolverModifierOutput",
+      alias?: string | null,
+      default?: string | null,
+      name: string,
+      type?: ResolverModifierType | null,
+      values?:  Array< {
+        __typename: "ResolverModifierValue",
+        branch?: string | null,
+        name?: string | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+    } | null > | null,
     name?: string | null,
     release?:  Array< {
       __typename: "Release",
       created?: string | null,
+      releasedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      tokens:  Array<( {
+          __typename: "Token_Typography",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        } | {
+          __typename: "Token_color",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        } | {
+          __typename: "Token_scalar",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        }
+      ) | null > | null,
       urn?: string | null,
       version?: string | null,
     } | null > | null,
-    tokens:  Array<( {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_scalar",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      }
-    ) | null > | null,
+    sources?:  Array< {
+      __typename: "ResolverSource",
+      branch?: string | null,
+      urn: string,
+      version?: string | null,
+    } | null > | null,
     urn?: string | null,
   } | null,
 };
@@ -955,9 +2452,36 @@ export type DeleteTokenMutation = {
   deleteToken: ( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -967,15 +2491,92 @@ export type DeleteTokenMutation = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null,
 };
@@ -990,22 +2591,69 @@ export type DeleteTokenSetMutation = {
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -1014,11 +2662,92 @@ export type DeleteTokenSetMutation = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,
@@ -1082,8 +2811,15 @@ export type UpdatePolicyMutation = {
     created?: string | null,
     description?: string | null,
     name: string,
+    urn?: string | null,
     value:  {
       __typename: "PolicyDoc",
+      statement:  {
+        __typename: "PolicyStatement",
+        action: Array< string | null >,
+        effect: string,
+        resource: Array< string | null >,
+      },
       version: string,
     },
   } | null,
@@ -1105,13 +2841,255 @@ export type UpdateProjectMutation = {
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
+      modifiers?:  Array< {
+        __typename: "ResolverModifierOutput",
+        alias?: string | null,
+        default?: string | null,
+        name: string,
+        type?: ResolverModifierType | null,
+        values?:  Array< {
+          __typename: "ResolverModifierValue",
+          branch?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+      } | null > | null,
       name?: string | null,
+      release?:  Array< {
+        __typename: "Release",
+        created?: string | null,
+        releasedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        tokens:  Array<( {
+            __typename: "Token_Typography",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          } | {
+            __typename: "Token_color",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          } | {
+            __typename: "Token_scalar",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          }
+        ) | null > | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+      sources?:  Array< {
+        __typename: "ResolverSource",
+        branch?: string | null,
+        urn: string,
+        version?: string | null,
+      } | null > | null,
       urn?: string | null,
     } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
+      metadata?:  {
+        __typename: "Metadata",
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
       name?: string | null,
       projectUrn?: string | null,
+      tokens:  Array<( {
+          __typename: "Raw_Token_color",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_scalar",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_typography",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        }
+      ) >,
       urn?: string | null,
     } | null > | null,
     urn: string,
@@ -1128,33 +3106,167 @@ export type UpdateResolverMutation = {
   updateResolver?:  {
     __typename: "Resolver",
     description?: string | null,
+    modifiers?:  Array< {
+      __typename: "ResolverModifierOutput",
+      alias?: string | null,
+      default?: string | null,
+      name: string,
+      type?: ResolverModifierType | null,
+      values?:  Array< {
+        __typename: "ResolverModifierValue",
+        branch?: string | null,
+        name?: string | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+    } | null > | null,
     name?: string | null,
     release?:  Array< {
       __typename: "Release",
       created?: string | null,
+      releasedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      tokens:  Array<( {
+          __typename: "Token_Typography",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        } | {
+          __typename: "Token_color",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        } | {
+          __typename: "Token_scalar",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        }
+      ) | null > | null,
       urn?: string | null,
       version?: string | null,
     } | null > | null,
-    tokens:  Array<( {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_scalar",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      }
-    ) | null > | null,
+    sources?:  Array< {
+      __typename: "ResolverSource",
+      branch?: string | null,
+      urn: string,
+      version?: string | null,
+    } | null > | null,
     urn?: string | null,
   } | null,
 };
@@ -1168,9 +3280,36 @@ export type UpdateTokenMutation = {
   updateToken: ( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -1180,15 +3319,92 @@ export type UpdateTokenMutation = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null,
 };
@@ -1204,22 +3420,69 @@ export type UpdateTokenSetMutation = {
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -1228,15 +3491,113 @@ export type UpdateTokenSetMutation = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,
   } | null,
+};
+
+export type ApiKeysQueryVariables = {
+  filter?: ApiKeyFilterInput | null,
+  limit?: number | null,
+  offset?: number | null,
+  organization: string,
+};
+
+export type ApiKeysQuery = {
+  apiKeys?:  Array< {
+    __typename: "APIKeyWithoutValue",
+    description?: string | null,
+    lastUsed?: string | null,
+    name?: string | null,
+    urn?: string | null,
+  } | null > | null,
 };
 
 export type GroupsQueryVariables = {
@@ -1270,7 +3631,19 @@ export type GroupsQuery = {
       created?: string | null,
       description?: string | null,
       name: string,
+      urn?: string | null,
+      value:  {
+        __typename: "PolicyDoc",
+        statement:  {
+          __typename: "PolicyStatement",
+          action: Array< string | null >,
+          effect: string,
+          resource: Array< string | null >,
+        },
+        version: string,
+      },
     } | null,
+    urn?: string | null,
   } | null > | null,
 };
 
@@ -1287,6 +3660,7 @@ export type OrganizationsQuery = {
     apiKeys?:  Array< {
       __typename: "APIKeyWithoutValue",
       description?: string | null,
+      lastUsed?: string | null,
       name?: string | null,
       urn?: string | null,
     } | null > | null,
@@ -1296,7 +3670,38 @@ export type OrganizationsQuery = {
       __typename: "Group",
       created: string,
       description?: string | null,
+      members:  Array<( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null > | null,
       name: string,
+      policy?:  {
+        __typename: "Policy",
+        created?: string | null,
+        description?: string | null,
+        name: string,
+        urn?: string | null,
+        value:  {
+          __typename: "PolicyDoc",
+          statement:  {
+            __typename: "PolicyStatement",
+            action: Array< string | null >,
+            effect: string,
+            resource: Array< string | null >,
+          },
+          version: string,
+        },
+      } | null,
+      urn?: string | null,
     } | null > | null,
     icon?: string | null,
     name?: string | null,
@@ -1306,6 +3711,17 @@ export type OrganizationsQuery = {
       created?: string | null,
       description?: string | null,
       name: string,
+      urn?: string | null,
+      value:  {
+        __typename: "PolicyDoc",
+        statement:  {
+          __typename: "PolicyStatement",
+          action: Array< string | null >,
+          effect: string,
+          resource: Array< string | null >,
+        },
+        version: string,
+      },
     } | null > | null,
     projects?:  Array< {
       __typename: "Project",
@@ -1314,6 +3730,158 @@ export type OrganizationsQuery = {
       icon?: string | null,
       name: string,
       orgUrn?: string | null,
+      resolvers?:  Array< {
+        __typename: "Resolver",
+        description?: string | null,
+        modifiers?:  Array< {
+          __typename: "ResolverModifierOutput",
+          alias?: string | null,
+          default?: string | null,
+          name: string,
+          type?: ResolverModifierType | null,
+          values?:  Array< {
+            __typename: "ResolverModifierValue",
+            branch?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            version?: string | null,
+          } | null > | null,
+        } | null > | null,
+        name?: string | null,
+        release?:  Array< {
+          __typename: "Release",
+          created?: string | null,
+          releasedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          tokens:  Array<( {
+              __typename: "Token_Typography",
+              description?: string | null,
+              name?: string | null,
+              type?: TokenType | null,
+            } | {
+              __typename: "Token_color",
+              description?: string | null,
+              name?: string | null,
+              type?: TokenType | null,
+              value?: string | null,
+            } | {
+              __typename: "Token_scalar",
+              description?: string | null,
+              name?: string | null,
+              type?: TokenType | null,
+              value?: string | null,
+            }
+          ) | null > | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+        sources?:  Array< {
+          __typename: "ResolverSource",
+          branch?: string | null,
+          urn: string,
+          version?: string | null,
+        } | null > | null,
+        urn?: string | null,
+      } | null > | null,
+      sets?:  Array< {
+        __typename: "TokenSet",
+        metadata?:  {
+          __typename: "Metadata",
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        projectUrn?: string | null,
+        tokens:  Array<( {
+            __typename: "Raw_Token_color",
+            description?: string | null,
+            extensions?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            setUrn?: string | null,
+            type?: TokenType | null,
+            urn?: string | null,
+            value?: string | null,
+          } | {
+            __typename: "Raw_Token_scalar",
+            description?: string | null,
+            extensions?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            setUrn?: string | null,
+            type?: TokenType | null,
+            urn?: string | null,
+            value?: string | null,
+          } | {
+            __typename: "Raw_Token_typography",
+            description?: string | null,
+            extensions?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            setUrn?: string | null,
+            type?: TokenType | null,
+            urn?: string | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          }
+        ) >,
+        urn?: string | null,
+      } | null > | null,
       urn: string,
       visibility?: Visibility | null,
     } | null > | null,
@@ -1344,11 +3912,289 @@ export type PoliciesQuery = {
     created?: string | null,
     description?: string | null,
     name: string,
+    urn?: string | null,
     value:  {
       __typename: "PolicyDoc",
+      statement:  {
+        __typename: "PolicyStatement",
+        action: Array< string | null >,
+        effect: string,
+        resource: Array< string | null >,
+      },
       version: string,
     },
   } | null > | null,
+};
+
+export type ProjectQueryVariables = {
+  urn: string,
+};
+
+export type ProjectQuery = {
+  project?:  {
+    __typename: "Project",
+    created: string,
+    description?: string | null,
+    icon?: string | null,
+    name: string,
+    orgUrn?: string | null,
+    resolvers?:  Array< {
+      __typename: "Resolver",
+      description?: string | null,
+      modifiers?:  Array< {
+        __typename: "ResolverModifierOutput",
+        alias?: string | null,
+        default?: string | null,
+        name: string,
+        type?: ResolverModifierType | null,
+        values?:  Array< {
+          __typename: "ResolverModifierValue",
+          branch?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+      } | null > | null,
+      name?: string | null,
+      release?:  Array< {
+        __typename: "Release",
+        created?: string | null,
+        releasedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        tokens:  Array<( {
+            __typename: "Token_Typography",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          } | {
+            __typename: "Token_color",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          } | {
+            __typename: "Token_scalar",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          }
+        ) | null > | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+      sources?:  Array< {
+        __typename: "ResolverSource",
+        branch?: string | null,
+        urn: string,
+        version?: string | null,
+      } | null > | null,
+      urn?: string | null,
+    } | null > | null,
+    sets?:  Array< {
+      __typename: "TokenSet",
+      metadata?:  {
+        __typename: "Metadata",
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      projectUrn?: string | null,
+      tokens:  Array<( {
+          __typename: "Raw_Token_color",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_scalar",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_typography",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        }
+      ) >,
+      urn?: string | null,
+    } | null > | null,
+    urn: string,
+    visibility?: Visibility | null,
+  } | null,
 };
 
 export type ProjectsQueryVariables = {
@@ -1369,13 +4215,255 @@ export type ProjectsQuery = {
     resolvers?:  Array< {
       __typename: "Resolver",
       description?: string | null,
+      modifiers?:  Array< {
+        __typename: "ResolverModifierOutput",
+        alias?: string | null,
+        default?: string | null,
+        name: string,
+        type?: ResolverModifierType | null,
+        values?:  Array< {
+          __typename: "ResolverModifierValue",
+          branch?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          version?: string | null,
+        } | null > | null,
+      } | null > | null,
       name?: string | null,
+      release?:  Array< {
+        __typename: "Release",
+        created?: string | null,
+        releasedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        tokens:  Array<( {
+            __typename: "Token_Typography",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?:  {
+              __typename: string,
+              fontFamily?: string | null,
+              fontSize?: string | null,
+              fontWeight?: string | null,
+              letterSpacing?: string | null,
+              lineHeight?: string | null,
+              paragraphIndent?: string | null,
+              paragraphSpacing?: string | null,
+              textCase?: string | null,
+              textDecoration?: string | null,
+            } | null,
+          } | {
+            __typename: "Token_color",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          } | {
+            __typename: "Token_scalar",
+            description?: string | null,
+            metadata?:  {
+              __typename: string,
+              created?: string | null,
+            } | null,
+            name?: string | null,
+            type?: TokenType | null,
+            value?: string | null,
+          }
+        ) | null > | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+      sources?:  Array< {
+        __typename: "ResolverSource",
+        branch?: string | null,
+        urn: string,
+        version?: string | null,
+      } | null > | null,
       urn?: string | null,
     } | null > | null,
     sets?:  Array< {
       __typename: "TokenSet",
+      metadata?:  {
+        __typename: "Metadata",
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
       name?: string | null,
       projectUrn?: string | null,
+      tokens:  Array<( {
+          __typename: "Raw_Token_color",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_scalar",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?: string | null,
+        } | {
+          __typename: "Raw_Token_typography",
+          description?: string | null,
+          extensions?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          setUrn?: string | null,
+          type?: TokenType | null,
+          urn?: string | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        }
+      ) >,
       urn?: string | null,
     } | null > | null,
     urn: string,
@@ -1384,7 +4472,7 @@ export type ProjectsQuery = {
 };
 
 export type ResolveQueryVariables = {
-  aliases?: Array< AliasTuple | null > | null,
+  modifiers?: Array< ResolverModifierValueInput | null > | null,
   resolver: string,
 };
 
@@ -1395,16 +4483,79 @@ export type ResolveQuery = {
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       type?: TokenType | null,
-      value?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     } | {
       __typename: "Token_color",
       description?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       type?: TokenType | null,
@@ -1415,6 +4566,32 @@ export type ResolveQuery = {
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       type?: TokenType | null,
@@ -1423,7 +4600,181 @@ export type ResolveQuery = {
   ) | null > | null,
 };
 
+export type ResolverQueryVariables = {
+  urn: string,
+};
+
+export type ResolverQuery = {
+  resolver?:  {
+    __typename: "Resolver",
+    description?: string | null,
+    modifiers?:  Array< {
+      __typename: "ResolverModifierOutput",
+      alias?: string | null,
+      default?: string | null,
+      name: string,
+      type?: ResolverModifierType | null,
+      values?:  Array< {
+        __typename: "ResolverModifierValue",
+        branch?: string | null,
+        name?: string | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+    } | null > | null,
+    name?: string | null,
+    release?:  Array< {
+      __typename: "Release",
+      created?: string | null,
+      releasedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      tokens:  Array<( {
+          __typename: "Token_Typography",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        } | {
+          __typename: "Token_color",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        } | {
+          __typename: "Token_scalar",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        }
+      ) | null > | null,
+      urn?: string | null,
+      version?: string | null,
+    } | null > | null,
+    sources?:  Array< {
+      __typename: "ResolverSource",
+      branch?: string | null,
+      urn: string,
+      version?: string | null,
+    } | null > | null,
+    urn?: string | null,
+  } | null,
+};
+
 export type ResolversQueryVariables = {
+  filter?: ResolverFilterInput | null,
   limit?: number | null,
   offset?: number | null,
   project: string,
@@ -1433,33 +4784,167 @@ export type ResolversQuery = {
   resolvers?:  Array< {
     __typename: "Resolver",
     description?: string | null,
+    modifiers?:  Array< {
+      __typename: "ResolverModifierOutput",
+      alias?: string | null,
+      default?: string | null,
+      name: string,
+      type?: ResolverModifierType | null,
+      values?:  Array< {
+        __typename: "ResolverModifierValue",
+        branch?: string | null,
+        name?: string | null,
+        urn?: string | null,
+        version?: string | null,
+      } | null > | null,
+    } | null > | null,
     name?: string | null,
     release?:  Array< {
       __typename: "Release",
       created?: string | null,
+      releasedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      tokens:  Array<( {
+          __typename: "Token_Typography",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?:  {
+            __typename: string,
+            fontFamily?: string | null,
+            fontSize?: string | null,
+            fontWeight?: string | null,
+            letterSpacing?: string | null,
+            lineHeight?: string | null,
+            paragraphIndent?: string | null,
+            paragraphSpacing?: string | null,
+            textCase?: string | null,
+            textDecoration?: string | null,
+          } | null,
+        } | {
+          __typename: "Token_color",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        } | {
+          __typename: "Token_scalar",
+          description?: string | null,
+          metadata?:  {
+            __typename: string,
+            created?: string | null,
+            createdBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+            lastUpdatedBy: ( {
+                __typename: "APIKeyIdentity",
+                name?: string | null,
+                urn?: string | null,
+              } | {
+                __typename: "User",
+                description?: string | null,
+                icon?: string | null,
+                name?: string | null,
+                urn?: string | null,
+                visibility?: Visibility | null,
+              }
+            ) | null,
+          } | null,
+          name?: string | null,
+          type?: TokenType | null,
+          value?: string | null,
+        }
+      ) | null > | null,
       urn?: string | null,
       version?: string | null,
     } | null > | null,
-    tokens:  Array<( {
-        __typename: "Token_Typography",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_color",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      } | {
-        __typename: "Token_scalar",
-        description?: string | null,
-        name?: string | null,
-        type?: TokenType | null,
-        value?: string | null,
-      }
-    ) | null > | null,
+    sources?:  Array< {
+      __typename: "ResolverSource",
+      branch?: string | null,
+      urn: string,
+      version?: string | null,
+    } | null > | null,
     urn?: string | null,
   } | null > | null,
 };
@@ -1481,14 +4966,150 @@ export type SelfQuery = {
     organizations?:  Array< {
       __typename: "Organization",
       account?: string | null,
+      apiKeys?:  Array< {
+        __typename: "APIKeyWithoutValue",
+        description?: string | null,
+        lastUsed?: string | null,
+        name?: string | null,
+        urn?: string | null,
+      } | null > | null,
       created?: string | null,
       description?: string | null,
+      groups?:  Array< {
+        __typename: "Group",
+        created: string,
+        description?: string | null,
+        members:  Array<( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null > | null,
+        name: string,
+        policy?:  {
+          __typename: "Policy",
+          created?: string | null,
+          description?: string | null,
+          name: string,
+          urn?: string | null,
+          value:  {
+            __typename: "PolicyDoc",
+            version: string,
+          },
+        } | null,
+        urn?: string | null,
+      } | null > | null,
       icon?: string | null,
       name?: string | null,
       payment?: string | null,
+      policies?:  Array< {
+        __typename: "Policy",
+        created?: string | null,
+        description?: string | null,
+        name: string,
+        urn?: string | null,
+        value:  {
+          __typename: "PolicyDoc",
+          statement:  {
+            __typename: "PolicyStatement",
+            action: Array< string | null >,
+            effect: string,
+            resource: Array< string | null >,
+          },
+          version: string,
+        },
+      } | null > | null,
+      projects?:  Array< {
+        __typename: "Project",
+        created: string,
+        description?: string | null,
+        icon?: string | null,
+        name: string,
+        orgUrn?: string | null,
+        resolvers?:  Array< {
+          __typename: "Resolver",
+          description?: string | null,
+          modifiers?:  Array< {
+            __typename: "ResolverModifierOutput",
+            alias?: string | null,
+            default?: string | null,
+            name: string,
+            type?: ResolverModifierType | null,
+          } | null > | null,
+          name?: string | null,
+          release?:  Array< {
+            __typename: "Release",
+            created?: string | null,
+            urn?: string | null,
+            version?: string | null,
+          } | null > | null,
+          sources?:  Array< {
+            __typename: "ResolverSource",
+            branch?: string | null,
+            urn: string,
+            version?: string | null,
+          } | null > | null,
+          urn?: string | null,
+        } | null > | null,
+        sets?:  Array< {
+          __typename: "TokenSet",
+          metadata?:  {
+            __typename: "Metadata",
+            created?: string | null,
+          } | null,
+          name?: string | null,
+          projectUrn?: string | null,
+          tokens:  Array<( {
+              __typename: "Raw_Token_color",
+              description?: string | null,
+              extensions?: string | null,
+              name?: string | null,
+              setUrn?: string | null,
+              type?: TokenType | null,
+              urn?: string | null,
+              value?: string | null,
+            } | {
+              __typename: "Raw_Token_scalar",
+              description?: string | null,
+              extensions?: string | null,
+              name?: string | null,
+              setUrn?: string | null,
+              type?: TokenType | null,
+              urn?: string | null,
+              value?: string | null,
+            } | {
+              __typename: "Raw_Token_typography",
+              description?: string | null,
+              extensions?: string | null,
+              name?: string | null,
+              setUrn?: string | null,
+              type?: TokenType | null,
+              urn?: string | null,
+            }
+          ) >,
+          urn?: string | null,
+        } | null > | null,
+        urn: string,
+        visibility?: Visibility | null,
+      } | null > | null,
       ssoEnabled?: boolean | null,
       tier?: OrganizationTier | null,
       urn?: string | null,
+      users?:  Array< {
+        __typename: "User",
+        description?: string | null,
+        icon?: string | null,
+        name?: string | null,
+        urn?: string | null,
+        visibility?: Visibility | null,
+      } | null > | null,
       visibility?: Visibility | null,
     } | null > | null,
     user?:  {
@@ -1510,9 +5131,36 @@ export type TokenQuery = {
   token: ( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -1522,15 +5170,92 @@ export type TokenQuery = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null,
 };
@@ -1545,22 +5270,69 @@ export type TokenSetQuery = {
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -1569,11 +5341,92 @@ export type TokenSetQuery = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,
@@ -1592,22 +5445,69 @@ export type TokenSetsQuery = {
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -1616,11 +5516,92 @@ export type TokenSetsQuery = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,
@@ -1638,9 +5619,36 @@ export type TokensQuery = {
   tokens:  Array<( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -1650,15 +5658,92 @@ export type TokensQuery = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) >,
 };
@@ -1676,90 +5761,12 @@ export type UserInvitationsQuery = {
   } | null > | null,
 };
 
-export type OnDeleteTokenSubscriptionVariables = {
-  setUrn: string,
-};
-
-export type OnDeleteTokenSubscription = {
-  onDeleteToken: ( {
-      __typename: "Raw_Token_color",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      setUrn?: string | null,
-      type?: TokenType | null,
-      urn?: string | null,
-      value?: string | null,
-    } | {
-      __typename: "Raw_Token_scalar",
-      description?: string | null,
-      metadata?:  {
-        __typename: string,
-        created?: string | null,
-      } | null,
-      name?: string | null,
-      setUrn?: string | null,
-      type?: TokenType | null,
-      urn?: string | null,
-      value?: string | null,
-    }
-  ) | null,
-};
-
-export type OnDeleteTokenSetSubscriptionVariables = {
-  projectUrn: string,
-};
-
-export type OnDeleteTokenSetSubscription = {
-  onDeleteTokenSet?:  {
-    __typename: "TokenSet",
-    metadata?:  {
-      __typename: "Metadata",
-      created?: string | null,
-    } | null,
-    name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
-    projectUrn?: string | null,
-    tokens:  Array<( {
-        __typename: "Raw_Token_color",
-        description?: string | null,
-        name?: string | null,
-        setUrn?: string | null,
-        type?: TokenType | null,
-        urn?: string | null,
-        value?: string | null,
-      } | {
-        __typename: "Raw_Token_scalar",
-        description?: string | null,
-        name?: string | null,
-        setUrn?: string | null,
-        type?: TokenType | null,
-        urn?: string | null,
-        value?: string | null,
-      }
-    ) >,
-    urn?: string | null,
-  } | null,
-};
-
-export type OnNewGroupSubscriptionVariables = {
+export type OnCreateGroupSubscriptionVariables = {
   organization: string,
 };
 
-export type OnNewGroupSubscription = {
-  onNewGroup?:  {
+export type OnCreateGroupSubscription = {
+  onCreateGroup?:  {
     __typename: "Group",
     created: string,
     description?: string | null,
@@ -1782,21 +5789,60 @@ export type OnNewGroupSubscription = {
       created?: string | null,
       description?: string | null,
       name: string,
+      urn?: string | null,
+      value:  {
+        __typename: "PolicyDoc",
+        statement:  {
+          __typename: "PolicyStatement",
+          action: Array< string | null >,
+          effect: string,
+          resource: Array< string | null >,
+        },
+        version: string,
+      },
     } | null,
+    urn?: string | null,
   } | null,
 };
 
-export type OnNewTokenSubscriptionVariables = {
+export type OnCreateTokenSubscriptionVariables = {
   setUrn: string,
 };
 
-export type OnNewTokenSubscription = {
-  onNewToken: ( {
+export type OnCreateTokenSubscription = {
+  onCreateToken: ( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -1806,45 +5852,169 @@ export type OnNewTokenSubscription = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null,
 };
 
-export type OnNewTokenSetSubscriptionVariables = {
+export type OnCreateTokenSetSubscriptionVariables = {
   projectUrn: string,
 };
 
-export type OnNewTokenSetSubscription = {
-  onNewTokenSet?:  {
+export type OnCreateTokenSetSubscription = {
+  onCreateTokenSet?:  {
     __typename: "TokenSet",
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -1853,11 +6023,402 @@ export type OnNewTokenSetSubscription = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
+      }
+    ) >,
+    urn?: string | null,
+  } | null,
+};
+
+export type OnDeleteTokenSubscriptionVariables = {
+  setUrn: string,
+};
+
+export type OnDeleteTokenSubscription = {
+  onDeleteToken: ( {
+      __typename: "Raw_Token_color",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?: string | null,
+    } | {
+      __typename: "Raw_Token_scalar",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
+    }
+  ) | null,
+};
+
+export type OnDeleteTokenSetSubscriptionVariables = {
+  projectUrn: string,
+};
+
+export type OnDeleteTokenSetSubscription = {
+  onDeleteTokenSet?:  {
+    __typename: "TokenSet",
+    metadata?:  {
+      __typename: "Metadata",
+      created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+    } | null,
+    name?: string | null,
+    projectUrn?: string | null,
+    tokens:  Array<( {
+        __typename: "Raw_Token_color",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?: string | null,
+      } | {
+        __typename: "Raw_Token_scalar",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,
@@ -1872,9 +6433,36 @@ export type OnUpdateTokenSubscription = {
   onUpdateToken: ( {
       __typename: "Raw_Token_color",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
@@ -1884,15 +6472,92 @@ export type OnUpdateTokenSubscription = {
     } | {
       __typename: "Raw_Token_scalar",
       description?: string | null,
+      extensions?: string | null,
       metadata?:  {
         __typename: string,
         created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
       } | null,
       name?: string | null,
       setUrn?: string | null,
       type?: TokenType | null,
       urn?: string | null,
       value?: string | null,
+    } | {
+      __typename: "Raw_Token_typography",
+      description?: string | null,
+      extensions?: string | null,
+      metadata?:  {
+        __typename: string,
+        created?: string | null,
+        createdBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+        lastUpdatedBy: ( {
+            __typename: "APIKeyIdentity",
+            name?: string | null,
+            urn?: string | null,
+          } | {
+            __typename: "User",
+            description?: string | null,
+            icon?: string | null,
+            name?: string | null,
+            urn?: string | null,
+            visibility?: Visibility | null,
+          }
+        ) | null,
+      } | null,
+      name?: string | null,
+      setUrn?: string | null,
+      type?: TokenType | null,
+      urn?: string | null,
+      value?:  {
+        __typename: string,
+        fontFamily?: string | null,
+        fontSize?: string | null,
+        fontWeight?: string | null,
+        letterSpacing?: string | null,
+        lineHeight?: string | null,
+        paragraphIndent?: string | null,
+        paragraphSpacing?: string | null,
+        textCase?: string | null,
+        textDecoration?: string | null,
+      } | null,
     }
   ) | null,
 };
@@ -1907,22 +6572,69 @@ export type OnUpdateTokenSetSubscription = {
     metadata?:  {
       __typename: "Metadata",
       created?: string | null,
+      createdBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
+      lastUpdatedBy: ( {
+          __typename: "APIKeyIdentity",
+          name?: string | null,
+          urn?: string | null,
+        } | {
+          __typename: "User",
+          description?: string | null,
+          icon?: string | null,
+          name?: string | null,
+          urn?: string | null,
+          visibility?: Visibility | null,
+        }
+      ) | null,
     } | null,
     name?: string | null,
-    project:  {
-      __typename: "Project",
-      created: string,
-      description?: string | null,
-      icon?: string | null,
-      name: string,
-      orgUrn?: string | null,
-      urn: string,
-      visibility?: Visibility | null,
-    },
     projectUrn?: string | null,
     tokens:  Array<( {
         __typename: "Raw_Token_color",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
@@ -1931,11 +6643,92 @@ export type OnUpdateTokenSetSubscription = {
       } | {
         __typename: "Raw_Token_scalar",
         description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
         name?: string | null,
         setUrn?: string | null,
         type?: TokenType | null,
         urn?: string | null,
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_typography",
+        description?: string | null,
+        extensions?: string | null,
+        metadata?:  {
+          __typename: string,
+          created?: string | null,
+          createdBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+          lastUpdatedBy: ( {
+              __typename: "APIKeyIdentity",
+              name?: string | null,
+              urn?: string | null,
+            } | {
+              __typename: "User",
+              description?: string | null,
+              icon?: string | null,
+              name?: string | null,
+              urn?: string | null,
+              visibility?: Visibility | null,
+            }
+          ) | null,
+        } | null,
+        name?: string | null,
+        setUrn?: string | null,
+        type?: TokenType | null,
+        urn?: string | null,
+        value?:  {
+          __typename: string,
+          fontFamily?: string | null,
+          fontSize?: string | null,
+          fontWeight?: string | null,
+          letterSpacing?: string | null,
+          lineHeight?: string | null,
+          paragraphIndent?: string | null,
+          paragraphSpacing?: string | null,
+          textCase?: string | null,
+          textDecoration?: string | null,
+        } | null,
       }
     ) >,
     urn?: string | null,

@@ -219,6 +219,8 @@ type Query @aws_cognito_user_pools @aws_lambda {
   organizations(filter: OrganizationFilterInput, limit: Int, offset: Int): [Organization] @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  queries policies available to the org. The organization is the organization urn
   policies(limit: Int, offset: Int, organization: String!): [Policy] @aws_cognito_user_pools @aws_lambda
+  #  Retrieve a specific project 
+  project(urn: String!): Project @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
   projects(filter: ProjectFilterInput, limit: Int, offset: Int, organization: String!): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  Resolves the resolver and returns the expected tokens
@@ -344,17 +346,17 @@ type Self {
 }
 
 type Subscription @aws_cognito_user_pools @aws_lambda {
+  #   Subscribe to all new groups created for the organization
+  onCreateGroup(organization: String!): Group @aws_subscribe(mutations : ["createGroup"])
+  # ## Tokens
+  ####  Subscribe to all new tokens created in a token set
+  onCreateToken(setUrn: String!): RawToken @aws_subscribe(mutations : ["createToken"])
+  # ## TokenSets
+  ####  Subscribe to all new tokens sets created by an organization
+  onCreateTokenSet(projectUrn: String!): TokenSet @aws_subscribe(mutations : ["createTokenSet"])
   onDeleteToken(setUrn: String!): RawToken @aws_subscribe(mutations : ["deleteToken"])
   # Subscribe to tokenSet deletions
   onDeleteTokenSet(projectUrn: String!): TokenSet @aws_subscribe(mutations : ["deleteTokenSet"])
-  #   Subscribe to all new groups created for the organization
-  onNewGroup(organization: String!): Group @aws_subscribe(mutations : ["createGroup"])
-  # ## Tokens
-  ####  Subscribe to all new tokens created in a token set
-  onNewToken(setUrn: String!): RawToken @aws_subscribe(mutations : ["createToken"])
-  # ## TokenSets
-  ####  Subscribe to all new tokens sets created by an organization
-  onNewTokenSet(projectUrn: String!): TokenSet @aws_subscribe(mutations : ["createTokenSet"])
   #   Subscribe to token Changes
   onUpdateToken(setUrn: String!): RawToken @aws_subscribe(mutations : ["updateToken"])
   #   Subscribe to all new tokens sets created by an organization
