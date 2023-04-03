@@ -10,6 +10,7 @@
     "type": "git",
     "url": "https://github.com/tokens-studio/token-studio-sdk.git"
   },
+  "sideEffects": false,
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
