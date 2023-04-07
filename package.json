@@ -27,7 +27,7 @@
   "author": "andrew@hyma.io",
   "license": "MIT",
   "dependencies": {
-    "@aws-amplify/api": "^5.0.19",
+    "@aws-amplify/api": "^5.0.20",
     "@aws-amplify/auth": "^5.1.13",
     "@aws-amplify/core": "^5.1.2",
     "@aws-amplify/pubsub": "^5.1.2",
