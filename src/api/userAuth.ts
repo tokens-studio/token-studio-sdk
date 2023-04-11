@@ -86,7 +86,6 @@ export namespace UserAuth {
         signIn: {
             provider: FederatedProviders,
         }
-
         oauth?: {
             redirectSignIn: string,
             redirectSignOut: string

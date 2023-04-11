@@ -153,8 +153,7 @@ export const onCreateToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -165,6 +164,8 @@ export const onCreateToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -315,8 +316,7 @@ export const onCreateTokenSet = /* GraphQL */ `
           name
           setUrn
           type
-          urn
-          value {
+          typography {
             fontFamily
             fontSize
             fontWeight
@@ -327,6 +327,8 @@ export const onCreateTokenSet = /* GraphQL */ `
             textCase
             textDecoration
           }
+          urn
+          value
         }
       }
       urn
@@ -447,8 +449,7 @@ export const onDeleteToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -459,6 +460,8 @@ export const onDeleteToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -609,8 +612,7 @@ export const onDeleteTokenSet = /* GraphQL */ `
           name
           setUrn
           type
-          urn
-          value {
+          typography {
             fontFamily
             fontSize
             fontWeight
@@ -621,6 +623,8 @@ export const onDeleteTokenSet = /* GraphQL */ `
             textCase
             textDecoration
           }
+          urn
+          value
         }
       }
       urn
@@ -741,8 +745,7 @@ export const onUpdateToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -753,6 +756,8 @@ export const onUpdateToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -903,8 +908,7 @@ export const onUpdateTokenSet = /* GraphQL */ `
           name
           setUrn
           type
-          urn
-          value {
+          typography {
             fontFamily
             fontSize
             fontWeight
@@ -915,6 +919,8 @@ export const onUpdateTokenSet = /* GraphQL */ `
             textCase
             textDecoration
           }
+          urn
+          value
         }
       }
       urn

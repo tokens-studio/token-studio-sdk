@@ -1,7 +1,8 @@
 import { ApiKey } from "./apiKey";
-import config from '../aws-exports';
+import config, { oauth } from '../aws-exports';
 import { Amplify } from '@aws-amplify/core';
-import { Auth } from '@aws-amplify/auth';
+
+
 /**
  * There are 3 authentication modes available. 
  * 1. User Auth (default)
@@ -12,6 +13,7 @@ import { Auth } from '@aws-amplify/auth';
  */
 export namespace Configuration {
 
+    export const PUBLIC_KEY = 'da2-aqavhxqlkzgzjjwt35zyy2xqqy';
 
     /**
      * If you need to externalize session storage you can use the following interface to implement your own
@@ -30,12 +32,26 @@ export namespace Configuration {
         sync(): Promise<void>
     }
 
+    export const defaultConfig = {
+        ...config,
+        oauth
+    };
+
     export type IConfiguration = Partial<{
         aws_appsync_graphqlEndpoint: string;
         aws_appsync_region: string;
         aws_user_pools_id: string;
         aws_appsync_authenticationType: string;
         aws_user_pools_web_client_id: string;
+        //Honestly why Amplify ? Just export the type
+        oauth: {
+            domain: string;
+            scope: Array<string>;
+            redirectSignIn: string;
+            redirectSignOut: string;
+            responseType: string;
+            options?: object;
+        },
         //Custom auth storage
         storage: Storage
     }>
@@ -48,11 +64,10 @@ export namespace Configuration {
      * @param config 
     */
     export const configure = (config: IConfiguration) => {
-        configuration = Amplify.configure(config) as IConfiguration;
-        Auth.configure({
-            userPoolId: config.aws_user_pools_id,
-            userPoolWebClientId: config.aws_user_pools_web_client_id
-        })
+        configuration = Amplify.configure({
+            ...defaultConfig,
+            ...config
+        }) as IConfiguration;
     }
     /**
      * Returns the current internal configuration
@@ -81,7 +96,7 @@ export namespace Configuration {
     /**
      * Set to use public mode to access values
      */
-    export const setPublic = (apikey = 'da2-aqavhxqlkzgzjjwt35zyy2xqqy') => {
+    export const setPublic = (apikey = PUBLIC_KEY) => {
 
         //Take the default config and change the config type 
         configuration = Amplify.configure({

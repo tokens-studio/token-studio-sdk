@@ -126,8 +126,7 @@ export const bulkCreateToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -138,6 +137,8 @@ export const bulkCreateToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -236,6 +237,13 @@ export const createOrganization = /* GraphQL */ `
       }
       icon
       name
+      owner {
+        description
+        icon
+        name
+        urn
+        visibility
+      }
       payment
       policies {
         created
@@ -290,17 +298,105 @@ export const createOrganization = /* GraphQL */ `
             tokens {
               ... on Token_Typography {
                 description
+                metadata {
+                  created
+                  createdBy {
+                    ... on APIKeyIdentity {
+                      name
+                      urn
+                    }
+                    ... on User {
+                      description
+                      icon
+                      name
+                      urn
+                      visibility
+                    }
+                  }
+                  lastUpdatedBy {
+                    ... on APIKeyIdentity {
+                      name
+                      urn
+                    }
+                    ... on User {
+                      description
+                      icon
+                      name
+                      urn
+                      visibility
+                    }
+                  }
+                }
                 name
                 type
+                value
               }
               ... on Token_color {
                 description
+                metadata {
+                  created
+                  createdBy {
+                    ... on APIKeyIdentity {
+                      name
+                      urn
+                    }
+                    ... on User {
+                      description
+                      icon
+                      name
+                      urn
+                      visibility
+                    }
+                  }
+                  lastUpdatedBy {
+                    ... on APIKeyIdentity {
+                      name
+                      urn
+                    }
+                    ... on User {
+                      description
+                      icon
+                      name
+                      urn
+                      visibility
+                    }
+                  }
+                }
                 name
                 type
                 value
               }
               ... on Token_scalar {
                 description
+                metadata {
+                  created
+                  createdBy {
+                    ... on APIKeyIdentity {
+                      name
+                      urn
+                    }
+                    ... on User {
+                      description
+                      icon
+                      name
+                      urn
+                      visibility
+                    }
+                  }
+                  lastUpdatedBy {
+                    ... on APIKeyIdentity {
+                      name
+                      urn
+                    }
+                    ... on User {
+                      description
+                      icon
+                      name
+                      urn
+                      visibility
+                    }
+                  }
+                }
                 name
                 type
                 value
@@ -354,6 +450,32 @@ export const createOrganization = /* GraphQL */ `
               extensions
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               setUrn
@@ -366,6 +488,32 @@ export const createOrganization = /* GraphQL */ `
               extensions
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               setUrn
@@ -378,12 +526,37 @@ export const createOrganization = /* GraphQL */ `
               extensions
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               setUrn
               type
-              urn
-              value {
+              typography {
                 fontFamily
                 fontSize
                 fontWeight
@@ -394,6 +567,8 @@ export const createOrganization = /* GraphQL */ `
                 textCase
                 textDecoration
               }
+              urn
+              value
             }
           }
           urn
@@ -476,25 +651,67 @@ export const createProject = /* GraphQL */ `
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
-              value {
-                fontFamily
-                fontSize
-                fontWeight
-                letterSpacing
-                lineHeight
-                paragraphIndent
-                paragraphSpacing
-                textCase
-                textDecoration
-              }
+              value
             }
             ... on Token_color {
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
@@ -504,6 +721,32 @@ export const createProject = /* GraphQL */ `
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
@@ -664,8 +907,7 @@ export const createProject = /* GraphQL */ `
             name
             setUrn
             type
-            urn
-            value {
+            typography {
               fontFamily
               fontSize
               fontWeight
@@ -676,6 +918,8 @@ export const createProject = /* GraphQL */ `
               textCase
               textDecoration
             }
+            urn
+            value
           }
         }
         urn
@@ -736,17 +980,7 @@ export const createRelease = /* GraphQL */ `
           }
           name
           type
-          value {
-            fontFamily
-            fontSize
-            fontWeight
-            letterSpacing
-            lineHeight
-            paragraphIndent
-            paragraphSpacing
-            textCase
-            textDecoration
-          }
+          value
         }
         ... on Token_color {
           description
@@ -890,17 +1124,7 @@ export const createResolver = /* GraphQL */ `
             }
             name
             type
-            value {
-              fontFamily
-              fontSize
-              fontWeight
-              letterSpacing
-              lineHeight
-              paragraphIndent
-              paragraphSpacing
-              textCase
-              textDecoration
-            }
+            value
           }
           ... on Token_color {
             description
@@ -1099,8 +1323,7 @@ export const createToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -1111,6 +1334,8 @@ export const createToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -1261,8 +1486,7 @@ export const createTokenSet = /* GraphQL */ `
           name
           setUrn
           type
-          urn
-          value {
+          typography {
             fontFamily
             fontSize
             fontWeight
@@ -1273,6 +1497,8 @@ export const createTokenSet = /* GraphQL */ `
             textCase
             textDecoration
           }
+          urn
+          value
         }
       }
       urn
@@ -1340,27 +1566,9 @@ export const deleteInvitation = /* GraphQL */ `
     }
   }
 `;
-export const deletePolicy = /* GraphQL */ `
-  mutation DeletePolicy($urn: String!) {
-    deletePolicy(urn: $urn) {
-      created
-      description
-      name
-      urn
-      value {
-        statement {
-          action
-          effect
-          resource
-        }
-        version
-      }
-    }
-  }
-`;
-export const deleteProject = /* GraphQL */ `
-  mutation DeleteProject($urn: String!) {
-    deleteProject(urn: $urn) {
+export const deleteOrganization = /* GraphQL */ `
+  mutation DeleteOrganization($urn: String!) {
+    deleteOrganization(urn: $urn) {
       created
       description
       icon
@@ -1401,25 +1609,67 @@ export const deleteProject = /* GraphQL */ `
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
-              value {
-                fontFamily
-                fontSize
-                fontWeight
-                letterSpacing
-                lineHeight
-                paragraphIndent
-                paragraphSpacing
-                textCase
-                textDecoration
-              }
+              value
             }
             ... on Token_color {
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
@@ -1429,6 +1679,32 @@ export const deleteProject = /* GraphQL */ `
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
@@ -1589,8 +1865,7 @@ export const deleteProject = /* GraphQL */ `
             name
             setUrn
             type
-            urn
-            value {
+            typography {
               fontFamily
               fontSize
               fontWeight
@@ -1601,6 +1876,347 @@ export const deleteProject = /* GraphQL */ `
               textCase
               textDecoration
             }
+            urn
+            value
+          }
+        }
+        urn
+      }
+      urn
+      visibility
+    }
+  }
+`;
+export const deletePolicy = /* GraphQL */ `
+  mutation DeletePolicy($urn: String!) {
+    deletePolicy(urn: $urn) {
+      created
+      description
+      name
+      urn
+      value {
+        statement {
+          action
+          effect
+          resource
+        }
+        version
+      }
+    }
+  }
+`;
+export const deleteProject = /* GraphQL */ `
+  mutation DeleteProject($urn: String!) {
+    deleteProject(urn: $urn) {
+      created
+      description
+      icon
+      name
+      orgUrn
+      resolvers {
+        description
+        modifiers {
+          alias
+          default
+          name
+          type
+          values {
+            branch
+            name
+            urn
+            version
+          }
+        }
+        name
+        release {
+          created
+          releasedBy {
+            ... on APIKeyIdentity {
+              name
+              urn
+            }
+            ... on User {
+              description
+              icon
+              name
+              urn
+              visibility
+            }
+          }
+          tokens {
+            ... on Token_Typography {
+              description
+              metadata {
+                created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+              }
+              name
+              type
+              value
+            }
+            ... on Token_color {
+              description
+              metadata {
+                created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+              }
+              name
+              type
+              value
+            }
+            ... on Token_scalar {
+              description
+              metadata {
+                created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+              }
+              name
+              type
+              value
+            }
+          }
+          urn
+          version
+        }
+        sources {
+          branch
+          urn
+          version
+        }
+        urn
+      }
+      sets {
+        metadata {
+          created
+          createdBy {
+            ... on APIKeyIdentity {
+              name
+              urn
+            }
+            ... on User {
+              description
+              icon
+              name
+              urn
+              visibility
+            }
+          }
+          lastUpdatedBy {
+            ... on APIKeyIdentity {
+              name
+              urn
+            }
+            ... on User {
+              description
+              icon
+              name
+              urn
+              visibility
+            }
+          }
+        }
+        name
+        projectUrn
+        tokens {
+          ... on Raw_Token_color {
+            description
+            extensions
+            metadata {
+              created
+              createdBy {
+                ... on APIKeyIdentity {
+                  name
+                  urn
+                }
+                ... on User {
+                  description
+                  icon
+                  name
+                  urn
+                  visibility
+                }
+              }
+              lastUpdatedBy {
+                ... on APIKeyIdentity {
+                  name
+                  urn
+                }
+                ... on User {
+                  description
+                  icon
+                  name
+                  urn
+                  visibility
+                }
+              }
+            }
+            name
+            setUrn
+            type
+            urn
+            value
+          }
+          ... on Raw_Token_scalar {
+            description
+            extensions
+            metadata {
+              created
+              createdBy {
+                ... on APIKeyIdentity {
+                  name
+                  urn
+                }
+                ... on User {
+                  description
+                  icon
+                  name
+                  urn
+                  visibility
+                }
+              }
+              lastUpdatedBy {
+                ... on APIKeyIdentity {
+                  name
+                  urn
+                }
+                ... on User {
+                  description
+                  icon
+                  name
+                  urn
+                  visibility
+                }
+              }
+            }
+            name
+            setUrn
+            type
+            urn
+            value
+          }
+          ... on Raw_Token_typography {
+            description
+            extensions
+            metadata {
+              created
+              createdBy {
+                ... on APIKeyIdentity {
+                  name
+                  urn
+                }
+                ... on User {
+                  description
+                  icon
+                  name
+                  urn
+                  visibility
+                }
+              }
+              lastUpdatedBy {
+                ... on APIKeyIdentity {
+                  name
+                  urn
+                }
+                ... on User {
+                  description
+                  icon
+                  name
+                  urn
+                  visibility
+                }
+              }
+            }
+            name
+            setUrn
+            type
+            typography {
+              fontFamily
+              fontSize
+              fontWeight
+              letterSpacing
+              lineHeight
+              paragraphIndent
+              paragraphSpacing
+              textCase
+              textDecoration
+            }
+            urn
+            value
           }
         }
         urn
@@ -1676,17 +2292,7 @@ export const deleteResolver = /* GraphQL */ `
             }
             name
             type
-            value {
-              fontFamily
-              fontSize
-              fontWeight
-              letterSpacing
-              lineHeight
-              paragraphIndent
-              paragraphSpacing
-              textCase
-              textDecoration
-            }
+            value
           }
           ... on Token_color {
             description
@@ -1885,8 +2491,7 @@ export const deleteToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -1897,6 +2502,8 @@ export const deleteToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -2047,8 +2654,7 @@ export const deleteTokenSet = /* GraphQL */ `
           name
           setUrn
           type
-          urn
-          value {
+          typography {
             fontFamily
             fontSize
             fontWeight
@@ -2059,6 +2665,8 @@ export const deleteTokenSet = /* GraphQL */ `
             textCase
             textDecoration
           }
+          urn
+          value
         }
       }
       urn
@@ -2155,25 +2763,67 @@ export const updateProject = /* GraphQL */ `
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
-              value {
-                fontFamily
-                fontSize
-                fontWeight
-                letterSpacing
-                lineHeight
-                paragraphIndent
-                paragraphSpacing
-                textCase
-                textDecoration
-              }
+              value
             }
             ... on Token_color {
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
@@ -2183,6 +2833,32 @@ export const updateProject = /* GraphQL */ `
               description
               metadata {
                 created
+                createdBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
+                lastUpdatedBy {
+                  ... on APIKeyIdentity {
+                    name
+                    urn
+                  }
+                  ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                  }
+                }
               }
               name
               type
@@ -2343,8 +3019,7 @@ export const updateProject = /* GraphQL */ `
             name
             setUrn
             type
-            urn
-            value {
+            typography {
               fontFamily
               fontSize
               fontWeight
@@ -2355,6 +3030,8 @@ export const updateProject = /* GraphQL */ `
               textCase
               textDecoration
             }
+            urn
+            value
           }
         }
         urn
@@ -2430,17 +3107,7 @@ export const updateResolver = /* GraphQL */ `
             }
             name
             type
-            value {
-              fontFamily
-              fontSize
-              fontWeight
-              letterSpacing
-              lineHeight
-              paragraphIndent
-              paragraphSpacing
-              textCase
-              textDecoration
-            }
+            value
           }
           ... on Token_color {
             description
@@ -2639,8 +3306,7 @@ export const updateToken = /* GraphQL */ `
         name
         setUrn
         type
-        urn
-        value {
+        typography {
           fontFamily
           fontSize
           fontWeight
@@ -2651,6 +3317,8 @@ export const updateToken = /* GraphQL */ `
           textCase
           textDecoration
         }
+        urn
+        value
       }
     }
   }
@@ -2801,8 +3469,7 @@ export const updateTokenSet = /* GraphQL */ `
           name
           setUrn
           type
-          urn
-          value {
+          typography {
             fontFamily
             fontSize
             fontWeight
@@ -2813,6 +3480,8 @@ export const updateTokenSet = /* GraphQL */ `
             textCase
             textDecoration
           }
+          urn
+          value
         }
       }
       urn
