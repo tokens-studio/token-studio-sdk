@@ -10,10 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'public')
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-        })
-    ],
+    plugins: [new HtmlWebpackPlugin({})],
     module: {
         rules: [
             {

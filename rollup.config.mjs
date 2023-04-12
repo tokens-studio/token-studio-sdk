@@ -1,37 +1,32 @@
-import  dts from 'rollup-plugin-dts';
+import cleanupDir from 'rollup-plugin-cleanup-dir';
 import esbuild from 'rollup-plugin-esbuild';
 
 const defaultEntries = [
-	{
-		input: './src/index.ts',
-		output: [
-			{
-				file: './dist/commonjs.cjs',
-				exports: 'named',
-				sourcemap: true,
-				format: 'cjs'
-			},
-			{
-				file: './dist/esm.js',
-				exports: 'named',
-				sourcemap: true,
-				format: 'es'
-			}
-		],
-		plugins: [esbuild.default({
-			tsconfig: 'tsconfig.prod.json'
-		})]
-	},
-	{
-		input: './src/index.ts',
-		output: [
-			{
-				file: 'dist/bundle.d.ts',
-				format: 'es'
-			}
-		],
-		plugins: [dts.default()]
-	}
+    {
+        input: './src/index.ts',
+        output: [
+            {
+                preserveModules: true,
+                dir: './dist/cjs',
+                exports: 'named',
+                sourcemap: true,
+                format: 'cjs'
+            },
+            {
+                preserveModules: true,
+                dir: './dist/esm',
+                exports: 'named',
+                sourcemap: true,
+                format: 'es'
+            }
+        ],
+        plugins: [
+            cleanupDir,
+            esbuild.default({
+                tsconfig: 'tsconfig.prod.json'
+            })
+        ]
+    }
 ];
 
 module.exports = defaultEntries;
