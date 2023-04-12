@@ -2,10 +2,18 @@
   "name": "@tokens-studio/sdk",
   "version": "0.0.0-alpha.0",
   "description": "The official SDK for Tokens Studio",
-  "main": "./dist/commonjs.cjs",
+  "main": "./dist/cjs/index.js",
   "type": "module",
   "module": "./dist/esm.js",
-  "jsnext:main": "./dist/esm.js",
+  "jsnext:main": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tokens-studio/token-studio-sdk.git"
@@ -16,7 +24,7 @@
     "lint:fix": "eslint --fix .",
     "build": "npm run build:js && npm run build:types",
     "build:js": "rollup --bundleConfigAsCjs --config rollup.config.mjs",
-    "build:types": "tsc -p tsconfig.json",
+    "build:types": "tsc --emitDeclarationOnly --declaration -p tsconfig.types.json",
     "format": "prettier --write .",
     "format:check": "prettier -c .",
     "test": "jest",
@@ -43,7 +51,7 @@
     "management",
     "graphql"
   ],
-  "types": "dist/bundle.d.ts",
+
   "optionalDependencies": {
     "eslint": "^8.31.0",
     "eslint-plugin-jest": "^27.2.1",

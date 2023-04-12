@@ -1,7 +1,7 @@
 site_name: 'docs'
 
 nav:
-  - Home: index.md
+    - Home: index.md
 
 docs_dir: developer-docs
 repo_url: https://github.com/tokens-studio/token-studio-sdk/
@@ -10,4 +10,4 @@ theme:
     name: readthedocs
 
 plugins:
-  - techdocs-core
+    - techdocs-core

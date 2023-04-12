@@ -1,14 +1,12 @@
 {
-	"$schema": "https://typedoc.org/schema.json",
-	"entryPointStrategy": "resolve",
-	"entryPoints": [
-		"./src/"
-	],
-	"exclude": ["**/*.test.ts","cypress/**"],
-	"excludeExternals": true,
-	"out": "docs",
-	"cleanOutputDir": true,
-	"compilerOptions": {
-		"skipLibCheck": true
-	}
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPointStrategy": "resolve",
+    "entryPoints": ["./src/"],
+    "exclude": ["**/*.test.ts", "cypress/**"],
+    "excludeExternals": true,
+    "out": "docs",
+    "cleanOutputDir": true,
+    "compilerOptions": {
+        "skipLibCheck": true
+    }
 }

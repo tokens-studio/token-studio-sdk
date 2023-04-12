@@ -6,5 +6,5 @@ minor-version-bump-message: '(feature|minor|feat):\s?'
 patch-version-bump-message: '(fix|patch):\s?'
 no-bump-message: '(none|skip)\s?:'
 branches:
-  master:
-    is-mainline: true
+    master:
+        is-mainline: true

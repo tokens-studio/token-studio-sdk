@@ -2,3 +2,6 @@ package.json
 package-lock.json
 dist
 coverage
+docs
+jest-coverage
+site

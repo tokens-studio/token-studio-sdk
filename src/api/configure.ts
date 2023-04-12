@@ -1,18 +1,16 @@
-import { ApiKey } from "./apiKey";
+import { ApiKey } from './apiKey';
 import config, { oauth } from '../aws-exports';
 import { Amplify } from '@aws-amplify/core';
 
-
 /**
- * There are 3 authentication modes available. 
+ * There are 3 authentication modes available.
  * 1. User Auth (default)
- * 2. API Keys 
- * 3. Public 
- * 
+ * 2. API Keys
+ * 3. Public
+ *
  * Public interaction has a huge amount of restrictions applied as to which resources it can access and should not be used outside of the Tokens Website as the permissions might change on a whim
  */
 export namespace Configuration {
-
     export const PUBLIC_KEY = 'da2-aqavhxqlkzgzjjwt35zyy2xqqy';
 
     /**
@@ -29,7 +27,7 @@ export namespace Configuration {
         clear(): void;
         // If the storage operations are async(i.e AsyncStorage)
         // Then you need to sync those items into the memory in this method
-        sync(): Promise<void>
+        sync(): Promise<void>;
     }
 
     export const defaultConfig = {
@@ -51,28 +49,28 @@ export namespace Configuration {
             redirectSignOut: string;
             responseType: string;
             options?: object;
-        },
+        };
         //Custom auth storage
-        storage: Storage
-    }>
+        storage: Storage;
+    }>;
 
     let configuration: IConfiguration = config;
 
     /**
-     * Sets up configuration for the 
+     * Sets up configuration for the
      * @private
-     * @param config 
-    */
+     * @param config
+     */
     export const configure = (config: IConfiguration) => {
         configuration = Amplify.configure({
             ...defaultConfig,
             ...config
         }) as IConfiguration;
-    }
+    };
     /**
      * Returns the current internal configuration
      * @private
-     * @returns 
+     * @returns
      */
     export const get = (): IConfiguration => ({ ...configuration });
 
@@ -82,30 +80,28 @@ export namespace Configuration {
      * ```
      * sdk.Configuration.setAPIKey('api_key_....');
      * ```
-     * @param token 
+     * @param token
      */
     export const setAPIKey = (token: string) => {
-        //Take the default config and change the config type 
+        //Take the default config and change the config type
         configuration = Amplify.configure({
             ...config,
-            "aws_appsync_authenticationType": "AWS_LAMBDA",
+            aws_appsync_authenticationType: 'AWS_LAMBDA'
         }) as IConfiguration;
         ApiKey.set(token);
-    }
+    };
 
     /**
      * Set to use public mode to access values
      */
     export const setPublic = (apikey = PUBLIC_KEY) => {
-
-        //Take the default config and change the config type 
+        //Take the default config and change the config type
         configuration = Amplify.configure({
             ...config,
             aws_appsync_authenticationType: 'API_KEY',
             aws_appsync_apiKey: apikey
         }) as IConfiguration;
-    }
-
+    };
 
     //Setup the default config
     configure(config);

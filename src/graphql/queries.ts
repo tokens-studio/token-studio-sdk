@@ -3,2598 +3,2601 @@
 // this is an auto generated file. This will be overwritten
 
 export const apiKeys = /* GraphQL */ `
-  query ApiKeys(
-    $filter: ApiKeyFilterInput
-    $limit: Int
-    $offset: Int
-    $organization: String!
-  ) {
-    apiKeys(
-      filter: $filter
-      limit: $limit
-      offset: $offset
-      organization: $organization
+    query ApiKeys(
+        $filter: ApiKeyFilterInput
+        $limit: Int
+        $offset: Int
+        $organization: String!
     ) {
-      description
-      lastUsed
-      name
-      urn
+        apiKeys(
+            filter: $filter
+            limit: $limit
+            offset: $offset
+            organization: $organization
+        ) {
+            description
+            lastUsed
+            name
+            urn
+        }
     }
-  }
 `;
 export const groups = /* GraphQL */ `
-  query Groups(
-    $filter: GroupFilterInput
-    $limit: Int
-    $offset: Int
-    $organization: String!
-  ) {
-    groups(
-      filter: $filter
-      limit: $limit
-      offset: $offset
-      organization: $organization
+    query Groups(
+        $filter: GroupFilterInput
+        $limit: Int
+        $offset: Int
+        $organization: String!
     ) {
-      created
-      description
-      members {
-        ... on APIKeyIdentity {
-          name
-          urn
+        groups(
+            filter: $filter
+            limit: $limit
+            offset: $offset
+            organization: $organization
+        ) {
+            created
+            description
+            members {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
+            name
+            policy {
+                created
+                description
+                name
+                urn
+                value {
+                    statement {
+                        action
+                        effect
+                        resource
+                    }
+                    version
+                }
+            }
+            urn
         }
-        ... on User {
-          description
-          icon
-          name
-          urn
-          visibility
-        }
-      }
-      name
-      policy {
-        created
-        description
-        name
-        urn
-        value {
-          statement {
-            action
-            effect
-            resource
-          }
-          version
-        }
-      }
-      urn
     }
-  }
 `;
 export const organizations = /* GraphQL */ `
-  query Organizations(
-    $filter: OrganizationFilterInput
-    $limit: Int
-    $offset: Int
-  ) {
-    organizations(filter: $filter, limit: $limit, offset: $offset) {
-      account
-      apiKeys {
-        description
-        lastUsed
-        name
-        urn
-      }
-      created
-      description
-      groups {
-        created
-        description
-        members {
-          ... on APIKeyIdentity {
-            name
-            urn
-          }
-          ... on User {
+    query Organizations(
+        $filter: OrganizationFilterInput
+        $limit: Int
+        $offset: Int
+    ) {
+        organizations(filter: $filter, limit: $limit, offset: $offset) {
+            account
+            apiKeys {
+                description
+                lastUsed
+                name
+                urn
+            }
+            created
             description
+            groups {
+                created
+                description
+                members {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
+                }
+                name
+                policy {
+                    created
+                    description
+                    name
+                    urn
+                    value {
+                        statement {
+                            action
+                            effect
+                            resource
+                        }
+                        version
+                    }
+                }
+                urn
+            }
             icon
             name
+            owner {
+                description
+                icon
+                name
+                urn
+                visibility
+            }
+            payment
+            policies {
+                created
+                description
+                name
+                urn
+                value {
+                    statement {
+                        action
+                        effect
+                        resource
+                    }
+                    version
+                }
+            }
+            projects {
+                created
+                description
+                icon
+                name
+                orgUrn
+                resolvers {
+                    description
+                    modifiers {
+                        alias
+                        default
+                        name
+                        type
+                        values {
+                            branch
+                            name
+                            urn
+                            version
+                        }
+                    }
+                    name
+                    release {
+                        created
+                        releasedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        tokens {
+                            ... on Token_Typography {
+                                description
+                                metadata {
+                                    created
+                                    createdBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                    lastUpdatedBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                }
+                                name
+                                type
+                                value
+                            }
+                            ... on Token_color {
+                                description
+                                metadata {
+                                    created
+                                    createdBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                    lastUpdatedBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                }
+                                name
+                                type
+                                value
+                            }
+                            ... on Token_scalar {
+                                description
+                                metadata {
+                                    created
+                                    createdBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                    lastUpdatedBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                }
+                                name
+                                type
+                                value
+                            }
+                        }
+                        urn
+                        version
+                    }
+                    sources {
+                        branch
+                        urn
+                        version
+                    }
+                    urn
+                }
+                sets {
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    projectUrn
+                    tokens {
+                        ... on Raw_Token_color {
+                            description
+                            extensions
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            setUrn
+                            type
+                            urn
+                            value
+                        }
+                        ... on Raw_Token_scalar {
+                            description
+                            extensions
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            setUrn
+                            type
+                            urn
+                            value
+                        }
+                        ... on Raw_Token_typography {
+                            description
+                            extensions
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            setUrn
+                            type
+                            typography {
+                                fontFamily
+                                fontSize
+                                fontWeight
+                                letterSpacing
+                                lineHeight
+                                paragraphIndent
+                                paragraphSpacing
+                                textCase
+                                textDecoration
+                            }
+                            urn
+                            value
+                        }
+                    }
+                    urn
+                }
+                urn
+                visibility
+            }
+            ssoEnabled
+            tier
             urn
+            users {
+                description
+                icon
+                name
+                urn
+                visibility
+            }
             visibility
-          }
         }
-        name
-        policy {
-          created
-          description
-          name
-          urn
-          value {
-            statement {
-              action
-              effect
-              resource
-            }
-            version
-          }
-        }
-        urn
-      }
-      icon
-      name
-      owner {
-        description
-        icon
-        name
-        urn
-        visibility
-      }
-      payment
-      policies {
-        created
-        description
-        name
-        urn
-        value {
-          statement {
-            action
-            effect
-            resource
-          }
-          version
-        }
-      }
-      projects {
-        created
-        description
-        icon
-        name
-        orgUrn
-        resolvers {
-          description
-          modifiers {
-            alias
-            default
-            name
-            type
-            values {
-              branch
-              name
-              urn
-              version
-            }
-          }
-          name
-          release {
-            created
-            releasedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            tokens {
-              ... on Token_Typography {
-                description
-                metadata {
-                  created
-                  createdBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
-                  lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
-                }
-                name
-                type
-                value
-              }
-              ... on Token_color {
-                description
-                metadata {
-                  created
-                  createdBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
-                  lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
-                }
-                name
-                type
-                value
-              }
-              ... on Token_scalar {
-                description
-                metadata {
-                  created
-                  createdBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
-                  lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
-                }
-                name
-                type
-                value
-              }
-            }
-            urn
-            version
-          }
-          sources {
-            branch
-            urn
-            version
-          }
-          urn
-        }
-        sets {
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          projectUrn
-          tokens {
-            ... on Raw_Token_color {
-              description
-              extensions
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              setUrn
-              type
-              urn
-              value
-            }
-            ... on Raw_Token_scalar {
-              description
-              extensions
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              setUrn
-              type
-              urn
-              value
-            }
-            ... on Raw_Token_typography {
-              description
-              extensions
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              setUrn
-              type
-              typography {
-                fontFamily
-                fontSize
-                fontWeight
-                letterSpacing
-                lineHeight
-                paragraphIndent
-                paragraphSpacing
-                textCase
-                textDecoration
-              }
-              urn
-              value
-            }
-          }
-          urn
-        }
-        urn
-        visibility
-      }
-      ssoEnabled
-      tier
-      urn
-      users {
-        description
-        icon
-        name
-        urn
-        visibility
-      }
-      visibility
     }
-  }
 `;
 export const policies = /* GraphQL */ `
-  query Policies($limit: Int, $offset: Int, $organization: String!) {
-    policies(limit: $limit, offset: $offset, organization: $organization) {
-      created
-      description
-      name
-      urn
-      value {
-        statement {
-          action
-          effect
-          resource
-        }
-        version
-      }
-    }
-  }
-`;
-export const project = /* GraphQL */ `
-  query Project($urn: String!) {
-    project(urn: $urn) {
-      created
-      description
-      icon
-      name
-      orgUrn
-      resolvers {
-        description
-        modifiers {
-          alias
-          default
-          name
-          type
-          values {
-            branch
-            name
-            urn
-            version
-          }
-        }
-        name
-        release {
-          created
-          releasedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          tokens {
-            ... on Token_Typography {
-              description
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              type
-              value
-            }
-            ... on Token_color {
-              description
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              type
-              value
-            }
-            ... on Token_scalar {
-              description
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              type
-              value
-            }
-          }
-          urn
-          version
-        }
-        sources {
-          branch
-          urn
-          version
-        }
-        urn
-      }
-      sets {
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        projectUrn
-        tokens {
-          ... on Raw_Token_color {
-            description
-            extensions
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            setUrn
-            type
-            urn
-            value
-          }
-          ... on Raw_Token_scalar {
-            description
-            extensions
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            setUrn
-            type
-            urn
-            value
-          }
-          ... on Raw_Token_typography {
-            description
-            extensions
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            setUrn
-            type
-            typography {
-              fontFamily
-              fontSize
-              fontWeight
-              letterSpacing
-              lineHeight
-              paragraphIndent
-              paragraphSpacing
-              textCase
-              textDecoration
-            }
-            urn
-            value
-          }
-        }
-        urn
-      }
-      urn
-      visibility
-    }
-  }
-`;
-export const projects = /* GraphQL */ `
-  query Projects(
-    $filter: ProjectFilterInput
-    $limit: Int
-    $offset: Int
-    $organization: String!
-  ) {
-    projects(
-      filter: $filter
-      limit: $limit
-      offset: $offset
-      organization: $organization
-    ) {
-      created
-      description
-      icon
-      name
-      orgUrn
-      resolvers {
-        description
-        modifiers {
-          alias
-          default
-          name
-          type
-          values {
-            branch
-            name
-            urn
-            version
-          }
-        }
-        name
-        release {
-          created
-          releasedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          tokens {
-            ... on Token_Typography {
-              description
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              type
-              value
-            }
-            ... on Token_color {
-              description
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              type
-              value
-            }
-            ... on Token_scalar {
-              description
-              metadata {
-                created
-                createdBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-                lastUpdatedBy {
-                  ... on APIKeyIdentity {
-                    name
-                    urn
-                  }
-                  ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                  }
-                }
-              }
-              name
-              type
-              value
-            }
-          }
-          urn
-          version
-        }
-        sources {
-          branch
-          urn
-          version
-        }
-        urn
-      }
-      sets {
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        projectUrn
-        tokens {
-          ... on Raw_Token_color {
-            description
-            extensions
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            setUrn
-            type
-            urn
-            value
-          }
-          ... on Raw_Token_scalar {
-            description
-            extensions
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            setUrn
-            type
-            urn
-            value
-          }
-          ... on Raw_Token_typography {
-            description
-            extensions
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            setUrn
-            type
-            typography {
-              fontFamily
-              fontSize
-              fontWeight
-              letterSpacing
-              lineHeight
-              paragraphIndent
-              paragraphSpacing
-              textCase
-              textDecoration
-            }
-            urn
-            value
-          }
-        }
-        urn
-      }
-      urn
-      visibility
-    }
-  }
-`;
-export const resolve = /* GraphQL */ `
-  query Resolve($modifiers: [ResolverModifierValueInput], $resolver: String!) {
-    resolve(modifiers: $modifiers, resolver: $resolver) {
-      ... on Token_Typography {
-        description
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        type
-        value
-      }
-      ... on Token_color {
-        description
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        type
-        value
-      }
-      ... on Token_scalar {
-        description
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        type
-        value
-      }
-    }
-  }
-`;
-export const resolver = /* GraphQL */ `
-  query Resolver($urn: String!) {
-    resolver(urn: $urn) {
-      description
-      modifiers {
-        alias
-        default
-        name
-        type
-        values {
-          branch
-          name
-          urn
-          version
-        }
-      }
-      name
-      release {
-        created
-        releasedBy {
-          ... on APIKeyIdentity {
-            name
-            urn
-          }
-          ... on User {
-            description
-            icon
-            name
-            urn
-            visibility
-          }
-        }
-        tokens {
-          ... on Token_Typography {
-            description
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            type
-            value
-          }
-          ... on Token_color {
-            description
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            type
-            value
-          }
-          ... on Token_scalar {
-            description
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            type
-            value
-          }
-        }
-        urn
-        version
-      }
-      sources {
-        branch
-        urn
-        version
-      }
-      urn
-    }
-  }
-`;
-export const resolvers = /* GraphQL */ `
-  query Resolvers(
-    $filter: ResolverFilterInput
-    $limit: Int
-    $offset: Int
-    $project: String!
-  ) {
-    resolvers(
-      filter: $filter
-      limit: $limit
-      offset: $offset
-      project: $project
-    ) {
-      description
-      modifiers {
-        alias
-        default
-        name
-        type
-        values {
-          branch
-          name
-          urn
-          version
-        }
-      }
-      name
-      release {
-        created
-        releasedBy {
-          ... on APIKeyIdentity {
-            name
-            urn
-          }
-          ... on User {
-            description
-            icon
-            name
-            urn
-            visibility
-          }
-        }
-        tokens {
-          ... on Token_Typography {
-            description
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            type
-            value
-          }
-          ... on Token_color {
-            description
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            type
-            value
-          }
-          ... on Token_scalar {
-            description
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-            }
-            name
-            type
-            value
-          }
-        }
-        urn
-        version
-      }
-      sources {
-        branch
-        urn
-        version
-      }
-      urn
-    }
-  }
-`;
-export const self = /* GraphQL */ `
-  query Self {
-    self {
-      identity {
-        authenticated
-        urn
-      }
-      invitations {
-        organization
-        status
-        user
-      }
-      organizations {
-        account
-        apiKeys {
-          description
-          lastUsed
-          name
-          urn
-        }
-        created
-        description
-        groups {
-          created
-          description
-          members {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          name
-          policy {
+    query Policies($limit: Int, $offset: Int, $organization: String!) {
+        policies(limit: $limit, offset: $offset, organization: $organization) {
             created
             description
             name
             urn
             value {
-              statement {
-                action
-                effect
-                resource
-              }
-              version
+                statement {
+                    action
+                    effect
+                    resource
+                }
+                version
             }
-          }
-          urn
         }
-        icon
-        name
-        owner {
-          description
-          icon
-          name
-          urn
-          visibility
-        }
-        payment
-        policies {
-          created
-          description
-          name
-          urn
-          value {
-            statement {
-              action
-              effect
-              resource
+    }
+`;
+export const project = /* GraphQL */ `
+    query Project($urn: String!) {
+        project(urn: $urn) {
+            created
+            description
+            icon
+            name
+            orgUrn
+            resolvers {
+                description
+                modifiers {
+                    alias
+                    default
+                    name
+                    type
+                    values {
+                        branch
+                        name
+                        urn
+                        version
+                    }
+                }
+                name
+                release {
+                    created
+                    releasedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    tokens {
+                        ... on Token_Typography {
+                            description
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            type
+                            value
+                        }
+                        ... on Token_color {
+                            description
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            type
+                            value
+                        }
+                        ... on Token_scalar {
+                            description
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            type
+                            value
+                        }
+                    }
+                    urn
+                    version
+                }
+                sources {
+                    branch
+                    urn
+                    version
+                }
+                urn
             }
-            version
-          }
+            sets {
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                projectUrn
+                tokens {
+                    ... on Raw_Token_color {
+                        description
+                        extensions
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        setUrn
+                        type
+                        urn
+                        value
+                    }
+                    ... on Raw_Token_scalar {
+                        description
+                        extensions
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        setUrn
+                        type
+                        urn
+                        value
+                    }
+                    ... on Raw_Token_typography {
+                        description
+                        extensions
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        setUrn
+                        type
+                        typography {
+                            fontFamily
+                            fontSize
+                            fontWeight
+                            letterSpacing
+                            lineHeight
+                            paragraphIndent
+                            paragraphSpacing
+                            textCase
+                            textDecoration
+                        }
+                        urn
+                        value
+                    }
+                }
+                urn
+            }
+            urn
+            visibility
         }
-        projects {
-          created
-          description
-          icon
-          name
-          orgUrn
-          resolvers {
+    }
+`;
+export const projects = /* GraphQL */ `
+    query Projects(
+        $filter: ProjectFilterInput
+        $limit: Int
+        $offset: Int
+        $organization: String!
+    ) {
+        projects(
+            filter: $filter
+            limit: $limit
+            offset: $offset
+            organization: $organization
+        ) {
+            created
+            description
+            icon
+            name
+            orgUrn
+            resolvers {
+                description
+                modifiers {
+                    alias
+                    default
+                    name
+                    type
+                    values {
+                        branch
+                        name
+                        urn
+                        version
+                    }
+                }
+                name
+                release {
+                    created
+                    releasedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    tokens {
+                        ... on Token_Typography {
+                            description
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            type
+                            value
+                        }
+                        ... on Token_color {
+                            description
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            type
+                            value
+                        }
+                        ... on Token_scalar {
+                            description
+                            metadata {
+                                created
+                                createdBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                                lastUpdatedBy {
+                                    ... on APIKeyIdentity {
+                                        name
+                                        urn
+                                    }
+                                    ... on User {
+                                        description
+                                        icon
+                                        name
+                                        urn
+                                        visibility
+                                    }
+                                }
+                            }
+                            name
+                            type
+                            value
+                        }
+                    }
+                    urn
+                    version
+                }
+                sources {
+                    branch
+                    urn
+                    version
+                }
+                urn
+            }
+            sets {
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                projectUrn
+                tokens {
+                    ... on Raw_Token_color {
+                        description
+                        extensions
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        setUrn
+                        type
+                        urn
+                        value
+                    }
+                    ... on Raw_Token_scalar {
+                        description
+                        extensions
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        setUrn
+                        type
+                        urn
+                        value
+                    }
+                    ... on Raw_Token_typography {
+                        description
+                        extensions
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        setUrn
+                        type
+                        typography {
+                            fontFamily
+                            fontSize
+                            fontWeight
+                            letterSpacing
+                            lineHeight
+                            paragraphIndent
+                            paragraphSpacing
+                            textCase
+                            textDecoration
+                        }
+                        urn
+                        value
+                    }
+                }
+                urn
+            }
+            urn
+            visibility
+        }
+    }
+`;
+export const resolve = /* GraphQL */ `
+    query Resolve(
+        $modifiers: [ResolverModifierValueInput]
+        $resolver: String!
+    ) {
+        resolve(modifiers: $modifiers, resolver: $resolver) {
+            ... on Token_Typography {
+                description
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                type
+                value
+            }
+            ... on Token_color {
+                description
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                type
+                value
+            }
+            ... on Token_scalar {
+                description
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                type
+                value
+            }
+        }
+    }
+`;
+export const resolver = /* GraphQL */ `
+    query Resolver($urn: String!) {
+        resolver(urn: $urn) {
             description
             modifiers {
-              alias
-              default
-              name
-              type
-              values {
-                branch
+                alias
+                default
                 name
-                urn
-                version
-              }
+                type
+                values {
+                    branch
+                    name
+                    urn
+                    version
+                }
             }
             name
             release {
-              created
-              releasedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
+                created
+                releasedBy {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
                 }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
+                tokens {
+                    ... on Token_Typography {
+                        description
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        type
+                        value
+                    }
+                    ... on Token_color {
+                        description
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        type
+                        value
+                    }
+                    ... on Token_scalar {
+                        description
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        type
+                        value
+                    }
                 }
-              }
-              tokens {
-                ... on Token_Typography {
-                  description
-                  metadata {
-                    created
-                    createdBy {
-                      ... on APIKeyIdentity {
-                        name
-                        urn
-                      }
-                      ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                      }
-                    }
-                    lastUpdatedBy {
-                      ... on APIKeyIdentity {
-                        name
-                        urn
-                      }
-                      ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                      }
-                    }
-                  }
-                  name
-                  type
-                  value
-                }
-                ... on Token_color {
-                  description
-                  metadata {
-                    created
-                    createdBy {
-                      ... on APIKeyIdentity {
-                        name
-                        urn
-                      }
-                      ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                      }
-                    }
-                    lastUpdatedBy {
-                      ... on APIKeyIdentity {
-                        name
-                        urn
-                      }
-                      ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                      }
-                    }
-                  }
-                  name
-                  type
-                  value
-                }
-                ... on Token_scalar {
-                  description
-                  metadata {
-                    created
-                    createdBy {
-                      ... on APIKeyIdentity {
-                        name
-                        urn
-                      }
-                      ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                      }
-                    }
-                    lastUpdatedBy {
-                      ... on APIKeyIdentity {
-                        name
-                        urn
-                      }
-                      ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                      }
-                    }
-                  }
-                  name
-                  type
-                  value
-                }
-              }
-              urn
-              version
+                urn
+                version
             }
             sources {
-              branch
-              urn
-              version
+                branch
+                urn
+                version
             }
             urn
-          }
-          sets {
-            metadata {
-              created
-              createdBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
+        }
+    }
+`;
+export const resolvers = /* GraphQL */ `
+    query Resolvers(
+        $filter: ResolverFilterInput
+        $limit: Int
+        $offset: Int
+        $project: String!
+    ) {
+        resolvers(
+            filter: $filter
+            limit: $limit
+            offset: $offset
+            project: $project
+        ) {
+            description
+            modifiers {
+                alias
+                default
+                name
+                type
+                values {
+                    branch
+                    name
+                    urn
+                    version
                 }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
-              lastUpdatedBy {
-                ... on APIKeyIdentity {
-                  name
-                  urn
-                }
-                ... on User {
-                  description
-                  icon
-                  name
-                  urn
-                  visibility
-                }
-              }
             }
             name
-            projectUrn
-            tokens {
-              ... on Raw_Token_color {
+            release {
+                created
+                releasedBy {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
+                }
+                tokens {
+                    ... on Token_Typography {
+                        description
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        type
+                        value
+                    }
+                    ... on Token_color {
+                        description
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        type
+                        value
+                    }
+                    ... on Token_scalar {
+                        description
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        type
+                        value
+                    }
+                }
+                urn
+                version
+            }
+            sources {
+                branch
+                urn
+                version
+            }
+            urn
+        }
+    }
+`;
+export const self = /* GraphQL */ `
+    query Self {
+        self {
+            identity {
+                authenticated
+                urn
+            }
+            invitations {
+                organization
+                status
+                user
+            }
+            organizations {
+                account
+                apiKeys {
+                    description
+                    lastUsed
+                    name
+                    urn
+                }
+                created
+                description
+                groups {
+                    created
+                    description
+                    members {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    name
+                    policy {
+                        created
+                        description
+                        name
+                        urn
+                        value {
+                            statement {
+                                action
+                                effect
+                                resource
+                            }
+                            version
+                        }
+                    }
+                    urn
+                }
+                icon
+                name
+                owner {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+                payment
+                policies {
+                    created
+                    description
+                    name
+                    urn
+                    value {
+                        statement {
+                            action
+                            effect
+                            resource
+                        }
+                        version
+                    }
+                }
+                projects {
+                    created
+                    description
+                    icon
+                    name
+                    orgUrn
+                    resolvers {
+                        description
+                        modifiers {
+                            alias
+                            default
+                            name
+                            type
+                            values {
+                                branch
+                                name
+                                urn
+                                version
+                            }
+                        }
+                        name
+                        release {
+                            created
+                            releasedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            tokens {
+                                ... on Token_Typography {
+                                    description
+                                    metadata {
+                                        created
+                                        createdBy {
+                                            ... on APIKeyIdentity {
+                                                name
+                                                urn
+                                            }
+                                            ... on User {
+                                                description
+                                                icon
+                                                name
+                                                urn
+                                                visibility
+                                            }
+                                        }
+                                        lastUpdatedBy {
+                                            ... on APIKeyIdentity {
+                                                name
+                                                urn
+                                            }
+                                            ... on User {
+                                                description
+                                                icon
+                                                name
+                                                urn
+                                                visibility
+                                            }
+                                        }
+                                    }
+                                    name
+                                    type
+                                    value
+                                }
+                                ... on Token_color {
+                                    description
+                                    metadata {
+                                        created
+                                        createdBy {
+                                            ... on APIKeyIdentity {
+                                                name
+                                                urn
+                                            }
+                                            ... on User {
+                                                description
+                                                icon
+                                                name
+                                                urn
+                                                visibility
+                                            }
+                                        }
+                                        lastUpdatedBy {
+                                            ... on APIKeyIdentity {
+                                                name
+                                                urn
+                                            }
+                                            ... on User {
+                                                description
+                                                icon
+                                                name
+                                                urn
+                                                visibility
+                                            }
+                                        }
+                                    }
+                                    name
+                                    type
+                                    value
+                                }
+                                ... on Token_scalar {
+                                    description
+                                    metadata {
+                                        created
+                                        createdBy {
+                                            ... on APIKeyIdentity {
+                                                name
+                                                urn
+                                            }
+                                            ... on User {
+                                                description
+                                                icon
+                                                name
+                                                urn
+                                                visibility
+                                            }
+                                        }
+                                        lastUpdatedBy {
+                                            ... on APIKeyIdentity {
+                                                name
+                                                urn
+                                            }
+                                            ... on User {
+                                                description
+                                                icon
+                                                name
+                                                urn
+                                                visibility
+                                            }
+                                        }
+                                    }
+                                    name
+                                    type
+                                    value
+                                }
+                            }
+                            urn
+                            version
+                        }
+                        sources {
+                            branch
+                            urn
+                            version
+                        }
+                        urn
+                    }
+                    sets {
+                        metadata {
+                            created
+                            createdBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                            lastUpdatedBy {
+                                ... on APIKeyIdentity {
+                                    name
+                                    urn
+                                }
+                                ... on User {
+                                    description
+                                    icon
+                                    name
+                                    urn
+                                    visibility
+                                }
+                            }
+                        }
+                        name
+                        projectUrn
+                        tokens {
+                            ... on Raw_Token_color {
+                                description
+                                extensions
+                                metadata {
+                                    created
+                                    createdBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                    lastUpdatedBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                }
+                                name
+                                setUrn
+                                type
+                                urn
+                                value
+                            }
+                            ... on Raw_Token_scalar {
+                                description
+                                extensions
+                                metadata {
+                                    created
+                                    createdBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                    lastUpdatedBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                }
+                                name
+                                setUrn
+                                type
+                                urn
+                                value
+                            }
+                            ... on Raw_Token_typography {
+                                description
+                                extensions
+                                metadata {
+                                    created
+                                    createdBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                    lastUpdatedBy {
+                                        ... on APIKeyIdentity {
+                                            name
+                                            urn
+                                        }
+                                        ... on User {
+                                            description
+                                            icon
+                                            name
+                                            urn
+                                            visibility
+                                        }
+                                    }
+                                }
+                                name
+                                setUrn
+                                type
+                                typography {
+                                    fontFamily
+                                    fontSize
+                                    fontWeight
+                                    letterSpacing
+                                    lineHeight
+                                    paragraphIndent
+                                    paragraphSpacing
+                                    textCase
+                                    textDecoration
+                                }
+                                urn
+                                value
+                            }
+                        }
+                        urn
+                    }
+                    urn
+                    visibility
+                }
+                ssoEnabled
+                tier
+                urn
+                users {
+                    description
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+                visibility
+            }
+            permissions {
+                statement {
+                    action
+                    effect
+                    resource
+                }
+                version
+            }
+            user {
+                description
+                icon
+                name
+                urn
+                visibility
+            }
+        }
+    }
+`;
+export const token = /* GraphQL */ `
+    query Token($urn: String!) {
+        token(urn: $urn) {
+            ... on Raw_Token_color {
                 description
                 extensions
                 metadata {
-                  created
-                  createdBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
                     }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
                     }
-                  }
-                  lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
                 }
                 name
                 setUrn
                 type
                 urn
                 value
-              }
-              ... on Raw_Token_scalar {
+            }
+            ... on Raw_Token_scalar {
                 description
                 extensions
                 metadata {
-                  created
-                  createdBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
                     }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
                     }
-                  }
-                  lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
                 }
                 name
                 setUrn
                 type
                 urn
                 value
-              }
-              ... on Raw_Token_typography {
+            }
+            ... on Raw_Token_typography {
                 description
                 extensions
                 metadata {
-                  created
-                  createdBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
                     }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
                     }
-                  }
-                  lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                      name
-                      urn
-                    }
-                    ... on User {
-                      description
-                      icon
-                      name
-                      urn
-                      visibility
-                    }
-                  }
                 }
                 name
                 setUrn
                 type
                 typography {
-                  fontFamily
-                  fontSize
-                  fontWeight
-                  letterSpacing
-                  lineHeight
-                  paragraphIndent
-                  paragraphSpacing
-                  textCase
-                  textDecoration
+                    fontFamily
+                    fontSize
+                    fontWeight
+                    letterSpacing
+                    lineHeight
+                    paragraphIndent
+                    paragraphSpacing
+                    textCase
+                    textDecoration
                 }
                 urn
                 value
-              }
             }
-            urn
-          }
-          urn
-          visibility
         }
-        ssoEnabled
-        tier
-        urn
-        users {
-          description
-          icon
-          name
-          urn
-          visibility
-        }
-        visibility
-      }
-      permissions {
-        statement {
-          action
-          effect
-          resource
-        }
-        version
-      }
-      user {
-        description
-        icon
-        name
-        urn
-        visibility
-      }
     }
-  }
-`;
-export const token = /* GraphQL */ `
-  query Token($urn: String!) {
-    token(urn: $urn) {
-      ... on Raw_Token_color {
-        description
-        extensions
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        setUrn
-        type
-        urn
-        value
-      }
-      ... on Raw_Token_scalar {
-        description
-        extensions
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        setUrn
-        type
-        urn
-        value
-      }
-      ... on Raw_Token_typography {
-        description
-        extensions
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        setUrn
-        type
-        typography {
-          fontFamily
-          fontSize
-          fontWeight
-          letterSpacing
-          lineHeight
-          paragraphIndent
-          paragraphSpacing
-          textCase
-          textDecoration
-        }
-        urn
-        value
-      }
-    }
-  }
 `;
 export const tokenSet = /* GraphQL */ `
-  query TokenSet($urn: String!) {
-    tokenSet(urn: $urn) {
-      metadata {
-        created
-        createdBy {
-          ... on APIKeyIdentity {
+    query TokenSet($urn: String!) {
+        tokenSet(urn: $urn) {
+            metadata {
+                created
+                createdBy {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
+                }
+                lastUpdatedBy {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
+                }
+            }
             name
+            projectUrn
+            tokens {
+                ... on Raw_Token_color {
+                    description
+                    extensions
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_scalar {
+                    description
+                    extensions
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_typography {
+                    description
+                    extensions
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    setUrn
+                    type
+                    typography {
+                        fontFamily
+                        fontSize
+                        fontWeight
+                        letterSpacing
+                        lineHeight
+                        paragraphIndent
+                        paragraphSpacing
+                        textCase
+                        textDecoration
+                    }
+                    urn
+                    value
+                }
+            }
             urn
-          }
-          ... on User {
-            description
-            icon
-            name
-            urn
-            visibility
-          }
         }
-        lastUpdatedBy {
-          ... on APIKeyIdentity {
-            name
-            urn
-          }
-          ... on User {
-            description
-            icon
-            name
-            urn
-            visibility
-          }
-        }
-      }
-      name
-      projectUrn
-      tokens {
-        ... on Raw_Token_color {
-          description
-          extensions
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          setUrn
-          type
-          urn
-          value
-        }
-        ... on Raw_Token_scalar {
-          description
-          extensions
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          setUrn
-          type
-          urn
-          value
-        }
-        ... on Raw_Token_typography {
-          description
-          extensions
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          setUrn
-          type
-          typography {
-            fontFamily
-            fontSize
-            fontWeight
-            letterSpacing
-            lineHeight
-            paragraphIndent
-            paragraphSpacing
-            textCase
-            textDecoration
-          }
-          urn
-          value
-        }
-      }
-      urn
     }
-  }
 `;
 export const tokenSets = /* GraphQL */ `
-  query TokenSets($limit: Int, $offset: Int, $project: String!) {
-    tokenSets(limit: $limit, offset: $offset, project: $project) {
-      metadata {
-        created
-        createdBy {
-          ... on APIKeyIdentity {
+    query TokenSets($limit: Int, $offset: Int, $project: String!) {
+        tokenSets(limit: $limit, offset: $offset, project: $project) {
+            metadata {
+                created
+                createdBy {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
+                }
+                lastUpdatedBy {
+                    ... on APIKeyIdentity {
+                        name
+                        urn
+                    }
+                    ... on User {
+                        description
+                        icon
+                        name
+                        urn
+                        visibility
+                    }
+                }
+            }
             name
+            projectUrn
+            tokens {
+                ... on Raw_Token_color {
+                    description
+                    extensions
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_scalar {
+                    description
+                    extensions
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_typography {
+                    description
+                    extensions
+                    metadata {
+                        created
+                        createdBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                        lastUpdatedBy {
+                            ... on APIKeyIdentity {
+                                name
+                                urn
+                            }
+                            ... on User {
+                                description
+                                icon
+                                name
+                                urn
+                                visibility
+                            }
+                        }
+                    }
+                    name
+                    setUrn
+                    type
+                    typography {
+                        fontFamily
+                        fontSize
+                        fontWeight
+                        letterSpacing
+                        lineHeight
+                        paragraphIndent
+                        paragraphSpacing
+                        textCase
+                        textDecoration
+                    }
+                    urn
+                    value
+                }
+            }
             urn
-          }
-          ... on User {
-            description
-            icon
-            name
-            urn
-            visibility
-          }
         }
-        lastUpdatedBy {
-          ... on APIKeyIdentity {
-            name
-            urn
-          }
-          ... on User {
-            description
-            icon
-            name
-            urn
-            visibility
-          }
-        }
-      }
-      name
-      projectUrn
-      tokens {
-        ... on Raw_Token_color {
-          description
-          extensions
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          setUrn
-          type
-          urn
-          value
-        }
-        ... on Raw_Token_scalar {
-          description
-          extensions
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          setUrn
-          type
-          urn
-          value
-        }
-        ... on Raw_Token_typography {
-          description
-          extensions
-          metadata {
-            created
-            createdBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-            lastUpdatedBy {
-              ... on APIKeyIdentity {
-                name
-                urn
-              }
-              ... on User {
-                description
-                icon
-                name
-                urn
-                visibility
-              }
-            }
-          }
-          name
-          setUrn
-          type
-          typography {
-            fontFamily
-            fontSize
-            fontWeight
-            letterSpacing
-            lineHeight
-            paragraphIndent
-            paragraphSpacing
-            textCase
-            textDecoration
-          }
-          urn
-          value
-        }
-      }
-      urn
     }
-  }
 `;
 export const tokens = /* GraphQL */ `
-  query Tokens(
-    $filter: TokenFilterInput
-    $limit: Int
-    $offset: Int
-    $set: String!
-  ) {
-    tokens(filter: $filter, limit: $limit, offset: $offset, set: $set) {
-      ... on Raw_Token_color {
-        description
-        extensions
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
+    query Tokens(
+        $filter: TokenFilterInput
+        $limit: Int
+        $offset: Int
+        $set: String!
+    ) {
+        tokens(filter: $filter, limit: $limit, offset: $offset, set: $set) {
+            ... on Raw_Token_color {
+                description
+                extensions
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                setUrn
+                type
+                urn
+                value
             }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
+            ... on Raw_Token_scalar {
+                description
+                extensions
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                setUrn
+                type
+                urn
+                value
             }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
+            ... on Raw_Token_typography {
+                description
+                extensions
+                metadata {
+                    created
+                    createdBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                    lastUpdatedBy {
+                        ... on APIKeyIdentity {
+                            name
+                            urn
+                        }
+                        ... on User {
+                            description
+                            icon
+                            name
+                            urn
+                            visibility
+                        }
+                    }
+                }
+                name
+                setUrn
+                type
+                typography {
+                    fontFamily
+                    fontSize
+                    fontWeight
+                    letterSpacing
+                    lineHeight
+                    paragraphIndent
+                    paragraphSpacing
+                    textCase
+                    textDecoration
+                }
+                urn
+                value
             }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
         }
-        name
-        setUrn
-        type
-        urn
-        value
-      }
-      ... on Raw_Token_scalar {
-        description
-        extensions
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        setUrn
-        type
-        urn
-        value
-      }
-      ... on Raw_Token_typography {
-        description
-        extensions
-        metadata {
-          created
-          createdBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-          lastUpdatedBy {
-            ... on APIKeyIdentity {
-              name
-              urn
-            }
-            ... on User {
-              description
-              icon
-              name
-              urn
-              visibility
-            }
-          }
-        }
-        name
-        setUrn
-        type
-        typography {
-          fontFamily
-          fontSize
-          fontWeight
-          letterSpacing
-          lineHeight
-          paragraphIndent
-          paragraphSpacing
-          textCase
-          textDecoration
-        }
-        urn
-        value
-      }
     }
-  }
 `;
 export const userInvitations = /* GraphQL */ `
-  query UserInvitations($limit: Int) {
-    userInvitations(limit: $limit) {
-      organization
-      status
-      user
+    query UserInvitations($limit: Int) {
+        userInvitations(limit: $limit) {
+            organization
+            status
+            user
+        }
     }
-  }
 `;

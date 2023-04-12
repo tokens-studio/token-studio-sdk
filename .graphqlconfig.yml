@@ -1,20 +1,20 @@
 projects:
-  Codegen Project:
-    schemaPath: schema.graphql
-    includes:
-      - src/graphql/**/*.ts
-    excludes:
-      - ./amplify/**
-    extensions:
-      amplify:
-        codeGenTarget: typescript
-        generatedFileName: src/graphqlTypes.ts
-        docsFilePath: src/graphql
-        region: eu-central-1
-        apiId: eo4qrsjagbb2neq2nadxv6nv4q
-        frontend: javascript
-        framework: none
-        maxDepth: 10
+    Codegen Project:
+        schemaPath: schema.graphql
+        includes:
+            - src/graphql/**/*.ts
+        excludes:
+            - ./amplify/**
+        extensions:
+            amplify:
+                codeGenTarget: typescript
+                generatedFileName: src/graphqlTypes.ts
+                docsFilePath: src/graphql
+                region: eu-central-1
+                apiId: eo4qrsjagbb2neq2nadxv6nv4q
+                frontend: javascript
+                framework: none
+                maxDepth: 10
 extensions:
-  amplify:
-    version: 3
+    amplify:
+        version: 3

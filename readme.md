@@ -10,34 +10,33 @@ This is the official SDK for Tokens Studio.
 npm install @tokens-studio/sdk
 ```
 
-## Signup 
+## Signup
 
 You will need to sign up to the Tokens Studio platform if you haven't already. The entire signup process can be done purely using this library and your email
 
 ```ts
-import {UserAuth} from '@tokens-studio/sdk';
+import { UserAuth } from '@tokens-studio/sdk';
 
 const username = 'MyUserName';
-const password =  'SomeSecurePassword1!'
+const password = 'SomeSecurePassword1!';
 
 const signup = await UserAuth.signUp({
-     username,
-        password,
-        attributes: {
-            email: 'my@email.com'
-        }
+    username,
+    password,
+    attributes: {
+        email: 'my@email.com'
+    }
 });
 
 // ...
 //Retrieve the verification code from your email address
 const verificationCode = '...';
 
-await UserAuth.confirmSignUp(username,verificationCode);
-await UserAuth.signIn(username,password);
+await UserAuth.confirmSignUp(username, verificationCode);
+await UserAuth.signIn(username, password);
 
 // You should now be signed in and can make authenticated requests.
 // Please see the documentation for alternate authentication modes should you wish to use API keys,etc
-
 ```
 
 ## Permissions
@@ -46,13 +45,13 @@ Note that some of the preconfigured queries are very expansive and attempt to re
 
 In cases like this, it is beneficial to be as specific as possible with the return values if operating with the public mode API or API keys.
 
-## Contributing 
+## Contributing
 
 See [Contributing](./developer-docs/contributing.md) for more info on running tests, etc
 
 ## Underlying Graphql documentation
 
-See the documentation for the GraphQL API [here](https://tokens-studio.github.io/tokens-studio-grapqhl-docs/) 
+See the documentation for the GraphQL API [here](https://tokens-studio.github.io/tokens-studio-grapqhl-docs/)
 
 ## Documentation
 

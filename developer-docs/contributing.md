@@ -1,6 +1,6 @@
-# Contributing 
+# Contributing
 
-## Tests 
+## Tests
 
 To run the tests locally, you will need to populate test user variables to confirm login functionality.
 

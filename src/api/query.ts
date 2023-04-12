@@ -1,3 +1,1 @@
-export namespace Query {
-
-}
+export namespace Query {}
