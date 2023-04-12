@@ -1,8 +1,8 @@
-import { ISignUpResult, CognitoUser } from 'amazon-cognito-identity-js';
 import { API } from '@aws-amplify/api';
-import type { FederatedSignInOptions } from '@aws-amplify/auth/lib/types/Auth';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
 import { oauth } from '../aws-exports';
+import type { FederatedSignInOptions } from '@aws-amplify/auth/lib/types/Auth';
 
 /**
  * Use this namespace to control user authentication controls and workflows
@@ -90,6 +90,9 @@ export namespace UserAuth {
         await API.Auth.signOut();
     };
 
+    export enum FederatedProviders {
+        Google = CognitoHostedUIIdentityProvider.Google
+    }
     export interface IFederatedSignInOptions {
         signIn: {
             provider: FederatedProviders;
@@ -98,10 +101,6 @@ export namespace UserAuth {
             redirectSignIn: string;
             redirectSignOut: string;
         };
-    }
-
-    export enum FederatedProviders {
-        Google = CognitoHostedUIIdentityProvider.Google
     }
 
     /**

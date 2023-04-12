@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 //TODO change this to prod when ready
 const awsmobile = {
     aws_appsync_graphqlEndpoint: 'https://query.api.dev.tokens.studio/graphql',

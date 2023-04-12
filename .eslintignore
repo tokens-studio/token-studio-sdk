@@ -2,3 +2,5 @@ dist/**
 coverage/**
 storybook-static/**
 docs
+site
+cypress

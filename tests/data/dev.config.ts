@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export default {
     aws_appsync_graphqlEndpoint: 'https://query.api.dev.tokens.studio/graphql',
     aws_appsync_region: 'eu-central-1',

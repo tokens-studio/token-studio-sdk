@@ -1,6 +1,7 @@
-import { expect } from '@jest/globals';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as lib from '../../src';
 import { Graphql, SelfQuery } from '../../src';
+import { expect } from '@jest/globals';
 
 const TEST_API_KEY = process.env.TEST_API_KEY!;
 

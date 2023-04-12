@@ -1,11 +1,11 @@
-import { Graphql } from './graphql';
 import * as mutations from '../graphql/mutations';
 import {
-    TokenInput as GraphqlTokenInput,
-    TokenType,
+    CreateTokenMutation,
     CreateTokenMutationVariables,
-    CreateTokenMutation
+    TokenInput as GraphqlTokenInput,
+    TokenType
 } from '../graphqlTypes';
+import { Graphql } from './graphql';
 
 /**
  * Use this namespace to perform any mutation actions against data

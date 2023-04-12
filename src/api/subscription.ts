@@ -1,7 +1,8 @@
 import { API } from '@aws-amplify/api';
 import { AWSAppSyncRealTimeProvider } from '@aws-amplify/pubsub';
-import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
+import { ApiKey } from './apiKey';
 import { Configuration } from './configure';
+import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
 import Observable from 'zen-observable-ts';
 
 /**
@@ -61,12 +62,11 @@ export namespace Subscription {
         input: GraphQLOptions,
         handler: SubscriptionHandler<T>
     ) => {
-        const extend = {};
+        const extend: any = {};
         // Use to inject the auth token
         if (
             Configuration.get().aws_appsync_authenticationType === 'AWS_LAMBDA'
         ) {
-            //@ts-ignore
             extend.authToken = ApiKey.get();
         }
         const subscription = API.graphql({

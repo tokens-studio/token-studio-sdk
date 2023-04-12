@@ -1,6 +1,6 @@
+import { Amplify } from '@aws-amplify/core';
 import { ApiKey } from './apiKey';
 import config, { oauth } from '../aws-exports';
-import { Amplify } from '@aws-amplify/core';
 
 /**
  * There are 3 authentication modes available.
@@ -86,6 +86,7 @@ export namespace Configuration {
         //Take the default config and change the config type
         configuration = Amplify.configure({
             ...config,
+            // eslint-disable-next-line camelcase
             aws_appsync_authenticationType: 'AWS_LAMBDA'
         }) as IConfiguration;
         ApiKey.set(token);
@@ -98,7 +99,9 @@ export namespace Configuration {
         //Take the default config and change the config type
         configuration = Amplify.configure({
             ...config,
+            // eslint-disable-next-line camelcase
             aws_appsync_authenticationType: 'API_KEY',
+            // eslint-disable-next-line camelcase
             aws_appsync_apiKey: apikey
         }) as IConfiguration;
     };

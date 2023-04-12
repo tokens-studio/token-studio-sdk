@@ -1,5 +1,6 @@
-import { expect } from '@jest/globals';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as lib from '../../src';
+import { expect } from '@jest/globals';
 
 const TEST_USER_NAME = process.env.TEST_USER_NAME!;
 const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD!;

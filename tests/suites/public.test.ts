@@ -1,11 +1,10 @@
-import { expect } from '@jest/globals';
 import {
-    SelfQuery,
-    OrganizationsQuery,
-    Graphql,
     Configuration,
-    Queries
+    Graphql,
+    OrganizationsQuery,
+    SelfQuery
 } from '../../src';
+import { expect } from '@jest/globals';
 
 describe('Public', () => {
     beforeAll(() => {

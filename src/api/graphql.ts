@@ -1,7 +1,7 @@
 import { API } from '@aws-amplify/api';
-import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
 import { ApiKey } from './apiKey';
 import { Configuration } from './configure';
+import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
 
 /**
  * The namespace for executing graphql queries.
@@ -25,12 +25,11 @@ export namespace Graphql {
     export const exec = async <T>(
         input: GraphQLOptions
     ): Promise<GraphQLResult<T>> => {
-        const extend = {};
+        const extend: any = {};
         // Use to inject the auth token
         if (
             Configuration.get().aws_appsync_authenticationType === 'AWS_LAMBDA'
         ) {
-            //@ts-ignore
             extend.authToken = ApiKey.get();
         }
         return (await API.graphql({
@@ -42,7 +41,7 @@ export namespace Graphql {
     /**
      * A convenience wrapper to create a GraphQLOptions type input for exec
      */
-    export const op = <T extends Object>(
+    export const op = <T extends Record<string, any>>(
         query: any,
         variables?: T
     ): GraphQLOptions => ({
