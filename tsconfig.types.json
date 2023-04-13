@@ -8,7 +8,7 @@
         "target": "ES6",
         "strict": true,
         "rootDir": "./src",
-        "outDir": "./dist"
+        "outDir": "./dist/types"
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/*.test.ts", "cypress/**"]
