@@ -13,7 +13,7 @@
     ".": {
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/esm/index.d.ts"
     }
   },
   "main": "./dist/cjs/index.js",
@@ -26,6 +26,7 @@
     "build:js": "rollup --bundleConfigAsCjs --config rollup.config.mjs",
     "build:types": "tsc --emitDeclarationOnly --declaration -p tsconfig.types.json",
     "cypress:open": "cypress open",
+    "dev": "rollup -w --bundleConfigAsCjs --config rollup.config.mjs",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .ts,.js,.html . --fix",
@@ -37,7 +38,7 @@
     "test": "jest"
   },
   "sideEffects": false,
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
   "dependencies": {
     "@aws-amplify/api": "^5.0.19",
     "@aws-amplify/auth": "^5.1.13",
@@ -69,7 +70,7 @@
     "react-dom": "^18.2.0",
     "rollup": "^3.10.1",
     "rollup-plugin-cleanup-dir": "^1.0.8",
-    "rollup-plugin-esbuild": "^5.0.0",
+    "rollup-plugin-typescript2": "^0.34.1",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
     "typedoc": "^0.23.24",

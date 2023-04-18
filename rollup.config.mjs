@@ -1,5 +1,5 @@
 import cleanupDir from 'rollup-plugin-cleanup-dir';
-import esbuild from 'rollup-plugin-esbuild';
+import typescript from 'rollup-plugin-typescript2';
 
 const defaultEntries = [
     {
@@ -21,12 +21,12 @@ const defaultEntries = [
             }
         ],
         plugins: [
-            cleanupDir,
-            esbuild.default({
+            cleanupDir.default(),
+            typescript({
                 tsconfig: 'tsconfig.prod.json'
             })
         ]
     }
 ];
 
-module.exports = defaultEntries;
+export default defaultEntries;
