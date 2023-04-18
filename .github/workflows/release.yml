@@ -56,7 +56,7 @@ jobs:
 
             - name: Install Dependencies
               if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-              run: npm ci
+              run: yarn install --frozen-lockfile
 
             - name: Set package version
               run: npm version ${{ steps.gitversion.outputs.SemVer }} --no-git-tag-version
@@ -85,7 +85,7 @@ jobs:
             - name: Deploy package to npm
               run: npm publish
               env:
-                  NPM_TOKEN: ${{ steps.secrets.outputs.NPM_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ steps.secrets.outputs.NPM_TOKEN }}
 
             - name: Tag released
               run: git tag release\${{ steps.gitversion.outputs.SemVer }}
