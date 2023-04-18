@@ -14,7 +14,7 @@ projects:
                 apiId: eo4qrsjagbb2neq2nadxv6nv4q
                 frontend: javascript
                 framework: none
-                maxDepth: 10
+                maxDepth: 2
 extensions:
     amplify:
         version: 3

@@ -15,7 +15,10 @@ npm install @tokens-studio/sdk
 You will need to sign up to the Tokens Studio platform if you haven't already. The entire signup process can be done purely using this library and your email
 
 ```ts
-import { UserAuth } from '@tokens-studio/sdk';
+import { UserAuth, Configuration } from '@tokens-studio/sdk';
+
+//Use defaults
+Configuration.configure();
 
 const username = 'MyUserName';
 const password = 'SomeSecurePassword1!';

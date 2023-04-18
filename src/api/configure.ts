@@ -64,7 +64,11 @@ export namespace Configuration {
     export const configure = (config: IConfiguration) => {
         configuration = Amplify.configure({
             ...defaultConfig,
-            ...config
+            ...config,
+            oauth: {
+                ...defaultConfig.oauth,
+                ...config.oauth
+            }
         }) as IConfiguration;
     };
     /**
@@ -105,7 +109,4 @@ export namespace Configuration {
             aws_appsync_apiKey: apikey
         }) as IConfiguration;
     };
-
-    //Setup the default config
-    configure(config);
 }

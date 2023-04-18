@@ -26,14 +26,6 @@ export const onCreateGroup = /* GraphQL */ `
                 description
                 name
                 urn
-                value {
-                    statement {
-                        action
-                        effect
-                        resource
-                    }
-                    version
-                }
             }
             urn
         }
@@ -47,32 +39,6 @@ export const onCreateToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -85,32 +51,6 @@ export const onCreateToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -123,32 +63,6 @@ export const onCreateToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -175,32 +89,6 @@ export const onCreateTokenSet = /* GraphQL */ `
         onCreateTokenSet(projectUrn: $projectUrn) {
             metadata {
                 created
-                createdBy {
-                    ... on APIKeyIdentity {
-                        name
-                        urn
-                    }
-                    ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                    }
-                }
-                lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                        name
-                        urn
-                    }
-                    ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                    }
-                }
             }
             name
             projectUrn
@@ -208,35 +96,6 @@ export const onCreateTokenSet = /* GraphQL */ `
                 ... on Raw_Token_color {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
@@ -246,35 +105,6 @@ export const onCreateTokenSet = /* GraphQL */ `
                 ... on Raw_Token_scalar {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
@@ -284,49 +114,9 @@ export const onCreateTokenSet = /* GraphQL */ `
                 ... on Raw_Token_typography {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
-                    typography {
-                        fontFamily
-                        fontSize
-                        fontWeight
-                        letterSpacing
-                        lineHeight
-                        paragraphIndent
-                        paragraphSpacing
-                        textCase
-                        textDecoration
-                    }
                     urn
                     value
                 }
@@ -343,32 +133,6 @@ export const onDeleteToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -381,32 +145,6 @@ export const onDeleteToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -419,32 +157,6 @@ export const onDeleteToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -471,32 +183,6 @@ export const onDeleteTokenSet = /* GraphQL */ `
         onDeleteTokenSet(projectUrn: $projectUrn) {
             metadata {
                 created
-                createdBy {
-                    ... on APIKeyIdentity {
-                        name
-                        urn
-                    }
-                    ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                    }
-                }
-                lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                        name
-                        urn
-                    }
-                    ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                    }
-                }
             }
             name
             projectUrn
@@ -504,35 +190,6 @@ export const onDeleteTokenSet = /* GraphQL */ `
                 ... on Raw_Token_color {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
@@ -542,35 +199,6 @@ export const onDeleteTokenSet = /* GraphQL */ `
                 ... on Raw_Token_scalar {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
@@ -580,49 +208,9 @@ export const onDeleteTokenSet = /* GraphQL */ `
                 ... on Raw_Token_typography {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
-                    typography {
-                        fontFamily
-                        fontSize
-                        fontWeight
-                        letterSpacing
-                        lineHeight
-                        paragraphIndent
-                        paragraphSpacing
-                        textCase
-                        textDecoration
-                    }
                     urn
                     value
                 }
@@ -639,32 +227,6 @@ export const onUpdateToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -677,32 +239,6 @@ export const onUpdateToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -715,32 +251,6 @@ export const onUpdateToken = /* GraphQL */ `
                 extensions
                 metadata {
                     created
-                    createdBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
-                    lastUpdatedBy {
-                        ... on APIKeyIdentity {
-                            name
-                            urn
-                        }
-                        ... on User {
-                            description
-                            icon
-                            name
-                            urn
-                            visibility
-                        }
-                    }
                 }
                 name
                 setUrn
@@ -767,32 +277,6 @@ export const onUpdateTokenSet = /* GraphQL */ `
         onUpdateTokenSet(projectUrn: $projectUrn) {
             metadata {
                 created
-                createdBy {
-                    ... on APIKeyIdentity {
-                        name
-                        urn
-                    }
-                    ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                    }
-                }
-                lastUpdatedBy {
-                    ... on APIKeyIdentity {
-                        name
-                        urn
-                    }
-                    ... on User {
-                        description
-                        icon
-                        name
-                        urn
-                        visibility
-                    }
-                }
             }
             name
             projectUrn
@@ -800,35 +284,6 @@ export const onUpdateTokenSet = /* GraphQL */ `
                 ... on Raw_Token_color {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
@@ -838,35 +293,6 @@ export const onUpdateTokenSet = /* GraphQL */ `
                 ... on Raw_Token_scalar {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
@@ -876,49 +302,9 @@ export const onUpdateTokenSet = /* GraphQL */ `
                 ... on Raw_Token_typography {
                     description
                     extensions
-                    metadata {
-                        created
-                        createdBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                        lastUpdatedBy {
-                            ... on APIKeyIdentity {
-                                name
-                                urn
-                            }
-                            ... on User {
-                                description
-                                icon
-                                name
-                                urn
-                                visibility
-                            }
-                        }
-                    }
                     name
                     setUrn
                     type
-                    typography {
-                        fontFamily
-                        fontSize
-                        fontWeight
-                        letterSpacing
-                        lineHeight
-                        paragraphIndent
-                        paragraphSpacing
-                        textCase
-                        textDecoration
-                    }
                     urn
                     value
                 }
