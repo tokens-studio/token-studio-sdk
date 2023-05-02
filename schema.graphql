@@ -135,7 +135,8 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   removeFromOrganization(organization: String!, user: String!): Boolean
   #  Removes a member from a group in your organization
   removeMemberFromGroup(group: String!, user: String!): String
-  updatePolicy(input: PolicyInput!, urn: String!): Policy
+  updateGroup(input: GroupInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
+  updatePolicy(input: PolicyInput!, urn: String!): Policy @aws_cognito_user_pools @aws_lambda
   updateProject(input: ProjectInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
   updateResolver(input: ResolverInput!, urn: String!): Resolver @aws_cognito_user_pools @aws_lambda
   # ## Updates
