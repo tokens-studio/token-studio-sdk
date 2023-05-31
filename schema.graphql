@@ -53,6 +53,16 @@ type ColorValue {
   rgba: [Int]
 }
 
+type Generator {
+  createdAt: AWSDateTime
+  description: String
+  editor: String
+  graph: String
+  name: String
+  updatedAt: AWSDateTime
+  urn: String
+}
+
 type Group @aws_cognito_user_pools @aws_lambda {
   created: AWSDateTime! @aws_cognito_user_pools @aws_lambda
   description: String @aws_cognito_user_pools @aws_lambda
@@ -92,10 +102,13 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   # ## Membership
   #### Adds a member that already exists as part of your organization to a group
   addMemberToGroup(entity: String!, group: String!): String
+  attachPolicyToGroup(group: String!, policy: String!): Group @aws_cognito_user_pools @aws_lambda
   #  Bulk token creation. Limit of 50 tokens at a time
   bulkCreateToken(input: [TokenInput]!, set: String!): [RawToken] @aws_cognito_user_pools @aws_lambda
   #  Creates a new API Keyt
   createAPIKey(input: APIKeyInput!, organization: String!): APIKey
+  #  Creates a new generator definition 
+  createGenerator(input: GeneratorInput!, project: String!): Generator @aws_cognito_user_pools @aws_lambda
   #  Creates a new group that can have an associated policy to control it
   createGroup(input: GroupInput!, organization: String!): Group @aws_cognito_user_pools @aws_lambda
   #  Creates a new organization
@@ -106,7 +119,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   #### Creates a new project for the organization
   createProject(input: ProjectInput!, organization: String!): Project @aws_cognito_user_pools @aws_lambda
   #  Creates a release by freezing a resolvers output
-  createRelease(input: ReleaseInput!, resolver: String!): Release @aws_cognito_user_pools @aws_lambda
+  createRelease(input: ReleaseInput!, project: String!): Release @aws_cognito_user_pools @aws_lambda
   #  Creates a new Resolver
   createResolver(input: ResolverInput!, project: String!): Resolver @aws_cognito_user_pools @aws_lambda
   #  Creates a new Token
@@ -127,6 +140,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   deleteResolver(urn: String!): Resolver @aws_cognito_user_pools @aws_lambda
   deleteToken(urn: String!): RawToken @aws_cognito_user_pools @aws_lambda
   deleteTokenSet(urn: String!): TokenSet @aws_cognito_user_pools @aws_lambda
+  detachPolicyFromGroup(group: String!, policy: String!): Group @aws_cognito_user_pools @aws_lambda
   #  request that a member join your organization if they haven't already
   inviteToOrganization(organization: String!, user: String!): Invitation
   #  Regenerates an API Key, removing its value from use
@@ -135,9 +149,10 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   removeFromOrganization(organization: String!, user: String!): Boolean
   #  Removes a member from a group in your organization
   removeMemberFromGroup(group: String!, user: String!): String
-  updateGroup(input: GroupInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
-  updatePolicy(input: PolicyInput!, urn: String!): Policy @aws_cognito_user_pools @aws_lambda
-  updateProject(input: ProjectInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
+  updateGroup(input: GroupUpdateInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
+  updateOrganization(input: OrganizationUpdateInput!, urn: String!): Organization @aws_cognito_user_pools @aws_lambda
+  updatePolicy(input: PolicyInputUpdate!, urn: String!): Policy @aws_cognito_user_pools @aws_lambda
+  updateProject(input: ProjectUpdateInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
   updateResolver(input: ResolverInput!, urn: String!): Resolver @aws_cognito_user_pools @aws_lambda
   # ## Updates
   #### Update the values of an existing token
@@ -240,7 +255,7 @@ type Query @aws_cognito_user_pools @aws_lambda {
   #   Retrieves a specific tokenset
   tokenSet(urn: String!): TokenSet @aws_cognito_user_pools @aws_lambda
   #   Retrieves all accessible tokensets for the current project
-  tokenSets(limit: Int, offset: Int, project: String!): [TokenSet!]! @aws_cognito_user_pools @aws_lambda
+  tokenSets(filter: TokenSetsFilterInput, limit: Int, offset: Int, project: String!): [TokenSet!]! @aws_cognito_user_pools @aws_lambda
   #  Retrieves all tokens of the current set
   tokens(filter: TokenFilterInput, limit: Int, offset: Int, set: String!): [RawToken!]! @aws_api_key @aws_cognito_user_pools
   #  Retrieves all invitations in the context of your user
@@ -289,16 +304,13 @@ type Raw_Token_typography implements TokenInterface @aws_cognito_user_pools @aws
 }
 
 type Release {
-  #  Date that the release was created
-  created: AWSDateTime
-  #  The entity who created the release
+  createdAt: AWSDateTime
+  description: String
+  name: String!
   releasedBy: Entity
-  #  tokens included in the release
-  tokens: [Token]
-  #  unique urn of the release
-  urn: String
-  #  The semver version string
-  version: String
+  updatedAt: AWSDateTime
+  urn: String!
+  version: String!
 }
 
 type Resolver @aws_cognito_user_pools @aws_lambda {
@@ -348,7 +360,7 @@ type Self {
   #  Organizations that the user owns
   organizations: [Organization]
   #  Retrieves the applicable permissions for yourself in the context of an organization
-  permissions(orgUrn: String!): [PolicyDoc]
+  permissions(orgUrn: String): [PolicyDoc]
   #  information about the user if logged in with user auth
   user: User
 }
@@ -507,6 +519,13 @@ input ApiKeyFilterInput {
   urn: StringFilterInput
 }
 
+input GeneratorInput {
+  description: String
+  editor: String
+  graph: String
+  name: String!
+}
+
 input GroupFilterInput {
   name: GroupStringFilterInput
   urn: GroupUrnFilterInput
@@ -521,6 +540,12 @@ input GroupInput {
 input GroupStringFilterInput {
   #  Equal to
   eq: String
+}
+
+input GroupUpdateInput {
+  description: String
+  icon: String
+  name: String
 }
 
 input GroupUrnFilterInput {
@@ -558,6 +583,14 @@ input OrganizationInput {
   visibility: Visibility!
 }
 
+input OrganizationUpdateInput {
+  description: String
+  icon: String
+  name: String
+  tier: OrganizationTier
+  visibility: Visibility
+}
+
 input PolicyDocInput {
   statement: [PolicyStatementInput!]!
   version: String!
@@ -572,6 +605,12 @@ input PolicyInput {
   description: String
   name: String!
   value: PolicyDocInput!
+}
+
+input PolicyInputUpdate {
+  description: String
+  name: String
+  value: PolicyDocInput
 }
 
 input PolicyStatementInput {
@@ -601,6 +640,17 @@ input ProjectInput {
   visibility: Visibility!
 }
 
+input ProjectUpdateInput {
+  #  Optional description of the project
+  description: String
+  #  Icon associated with your project
+  icon: String
+  #  Unique name of the project
+  name: String
+  #  Visibility of the project
+  visibility: Visibility
+}
+
 input ReleaseFilterInput {
   name: StringFilterInput
   urn: StringFilterInput
@@ -608,8 +658,9 @@ input ReleaseFilterInput {
 }
 
 input ReleaseInput {
-  name: String
-  version: String!
+  description: String
+  name: String!
+  vesion: String!
 }
 
 input ResolverFilterInput {
@@ -693,6 +744,10 @@ input TokenSetInput {
 input TokenSetUpdateInput {
   description: String
   name: String
+}
+
+input TokenSetsFilterInput {
+  name: StringFilterInput
 }
 
 input TokenTypeFilterInput {
