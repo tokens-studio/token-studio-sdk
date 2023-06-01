@@ -2,135 +2,120 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const apiKeys = /* GraphQL */ `
-    query ApiKeys(
-        $filter: ApiKeyFilterInput
-        $limit: Int
-        $offset: Int
-        $organization: String!
-    ) {
-        apiKeys(
-            filter: $filter
-            limit: $limit
-            offset: $offset
-            organization: $organization
-        ) {
-            description
-            lastUsed
-            name
-            urn
+export const userInvitations = /* GraphQL */ `
+    query UserInvitations($limit: Int) {
+        userInvitations(limit: $limit) {
+            organization
+            user
+            status
         }
     }
 `;
-export const groups = /* GraphQL */ `
-    query Groups(
-        $filter: GroupFilterInput
-        $limit: Int
-        $offset: Int
-        $organization: String!
-    ) {
-        groups(
-            filter: $filter
-            limit: $limit
-            offset: $offset
-            organization: $organization
-        ) {
+export const policies = /* GraphQL */ `
+    query Policies($organization: String!, $limit: Int = 40, $offset: Int) {
+        policies(organization: $organization, limit: $limit, offset: $offset) {
             created
-            description
-            members {
-                ... on APIKeyIdentity {
-                    name
-                    urn
-                }
-                ... on User {
-                    description
-                    icon
-                    name
-                    urn
-                    visibility
-                }
-            }
             name
-            policy {
-                created
-                description
-                name
-                urn
-            }
             urn
+            description
+            value {
+                version
+            }
         }
     }
 `;
 export const organizations = /* GraphQL */ `
     query Organizations(
         $filter: OrganizationFilterInput
-        $limit: Int
+        $limit: Int = 40
         $offset: Int
     ) {
         organizations(filter: $filter, limit: $limit, offset: $offset) {
-            account
-            apiKeys {
-                description
-                lastUsed
-                name
-                urn
-            }
+            urn
             created
-            description
-            groups {
-                created
-                description
-                name
-                urn
-            }
-            icon
-            name
             owner {
+                name
+                givenName
+                urn
                 description
                 icon
-                name
-                urn
                 visibility
             }
+            name
+            description
+            visibility
+            account
             payment
-            policies {
-                created
-                description
-                name
-                urn
-            }
+            ssoEnabled
+            icon
+            tier
             projects {
                 created
-                description
-                icon
                 name
+                urn
                 orgUrn
-                urn
                 visibility
-            }
-            ssoEnabled
-            tier
-            urn
-            users {
-                description
                 icon
+                description
+            }
+            groups {
+                created
                 name
                 urn
+                description
+            }
+            policies {
+                created
+                name
+                urn
+                description
+            }
+            apiKeys {
+                name
+                lastUsed
+                description
+                urn
+            }
+            users {
+                name
+                givenName
+                urn
+                description
+                icon
                 visibility
             }
-            visibility
         }
     }
 `;
-export const policies = /* GraphQL */ `
-    query Policies($limit: Int, $offset: Int, $organization: String!) {
-        policies(limit: $limit, offset: $offset, organization: $organization) {
+export const projects = /* GraphQL */ `
+    query Projects(
+        $organization: String!
+        $filter: ProjectFilterInput
+        $limit: Int = 40
+        $offset: Int
+    ) {
+        projects(
+            organization: $organization
+            filter: $filter
+            limit: $limit
+            offset: $offset
+        ) {
             created
-            description
             name
             urn
-            value {
-                version
+            orgUrn
+            visibility
+            icon
+            description
+            sets {
+                urn
+                name
+                projectUrn
+            }
+            resolvers {
+                name
+                description
+                urn
             }
         }
     }
@@ -139,193 +124,153 @@ export const project = /* GraphQL */ `
     query Project($urn: String!) {
         project(urn: $urn) {
             created
-            description
-            icon
             name
+            urn
             orgUrn
-            resolvers {
-                description
-                name
-                urn
-            }
+            visibility
+            icon
+            description
             sets {
+                urn
                 name
                 projectUrn
+            }
+            resolvers {
+                name
+                description
                 urn
             }
-            urn
-            visibility
         }
     }
 `;
-export const projects = /* GraphQL */ `
-    query Projects(
-        $filter: ProjectFilterInput
-        $limit: Int
-        $offset: Int
+export const groups = /* GraphQL */ `
+    query Groups(
         $organization: String!
+        $filter: GroupFilterInput
+        $limit: Int = 40
+        $offset: Int
     ) {
-        projects(
+        groups(
+            organization: $organization
             filter: $filter
             limit: $limit
             offset: $offset
-            organization: $organization
         ) {
             created
-            description
-            icon
             name
-            orgUrn
-            resolvers {
-                description
-                name
-                urn
-            }
-            sets {
-                name
-                projectUrn
-                urn
-            }
             urn
-            visibility
-        }
-    }
-`;
-export const resolve = /* GraphQL */ `
-    query Resolve(
-        $modifiers: [ResolverModifierValueInput]
-        $resolver: String!
-    ) {
-        resolve(modifiers: $modifiers, resolver: $resolver) {
-            ... on Token_Typography {
-                description
-                metadata {
-                    created
-                }
-                name
-                type
-                value
-            }
-            ... on Token_color {
-                description
-                metadata {
-                    created
-                }
-                name
-                type
-                value
-            }
-            ... on Token_scalar {
-                description
-                metadata {
-                    created
-                }
-                name
-                type
-                value
-            }
-        }
-    }
-`;
-export const resolver = /* GraphQL */ `
-    query Resolver($urn: String!) {
-        resolver(urn: $urn) {
             description
-            modifiers {
-                alias
-                default
+            members {
+                ... on User {
+                    name
+                    givenName
+                    urn
+                    description
+                    icon
+                    visibility
+                }
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+            }
+            policy {
+                created
                 name
-                type
+                urn
+                description
+            }
+        }
+    }
+`;
+export const tokenSet = /* GraphQL */ `
+    query TokenSet($urn: String!) {
+        tokenSet(urn: $urn) {
+            urn
+            metadata {
+                created
             }
             name
-            release {
-                createdAt
-                description
-                name
-                updatedAt
-                urn
-                version
+            projectUrn
+            tokens {
+                ... on Raw_Token_color {
+                    description
+                    name
+                    value
+                    urn
+                    setUrn
+                    extensions
+                    type
+                }
+                ... on Raw_Token_scalar {
+                    description
+                    name
+                    value
+                    urn
+                    extensions
+                    setUrn
+                    type
+                }
+                ... on Raw_Token_typography {
+                    description
+                    name
+                    value
+                    urn
+                    extensions
+                    setUrn
+                    type
+                }
             }
-            sources {
-                branch
-                urn
-                version
-            }
-            urn
         }
     }
 `;
-export const resolvers = /* GraphQL */ `
-    query Resolvers(
-        $filter: ResolverFilterInput
-        $limit: Int
-        $offset: Int
+export const tokenSets = /* GraphQL */ `
+    query TokenSets(
         $project: String!
+        $limit: Int = 40
+        $offset: Int
+        $filter: TokenSetsFilterInput
     ) {
-        resolvers(
-            filter: $filter
+        tokenSets(
+            project: $project
             limit: $limit
             offset: $offset
-            project: $project
+            filter: $filter
         ) {
-            description
-            modifiers {
-                alias
-                default
-                name
-                type
+            urn
+            metadata {
+                created
             }
             name
-            release {
-                createdAt
-                description
-                name
-                updatedAt
-                urn
-                version
-            }
-            sources {
-                branch
-                urn
-                version
-            }
-            urn
-        }
-    }
-`;
-export const self = /* GraphQL */ `
-    query Self {
-        self {
-            identity {
-                authenticated
-                urn
-            }
-            invitations {
-                organization
-                status
-                user
-            }
-            organizations {
-                account
-                created
-                description
-                icon
-                name
-                payment
-                ssoEnabled
-                tier
-                urn
-                visibility
-            }
-            permissions {
-                version
-            }
-            user {
-                description
-                icon
-                name
-                urn
-                visibility
+            projectUrn
+            tokens {
+                ... on Raw_Token_color {
+                    description
+                    name
+                    value
+                    urn
+                    setUrn
+                    extensions
+                    type
+                }
+                ... on Raw_Token_scalar {
+                    description
+                    name
+                    value
+                    urn
+                    extensions
+                    setUrn
+                    type
+                }
+                ... on Raw_Token_typography {
+                    description
+                    name
+                    value
+                    urn
+                    extensions
+                    setUrn
+                    type
+                }
             }
         }
     }
@@ -335,210 +280,269 @@ export const token = /* GraphQL */ `
         token(urn: $urn) {
             ... on Raw_Token_color {
                 description
+                name
+                value
+                urn
+                setUrn
                 extensions
                 metadata {
                     created
                 }
-                name
-                setUrn
                 type
-                urn
-                value
             }
             ... on Raw_Token_scalar {
                 description
+                name
+                value
+                urn
                 extensions
+                setUrn
                 metadata {
                     created
                 }
-                name
-                setUrn
                 type
-                urn
-                value
             }
             ... on Raw_Token_typography {
                 description
-                extensions
-                metadata {
-                    created
-                }
                 name
-                setUrn
-                type
+                value
                 typography {
                     fontFamily
-                    fontSize
                     fontWeight
                     letterSpacing
                     lineHeight
+                    fontSize
                     paragraphIndent
                     paragraphSpacing
                     textCase
                     textDecoration
                 }
                 urn
-                value
+                extensions
+                setUrn
+                metadata {
+                    created
+                }
+                type
             }
-        }
-    }
-`;
-export const tokenSet = /* GraphQL */ `
-    query TokenSet($urn: String!) {
-        tokenSet(urn: $urn) {
-            metadata {
-                created
-            }
-            name
-            projectUrn
-            tokens {
-                ... on Raw_Token_color {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_scalar {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_typography {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-            }
-            urn
-        }
-    }
-`;
-export const tokenSets = /* GraphQL */ `
-    query TokenSets(
-        $filter: TokenSetsFilterInput
-        $limit: Int
-        $offset: Int
-        $project: String!
-    ) {
-        tokenSets(
-            filter: $filter
-            limit: $limit
-            offset: $offset
-            project: $project
-        ) {
-            metadata {
-                created
-            }
-            name
-            projectUrn
-            tokens {
-                ... on Raw_Token_color {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_scalar {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_typography {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-            }
-            urn
         }
     }
 `;
 export const tokens = /* GraphQL */ `
     query Tokens(
-        $filter: TokenFilterInput
-        $limit: Int
-        $offset: Int
         $set: String!
+        $filter: TokenFilterInput
+        $limit: Int = 40
+        $offset: Int
     ) {
-        tokens(filter: $filter, limit: $limit, offset: $offset, set: $set) {
+        tokens(set: $set, filter: $filter, limit: $limit, offset: $offset) {
             ... on Raw_Token_color {
                 description
+                name
+                value
+                urn
+                setUrn
                 extensions
                 metadata {
                     created
                 }
-                name
-                setUrn
                 type
-                urn
-                value
             }
             ... on Raw_Token_scalar {
                 description
+                name
+                value
+                urn
                 extensions
+                setUrn
                 metadata {
                     created
                 }
-                name
-                setUrn
                 type
-                urn
-                value
             }
             ... on Raw_Token_typography {
                 description
-                extensions
-                metadata {
-                    created
-                }
                 name
-                setUrn
-                type
+                value
                 typography {
                     fontFamily
-                    fontSize
                     fontWeight
                     letterSpacing
                     lineHeight
+                    fontSize
                     paragraphIndent
                     paragraphSpacing
                     textCase
                     textDecoration
                 }
                 urn
-                value
+                extensions
+                setUrn
+                metadata {
+                    created
+                }
+                type
             }
         }
     }
 `;
-export const userInvitations = /* GraphQL */ `
-    query UserInvitations($limit: Int) {
-        userInvitations(limit: $limit) {
-            organization
-            status
-            user
+export const self = /* GraphQL */ `
+    query Self {
+        self {
+            identity {
+                urn
+                authenticated
+            }
+            invitations {
+                organization
+                user
+                status
+            }
+            user {
+                name
+                givenName
+                urn
+                description
+                icon
+                visibility
+            }
+            organizations {
+                urn
+                created
+                name
+                description
+                visibility
+                account
+                payment
+                ssoEnabled
+                icon
+                tier
+            }
+            permissions {
+                version
+            }
+        }
+    }
+`;
+export const resolve = /* GraphQL */ `
+    query Resolve(
+        $resolver: String!
+        $modifiers: [ResolverModifierValueInput]
+    ) {
+        resolve(resolver: $resolver, modifiers: $modifiers) {
+            ... on Token_color {
+                description
+                name
+                value
+                type
+                metadata {
+                    created
+                }
+            }
+            ... on Token_scalar {
+                description
+                name
+                value
+                type
+                metadata {
+                    created
+                }
+            }
+            ... on Token_Typography {
+                description
+                name
+                value
+                metadata {
+                    created
+                }
+                type
+            }
+        }
+    }
+`;
+export const resolvers = /* GraphQL */ `
+    query Resolvers(
+        $project: String!
+        $filter: ResolverFilterInput
+        $limit: Int = 40
+        $offset: Int
+    ) {
+        resolvers(
+            project: $project
+            filter: $filter
+            limit: $limit
+            offset: $offset
+        ) {
+            name
+            description
+            urn
+            sources {
+                urn
+                version
+                branch
+            }
+            modifiers {
+                name
+                alias
+                default
+                type
+            }
+            release {
+                urn
+                name
+                version
+                description
+                createdAt
+                updatedAt
+            }
+        }
+    }
+`;
+export const resolver = /* GraphQL */ `
+    query Resolver($urn: String!) {
+        resolver(urn: $urn) {
+            name
+            description
+            urn
+            sources {
+                urn
+                version
+                branch
+            }
+            modifiers {
+                name
+                alias
+                default
+                type
+            }
+            release {
+                urn
+                name
+                version
+                description
+                createdAt
+                updatedAt
+            }
+        }
+    }
+`;
+export const apiKeys = /* GraphQL */ `
+    query ApiKeys(
+        $organization: String!
+        $filter: ApiKeyFilterInput
+        $limit: Int = 40
+        $offset: Int
+    ) {
+        apiKeys(
+            organization: $organization
+            filter: $filter
+            limit: $limit
+            offset: $offset
+        ) {
+            name
+            lastUsed
+            description
+            urn
         }
     }
 `;
