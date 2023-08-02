@@ -23,9 +23,9 @@ interface TokenInterface {
 union Entity = APIKeyIdentity | User
 
 #  Raw tokens are the tokens that are formatted after being input into the system. They do not reflect the final token values from resolved tokens
-union RawToken = Raw_Token_color | Raw_Token_scalar | Raw_Token_typography
+union RawToken = Raw_Token_border | Raw_Token_boxShadow | Raw_Token_color | Raw_Token_scalar | Raw_Token_typography
 
-union Token = Token_Typography | Token_color | Token_scalar
+union Token = Token_border | Token_boxShadow | Token_color | Token_scalar | Token_typography
 
 type APIKey {
   description: String
@@ -44,6 +44,21 @@ type APIKeyWithoutValue @aws_cognito_user_pools @aws_lambda {
   lastUsed: AWSDateTime
   name: String
   urn: String
+}
+
+type Border {
+  color: String
+  style: String
+  width: String
+}
+
+type BoxShadow {
+  blur: String
+  color: String
+  spread: String
+  type: String
+  x: String
+  y: String
 }
 
 type ColorValue {
@@ -262,6 +277,32 @@ type Query @aws_cognito_user_pools @aws_lambda {
   userInvitations(limit: Int): [Invitation] @aws_cognito_user_pools @aws_lambda
 }
 
+type Raw_Token_border implements TokenInterface @aws_cognito_user_pools @aws_lambda {
+  border: Border
+  description: String
+  extensions: AWSJSON
+  metadata: Metadata
+  name: String
+  setUrn: String
+  type: TokenType
+  urn: String
+  #  Use when setting a reference to a another border token
+  value: String
+}
+
+type Raw_Token_boxShadow implements TokenInterface @aws_cognito_user_pools @aws_lambda {
+  boxShadow: BoxShadow
+  description: String
+  extensions: AWSJSON
+  metadata: Metadata
+  name: String
+  setUrn: String
+  type: TokenType
+  urn: String
+  #  Use when setting a reference to a another boxShadow token
+  value: String
+}
+
 type Raw_Token_color implements TokenInterface @aws_cognito_user_pools @aws_lambda {
   description: String
   #  JSON stringified extensions data
@@ -288,9 +329,6 @@ type Raw_Token_scalar implements TokenInterface @aws_cognito_user_pools @aws_lam
   value: String
 }
 
-#  Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
-#### assets - Assumes a string output with a URL
-#### opacity - Assumes a simple numeric output
 type Raw_Token_typography implements TokenInterface @aws_cognito_user_pools @aws_lambda {
   description: String
   extensions: AWSJSON
@@ -300,6 +338,7 @@ type Raw_Token_typography implements TokenInterface @aws_cognito_user_pools @aws
   type: TokenType
   typography: Typography
   urn: String
+  #  Use when setting a reference to a typography set
   value: String
 }
 
@@ -399,11 +438,23 @@ type Token_Composition implements ResolvedTokenInterface {
   value: String
 }
 
-type Token_Typography implements ResolvedTokenInterface @aws_cognito_user_pools @aws_lambda {
+type Token_border implements ResolvedTokenInterface @aws_cognito_user_pools @aws_lambda {
+  border: Border
   description: String
   metadata: Metadata
   name: String
   type: TokenType
+  #  Only in the case of partial resolution
+  value: String
+}
+
+type Token_boxShadow implements ResolvedTokenInterface @aws_cognito_user_pools @aws_lambda {
+  boxShadow: BoxShadow
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  #  Only in the case of partial resolution
   value: String
 }
 
@@ -423,6 +474,16 @@ type Token_scalar implements ResolvedTokenInterface @aws_cognito_user_pools @aws
   value: String
 }
 
+type Token_typography implements ResolvedTokenInterface @aws_cognito_user_pools @aws_lambda {
+  description: String
+  metadata: Metadata
+  name: String
+  type: TokenType
+  typography: Typography
+  #  Only in the case of partial resolution
+  value: String
+}
+
 type Typography {
   fontFamily: String
   fontSize: String
@@ -438,6 +499,8 @@ type Typography {
 type User {
   #  Optional User description
   description: String
+  #  A preferred name of the user
+  givenName: String
   #  The icon of the user as html link to an image
   icon: String
   #  Display name of the user
@@ -757,6 +820,7 @@ input TokenTypeFilterInput {
 
 input TokenUpdateInput {
   description: String
+  extensions: AWSJSON
   name: String
   value: String
 }

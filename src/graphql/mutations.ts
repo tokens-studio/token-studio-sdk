@@ -24,6 +24,7 @@ export const attachPolicyToGroup = /* GraphQL */ `
                 }
                 ... on User {
                     description
+                    givenName
                     icon
                     name
                     urn
@@ -44,6 +45,43 @@ export const attachPolicyToGroup = /* GraphQL */ `
 export const bulkCreateToken = /* GraphQL */ `
     mutation BulkCreateToken($input: [TokenInput]!, $set: String!) {
         bulkCreateToken(input: $input, set: $set) {
+            ... on Raw_Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
+            ... on Raw_Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
             ... on Raw_Token_color {
                 description
                 extensions
@@ -129,6 +167,7 @@ export const createGroup = /* GraphQL */ `
                 }
                 ... on User {
                     description
+                    givenName
                     icon
                     name
                     urn
@@ -168,6 +207,7 @@ export const createOrganization = /* GraphQL */ `
             name
             owner {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -194,6 +234,7 @@ export const createOrganization = /* GraphQL */ `
             urn
             users {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -252,6 +293,7 @@ export const createRelease = /* GraphQL */ `
                 }
                 ... on User {
                     description
+                    givenName
                     icon
                     name
                     urn
@@ -295,6 +337,43 @@ export const createResolver = /* GraphQL */ `
 export const createToken = /* GraphQL */ `
     mutation CreateToken($input: TokenInput!, $set: String!) {
         createToken(input: $input, set: $set) {
+            ... on Raw_Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
+            ... on Raw_Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
             ... on Raw_Token_color {
                 description
                 extensions
@@ -354,6 +433,24 @@ export const createTokenSet = /* GraphQL */ `
             name
             projectUrn
             tokens {
+                ... on Raw_Token_border {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
                 ... on Raw_Token_color {
                     description
                     extensions
@@ -413,6 +510,7 @@ export const deleteGroup = /* GraphQL */ `
                 }
                 ... on User {
                     description
+                    givenName
                     icon
                     name
                     urn
@@ -529,6 +627,43 @@ export const deleteResolver = /* GraphQL */ `
 export const deleteToken = /* GraphQL */ `
     mutation DeleteToken($urn: String!) {
         deleteToken(urn: $urn) {
+            ... on Raw_Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
+            ... on Raw_Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
             ... on Raw_Token_color {
                 description
                 extensions
@@ -588,6 +723,24 @@ export const deleteTokenSet = /* GraphQL */ `
             name
             projectUrn
             tokens {
+                ... on Raw_Token_border {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
                 ... on Raw_Token_color {
                     description
                     extensions
@@ -632,6 +785,7 @@ export const detachPolicyFromGroup = /* GraphQL */ `
                 }
                 ... on User {
                     description
+                    givenName
                     icon
                     name
                     urn
@@ -726,6 +880,7 @@ export const updateOrganization = /* GraphQL */ `
             name
             owner {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -752,6 +907,7 @@ export const updateOrganization = /* GraphQL */ `
             urn
             users {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -828,6 +984,43 @@ export const updateResolver = /* GraphQL */ `
 export const updateToken = /* GraphQL */ `
     mutation UpdateToken($input: TokenUpdateInput!, $urn: String!) {
         updateToken(input: $input, urn: $urn) {
+            ... on Raw_Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
+            ... on Raw_Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
             ... on Raw_Token_color {
                 description
                 extensions
@@ -887,6 +1080,24 @@ export const updateTokenSet = /* GraphQL */ `
             name
             projectUrn
             tokens {
+                ... on Raw_Token_border {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
                 ... on Raw_Token_color {
                     description
                     extensions

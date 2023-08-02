@@ -23,6 +23,7 @@ export type APIKeyIdentity = {
 export type User = {
     __typename: 'User';
     description?: string | null;
+    givenName?: string | null;
     icon?: string | null;
     name?: string | null;
     urn?: string | null;
@@ -90,12 +91,15 @@ export enum TokenType {
 }
 
 export type RawToken =
+    | Raw_Token_border
+    | Raw_Token_boxShadow
     | Raw_Token_color
     | Raw_Token_scalar
     | Raw_Token_typography;
 
-export type Raw_Token_color = {
-    __typename: 'Raw_Token_color';
+export type Raw_Token_border = {
+    __typename: 'Raw_Token_border';
+    border?: Border | null;
     description?: string | null;
     extensions?: string | null;
     metadata?: Metadata | null;
@@ -116,8 +120,9 @@ export type TokenInterface = {
     urn?: string | null;
 };
 
-export type Raw_Token_scalar = {
-    __typename: 'Raw_Token_scalar';
+export type Raw_Token_boxShadow = {
+    __typename: 'Raw_Token_boxShadow';
+    boxShadow?: BoxShadow | null;
     description?: string | null;
     extensions?: string | null;
     metadata?: Metadata | null;
@@ -128,11 +133,45 @@ export type Raw_Token_scalar = {
     value?: string | null;
 };
 
+export type BoxShadow = {
+    __typename: 'BoxShadow';
+    blur?: string | null;
+    color?: string | null;
+    spread?: string | null;
+    type?: string | null;
+    x?: string | null;
+    y?: string | null;
+};
+
 export type Metadata = {
     __typename: 'Metadata';
     created?: string | null;
     createdBy?: Entity | null;
     lastUpdatedBy?: Entity | null;
+};
+
+export type Raw_Token_color = {
+    __typename: 'Raw_Token_color';
+    description?: string | null;
+    extensions?: string | null;
+    metadata?: Metadata | null;
+    name?: string | null;
+    setUrn?: string | null;
+    type?: TokenType | null;
+    urn?: string | null;
+    value?: string | null;
+};
+
+export type Raw_Token_scalar = {
+    __typename: 'Raw_Token_scalar';
+    description?: string | null;
+    extensions?: string | null;
+    metadata?: Metadata | null;
+    name?: string | null;
+    setUrn?: string | null;
+    type?: TokenType | null;
+    urn?: string | null;
+    value?: string | null;
 };
 
 export type Raw_Token_typography = {
@@ -159,6 +198,13 @@ export type Typography = {
     paragraphSpacing?: string | null;
     textCase?: string | null;
     textDecoration?: string | null;
+};
+
+export type Border = {
+    __typename: 'Border';
+    color?: string | null;
+    style?: string | null;
+    width?: string | null;
 };
 
 export type APIKeyInput = {
@@ -421,6 +467,7 @@ export type ProjectUpdateInput = {
 
 export type TokenUpdateInput = {
     description?: string | null;
+    extensions?: string | null;
     name?: string | null;
     value?: string | null;
 };
@@ -471,10 +518,16 @@ export type ProjectFilterInput = {
     visibility?: VisibilityInput | null;
 };
 
-export type Token = Token_Typography | Token_color | Token_scalar;
+export type Token =
+    | Token_border
+    | Token_boxShadow
+    | Token_color
+    | Token_scalar
+    | Token_typography;
 
-export type Token_Typography = {
-    __typename: 'Token_Typography';
+export type Token_border = {
+    __typename: 'Token_border';
+    border?: Border | null;
     description?: string | null;
     metadata?: Metadata | null;
     name?: string | null;
@@ -499,6 +552,16 @@ export type Token_Composition = {
     value?: string | null;
 };
 
+export type Token_boxShadow = {
+    __typename: 'Token_boxShadow';
+    boxShadow?: BoxShadow | null;
+    description?: string | null;
+    metadata?: Metadata | null;
+    name?: string | null;
+    type?: TokenType | null;
+    value?: string | null;
+};
+
 export type Token_color = {
     __typename: 'Token_color';
     description?: string | null;
@@ -514,6 +577,16 @@ export type Token_scalar = {
     metadata?: Metadata | null;
     name?: string | null;
     type?: TokenType | null;
+    value?: string | null;
+};
+
+export type Token_typography = {
+    __typename: 'Token_typography';
+    description?: string | null;
+    metadata?: Metadata | null;
+    name?: string | null;
+    type?: TokenType | null;
+    typography?: Typography | null;
     value?: string | null;
 };
 
@@ -589,6 +662,7 @@ export type AttachPolicyToGroupMutation = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -617,6 +691,49 @@ export type BulkCreateTokenMutationVariables = {
 export type BulkCreateTokenMutation = {
     bulkCreateToken: Array<
         | (
+              | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
               | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
@@ -729,6 +846,7 @@ export type CreateGroupMutation = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -778,6 +896,7 @@ export type CreateOrganizationMutation = {
         owner?: {
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -807,6 +926,7 @@ export type CreateOrganizationMutation = {
         users?: Array<{
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -886,6 +1006,7 @@ export type CreateReleaseMutation = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -943,6 +1064,49 @@ export type CreateTokenMutationVariables = {
 export type CreateTokenMutation = {
     createToken:
         | (
+              | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
               | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
@@ -1016,6 +1180,26 @@ export type CreateTokenSetMutation = {
         name?: string | null;
         projectUrn?: string | null;
         tokens: Array<
+            | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
             | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
@@ -1092,6 +1276,7 @@ export type DeleteGroupMutation = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -1244,6 +1429,49 @@ export type DeleteTokenMutation = {
     deleteToken:
         | (
               | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
                     extensions?: string | null;
@@ -1316,6 +1544,26 @@ export type DeleteTokenSetMutation = {
         projectUrn?: string | null;
         tokens: Array<
             | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
                   extensions?: string | null;
@@ -1370,6 +1618,7 @@ export type DetachPolicyFromGroupMutation = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -1496,6 +1745,7 @@ export type UpdateOrganizationMutation = {
         owner?: {
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -1525,6 +1775,7 @@ export type UpdateOrganizationMutation = {
         users?: Array<{
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -1628,6 +1879,49 @@ export type UpdateTokenMutation = {
     updateToken:
         | (
               | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
                     extensions?: string | null;
@@ -1700,6 +1994,26 @@ export type UpdateTokenSetMutation = {
         name?: string | null;
         projectUrn?: string | null;
         tokens: Array<
+            | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
             | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
@@ -1774,6 +2088,7 @@ export type GroupsQuery = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -1825,6 +2140,7 @@ export type OrganizationsQuery = {
         owner?: {
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -1854,6 +2170,7 @@ export type OrganizationsQuery = {
         users?: Array<{
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -1953,7 +2270,33 @@ export type ResolveQuery = {
     resolve: Array<
         | (
               | {
-                    __typename: 'Token_Typography';
+                    __typename: 'Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    type?: TokenType | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
                     description?: string | null;
                     metadata?: {
                         __typename: string;
@@ -1983,6 +2326,29 @@ export type ResolveQuery = {
                     } | null;
                     name?: string | null;
                     type?: TokenType | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Token_typography';
+                    description?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    type?: TokenType | null;
+                    typography?: {
+                        __typename: string;
+                        fontFamily?: string | null;
+                        fontSize?: string | null;
+                        fontWeight?: string | null;
+                        letterSpacing?: string | null;
+                        lineHeight?: string | null;
+                        paragraphIndent?: string | null;
+                        paragraphSpacing?: string | null;
+                        textCase?: string | null;
+                        textDecoration?: string | null;
+                    } | null;
                     value?: string | null;
                 }
           )
@@ -2097,6 +2463,7 @@ export type SelfQuery = {
         user?: {
             __typename: 'User';
             description?: string | null;
+            givenName?: string | null;
             icon?: string | null;
             name?: string | null;
             urn?: string | null;
@@ -2112,6 +2479,49 @@ export type TokenQueryVariables = {
 export type TokenQuery = {
     token:
         | (
+              | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
               | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
@@ -2185,6 +2595,26 @@ export type TokenSetQuery = {
         projectUrn?: string | null;
         tokens: Array<
             | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
                   extensions?: string | null;
@@ -2237,6 +2667,26 @@ export type TokenSetsQuery = {
         projectUrn?: string | null;
         tokens: Array<
             | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
                   extensions?: string | null;
@@ -2280,6 +2730,49 @@ export type TokensQueryVariables = {
 
 export type TokensQuery = {
     tokens: Array<
+        | {
+              __typename: 'Raw_Token_border';
+              border?: {
+                  __typename: string;
+                  color?: string | null;
+                  style?: string | null;
+                  width?: string | null;
+              } | null;
+              description?: string | null;
+              extensions?: string | null;
+              metadata?: {
+                  __typename: string;
+                  created?: string | null;
+              } | null;
+              name?: string | null;
+              setUrn?: string | null;
+              type?: TokenType | null;
+              urn?: string | null;
+              value?: string | null;
+          }
+        | {
+              __typename: 'Raw_Token_boxShadow';
+              boxShadow?: {
+                  __typename: string;
+                  blur?: string | null;
+                  color?: string | null;
+                  spread?: string | null;
+                  type?: string | null;
+                  x?: string | null;
+                  y?: string | null;
+              } | null;
+              description?: string | null;
+              extensions?: string | null;
+              metadata?: {
+                  __typename: string;
+                  created?: string | null;
+              } | null;
+              name?: string | null;
+              setUrn?: string | null;
+              type?: TokenType | null;
+              urn?: string | null;
+              value?: string | null;
+          }
         | {
               __typename: 'Raw_Token_color';
               description?: string | null;
@@ -2369,6 +2862,7 @@ export type OnCreateGroupSubscription = {
                   | {
                         __typename: 'User';
                         description?: string | null;
+                        givenName?: string | null;
                         icon?: string | null;
                         name?: string | null;
                         urn?: string | null;
@@ -2396,6 +2890,49 @@ export type OnCreateTokenSubscriptionVariables = {
 export type OnCreateTokenSubscription = {
     onCreateToken:
         | (
+              | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
               | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
@@ -2469,6 +3006,26 @@ export type OnCreateTokenSetSubscription = {
         projectUrn?: string | null;
         tokens: Array<
             | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
                   extensions?: string | null;
@@ -2510,6 +3067,49 @@ export type OnDeleteTokenSubscriptionVariables = {
 export type OnDeleteTokenSubscription = {
     onDeleteToken:
         | (
+              | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
               | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
@@ -2583,6 +3183,26 @@ export type OnDeleteTokenSetSubscription = {
         projectUrn?: string | null;
         tokens: Array<
             | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;
                   extensions?: string | null;
@@ -2624,6 +3244,49 @@ export type OnUpdateTokenSubscriptionVariables = {
 export type OnUpdateTokenSubscription = {
     onUpdateToken:
         | (
+              | {
+                    __typename: 'Raw_Token_border';
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Raw_Token_boxShadow';
+                    boxShadow?: {
+                        __typename: string;
+                        blur?: string | null;
+                        color?: string | null;
+                        spread?: string | null;
+                        type?: string | null;
+                        x?: string | null;
+                        y?: string | null;
+                    } | null;
+                    description?: string | null;
+                    extensions?: string | null;
+                    metadata?: {
+                        __typename: string;
+                        created?: string | null;
+                    } | null;
+                    name?: string | null;
+                    setUrn?: string | null;
+                    type?: TokenType | null;
+                    urn?: string | null;
+                    value?: string | null;
+                }
               | {
                     __typename: 'Raw_Token_color';
                     description?: string | null;
@@ -2696,6 +3359,26 @@ export type OnUpdateTokenSetSubscription = {
         name?: string | null;
         projectUrn?: string | null;
         tokens: Array<
+            | {
+                  __typename: 'Raw_Token_border';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
+            | {
+                  __typename: 'Raw_Token_boxShadow';
+                  description?: string | null;
+                  extensions?: string | null;
+                  name?: string | null;
+                  setUrn?: string | null;
+                  type?: TokenType | null;
+                  urn?: string | null;
+                  value?: string | null;
+              }
             | {
                   __typename: 'Raw_Token_color';
                   description?: string | null;

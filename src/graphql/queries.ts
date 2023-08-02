@@ -44,6 +44,7 @@ export const groups = /* GraphQL */ `
                 }
                 ... on User {
                     description
+                    givenName
                     icon
                     name
                     urn
@@ -87,6 +88,7 @@ export const organizations = /* GraphQL */ `
             name
             owner {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -113,6 +115,7 @@ export const organizations = /* GraphQL */ `
             urn
             users {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -197,7 +200,29 @@ export const resolve = /* GraphQL */ `
         $resolver: String!
     ) {
         resolve(modifiers: $modifiers, resolver: $resolver) {
-            ... on Token_Typography {
+            ... on Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                metadata {
+                    created
+                }
+                name
+                type
+                value
+            }
+            ... on Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
                 description
                 metadata {
                     created
@@ -222,6 +247,26 @@ export const resolve = /* GraphQL */ `
                 }
                 name
                 type
+                value
+            }
+            ... on Token_typography {
+                description
+                metadata {
+                    created
+                }
+                name
+                type
+                typography {
+                    fontFamily
+                    fontSize
+                    fontWeight
+                    letterSpacing
+                    lineHeight
+                    paragraphIndent
+                    paragraphSpacing
+                    textCase
+                    textDecoration
+                }
                 value
             }
         }
@@ -322,6 +367,7 @@ export const self = /* GraphQL */ `
             }
             user {
                 description
+                givenName
                 icon
                 name
                 urn
@@ -333,6 +379,43 @@ export const self = /* GraphQL */ `
 export const token = /* GraphQL */ `
     query Token($urn: String!) {
         token(urn: $urn) {
+            ... on Raw_Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
+            ... on Raw_Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
             ... on Raw_Token_color {
                 description
                 extensions
@@ -392,6 +475,24 @@ export const tokenSet = /* GraphQL */ `
             name
             projectUrn
             tokens {
+                ... on Raw_Token_border {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
                 ... on Raw_Token_color {
                     description
                     extensions
@@ -443,6 +544,24 @@ export const tokenSets = /* GraphQL */ `
             name
             projectUrn
             tokens {
+                ... on Raw_Token_border {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    description
+                    extensions
+                    name
+                    setUrn
+                    type
+                    urn
+                    value
+                }
                 ... on Raw_Token_color {
                     description
                     extensions
@@ -483,6 +602,43 @@ export const tokens = /* GraphQL */ `
         $set: String!
     ) {
         tokens(filter: $filter, limit: $limit, offset: $offset, set: $set) {
+            ... on Raw_Token_border {
+                border {
+                    color
+                    style
+                    width
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
+            ... on Raw_Token_boxShadow {
+                boxShadow {
+                    blur
+                    color
+                    spread
+                    type
+                    x
+                    y
+                }
+                description
+                extensions
+                metadata {
+                    created
+                }
+                name
+                setUrn
+                type
+                urn
+                value
+            }
             ... on Raw_Token_color {
                 description
                 extensions
