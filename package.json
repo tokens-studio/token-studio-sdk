@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/sdk",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "The official SDK for Tokens Studio",
   "license": "MIT",
   "author": "andrew@hyma.io",
@@ -25,6 +25,7 @@
     "build": "npm run build:js && npm run build:types",
     "build:js": "rollup --bundleConfigAsCjs --config rollup.config.mjs",
     "build:types": "tsc --emitDeclarationOnly --declaration -p tsconfig.types.json",
+    "changeset": "changeset",
     "cypress:open": "cypress open",
     "dev": "rollup -w --bundleConfigAsCjs --config rollup.config.mjs",
     "docs": "typedoc",
