@@ -1,7 +1,11 @@
 import { API } from '@aws-amplify/api';
 import { ApiKey } from './apiKey';
 import { Configuration } from './configure';
-import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
+import {
+    GraphQLAPIClass,
+    GraphQLOptions,
+    GraphQLResult
+} from '@aws-amplify/api-graphql';
 
 /**
  * The namespace for executing graphql queries.
@@ -48,6 +52,8 @@ export namespace Graphql {
         query,
         variables
     });
+
+    export const getConfig = () => API.configure({});
 }
 
 export type { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
