@@ -83,7 +83,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v1
   techdocs: 
-    name: Release
+    name: Techdocs
     runs-on: ubuntu-latest
     env:
       ENTITY_NAMESPACE: 'default'
@@ -118,6 +118,6 @@ jobs:
              aws-region: eu-central-1
       - name: Copy files to the production website with the AWS CLI
         run: |
-             aws s3 sync ./out s3://537243810878-prod-rkgdoji661a-s3/${ENTITY_NAMESPACE}/${ENTITY_KIND}/${ENTITY_NAME}/ --delete
+             aws s3 sync ./techdocs s3://537243810878-prod-rkgdoji661a-s3/${ENTITY_NAMESPACE}/${ENTITY_KIND}/${ENTITY_NAME}/ --delete
      
       
