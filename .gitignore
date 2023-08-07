@@ -89,5 +89,6 @@ types/**
 jest-coverage/**
 docs/**
 site/**
+techdocs/**
 
 .turbo

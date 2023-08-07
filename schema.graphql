@@ -582,6 +582,21 @@ input ApiKeyFilterInput {
   urn: StringFilterInput
 }
 
+input BorderInput {
+  color: String
+  style: String
+  width: String
+}
+
+input BoxShadowInput {
+  blur: String
+  color: String
+  spread: String
+  type: String
+  x: String
+  y: String
+}
+
 input GeneratorInput {
   description: String
   editor: String
@@ -787,10 +802,15 @@ input TokenFilterInput {
 }
 
 input TokenInput {
+  border: BorderInput
+  boxShadow: BoxShadowInput
   description: String
   extensions: AWSJSON
   name: String!
   type: TokenType!
+  #  Specific types
+  typography: TypographyInput
+  #  Used for references and scalars
   value: String!
 }
 
@@ -823,6 +843,18 @@ input TokenUpdateInput {
   extensions: AWSJSON
   name: String
   value: String
+}
+
+input TypographyInput {
+  fontFamily: String
+  fontSize: String
+  fontWeight: String
+  letterSpacing: String
+  lineHeight: String
+  paragraphIndent: String
+  paragraphSpacing: String
+  textCase: String
+  textDecoration: String
 }
 
 input UserFilterInput {

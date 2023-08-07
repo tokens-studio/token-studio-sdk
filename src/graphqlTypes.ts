@@ -58,11 +58,29 @@ export type PolicyStatement = {
 };
 
 export type TokenInput = {
+    border?: BorderInput | null;
+    boxShadow?: BoxShadowInput | null;
     description?: string | null;
     extensions?: string | null;
     name: string;
     type: TokenType;
+    typography?: TypographyInput | null;
     value: string;
+};
+
+export type BorderInput = {
+    color?: string | null;
+    style?: string | null;
+    width?: string | null;
+};
+
+export type BoxShadowInput = {
+    blur?: string | null;
+    color?: string | null;
+    spread?: string | null;
+    type?: string | null;
+    x?: string | null;
+    y?: string | null;
 };
 
 export enum TokenType {
@@ -89,6 +107,18 @@ export enum TokenType {
     textDecoration = 'textDecoration',
     typography = 'typography'
 }
+
+export type TypographyInput = {
+    fontFamily?: string | null;
+    fontSize?: string | null;
+    fontWeight?: string | null;
+    letterSpacing?: string | null;
+    lineHeight?: string | null;
+    paragraphIndent?: string | null;
+    paragraphSpacing?: string | null;
+    textCase?: string | null;
+    textDecoration?: string | null;
+};
 
 export type RawToken =
     | Raw_Token_border

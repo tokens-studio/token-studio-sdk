@@ -82,3 +82,42 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         id: deployment
         uses: actions/deploy-pages@v1
+  techdocs: 
+    name: Release
+    runs-on: ubuntu-latest
+    env:
+      ENTITY_NAMESPACE: 'default'
+      ENTITY_KIND: 'Component'
+      ENTITY_NAME: 'token-studio-sdk'
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Build docs
+        run: docker-compose run techdocs
+
+      - name: Import Secrets
+        id: secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ vars.VAULT_URL }}
+          role: techdocs
+          method: jwt
+          namespace: admin
+          secrets: |
+           aws/prod/creds/R_kgDOJI661A-techdocs-deploy  access_key | AWS_ACCESS_KEY_ID ;
+           aws/prod/creds/R_kgDOJI661A-techdocs-deploy  secret_key | AWS_SECRET_ACCESS_KEY ;
+           aws/prod/creds/R_kgDOJI661A-techdocs-deploy  security_token | AWS_SESSION_TOKEN ;
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+             aws-access-key-id: ${{ steps.secrets.outputs.AWS_ACCESS_KEY_ID }}
+             aws-secret-access-key: ${{ steps.secrets.outputs.AWS_SECRET_ACCESS_KEY }}
+             aws-session-token: ${{ steps.secrets.outputs.AWS_SESSION_TOKEN }}
+             aws-region: eu-central-1
+      - name: Copy files to the production website with the AWS CLI
+        run: |
+             aws s3 sync ./out s3://537243810878-prod-rkgdoji661a-s3/${ENTITY_NAMESPACE}/${ENTITY_KIND}/${ENTITY_NAME}/ --delete
+     
+      
