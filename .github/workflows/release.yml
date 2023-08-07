@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENTITY_NAMESPACE: 'default'
-      ENTITY_KIND: 'Component'
+      ENTITY_KIND: 'component'
       ENTITY_NAME: 'token-studio-sdk'
     steps:
       - name: Checkout Repo
