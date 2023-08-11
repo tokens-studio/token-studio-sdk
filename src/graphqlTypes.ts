@@ -4,7 +4,7 @@
 
 export type Group = {
     __typename: 'Group';
-    created: string;
+    createdAt: string;
     description?: string | null;
     members?: Array<Entity | null> | null;
     name: string;
@@ -37,7 +37,7 @@ export enum Visibility {
 
 export type Policy = {
     __typename: 'Policy';
-    created?: string | null;
+    createdAt?: string | null;
     description?: string | null;
     name: string;
     urn?: string | null;
@@ -58,11 +58,29 @@ export type PolicyStatement = {
 };
 
 export type TokenInput = {
+    border?: BorderInput | null;
+    boxShadow?: BoxShadowInput | null;
     description?: string | null;
     extensions?: string | null;
     name: string;
     type: TokenType;
+    typography?: TypographyInput | null;
     value: string;
+};
+
+export type BorderInput = {
+    color?: string | null;
+    style?: string | null;
+    width?: string | null;
+};
+
+export type BoxShadowInput = {
+    blur?: string | null;
+    color?: string | null;
+    spread?: string | null;
+    type?: string | null;
+    x?: string | null;
+    y?: string | null;
 };
 
 export enum TokenType {
@@ -89,6 +107,18 @@ export enum TokenType {
     textDecoration = 'textDecoration',
     typography = 'typography'
 }
+
+export type TypographyInput = {
+    fontFamily?: string | null;
+    fontSize?: string | null;
+    fontWeight?: string | null;
+    letterSpacing?: string | null;
+    lineHeight?: string | null;
+    paragraphIndent?: string | null;
+    paragraphSpacing?: string | null;
+    textCase?: string | null;
+    textDecoration?: string | null;
+};
 
 export type RawToken =
     | Raw_Token_border
@@ -145,7 +175,7 @@ export type BoxShadow = {
 
 export type Metadata = {
     __typename: 'Metadata';
-    created?: string | null;
+    createdAt?: string | null;
     createdBy?: Entity | null;
     lastUpdatedBy?: Entity | null;
 };
@@ -222,7 +252,6 @@ export type APIKey = {
 
 export type GeneratorInput = {
     description?: string | null;
-    editor?: string | null;
     graph?: string | null;
     name: string;
 };
@@ -231,7 +260,6 @@ export type Generator = {
     __typename: 'Generator';
     createdAt?: string | null;
     description?: string | null;
-    editor?: string | null;
     graph?: string | null;
     name?: string | null;
     updatedAt?: string | null;
@@ -263,7 +291,7 @@ export type Organization = {
     __typename: 'Organization';
     account?: string | null;
     apiKeys?: Array<APIKeyWithoutValue | null> | null;
-    created?: string | null;
+    createdAt?: string | null;
     description?: string | null;
     groups?: Array<Group | null> | null;
     icon?: string | null;
@@ -289,13 +317,16 @@ export type APIKeyWithoutValue = {
 
 export type Project = {
     __typename: 'Project';
-    created: string;
+    createdAt: string;
+    createdBy?: Entity | null;
     description?: string | null;
+    generators?: Array<Generator | null> | null;
     icon?: string | null;
     name: string;
     orgUrn?: string | null;
     resolvers?: Array<Resolver | null> | null;
     sets?: Array<TokenSet | null> | null;
+    summary?: ProjectSummary | null;
     urn: string;
     visibility?: Visibility | null;
 };
@@ -359,6 +390,19 @@ export type TokenSet = {
     projectUrn?: string | null;
     tokens: Array<RawToken>;
     urn?: string | null;
+};
+
+export type ProjectSummary = {
+    __typename: 'ProjectSummary';
+    generators?: SummarizedValue | null;
+    resolvers?: SummarizedValue | null;
+    sets?: SummarizedValue | null;
+    tokens?: SummarizedValue | null;
+};
+
+export type SummarizedValue = {
+    __typename: 'SummarizedValue';
+    total: number;
 };
 
 export type PolicyInput = {
@@ -486,6 +530,11 @@ export type StringFilterInput = {
     beginsWith?: string | null;
     eq?: string | null;
     ne?: string | null;
+};
+
+export type GeneratorFilterInput = {
+    name?: StringFilterInput | null;
+    urn?: StringFilterInput | null;
 };
 
 export type GroupFilterInput = {
@@ -650,7 +699,7 @@ export type AttachPolicyToGroupMutationVariables = {
 export type AttachPolicyToGroupMutation = {
     attachPolicyToGroup?: {
         __typename: 'Group';
-        created: string;
+        createdAt: string;
         description?: string | null;
         members: Array<
             | (
@@ -674,7 +723,7 @@ export type AttachPolicyToGroupMutation = {
         name: string;
         policy?: {
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -703,7 +752,7 @@ export type BulkCreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -726,7 +775,7 @@ export type BulkCreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -740,7 +789,7 @@ export type BulkCreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -754,7 +803,7 @@ export type BulkCreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -768,7 +817,7 @@ export type BulkCreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -818,7 +867,6 @@ export type CreateGeneratorMutation = {
         __typename: 'Generator';
         createdAt?: string | null;
         description?: string | null;
-        editor?: string | null;
         graph?: string | null;
         name?: string | null;
         updatedAt?: string | null;
@@ -834,7 +882,7 @@ export type CreateGroupMutationVariables = {
 export type CreateGroupMutation = {
     createGroup?: {
         __typename: 'Group';
-        created: string;
+        createdAt: string;
         description?: string | null;
         members: Array<
             | (
@@ -858,7 +906,7 @@ export type CreateGroupMutation = {
         name: string;
         policy?: {
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -882,11 +930,11 @@ export type CreateOrganizationMutation = {
             name?: string | null;
             urn?: string | null;
         } | null> | null;
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         groups?: Array<{
             __typename: 'Group';
-            created: string;
+            createdAt: string;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -905,14 +953,14 @@ export type CreateOrganizationMutation = {
         payment?: string | null;
         policies?: Array<{
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
         } | null> | null;
         projects?: Array<{
             __typename: 'Project';
-            created: string;
+            createdAt: string;
             description?: string | null;
             icon?: string | null;
             name: string;
@@ -944,7 +992,7 @@ export type CreatePolicyMutationVariables = {
 export type CreatePolicyMutation = {
     createPolicy?: {
         __typename: 'Policy';
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         name: string;
         urn?: string | null;
@@ -963,8 +1011,35 @@ export type CreateProjectMutationVariables = {
 export type CreateProjectMutation = {
     createProject?: {
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -1076,7 +1151,7 @@ export type CreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1099,7 +1174,7 @@ export type CreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1113,7 +1188,7 @@ export type CreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1127,7 +1202,7 @@ export type CreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1141,7 +1216,7 @@ export type CreateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1175,7 +1250,7 @@ export type CreateTokenSetMutation = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -1257,6 +1332,22 @@ export type DeleteAPIKeyMutation = {
     } | null;
 };
 
+export type DeleteGeneratorMutationVariables = {
+    urn: string;
+};
+
+export type DeleteGeneratorMutation = {
+    deleteGenerator?: {
+        __typename: 'Generator';
+        createdAt?: string | null;
+        description?: string | null;
+        graph?: string | null;
+        name?: string | null;
+        updatedAt?: string | null;
+        urn?: string | null;
+    } | null;
+};
+
 export type DeleteGroupMutationVariables = {
     urn: string;
 };
@@ -1264,7 +1355,7 @@ export type DeleteGroupMutationVariables = {
 export type DeleteGroupMutation = {
     deleteGroup?: {
         __typename: 'Group';
-        created: string;
+        createdAt: string;
         description?: string | null;
         members: Array<
             | (
@@ -1288,7 +1379,7 @@ export type DeleteGroupMutation = {
         name: string;
         policy?: {
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -1317,8 +1408,35 @@ export type DeleteOrganizationMutationVariables = {
 export type DeleteOrganizationMutation = {
     deleteOrganization?: {
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -1346,7 +1464,7 @@ export type DeletePolicyMutationVariables = {
 export type DeletePolicyMutation = {
     deletePolicy?: {
         __typename: 'Policy';
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         name: string;
         urn?: string | null;
@@ -1364,8 +1482,35 @@ export type DeleteProjectMutationVariables = {
 export type DeleteProjectMutation = {
     deleteProject?: {
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -1440,7 +1585,7 @@ export type DeleteTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1463,7 +1608,7 @@ export type DeleteTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1477,7 +1622,7 @@ export type DeleteTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1491,7 +1636,7 @@ export type DeleteTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1505,7 +1650,7 @@ export type DeleteTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1538,7 +1683,7 @@ export type DeleteTokenSetMutation = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -1606,7 +1751,7 @@ export type DetachPolicyFromGroupMutationVariables = {
 export type DetachPolicyFromGroupMutation = {
     detachPolicyFromGroup?: {
         __typename: 'Group';
-        created: string;
+        createdAt: string;
         description?: string | null;
         members: Array<
             | (
@@ -1630,7 +1775,7 @@ export type DetachPolicyFromGroupMutation = {
         name: string;
         policy?: {
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -1685,6 +1830,23 @@ export type RemoveMemberFromGroupMutation = {
     removeMemberFromGroup?: string | null;
 };
 
+export type UpdateGeneratorMutationVariables = {
+    input: GeneratorInput;
+    urn: string;
+};
+
+export type UpdateGeneratorMutation = {
+    updateGenerator?: {
+        __typename: 'Generator';
+        createdAt?: string | null;
+        description?: string | null;
+        graph?: string | null;
+        name?: string | null;
+        updatedAt?: string | null;
+        urn?: string | null;
+    } | null;
+};
+
 export type UpdateGroupMutationVariables = {
     input: GroupUpdateInput;
     urn: string;
@@ -1693,8 +1855,35 @@ export type UpdateGroupMutationVariables = {
 export type UpdateGroupMutation = {
     updateGroup?: {
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -1731,11 +1920,11 @@ export type UpdateOrganizationMutation = {
             name?: string | null;
             urn?: string | null;
         } | null> | null;
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         groups?: Array<{
             __typename: 'Group';
-            created: string;
+            createdAt: string;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -1754,14 +1943,14 @@ export type UpdateOrganizationMutation = {
         payment?: string | null;
         policies?: Array<{
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
         } | null> | null;
         projects?: Array<{
             __typename: 'Project';
-            created: string;
+            createdAt: string;
             description?: string | null;
             icon?: string | null;
             name: string;
@@ -1793,7 +1982,7 @@ export type UpdatePolicyMutationVariables = {
 export type UpdatePolicyMutation = {
     updatePolicy?: {
         __typename: 'Policy';
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         name: string;
         urn?: string | null;
@@ -1812,8 +2001,35 @@ export type UpdateProjectMutationVariables = {
 export type UpdateProjectMutation = {
     updateProject?: {
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -1890,7 +2106,7 @@ export type UpdateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1913,7 +2129,7 @@ export type UpdateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1927,7 +2143,7 @@ export type UpdateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1941,7 +2157,7 @@ export type UpdateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1955,7 +2171,7 @@ export type UpdateTokenMutation = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -1989,7 +2205,7 @@ export type UpdateTokenSetMutation = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -2066,6 +2282,41 @@ export type ApiKeysQuery = {
     } | null> | null;
 };
 
+export type GeneratorQueryVariables = {
+    urn: string;
+};
+
+export type GeneratorQuery = {
+    generator?: {
+        __typename: 'Generator';
+        createdAt?: string | null;
+        description?: string | null;
+        graph?: string | null;
+        name?: string | null;
+        updatedAt?: string | null;
+        urn?: string | null;
+    } | null;
+};
+
+export type GeneratorsQueryVariables = {
+    filter?: GeneratorFilterInput | null;
+    limit?: number | null;
+    offset?: number | null;
+    project: string;
+};
+
+export type GeneratorsQuery = {
+    generators?: Array<{
+        __typename: 'Generator';
+        createdAt?: string | null;
+        description?: string | null;
+        graph?: string | null;
+        name?: string | null;
+        updatedAt?: string | null;
+        urn?: string | null;
+    } | null> | null;
+};
+
 export type GroupsQueryVariables = {
     filter?: GroupFilterInput | null;
     limit?: number | null;
@@ -2076,7 +2327,7 @@ export type GroupsQueryVariables = {
 export type GroupsQuery = {
     groups?: Array<{
         __typename: 'Group';
-        created: string;
+        createdAt: string;
         description?: string | null;
         members: Array<
             | (
@@ -2100,7 +2351,7 @@ export type GroupsQuery = {
         name: string;
         policy?: {
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -2126,11 +2377,11 @@ export type OrganizationsQuery = {
             name?: string | null;
             urn?: string | null;
         } | null> | null;
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         groups?: Array<{
             __typename: 'Group';
-            created: string;
+            createdAt: string;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -2149,14 +2400,14 @@ export type OrganizationsQuery = {
         payment?: string | null;
         policies?: Array<{
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
         } | null> | null;
         projects?: Array<{
             __typename: 'Project';
-            created: string;
+            createdAt: string;
             description?: string | null;
             icon?: string | null;
             name: string;
@@ -2189,7 +2440,7 @@ export type PoliciesQueryVariables = {
 export type PoliciesQuery = {
     policies?: Array<{
         __typename: 'Policy';
-        created?: string | null;
+        createdAt?: string | null;
         description?: string | null;
         name: string;
         urn?: string | null;
@@ -2207,8 +2458,35 @@ export type ProjectQueryVariables = {
 export type ProjectQuery = {
     project?: {
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -2239,8 +2517,35 @@ export type ProjectsQueryVariables = {
 export type ProjectsQuery = {
     projects?: Array<{
         __typename: 'Project';
-        created: string;
+        createdAt: string;
+        createdBy:
+            | (
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+                  | {
+                        __typename: 'User';
+                        description?: string | null;
+                        givenName?: string | null;
+                        icon?: string | null;
+                        name?: string | null;
+                        urn?: string | null;
+                        visibility?: Visibility | null;
+                    }
+              )
+            | null;
         description?: string | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            createdAt?: string | null;
+            description?: string | null;
+            graph?: string | null;
+            name?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+        } | null> | null;
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
@@ -2280,7 +2585,7 @@ export type ResolveQuery = {
                     description?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     type?: TokenType | null;
@@ -2300,7 +2605,7 @@ export type ResolveQuery = {
                     description?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     type?: TokenType | null;
@@ -2311,7 +2616,7 @@ export type ResolveQuery = {
                     description?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     type?: TokenType | null;
@@ -2322,7 +2627,7 @@ export type ResolveQuery = {
                     description?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     type?: TokenType | null;
@@ -2333,7 +2638,7 @@ export type ResolveQuery = {
                     description?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     type?: TokenType | null;
@@ -2446,7 +2751,7 @@ export type SelfQuery = {
         organizations?: Array<{
             __typename: 'Organization';
             account?: string | null;
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             icon?: string | null;
             name?: string | null;
@@ -2491,7 +2796,7 @@ export type TokenQuery = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2514,7 +2819,7 @@ export type TokenQuery = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2528,7 +2833,7 @@ export type TokenQuery = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2542,7 +2847,7 @@ export type TokenQuery = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2556,7 +2861,7 @@ export type TokenQuery = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2589,7 +2894,7 @@ export type TokenSetQuery = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -2661,7 +2966,7 @@ export type TokenSetsQuery = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -2742,7 +3047,7 @@ export type TokensQuery = {
               extensions?: string | null;
               metadata?: {
                   __typename: string;
-                  created?: string | null;
+                  createdAt?: string | null;
               } | null;
               name?: string | null;
               setUrn?: string | null;
@@ -2765,7 +3070,7 @@ export type TokensQuery = {
               extensions?: string | null;
               metadata?: {
                   __typename: string;
-                  created?: string | null;
+                  createdAt?: string | null;
               } | null;
               name?: string | null;
               setUrn?: string | null;
@@ -2779,7 +3084,7 @@ export type TokensQuery = {
               extensions?: string | null;
               metadata?: {
                   __typename: string;
-                  created?: string | null;
+                  createdAt?: string | null;
               } | null;
               name?: string | null;
               setUrn?: string | null;
@@ -2793,7 +3098,7 @@ export type TokensQuery = {
               extensions?: string | null;
               metadata?: {
                   __typename: string;
-                  created?: string | null;
+                  createdAt?: string | null;
               } | null;
               name?: string | null;
               setUrn?: string | null;
@@ -2807,7 +3112,7 @@ export type TokensQuery = {
               extensions?: string | null;
               metadata?: {
                   __typename: string;
-                  created?: string | null;
+                  createdAt?: string | null;
               } | null;
               name?: string | null;
               setUrn?: string | null;
@@ -2850,7 +3155,7 @@ export type OnCreateGroupSubscriptionVariables = {
 export type OnCreateGroupSubscription = {
     onCreateGroup?: {
         __typename: 'Group';
-        created: string;
+        createdAt: string;
         description?: string | null;
         members: Array<
             | (
@@ -2874,7 +3179,7 @@ export type OnCreateGroupSubscription = {
         name: string;
         policy?: {
             __typename: 'Policy';
-            created?: string | null;
+            createdAt?: string | null;
             description?: string | null;
             name: string;
             urn?: string | null;
@@ -2902,7 +3207,7 @@ export type OnCreateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2925,7 +3230,7 @@ export type OnCreateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2939,7 +3244,7 @@ export type OnCreateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2953,7 +3258,7 @@ export type OnCreateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -2967,7 +3272,7 @@ export type OnCreateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3000,7 +3305,7 @@ export type OnCreateTokenSetSubscription = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -3079,7 +3384,7 @@ export type OnDeleteTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3102,7 +3407,7 @@ export type OnDeleteTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3116,7 +3421,7 @@ export type OnDeleteTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3130,7 +3435,7 @@ export type OnDeleteTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3144,7 +3449,7 @@ export type OnDeleteTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3177,7 +3482,7 @@ export type OnDeleteTokenSetSubscription = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
@@ -3256,7 +3561,7 @@ export type OnUpdateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3279,7 +3584,7 @@ export type OnUpdateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3293,7 +3598,7 @@ export type OnUpdateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3307,7 +3612,7 @@ export type OnUpdateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3321,7 +3626,7 @@ export type OnUpdateTokenSubscription = {
                     extensions?: string | null;
                     metadata?: {
                         __typename: string;
-                        created?: string | null;
+                        createdAt?: string | null;
                     } | null;
                     name?: string | null;
                     setUrn?: string | null;
@@ -3354,7 +3659,7 @@ export type OnUpdateTokenSetSubscription = {
         __typename: 'TokenSet';
         metadata?: {
             __typename: 'Metadata';
-            created?: string | null;
+            createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;

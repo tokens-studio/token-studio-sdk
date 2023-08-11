@@ -5,7 +5,7 @@
 export const onCreateGroup = /* GraphQL */ `
     subscription OnCreateGroup($organization: String!) {
         onCreateGroup(organization: $organization) {
-            created
+            createdAt
             description
             members {
                 ... on APIKeyIdentity {
@@ -23,7 +23,7 @@ export const onCreateGroup = /* GraphQL */ `
             }
             name
             policy {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -44,7 +44,7 @@ export const onCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -64,7 +64,7 @@ export const onCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -76,7 +76,7 @@ export const onCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -88,7 +88,7 @@ export const onCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -100,7 +100,7 @@ export const onCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -126,7 +126,7 @@ export const onCreateTokenSet = /* GraphQL */ `
     subscription OnCreateTokenSet($projectUrn: String!) {
         onCreateTokenSet(projectUrn: $projectUrn) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn
@@ -193,7 +193,7 @@ export const onDeleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -213,7 +213,7 @@ export const onDeleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -225,7 +225,7 @@ export const onDeleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -237,7 +237,7 @@ export const onDeleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -249,7 +249,7 @@ export const onDeleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -275,7 +275,7 @@ export const onDeleteTokenSet = /* GraphQL */ `
     subscription OnDeleteTokenSet($projectUrn: String!) {
         onDeleteTokenSet(projectUrn: $projectUrn) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn
@@ -342,7 +342,7 @@ export const onUpdateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -362,7 +362,7 @@ export const onUpdateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -374,7 +374,7 @@ export const onUpdateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -386,7 +386,7 @@ export const onUpdateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -398,7 +398,7 @@ export const onUpdateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -424,7 +424,7 @@ export const onUpdateTokenSet = /* GraphQL */ `
     subscription OnUpdateTokenSet($projectUrn: String!) {
         onUpdateTokenSet(projectUrn: $projectUrn) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn

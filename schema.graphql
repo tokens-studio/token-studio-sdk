@@ -71,15 +71,14 @@ type ColorValue {
 type Generator {
   createdAt: AWSDateTime
   description: String
-  editor: String
-  graph: String
+  graph: AWSJSON
   name: String
   updatedAt: AWSDateTime
   urn: String
 }
 
 type Group @aws_cognito_user_pools @aws_lambda {
-  created: AWSDateTime! @aws_cognito_user_pools @aws_lambda
+  createdAt: AWSDateTime! @aws_cognito_user_pools @aws_lambda
   description: String @aws_cognito_user_pools @aws_lambda
   members: [Entity] @aws_cognito_user_pools @aws_lambda
   name: String! @aws_cognito_user_pools @aws_lambda
@@ -104,7 +103,7 @@ type Invitation @aws_cognito_user_pools @aws_lambda {
 
 type Metadata {
   #  Time of creation of the resource
-  created: AWSDateTime
+  createdAt: AWSDateTime
   #   The entity who initially created this token
   createdBy: Entity
   #   The last entity to update the token directly.
@@ -122,7 +121,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   bulkCreateToken(input: [TokenInput]!, set: String!): [RawToken] @aws_cognito_user_pools @aws_lambda
   #  Creates a new API Keyt
   createAPIKey(input: APIKeyInput!, organization: String!): APIKey
-  #  Creates a new generator definition 
+  #  Creates a new generator definition
   createGenerator(input: GeneratorInput!, project: String!): Generator @aws_cognito_user_pools @aws_lambda
   #  Creates a new group that can have an associated policy to control it
   createGroup(input: GroupInput!, organization: String!): Group @aws_cognito_user_pools @aws_lambda
@@ -143,10 +142,12 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   createTokenSet(input: TokenSetInput!, project: String!): TokenSet @aws_cognito_user_pools @aws_lambda
   #  Declines an invitation to join an organization
   declineInvitation(urn: String!): String
-  deleteAPIKey(urn: String!): APIKey
+  deleteAPIKey(urn: String!): APIKey @aws_cognito_user_pools @aws_lambda
+  # ### Deletes a generator from a project
+  deleteGenerator(urn: String!): Generator @aws_cognito_user_pools @aws_lambda
   deleteGroup(urn: String!): Group @aws_cognito_user_pools @aws_lambda
   #  Deletes an invitation from your organization to a user
-  deleteInvitation(urn: String!): Invitation
+  deleteInvitation(urn: String!): Invitation @aws_cognito_user_pools @aws_lambda
   deleteOrganization(urn: String!): Project @aws_cognito_user_pools
   # ## Deletion
   #### Deletes a token from a set
@@ -164,13 +165,14 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   removeFromOrganization(organization: String!, user: String!): Boolean
   #  Removes a member from a group in your organization
   removeMemberFromGroup(group: String!, user: String!): String
+  # ## Updates
+  #### Update the values of an existing token
+  updateGenerator(input: GeneratorInput!, urn: String!): Generator @aws_cognito_user_pools @aws_lambda
   updateGroup(input: GroupUpdateInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
   updateOrganization(input: OrganizationUpdateInput!, urn: String!): Organization @aws_cognito_user_pools @aws_lambda
   updatePolicy(input: PolicyInputUpdate!, urn: String!): Policy @aws_cognito_user_pools @aws_lambda
   updateProject(input: ProjectUpdateInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
   updateResolver(input: ResolverInput!, urn: String!): Resolver @aws_cognito_user_pools @aws_lambda
-  # ## Updates
-  #### Update the values of an existing token
   updateToken(input: TokenUpdateInput!, urn: String!): RawToken @aws_cognito_user_pools @aws_lambda
   updateTokenSet(input: TokenSetUpdateInput!, urn: String!): TokenSet @aws_cognito_user_pools @aws_lambda
 }
@@ -181,7 +183,7 @@ type Organization @aws_api_key @aws_cognito_user_pools @aws_lambda {
   #  The api keys owned by the organization
   apiKeys: [APIKeyWithoutValue]
   #  Date that the org was created
-  created: AWSDateTime
+  createdAt: AWSDateTime
   #  Optional description
   description: String
   #  Groups inside the organization
@@ -211,11 +213,11 @@ type Organization @aws_api_key @aws_cognito_user_pools @aws_lambda {
 }
 
 type OrganizationMemberShip {
-  created: AWSDateTime!
+  createdAt: AWSDateTime!
 }
 
 type Policy @aws_cognito_user_pools @aws_lambda {
-  created: AWSDateTime
+  createdAt: AWSDateTime
   description: String
   name: String!
   urn: String
@@ -234,26 +236,43 @@ type PolicyStatement {
 }
 
 type Project @aws_cognito_user_pools @aws_lambda {
-  created: AWSDateTime!
+  createdAt: AWSDateTime!
+  # # The entity that created the project
+  createdBy: Entity
   description: String
+  generators(filter: GeneratorFilterInput, limit: Int, offset: Int): [Generator]
   icon: String
   name: String!
   orgUrn: String
   resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
   sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
+  summary: ProjectSummary
   urn: String!
   visibility: Visibility
 }
 
+type ProjectSummary {
+  generators: SummarizedValue
+  # # Total number of resolvers for this project
+  resolvers: SummarizedValue
+  # # Total number of sets for this project
+  sets: SummarizedValue
+  tokens: SummarizedValue
+}
+
 type Query @aws_cognito_user_pools @aws_lambda {
   apiKeys(filter: ApiKeyFilterInput, limit: Int, offset: Int, organization: String!): [APIKeyWithoutValue] @aws_api_key @aws_cognito_user_pools @aws_lambda
+  # Returns a specific generator
+  generator(urn: String!): Generator @aws_cognito_user_pools @aws_lambda
+  # Returns all generators for a project
+  generators(filter: GeneratorFilterInput, limit: Int, offset: Int, project: String!): [Generator] @aws_cognito_user_pools @aws_lambda
   #  Retrieves all projects for an organization
   groups(filter: GroupFilterInput, limit: Int, offset: Int, organization: String!): [Group] @aws_cognito_user_pools @aws_lambda
   #  Retrieves information about the organizations
   organizations(filter: OrganizationFilterInput, limit: Int, offset: Int): [Organization] @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  queries policies available to the org. The organization is the organization urn
   policies(limit: Int, offset: Int, organization: String!): [Policy] @aws_cognito_user_pools @aws_lambda
-  #  Retrieve a specific project 
+  #  Retrieve a specific project
   project(urn: String!): Project @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
   projects(filter: ProjectFilterInput, limit: Int, offset: Int, organization: String!): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
@@ -422,6 +441,10 @@ type Subscription @aws_cognito_user_pools @aws_lambda {
   onUpdateTokenSet(projectUrn: String!): TokenSet @aws_subscribe(mutations : ["updateTokenSet"])
 }
 
+type SummarizedValue {
+  total: Int!
+}
+
 type TokenSet @aws_cognito_user_pools @aws_lambda {
   metadata: Metadata
   name: String
@@ -517,6 +540,11 @@ enum InvitationStatus {
   PENDING
 }
 
+enum OrderDirection {
+  ASC
+  DESC
+}
+
 enum OrganizationTier {
   ENTERPRISE
   FREE
@@ -582,11 +610,36 @@ input ApiKeyFilterInput {
   urn: StringFilterInput
 }
 
+input BorderInput {
+  color: String
+  style: String
+  width: String
+}
+
+input BoxShadowInput {
+  blur: String
+  color: String
+  spread: String
+  type: String
+  x: String
+  y: String
+}
+
+input GeneratorFilterInput {
+  name: StringFilterInput
+  urn: StringFilterInput
+}
+
 input GeneratorInput {
   description: String
-  editor: String
-  graph: String
+  graph: AWSJSON
   name: String!
+}
+
+input GeneratorInputUpdate {
+  description: String
+  graph: AWSJSON
+  name: String
 }
 
 input GroupFilterInput {
@@ -629,6 +682,11 @@ input IntFilterInput {
   lt: Int
   #  Not equal to
   ne: Int
+}
+
+input Order {
+  direction: OrderDirection!
+  field: String!
 }
 
 input OrganizationFilterInput {
@@ -695,7 +753,7 @@ input ProjectFilterInput {
 input ProjectInput {
   #  Optional description of the project
   description: String
-  #  Icon associated with your project
+  #  Icon associated with your project as a base64 string
   icon: String
   #  Unique name of the project
   name: String!
@@ -787,10 +845,15 @@ input TokenFilterInput {
 }
 
 input TokenInput {
+  border: BorderInput
+  boxShadow: BoxShadowInput
   description: String
   extensions: AWSJSON
   name: String!
   type: TokenType!
+  #  Specific types
+  typography: TypographyInput
+  #  Used for references and scalars
   value: String!
 }
 
@@ -823,6 +886,18 @@ input TokenUpdateInput {
   extensions: AWSJSON
   name: String
   value: String
+}
+
+input TypographyInput {
+  fontFamily: String
+  fontSize: String
+  fontWeight: String
+  letterSpacing: String
+  lineHeight: String
+  paragraphIndent: String
+  paragraphSpacing: String
+  textCase: String
+  textDecoration: String
 }
 
 input UserFilterInput {

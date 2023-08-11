@@ -15,7 +15,7 @@ export const addMemberToGroup = /* GraphQL */ `
 export const attachPolicyToGroup = /* GraphQL */ `
     mutation AttachPolicyToGroup($group: String!, $policy: String!) {
         attachPolicyToGroup(group: $group, policy: $policy) {
-            created
+            createdAt
             description
             members {
                 ... on APIKeyIdentity {
@@ -33,7 +33,7 @@ export const attachPolicyToGroup = /* GraphQL */ `
             }
             name
             policy {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -54,7 +54,7 @@ export const bulkCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -74,7 +74,7 @@ export const bulkCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -86,7 +86,7 @@ export const bulkCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -98,7 +98,7 @@ export const bulkCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -110,7 +110,7 @@ export const bulkCreateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -147,7 +147,6 @@ export const createGenerator = /* GraphQL */ `
         createGenerator(input: $input, project: $project) {
             createdAt
             description
-            editor
             graph
             name
             updatedAt
@@ -158,7 +157,7 @@ export const createGenerator = /* GraphQL */ `
 export const createGroup = /* GraphQL */ `
     mutation CreateGroup($input: GroupInput!, $organization: String!) {
         createGroup(input: $input, organization: $organization) {
-            created
+            createdAt
             description
             members {
                 ... on APIKeyIdentity {
@@ -176,7 +175,7 @@ export const createGroup = /* GraphQL */ `
             }
             name
             policy {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -195,10 +194,10 @@ export const createOrganization = /* GraphQL */ `
                 name
                 urn
             }
-            created
+            createdAt
             description
             groups {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -215,13 +214,13 @@ export const createOrganization = /* GraphQL */ `
             }
             payment
             policies {
-                created
+                createdAt
                 description
                 name
                 urn
             }
             projects {
-                created
+                createdAt
                 description
                 icon
                 name
@@ -247,7 +246,7 @@ export const createOrganization = /* GraphQL */ `
 export const createPolicy = /* GraphQL */ `
     mutation CreatePolicy($input: PolicyInput!, $organization: String!) {
         createPolicy(input: $input, organization: $organization) {
-            created
+            createdAt
             description
             name
             urn
@@ -260,8 +259,30 @@ export const createPolicy = /* GraphQL */ `
 export const createProject = /* GraphQL */ `
     mutation CreateProject($input: ProjectInput!, $organization: String!) {
         createProject(input: $input, organization: $organization) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -346,7 +367,7 @@ export const createToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -366,7 +387,7 @@ export const createToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -378,7 +399,7 @@ export const createToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -390,7 +411,7 @@ export const createToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -402,7 +423,7 @@ export const createToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -428,7 +449,7 @@ export const createTokenSet = /* GraphQL */ `
     mutation CreateTokenSet($input: TokenSetInput!, $project: String!) {
         createTokenSet(input: $input, project: $project) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn
@@ -498,10 +519,22 @@ export const deleteAPIKey = /* GraphQL */ `
         }
     }
 `;
+export const deleteGenerator = /* GraphQL */ `
+    mutation DeleteGenerator($urn: String!) {
+        deleteGenerator(urn: $urn) {
+            createdAt
+            description
+            graph
+            name
+            updatedAt
+            urn
+        }
+    }
+`;
 export const deleteGroup = /* GraphQL */ `
     mutation DeleteGroup($urn: String!) {
         deleteGroup(urn: $urn) {
-            created
+            createdAt
             description
             members {
                 ... on APIKeyIdentity {
@@ -519,7 +552,7 @@ export const deleteGroup = /* GraphQL */ `
             }
             name
             policy {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -540,8 +573,30 @@ export const deleteInvitation = /* GraphQL */ `
 export const deleteOrganization = /* GraphQL */ `
     mutation DeleteOrganization($urn: String!) {
         deleteOrganization(urn: $urn) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -563,7 +618,7 @@ export const deleteOrganization = /* GraphQL */ `
 export const deletePolicy = /* GraphQL */ `
     mutation DeletePolicy($urn: String!) {
         deletePolicy(urn: $urn) {
-            created
+            createdAt
             description
             name
             urn
@@ -576,8 +631,30 @@ export const deletePolicy = /* GraphQL */ `
 export const deleteProject = /* GraphQL */ `
     mutation DeleteProject($urn: String!) {
         deleteProject(urn: $urn) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -636,7 +713,7 @@ export const deleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -656,7 +733,7 @@ export const deleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -668,7 +745,7 @@ export const deleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -680,7 +757,7 @@ export const deleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -692,7 +769,7 @@ export const deleteToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -718,7 +795,7 @@ export const deleteTokenSet = /* GraphQL */ `
     mutation DeleteTokenSet($urn: String!) {
         deleteTokenSet(urn: $urn) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn
@@ -776,7 +853,7 @@ export const deleteTokenSet = /* GraphQL */ `
 export const detachPolicyFromGroup = /* GraphQL */ `
     mutation DetachPolicyFromGroup($group: String!, $policy: String!) {
         detachPolicyFromGroup(group: $group, policy: $policy) {
-            created
+            createdAt
             description
             members {
                 ... on APIKeyIdentity {
@@ -794,7 +871,7 @@ export const detachPolicyFromGroup = /* GraphQL */ `
             }
             name
             policy {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -832,11 +909,45 @@ export const removeMemberFromGroup = /* GraphQL */ `
         removeMemberFromGroup(group: $group, user: $user)
     }
 `;
+export const updateGenerator = /* GraphQL */ `
+    mutation UpdateGenerator($input: GeneratorInput!, $urn: String!) {
+        updateGenerator(input: $input, urn: $urn) {
+            createdAt
+            description
+            graph
+            name
+            updatedAt
+            urn
+        }
+    }
+`;
 export const updateGroup = /* GraphQL */ `
     mutation UpdateGroup($input: GroupUpdateInput!, $urn: String!) {
         updateGroup(input: $input, urn: $urn) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -868,10 +979,10 @@ export const updateOrganization = /* GraphQL */ `
                 name
                 urn
             }
-            created
+            createdAt
             description
             groups {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -888,13 +999,13 @@ export const updateOrganization = /* GraphQL */ `
             }
             payment
             policies {
-                created
+                createdAt
                 description
                 name
                 urn
             }
             projects {
-                created
+                createdAt
                 description
                 icon
                 name
@@ -920,7 +1031,7 @@ export const updateOrganization = /* GraphQL */ `
 export const updatePolicy = /* GraphQL */ `
     mutation UpdatePolicy($input: PolicyInputUpdate!, $urn: String!) {
         updatePolicy(input: $input, urn: $urn) {
-            created
+            createdAt
             description
             name
             urn
@@ -933,8 +1044,30 @@ export const updatePolicy = /* GraphQL */ `
 export const updateProject = /* GraphQL */ `
     mutation UpdateProject($input: ProjectUpdateInput!, $urn: String!) {
         updateProject(input: $input, urn: $urn) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -993,7 +1126,7 @@ export const updateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -1013,7 +1146,7 @@ export const updateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -1025,7 +1158,7 @@ export const updateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -1037,7 +1170,7 @@ export const updateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -1049,7 +1182,7 @@ export const updateToken = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -1075,7 +1208,7 @@ export const updateTokenSet = /* GraphQL */ `
     mutation UpdateTokenSet($input: TokenSetUpdateInput!, $urn: String!) {
         updateTokenSet(input: $input, urn: $urn) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn

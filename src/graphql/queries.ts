@@ -22,6 +22,40 @@ export const apiKeys = /* GraphQL */ `
         }
     }
 `;
+export const generator = /* GraphQL */ `
+    query Generator($urn: String!) {
+        generator(urn: $urn) {
+            createdAt
+            description
+            graph
+            name
+            updatedAt
+            urn
+        }
+    }
+`;
+export const generators = /* GraphQL */ `
+    query Generators(
+        $filter: GeneratorFilterInput
+        $limit: Int
+        $offset: Int
+        $project: String!
+    ) {
+        generators(
+            filter: $filter
+            limit: $limit
+            offset: $offset
+            project: $project
+        ) {
+            createdAt
+            description
+            graph
+            name
+            updatedAt
+            urn
+        }
+    }
+`;
 export const groups = /* GraphQL */ `
     query Groups(
         $filter: GroupFilterInput
@@ -35,7 +69,7 @@ export const groups = /* GraphQL */ `
             offset: $offset
             organization: $organization
         ) {
-            created
+            createdAt
             description
             members {
                 ... on APIKeyIdentity {
@@ -53,7 +87,7 @@ export const groups = /* GraphQL */ `
             }
             name
             policy {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -76,10 +110,10 @@ export const organizations = /* GraphQL */ `
                 name
                 urn
             }
-            created
+            createdAt
             description
             groups {
-                created
+                createdAt
                 description
                 name
                 urn
@@ -96,13 +130,13 @@ export const organizations = /* GraphQL */ `
             }
             payment
             policies {
-                created
+                createdAt
                 description
                 name
                 urn
             }
             projects {
-                created
+                createdAt
                 description
                 icon
                 name
@@ -128,7 +162,7 @@ export const organizations = /* GraphQL */ `
 export const policies = /* GraphQL */ `
     query Policies($limit: Int, $offset: Int, $organization: String!) {
         policies(limit: $limit, offset: $offset, organization: $organization) {
-            created
+            createdAt
             description
             name
             urn
@@ -141,8 +175,30 @@ export const policies = /* GraphQL */ `
 export const project = /* GraphQL */ `
     query Project($urn: String!) {
         project(urn: $urn) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -174,8 +230,30 @@ export const projects = /* GraphQL */ `
             offset: $offset
             organization: $organization
         ) {
-            created
+            createdAt
+            createdBy {
+                ... on APIKeyIdentity {
+                    name
+                    urn
+                }
+                ... on User {
+                    description
+                    givenName
+                    icon
+                    name
+                    urn
+                    visibility
+                }
+            }
             description
+            generators {
+                createdAt
+                description
+                graph
+                name
+                updatedAt
+                urn
+            }
             icon
             name
             orgUrn
@@ -208,7 +286,7 @@ export const resolve = /* GraphQL */ `
                 }
                 description
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 type
@@ -225,7 +303,7 @@ export const resolve = /* GraphQL */ `
                 }
                 description
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 type
@@ -234,7 +312,7 @@ export const resolve = /* GraphQL */ `
             ... on Token_color {
                 description
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 type
@@ -243,7 +321,7 @@ export const resolve = /* GraphQL */ `
             ... on Token_scalar {
                 description
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 type
@@ -252,7 +330,7 @@ export const resolve = /* GraphQL */ `
             ... on Token_typography {
                 description
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 type
@@ -352,7 +430,7 @@ export const self = /* GraphQL */ `
             }
             organizations {
                 account
-                created
+                createdAt
                 description
                 icon
                 name
@@ -388,7 +466,7 @@ export const token = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -408,7 +486,7 @@ export const token = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -420,7 +498,7 @@ export const token = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -432,7 +510,7 @@ export const token = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -444,7 +522,7 @@ export const token = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -470,7 +548,7 @@ export const tokenSet = /* GraphQL */ `
     query TokenSet($urn: String!) {
         tokenSet(urn: $urn) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn
@@ -539,7 +617,7 @@ export const tokenSets = /* GraphQL */ `
             project: $project
         ) {
             metadata {
-                created
+                createdAt
             }
             name
             projectUrn
@@ -611,7 +689,7 @@ export const tokens = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -631,7 +709,7 @@ export const tokens = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -643,7 +721,7 @@ export const tokens = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -655,7 +733,7 @@ export const tokens = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
@@ -667,7 +745,7 @@ export const tokens = /* GraphQL */ `
                 description
                 extensions
                 metadata {
-                    created
+                    createdAt
                 }
                 name
                 setUrn
