@@ -1,11 +1,13 @@
 site_name: 'docs'
 
-nav:
-    - Home: index.md
 
+# Output to this director
+site_dir: techdocs/
+# Input director
 docs_dir: developer-docs
 repo_url: https://github.com/tokens-studio/token-studio-sdk/
-edit_uri: edit/-/docs/
+# Should have the same value as the docs-dir
+edit_uri: edit/-/developer-docs/
 theme:
     name: readthedocs
 
