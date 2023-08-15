@@ -65,7 +65,7 @@ export type TokenInput = {
     name: string;
     type: TokenType;
     typography?: TypographyInput | null;
-    value: string;
+    value?: string | null;
 };
 
 export type BorderInput = {
@@ -510,9 +510,12 @@ export type ProjectUpdateInput = {
 };
 
 export type TokenUpdateInput = {
+    border?: BorderInput | null;
+    boxShadow?: BoxShadowInput | null;
     description?: string | null;
     extensions?: string | null;
     name?: string | null;
+    typography?: TypographyInput | null;
     value?: string | null;
 };
 

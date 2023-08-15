@@ -610,12 +610,14 @@ input ApiKeyFilterInput {
   urn: StringFilterInput
 }
 
+# # Note this is atomic. You cannot partially update this value
 input BorderInput {
   color: String
   style: String
   width: String
 }
 
+# # Note this is atomic. You cannot partially update this value
 input BoxShadowInput {
   blur: String
   color: String
@@ -854,7 +856,7 @@ input TokenInput {
   #  Specific types
   typography: TypographyInput
   #  Used for references and scalars
-  value: String!
+  value: String
 }
 
 input TokenSetFilterInput {
@@ -882,12 +884,17 @@ input TokenTypeFilterInput {
 }
 
 input TokenUpdateInput {
+  border: BorderInput
+  boxShadow: BoxShadowInput
   description: String
   extensions: AWSJSON
   name: String
+  typography: TypographyInput
+  # # Use for scalars or references
   value: String
 }
 
+# # Note this is atomic. You cannot partially update this value
 input TypographyInput {
   fontFamily: String
   fontSize: String
