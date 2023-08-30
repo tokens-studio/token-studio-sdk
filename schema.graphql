@@ -157,22 +157,23 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   deleteToken(urn: String!): RawToken @aws_cognito_user_pools @aws_lambda
   deleteTokenSet(urn: String!): TokenSet @aws_cognito_user_pools @aws_lambda
   detachPolicyFromGroup(group: String!, policy: String!): Group @aws_cognito_user_pools @aws_lambda
-  #  request that a member join your organization if they haven't already
-  inviteToOrganization(organization: String!, user: String!): Invitation
+  #  request that a member join your organization if they haven't already. 
+  inviteToOrganization(groups: [String!], organization: String!, user: String!): Invitation
   #  Regenerates an API Key, removing its value from use
   regenerateApiKey(urn: String!): APIKey
   #  Removes a member from an organization
   removeFromOrganization(organization: String!, user: String!): Boolean
   #  Removes a member from a group in your organization
   removeMemberFromGroup(group: String!, user: String!): String
-  # ## Updates
-  #### Update the values of an existing token
   updateGenerator(input: GeneratorInput!, urn: String!): Generator @aws_cognito_user_pools @aws_lambda
   updateGroup(input: GroupUpdateInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
   updateOrganization(input: OrganizationUpdateInput!, urn: String!): Organization @aws_cognito_user_pools @aws_lambda
   updatePolicy(input: PolicyInputUpdate!, urn: String!): Policy @aws_cognito_user_pools @aws_lambda
   updateProject(input: ProjectUpdateInput!, urn: String!): Project @aws_cognito_user_pools @aws_lambda
   updateResolver(input: ResolverInput!, urn: String!): Resolver @aws_cognito_user_pools @aws_lambda
+  # ## Updates
+  #### Update the values of an existing token
+  updateSelf(input: UpdateSelfInput): User @aws_cognito_user_pools
   updateToken(input: TokenUpdateInput!, urn: String!): RawToken @aws_cognito_user_pools @aws_lambda
   updateTokenSet(input: TokenSetUpdateInput!, urn: String!): TokenSet @aws_cognito_user_pools @aws_lambda
 }
@@ -276,6 +277,8 @@ type Query @aws_cognito_user_pools @aws_lambda {
   project(urn: String!): Project @aws_api_key @aws_cognito_user_pools @aws_lambda
   #  Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
   projects(filter: ProjectFilterInput, limit: Int, offset: Int, organization: String!): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
+  # Returns all releases for a project
+  releases(filter: ReleaseFilterInput, limit: Int, offset: Int, project: String!): [Release] @aws_cognito_user_pools @aws_lambda
   #  Resolves the resolver and returns the expected tokens
   resolve(modifiers: [ResolverModifierValueInput], resolver: String!): [Token] @aws_cognito_user_pools @aws_lambda
   # Returns a single resolver
@@ -310,7 +313,7 @@ type Raw_Token_border implements TokenInterface @aws_cognito_user_pools @aws_lam
 }
 
 type Raw_Token_boxShadow implements TokenInterface @aws_cognito_user_pools @aws_lambda {
-  boxShadow: BoxShadow
+  boxShadow: [BoxShadow]
   description: String
   extensions: AWSJSON
   metadata: Metadata
@@ -364,11 +367,16 @@ type Raw_Token_typography implements TokenInterface @aws_cognito_user_pools @aws
 type Release {
   createdAt: AWSDateTime
   description: String
+  download: ReleaseDownload
   name: String!
   releasedBy: Entity
   updatedAt: AWSDateTime
   urn: String!
   version: String!
+}
+
+type ReleaseDownload {
+  url: String
 }
 
 type Resolver @aws_cognito_user_pools @aws_lambda {
@@ -450,6 +458,7 @@ type TokenSet @aws_cognito_user_pools @aws_lambda {
   name: String
   projectUrn: String
   tokens(filter: TokenFilterInput, limit: Int, offset: Int): [RawToken!]!
+  type: TokenSetType
   urn: String
 }
 
@@ -472,7 +481,7 @@ type Token_border implements ResolvedTokenInterface @aws_cognito_user_pools @aws
 }
 
 type Token_boxShadow implements ResolvedTokenInterface @aws_cognito_user_pools @aws_lambda {
-  boxShadow: BoxShadow
+  boxShadow: [BoxShadow]
   description: String
   metadata: Metadata
   name: String
@@ -558,6 +567,11 @@ enum ResolverModifierType {
   FIXED
 }
 
+enum TokenSetType {
+  DYNAMIC
+  STATIC
+}
+
 enum TokenType {
   any
   assets
@@ -625,6 +639,14 @@ input BoxShadowInput {
   type: String
   x: String
   y: String
+}
+
+input FileInput {
+  #  Base64 encoded file
+  data: String!
+  name: String!
+  #  The extension of the file as a string eg "png" 
+  type: String!
 }
 
 input GeneratorFilterInput {
@@ -782,7 +804,11 @@ input ReleaseFilterInput {
 
 input ReleaseInput {
   description: String
+  #  Generator urns from the project to freeze
+  generators: [String!]
   name: String!
+  #  Token set urns from the project to freeze
+  tokenSets: [String!]
   vesion: String!
 }
 
@@ -848,7 +874,7 @@ input TokenFilterInput {
 
 input TokenInput {
   border: BorderInput
-  boxShadow: BoxShadowInput
+  boxShadow: [BoxShadowInput]
   description: String
   extensions: AWSJSON
   name: String!
@@ -867,6 +893,7 @@ input TokenSetFilterInput {
 input TokenSetInput {
   description: String
   name: String!
+  type: TokenSetType
 }
 
 input TokenSetUpdateInput {
@@ -905,6 +932,19 @@ input TypographyInput {
   paragraphSpacing: String
   textCase: String
   textDecoration: String
+}
+
+input UpdateSelfInput {
+  #  Optional User description
+  description: String
+  #  A preferred name of the user
+  givenName: String
+  #  An icon in base64 format
+  icon: FileInput
+  #  Display name of the user
+  name: String
+  #  Visibility of the user to search
+  visibility: Visibility
 }
 
 input UserFilterInput {
