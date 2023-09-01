@@ -125,6 +125,7 @@ export const onCreateToken = /* GraphQL */ `
 export const onCreateTokenSet = /* GraphQL */ `
     subscription OnCreateTokenSet($projectUrn: String!) {
         onCreateTokenSet(projectUrn: $projectUrn) {
+            createdAt
             metadata {
                 createdAt
             }
@@ -275,6 +276,7 @@ export const onDeleteToken = /* GraphQL */ `
 export const onDeleteTokenSet = /* GraphQL */ `
     subscription OnDeleteTokenSet($projectUrn: String!) {
         onDeleteTokenSet(projectUrn: $projectUrn) {
+            createdAt
             metadata {
                 createdAt
             }
@@ -425,6 +427,7 @@ export const onUpdateToken = /* GraphQL */ `
 export const onUpdateTokenSet = /* GraphQL */ `
     subscription OnUpdateTokenSet($projectUrn: String!) {
         onUpdateTokenSet(projectUrn: $projectUrn) {
+            createdAt
             metadata {
                 createdAt
             }

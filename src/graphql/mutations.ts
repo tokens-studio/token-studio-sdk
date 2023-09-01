@@ -292,6 +292,7 @@ export const createProject = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -310,6 +311,7 @@ export const createRelease = /* GraphQL */ `
             download {
                 url
             }
+            generators
             name
             releasedBy {
                 ... on APIKeyIdentity {
@@ -325,7 +327,7 @@ export const createRelease = /* GraphQL */ `
                     visibility
                 }
             }
-            updatedAt
+            tokenSets
             urn
             version
         }
@@ -345,8 +347,9 @@ export const createResolver = /* GraphQL */ `
             release {
                 createdAt
                 description
+                generators
                 name
-                updatedAt
+                tokenSets
                 urn
                 version
             }
@@ -452,6 +455,7 @@ export const createToken = /* GraphQL */ `
 export const createTokenSet = /* GraphQL */ `
     mutation CreateTokenSet($input: TokenSetInput!, $project: String!) {
         createTokenSet(input: $input, project: $project) {
+            createdAt
             metadata {
                 createdAt
             }
@@ -611,6 +615,7 @@ export const deleteOrganization = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -670,6 +675,7 @@ export const deleteProject = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -694,8 +700,9 @@ export const deleteResolver = /* GraphQL */ `
             release {
                 createdAt
                 description
+                generators
                 name
-                updatedAt
+                tokenSets
                 urn
                 version
             }
@@ -801,6 +808,7 @@ export const deleteToken = /* GraphQL */ `
 export const deleteTokenSet = /* GraphQL */ `
     mutation DeleteTokenSet($urn: String!) {
         deleteTokenSet(urn: $urn) {
+            createdAt
             metadata {
                 createdAt
             }
@@ -973,6 +981,7 @@ export const updateGroup = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -1094,6 +1103,7 @@ export const updateProject = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -1118,8 +1128,9 @@ export const updateResolver = /* GraphQL */ `
             release {
                 createdAt
                 description
+                generators
                 name
-                updatedAt
+                tokenSets
                 urn
                 version
             }
@@ -1237,6 +1248,7 @@ export const updateToken = /* GraphQL */ `
 export const updateTokenSet = /* GraphQL */ `
     mutation UpdateTokenSet($input: TokenSetUpdateInput!, $urn: String!) {
         updateTokenSet(input: $input, urn: $urn) {
+            createdAt
             metadata {
                 createdAt
             }

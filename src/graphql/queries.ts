@@ -208,6 +208,7 @@ export const project = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -264,6 +265,7 @@ export const projects = /* GraphQL */ `
                 urn
             }
             sets {
+                createdAt
                 name
                 projectUrn
                 type
@@ -292,6 +294,7 @@ export const releases = /* GraphQL */ `
             download {
                 url
             }
+            generators
             name
             releasedBy {
                 ... on APIKeyIdentity {
@@ -307,7 +310,7 @@ export const releases = /* GraphQL */ `
                     visibility
                 }
             }
-            updatedAt
+            tokenSets
             urn
             version
         }
@@ -405,8 +408,9 @@ export const resolver = /* GraphQL */ `
             release {
                 createdAt
                 description
+                generators
                 name
-                updatedAt
+                tokenSets
                 urn
                 version
             }
@@ -443,8 +447,9 @@ export const resolvers = /* GraphQL */ `
             release {
                 createdAt
                 description
+                generators
                 name
-                updatedAt
+                tokenSets
                 urn
                 version
             }
@@ -588,6 +593,7 @@ export const token = /* GraphQL */ `
 export const tokenSet = /* GraphQL */ `
     query TokenSet($urn: String!) {
         tokenSet(urn: $urn) {
+            createdAt
             metadata {
                 createdAt
             }
@@ -658,6 +664,7 @@ export const tokenSets = /* GraphQL */ `
             offset: $offset
             project: $project
         ) {
+            createdAt
             metadata {
                 createdAt
             }

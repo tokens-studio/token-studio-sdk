@@ -369,9 +369,10 @@ export type Release = {
     createdAt?: string | null;
     description?: string | null;
     download?: ReleaseDownload | null;
+    generators?: Array<string> | null;
     name: string;
     releasedBy?: Entity | null;
-    updatedAt?: string | null;
+    tokenSets?: Array<string> | null;
     urn: string;
     version: string;
 };
@@ -391,6 +392,7 @@ export type ResolverSource = {
 
 export type TokenSet = {
     __typename: 'TokenSet';
+    createdAt?: string | null;
     metadata?: Metadata | null;
     name?: string | null;
     projectUrn?: string | null;
@@ -446,6 +448,7 @@ export type ReleaseInput = {
     generators?: Array<string> | null;
     name: string;
     tokenSets?: Array<string> | null;
+    version: string;
     vesion: string;
 };
 
@@ -1089,6 +1092,7 @@ export type CreateProjectMutation = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -1113,6 +1117,7 @@ export type CreateReleaseMutation = {
             __typename: 'ReleaseDownload';
             url?: string | null;
         } | null;
+        generators?: Array<string> | null;
         name: string;
         releasedBy:
             | (
@@ -1132,7 +1137,7 @@ export type CreateReleaseMutation = {
                     }
               )
             | null;
-        updatedAt?: string | null;
+        tokenSets?: Array<string> | null;
         urn: string;
         version: string;
     } | null;
@@ -1159,8 +1164,9 @@ export type CreateResolverMutation = {
             __typename: 'Release';
             createdAt?: string | null;
             description?: string | null;
+            generators?: Array<string> | null;
             name: string;
-            updatedAt?: string | null;
+            tokenSets?: Array<string> | null;
             urn: string;
             version: string;
         } | null> | null;
@@ -1291,6 +1297,7 @@ export type CreateTokenSetMutationVariables = {
 export type CreateTokenSetMutation = {
     createTokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -1492,6 +1499,7 @@ export type DeleteOrganizationMutation = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -1567,6 +1575,7 @@ export type DeleteProjectMutation = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -1597,8 +1606,9 @@ export type DeleteResolverMutation = {
             __typename: 'Release';
             createdAt?: string | null;
             description?: string | null;
+            generators?: Array<string> | null;
             name: string;
-            updatedAt?: string | null;
+            tokenSets?: Array<string> | null;
             urn: string;
             version: string;
         } | null> | null;
@@ -1727,6 +1737,7 @@ export type DeleteTokenSetMutationVariables = {
 export type DeleteTokenSetMutation = {
     deleteTokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -1943,6 +1954,7 @@ export type UpdateGroupMutation = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -2090,6 +2102,7 @@ export type UpdateProjectMutation = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -2121,8 +2134,9 @@ export type UpdateResolverMutation = {
             __typename: 'Release';
             createdAt?: string | null;
             description?: string | null;
+            generators?: Array<string> | null;
             name: string;
-            updatedAt?: string | null;
+            tokenSets?: Array<string> | null;
             urn: string;
             version: string;
         } | null> | null;
@@ -2269,6 +2283,7 @@ export type UpdateTokenSetMutationVariables = {
 export type UpdateTokenSetMutation = {
     updateTokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -2565,6 +2580,7 @@ export type ProjectQuery = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -2625,6 +2641,7 @@ export type ProjectsQuery = {
         } | null> | null;
         sets?: Array<{
             __typename: 'TokenSet';
+            createdAt?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
@@ -2651,6 +2668,7 @@ export type ReleasesQuery = {
             __typename: 'ReleaseDownload';
             url?: string | null;
         } | null;
+        generators?: Array<string> | null;
         name: string;
         releasedBy:
             | (
@@ -2670,7 +2688,7 @@ export type ReleasesQuery = {
                     }
               )
             | null;
-        updatedAt?: string | null;
+        tokenSets?: Array<string> | null;
         urn: string;
         version: string;
     } | null> | null;
@@ -2791,8 +2809,9 @@ export type ResolverQuery = {
             __typename: 'Release';
             createdAt?: string | null;
             description?: string | null;
+            generators?: Array<string> | null;
             name: string;
-            updatedAt?: string | null;
+            tokenSets?: Array<string> | null;
             urn: string;
             version: string;
         } | null> | null;
@@ -2829,8 +2848,9 @@ export type ResolversQuery = {
             __typename: 'Release';
             createdAt?: string | null;
             description?: string | null;
+            generators?: Array<string> | null;
             name: string;
-            updatedAt?: string | null;
+            tokenSets?: Array<string> | null;
             urn: string;
             version: string;
         } | null> | null;
@@ -3002,6 +3022,7 @@ export type TokenSetQueryVariables = {
 export type TokenSetQuery = {
     tokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -3075,6 +3096,7 @@ export type TokenSetsQueryVariables = {
 export type TokenSetsQuery = {
     tokenSets: Array<{
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -3415,6 +3437,7 @@ export type OnCreateTokenSetSubscriptionVariables = {
 export type OnCreateTokenSetSubscription = {
     onCreateTokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -3593,6 +3616,7 @@ export type OnDeleteTokenSetSubscriptionVariables = {
 export type OnDeleteTokenSetSubscription = {
     onDeleteTokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
@@ -3771,6 +3795,7 @@ export type OnUpdateTokenSetSubscriptionVariables = {
 export type OnUpdateTokenSetSubscription = {
     onUpdateTokenSet?: {
         __typename: 'TokenSet';
+        createdAt?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;

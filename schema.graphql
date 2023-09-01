@@ -52,7 +52,7 @@ type Border {
   width: String
 }
 
-type BoxShadow {
+type BoxShadow @aws_cognito_user_pools @aws_lambda {
   blur: String
   color: String
   spread: String
@@ -368,9 +368,12 @@ type Release {
   createdAt: AWSDateTime
   description: String
   download: ReleaseDownload
+  #  Urns of the generators at the time of release
+  generators: [String!]
   name: String!
   releasedBy: Entity
-  updatedAt: AWSDateTime
+  #  Urns of the sets at the time of release
+  tokenSets: [String!]
   urn: String!
   version: String!
 }
@@ -454,9 +457,11 @@ type SummarizedValue {
 }
 
 type TokenSet @aws_cognito_user_pools @aws_lambda {
+  createdAt: AWSDateTime
   metadata: Metadata
   name: String
   projectUrn: String
+  #  For dynamic sets this contains information about the generator used to create them
   tokens(filter: TokenFilterInput, limit: Int, offset: Int): [RawToken!]!
   type: TokenSetType
   urn: String
@@ -516,7 +521,7 @@ type Token_typography implements ResolvedTokenInterface @aws_cognito_user_pools 
   value: String
 }
 
-type Typography {
+type Typography @aws_cognito_user_pools @aws_lambda {
   fontFamily: String
   fontSize: String
   fontWeight: String
@@ -809,6 +814,8 @@ input ReleaseInput {
   name: String!
   #  Token set urns from the project to freeze
   tokenSets: [String!]
+  #  The next version you wish to release. This must be greater than the current version
+  version: String!
   vesion: String!
 }
 
