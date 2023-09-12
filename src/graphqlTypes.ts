@@ -239,6 +239,7 @@ export type Border = {
 
 export type APIKeyInput = {
     description?: string | null;
+    groups?: Array<string> | null;
     name: string;
 };
 
@@ -324,11 +325,44 @@ export type Project = {
     icon?: string | null;
     name: string;
     orgUrn?: string | null;
+    releases?: Array<Release | null> | null;
     resolvers?: Array<Resolver | null> | null;
     sets?: Array<TokenSet | null> | null;
     summary?: ProjectSummary | null;
     urn: string;
     visibility?: Visibility | null;
+};
+
+export type Release = {
+    __typename: 'Release';
+    createdAt?: string | null;
+    description?: string | null;
+    download?: ReleaseDownload | null;
+    generators?: Array<string> | null;
+    name: string;
+    releasedBy?: Entity | null;
+    stats?: ReleaseStats | null;
+    tokenSets?: Array<string> | null;
+    urn: string;
+    version: string;
+};
+
+export type ReleaseDownload = {
+    __typename: 'ReleaseDownload';
+    file?: Array<ReleaseFile | null> | null;
+    zipUrl?: ReleaseFile | null;
+};
+
+export type ReleaseFile = {
+    __typename: 'ReleaseFile';
+    path?: string | null;
+    type?: string | null;
+};
+
+export type ReleaseStats = {
+    __typename: 'ReleaseStats';
+    generators?: number | null;
+    tokenSets?: number | null;
 };
 
 export type Resolver = {
@@ -362,24 +396,6 @@ export type ResolverModifierValue = {
     name?: string | null;
     urn?: string | null;
     version?: string | null;
-};
-
-export type Release = {
-    __typename: 'Release';
-    createdAt?: string | null;
-    description?: string | null;
-    download?: ReleaseDownload | null;
-    generators?: Array<string> | null;
-    name: string;
-    releasedBy?: Entity | null;
-    tokenSets?: Array<string> | null;
-    urn: string;
-    version: string;
-};
-
-export type ReleaseDownload = {
-    __typename: 'ReleaseDownload';
-    url?: string | null;
 };
 
 export type ResolverSource = {
@@ -449,7 +465,6 @@ export type ReleaseInput = {
     name: string;
     tokenSets?: Array<string> | null;
     version: string;
-    vesion: string;
 };
 
 export type ResolverInput = {
@@ -1084,6 +1099,16 @@ export type CreateProjectMutation = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -1113,10 +1138,6 @@ export type CreateReleaseMutation = {
         __typename: 'Release';
         createdAt?: string | null;
         description?: string | null;
-        download?: {
-            __typename: 'ReleaseDownload';
-            url?: string | null;
-        } | null;
         generators?: Array<string> | null;
         name: string;
         releasedBy:
@@ -1137,6 +1158,11 @@ export type CreateReleaseMutation = {
                     }
               )
             | null;
+        stats?: {
+            __typename: 'ReleaseStats';
+            generators?: number | null;
+            tokenSets?: number | null;
+        } | null;
         tokenSets?: Array<string> | null;
         urn: string;
         version: string;
@@ -1491,6 +1517,16 @@ export type DeleteOrganizationMutation = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -1567,6 +1603,16 @@ export type DeleteProjectMutation = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -1946,6 +1992,16 @@ export type UpdateGroupMutation = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -2094,6 +2150,16 @@ export type UpdateProjectMutation = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -2572,6 +2638,16 @@ export type ProjectQuery = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -2633,6 +2709,16 @@ export type ProjectsQuery = {
         icon?: string | null;
         name: string;
         orgUrn?: string | null;
+        releases?: Array<{
+            __typename: 'Release';
+            createdAt?: string | null;
+            description?: string | null;
+            generators?: Array<string> | null;
+            name: string;
+            tokenSets?: Array<string> | null;
+            urn: string;
+            version: string;
+        } | null> | null;
         resolvers?: Array<{
             __typename: 'Resolver';
             description?: string | null;
@@ -2664,10 +2750,6 @@ export type ReleasesQuery = {
         __typename: 'Release';
         createdAt?: string | null;
         description?: string | null;
-        download?: {
-            __typename: 'ReleaseDownload';
-            url?: string | null;
-        } | null;
         generators?: Array<string> | null;
         name: string;
         releasedBy:
@@ -2688,6 +2770,11 @@ export type ReleasesQuery = {
                     }
               )
             | null;
+        stats?: {
+            __typename: 'ReleaseStats';
+            generators?: number | null;
+            tokenSets?: number | null;
+        } | null;
         tokenSets?: Array<string> | null;
         urn: string;
         version: string;

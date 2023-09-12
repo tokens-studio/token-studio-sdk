@@ -245,6 +245,7 @@ type Project @aws_cognito_user_pools @aws_lambda {
   icon: String
   name: String!
   orgUrn: String
+  releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
   resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
   sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
   summary: ProjectSummary
@@ -372,6 +373,7 @@ type Release {
   generators: [String!]
   name: String!
   releasedBy: Entity
+  stats: ReleaseStats
   #  Urns of the sets at the time of release
   tokenSets: [String!]
   urn: String!
@@ -379,7 +381,21 @@ type Release {
 }
 
 type ReleaseDownload {
-  url: String
+  file(filter: ReleaseDownloadFilter, limit: Int, offset: Int): [ReleaseFile] @aws_api_key @aws_cognito_user_pools @aws_lambda
+  #  The full release as a single url
+  zipUrl: ReleaseFile
+}
+
+type ReleaseFile {
+  path: String
+  type: String
+}
+
+type ReleaseStats {
+  #  The number of generators in the release
+  generators: Int
+  #  The number of token sets in the release
+  tokenSets: Int
 }
 
 type Resolver @aws_cognito_user_pools @aws_lambda {
@@ -566,6 +582,12 @@ enum OrganizationTier {
   STUDIO
 }
 
+enum ReleaseDownloadType {
+  FULLZIP
+  GENERATOR
+  SET
+}
+
 enum ResolverModifierType {
   DYNAMIC
   ENUMERATED
@@ -609,6 +631,8 @@ enum Visibility {
 
 input APIKeyInput {
   description: String
+  #  Optional groups to add the key to on creation
+  groups: [String!]
   name: String!
 }
 
@@ -801,6 +825,11 @@ input ProjectUpdateInput {
   visibility: Visibility
 }
 
+input ReleaseDownloadFilter {
+  name: StringFilterInput
+  type: ReleaseDownloadType
+}
+
 input ReleaseFilterInput {
   name: StringFilterInput
   urn: StringFilterInput
@@ -816,7 +845,6 @@ input ReleaseInput {
   tokenSets: [String!]
   #  The next version you wish to release. This must be greater than the current version
   version: String!
-  vesion: String!
 }
 
 input ResolverFilterInput {
