@@ -286,6 +286,15 @@ export const createProject = /* GraphQL */ `
             icon
             name
             orgUrn
+            releases {
+                createdAt
+                description
+                generators
+                name
+                tokenSets
+                urn
+                version
+            }
             resolvers {
                 description
                 name
@@ -308,9 +317,6 @@ export const createRelease = /* GraphQL */ `
         createRelease(input: $input, project: $project) {
             createdAt
             description
-            download {
-                url
-            }
             generators
             name
             releasedBy {
@@ -326,6 +332,10 @@ export const createRelease = /* GraphQL */ `
                     urn
                     visibility
                 }
+            }
+            stats {
+                generators
+                tokenSets
             }
             tokenSets
             urn
@@ -609,6 +619,15 @@ export const deleteOrganization = /* GraphQL */ `
             icon
             name
             orgUrn
+            releases {
+                createdAt
+                description
+                generators
+                name
+                tokenSets
+                urn
+                version
+            }
             resolvers {
                 description
                 name
@@ -669,6 +688,15 @@ export const deleteProject = /* GraphQL */ `
             icon
             name
             orgUrn
+            releases {
+                createdAt
+                description
+                generators
+                name
+                tokenSets
+                urn
+                version
+            }
             resolvers {
                 description
                 name
@@ -975,6 +1003,15 @@ export const updateGroup = /* GraphQL */ `
             icon
             name
             orgUrn
+            releases {
+                createdAt
+                description
+                generators
+                name
+                tokenSets
+                urn
+                version
+            }
             resolvers {
                 description
                 name
@@ -1097,6 +1134,15 @@ export const updateProject = /* GraphQL */ `
             icon
             name
             orgUrn
+            releases {
+                createdAt
+                description
+                generators
+                name
+                tokenSets
+                urn
+                version
+            }
             resolvers {
                 description
                 name
