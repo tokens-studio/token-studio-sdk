@@ -7,6 +7,7 @@ export const onCreateGroup = /* GraphQL */ `
         onCreateGroup(organization: $organization) {
             createdAt
             description
+            icon
             members {
                 ... on APIKeyIdentity {
                     name

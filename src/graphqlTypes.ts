@@ -6,6 +6,7 @@ export type Group = {
     __typename: 'Group';
     createdAt: string;
     description?: string | null;
+    icon?: string | null;
     members?: Array<Entity | null> | null;
     name: string;
     policy?: Policy | null;
@@ -757,6 +758,7 @@ export type AttachPolicyToGroupMutation = {
         __typename: 'Group';
         createdAt: string;
         description?: string | null;
+        icon?: string | null;
         members: Array<
             | (
                   | {
@@ -940,6 +942,7 @@ export type CreateGroupMutation = {
         __typename: 'Group';
         createdAt: string;
         description?: string | null;
+        icon?: string | null;
         members: Array<
             | (
                   | {
@@ -992,6 +995,7 @@ export type CreateOrganizationMutation = {
             __typename: 'Group';
             createdAt: string;
             description?: string | null;
+            icon?: string | null;
             name: string;
             urn?: string | null;
         } | null> | null;
@@ -1434,6 +1438,7 @@ export type DeleteGroupMutation = {
         __typename: 'Group';
         createdAt: string;
         description?: string | null;
+        icon?: string | null;
         members: Array<
             | (
                   | {
@@ -1857,6 +1862,7 @@ export type DetachPolicyFromGroupMutation = {
         __typename: 'Group';
         createdAt: string;
         description?: string | null;
+        icon?: string | null;
         members: Array<
             | (
                   | {
@@ -2043,6 +2049,7 @@ export type UpdateOrganizationMutation = {
             __typename: 'Group';
             createdAt: string;
             description?: string | null;
+            icon?: string | null;
             name: string;
             urn?: string | null;
         } | null> | null;
@@ -2477,6 +2484,7 @@ export type GroupsQuery = {
         __typename: 'Group';
         createdAt: string;
         description?: string | null;
+        icon?: string | null;
         members: Array<
             | (
                   | {
@@ -2531,6 +2539,7 @@ export type OrganizationsQuery = {
             __typename: 'Group';
             createdAt: string;
             description?: string | null;
+            icon?: string | null;
             name: string;
             urn?: string | null;
         } | null> | null;
@@ -3378,6 +3387,7 @@ export type OnCreateGroupSubscription = {
         __typename: 'Group';
         createdAt: string;
         description?: string | null;
+        icon?: string | null;
         members: Array<
             | (
                   | {

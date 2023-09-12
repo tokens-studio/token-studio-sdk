@@ -71,6 +71,7 @@ export const groups = /* GraphQL */ `
         ) {
             createdAt
             description
+            icon
             members {
                 ... on APIKeyIdentity {
                     name
@@ -115,6 +116,7 @@ export const organizations = /* GraphQL */ `
             groups {
                 createdAt
                 description
+                icon
                 name
                 urn
             }

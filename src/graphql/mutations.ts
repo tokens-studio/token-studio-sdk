@@ -17,6 +17,7 @@ export const attachPolicyToGroup = /* GraphQL */ `
         attachPolicyToGroup(group: $group, policy: $policy) {
             createdAt
             description
+            icon
             members {
                 ... on APIKeyIdentity {
                     name
@@ -159,6 +160,7 @@ export const createGroup = /* GraphQL */ `
         createGroup(input: $input, organization: $organization) {
             createdAt
             description
+            icon
             members {
                 ... on APIKeyIdentity {
                     name
@@ -199,6 +201,7 @@ export const createOrganization = /* GraphQL */ `
             groups {
                 createdAt
                 description
+                icon
                 name
                 urn
             }
@@ -555,6 +558,7 @@ export const deleteGroup = /* GraphQL */ `
         deleteGroup(urn: $urn) {
             createdAt
             description
+            icon
             members {
                 ... on APIKeyIdentity {
                     name
@@ -899,6 +903,7 @@ export const detachPolicyFromGroup = /* GraphQL */ `
         detachPolicyFromGroup(group: $group, policy: $policy) {
             createdAt
             description
+            icon
             members {
                 ... on APIKeyIdentity {
                     name
@@ -1047,6 +1052,7 @@ export const updateOrganization = /* GraphQL */ `
             groups {
                 createdAt
                 description
+                icon
                 name
                 urn
             }

@@ -80,6 +80,7 @@ type Generator {
 type Group @aws_cognito_user_pools @aws_lambda {
   createdAt: AWSDateTime! @aws_cognito_user_pools @aws_lambda
   description: String @aws_cognito_user_pools @aws_lambda
+  icon: String
   members: [Entity] @aws_cognito_user_pools @aws_lambda
   name: String! @aws_cognito_user_pools @aws_lambda
   policy: Policy @aws_cognito_user_pools @aws_lambda
