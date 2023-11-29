@@ -738,69 +738,7 @@ export const deleteInvitation = /* GraphQL */ `
 export const deleteOrganization = /* GraphQL */ `
     mutation DeleteOrganization($urn: String!) {
         deleteOrganization(urn: $urn) {
-            createdAt
-            createdBy {
-                ... on APIKeyIdentity {
-                    name
-                    urn
-                }
-                ... on User {
-                    description
-                    givenName
-                    icon
-                    name
-                    urn
-                    visibility
-                }
-            }
-            description
-            generators {
-                createdAt
-                description
-                graph
-                name
-                updatedAt
-                urn
-            }
-            icon
-            name
-            orgUrn
-            releaseCount
-            releases {
-                createdAt
-                description
-                name
-                urn
-                version
-            }
-            resolvers {
-                createdAt
-                description
-                graph
-                name
-                updatedAt
-                urn
-            }
-            sdConfigs {
-                config
-                createdAt
-                functions
-                name
-                projectUrn
-                updatedAt
-                urn
-            }
-            sets {
-                createdAt
-                generatorUrn
-                name
-                projectUrn
-                type
-                urn
-            }
-            tokenCount
             urn
-            visibility
         }
     }
 `;

@@ -413,6 +413,7 @@ export type GroupInput = {
     description?: string | null;
     icon?: string | null;
     name: string;
+    policy?: string | null;
 };
 
 export type OrganizationInput = {
@@ -490,10 +491,16 @@ export enum InvitationStatus {
     PENDING = 'PENDING'
 }
 
+export type DeletedOrg = {
+    __typename: 'DeletedOrg';
+    urn?: string | null;
+};
+
 export type GroupUpdateInput = {
     description?: string | null;
     icon?: string | null;
     name?: string | null;
+    policy?: string | null;
 };
 
 export type OrganizationUpdateInput = {
@@ -1640,79 +1647,8 @@ export type DeleteOrganizationMutationVariables = {
 
 export type DeleteOrganizationMutation = {
     deleteOrganization?: {
-        __typename: 'Project';
-        createdAt: string;
-        createdBy:
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name: string;
-        orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn: string;
-            version: string;
-        } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
-            name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
-        } | null> | null;
-        sets?: Array<{
-            __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
-            name?: string | null;
-            projectUrn?: string | null;
-            type?: TokenSetType | null;
-            urn?: string | null;
-        } | null> | null;
-        tokenCount?: number | null;
-        urn: string;
-        visibility?: Visibility | null;
+        __typename: 'DeletedOrg';
+        urn?: string | null;
     } | null;
 };
 
