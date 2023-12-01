@@ -61,7 +61,7 @@ export namespace Configuration {
      * @private
      * @param config
      */
-    export const configure = (config: IConfiguration) => {
+    export const configure = (config: IConfiguration = {}) => {
         configuration = Amplify.configure({
             ...defaultConfig,
             ...config,
