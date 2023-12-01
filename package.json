@@ -92,5 +92,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "jsnext:main": "./dist/esm/index.js"
+  "jsnext:main": "./dist/esm/index.js",
+  "packageManager": "yarn@4.0.2"
 }
