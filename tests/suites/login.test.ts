@@ -7,6 +7,10 @@ const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD!;
 const TEST_USER_EMAIL = process.env.TEST_USER_EMAIL!;
 
 describe('Login', () => {
+    beforeAll(() => {
+        lib.Configuration.configure();
+    });
+
     it('logs in the test user correctly', async () => {
         const res = await lib.UserAuth.signIn(
             TEST_USER_NAME,
