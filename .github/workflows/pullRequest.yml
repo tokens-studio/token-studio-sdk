@@ -15,13 +15,13 @@ jobs:
                   node-version: 18
 
             - name: Install Dependencies
-              run: npm ci
+              run: yarn --frozen-lockfile
 
             - name: Lint
-              run: npm run lint
+              run: yarn run lint
 
             - name: Test
-              run: npm run test
+              run: yarn run test
               env: # Or as an environment variable
                   TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
                   TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
