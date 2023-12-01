@@ -1,7 +1,7 @@
 import { API } from '@aws-amplify/api';
-import { Hub } from '@aws-amplify/core';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
+import { Hub } from '@aws-amplify/core';
 import { oauth } from '../aws-exports';
 import type { FederatedSignInOptions } from '@aws-amplify/auth/lib/types/Auth';
 
