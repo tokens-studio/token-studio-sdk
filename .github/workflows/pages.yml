@@ -30,12 +30,11 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 18
-            - name: Enable corepack
-              run:  corepack enable
+
             - name: Install Dependencies
-              run: yarn --frozen-lockfile
+              run: npm ci
             - name: Generate docs
-              run: yarn run docs
+              run: npm run docs
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v1
               with:
