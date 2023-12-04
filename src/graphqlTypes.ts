@@ -491,11 +491,6 @@ export enum InvitationStatus {
     PENDING = 'PENDING'
 }
 
-export type DeletedOrg = {
-    __typename: 'DeletedOrg';
-    urn?: string | null;
-};
-
 export type GroupUpdateInput = {
     description?: string | null;
     icon?: string | null;
@@ -1647,8 +1642,69 @@ export type DeleteOrganizationMutationVariables = {
 
 export type DeleteOrganizationMutation = {
     deleteOrganization?: {
-        __typename: 'DeletedOrg';
+        __typename: 'Organization';
+        account?: string | null;
+        apiKeys?: Array<{
+            __typename: 'APIKeyWithoutValue';
+            description?: string | null;
+            lastUsed?: string | null;
+            name?: string | null;
+            urn?: string | null;
+        } | null> | null;
+        createdAt?: string | null;
+        description?: string | null;
+        groups?: Array<{
+            __typename: 'Group';
+            createdAt: string;
+            description?: string | null;
+            icon?: string | null;
+            name: string;
+            urn?: string | null;
+        } | null> | null;
+        icon?: string | null;
+        name?: string | null;
+        owner?: {
+            __typename: 'User';
+            description?: string | null;
+            givenName?: string | null;
+            icon?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            visibility?: Visibility | null;
+        } | null;
+        payment?: string | null;
+        policies?: Array<{
+            __typename: 'Policy';
+            createdAt?: string | null;
+            description?: string | null;
+            name: string;
+            urn?: string | null;
+        } | null> | null;
+        projects?: Array<{
+            __typename: 'Project';
+            createdAt: string;
+            description?: string | null;
+            icon?: string | null;
+            name: string;
+            orgUrn?: string | null;
+            releaseCount?: number | null;
+            tokenCount?: number | null;
+            urn: string;
+            visibility?: Visibility | null;
+        } | null> | null;
+        ssoEnabled?: boolean | null;
+        tier?: OrganizationTier | null;
         urn?: string | null;
+        users?: Array<{
+            __typename: 'User';
+            description?: string | null;
+            givenName?: string | null;
+            icon?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            visibility?: Visibility | null;
+        } | null> | null;
+        visibility?: Visibility | null;
     } | null;
 };
 

@@ -13,16 +13,15 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 18
-            - name: Enable corepack
-              run:  corepack enable
+
             - name: Install Dependencies
-              run: yarn --frozen-lockfile
+              run: yarn
 
             - name: Lint
-              run: yarn run lint
+              run: npm run lint
 
             - name: Test
-              run: yarn run test
+              run: npm run test
               env: # Or as an environment variable
                   TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
                   TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}

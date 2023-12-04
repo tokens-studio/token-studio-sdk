@@ -68,10 +68,6 @@ type ColorValue {
   rgba: [Int]
 }
 
-type DeletedOrg {
-  urn: String
-}
-
 type Generator {
   createdAt: AWSDateTime
   description: String
@@ -157,7 +153,7 @@ type Mutation @aws_cognito_user_pools @aws_lambda {
   deleteGroup(urn: String!): Group @aws_cognito_user_pools @aws_lambda
   #  Deletes an invitation from your organization to a user
   deleteInvitation(urn: String!): Invitation @aws_cognito_user_pools @aws_lambda
-  deleteOrganization(urn: String!): DeletedOrg @aws_cognito_user_pools
+  deleteOrganization(urn: String!): Organization @aws_cognito_user_pools
   # ## Deletion
   ##### Deletes a token from a set
   deletePolicy(urn: String!): Policy @aws_cognito_user_pools @aws_lambda
