@@ -34,7 +34,7 @@
     "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "release": "npm run build && changeset publish",
     "server": "webpack serve",
     "test": "jest"
@@ -45,7 +45,8 @@
     "@aws-amplify/api": "^5.0.19",
     "@aws-amplify/auth": "^5.1.13",
     "@aws-amplify/core": "^5.1.2",
-    "@aws-amplify/pubsub": "^5.1.2"
+    "@aws-amplify/pubsub": "^5.1.2",
+    "is-ci": "^3.0.1"
   },
   "optionalDependencies": {
     "eslint": "^8.31.0",
