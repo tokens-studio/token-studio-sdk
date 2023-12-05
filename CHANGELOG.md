@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.0.0
+
+### Major Changes
+
+-   ae4a60c: Changed how raw tokens are represented in the SDK
+
 ## 0.4.0
 
 ### Minor Changes
