@@ -2,123 +2,89 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateGroup = /* GraphQL */ `
-    subscription OnCreateGroup($organization: String!) {
-        onCreateGroup(organization: $organization) {
-            createdAt
-            description
-            icon
-            members {
-                ... on APIKeyIdentity {
-                    name
-                    urn
-                }
-                ... on User {
-                    description
-                    givenName
-                    icon
-                    name
-                    urn
-                    visibility
-                }
-            }
-            name
-            policy {
-                createdAt
-                description
-                name
-                urn
-            }
-            urn
-        }
-    }
-`;
 export const onCreateToken = /* GraphQL */ `
     subscription OnCreateToken($setUrn: String!) {
         onCreateToken(setUrn: $setUrn) {
-            ... on Raw_Token_border {
-                border {
-                    color
-                    style
-                    width
-                }
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
+            description
+            name
+            urn
+            extensions
+            setUrn
+            metadata {
+                createdAt
             }
-            ... on Raw_Token_boxShadow {
-                boxShadow {
-                    blur
-                    color
-                    spread
-                    type
-                    x
-                    y
+            type
+            value {
+                ... on Raw_Token_scalar {
+                    value
                 }
-                description
-                extensions
-                metadata {
-                    createdAt
+                ... on Raw_Token_typography {
+                    value
                 }
-                name
-                setUrn
-                type
-                urn
-                value
+                ... on Raw_Token_border {
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    value
+                }
             }
-            ... on Raw_Token_color {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
+        }
+    }
+`;
+export const onUpdateToken = /* GraphQL */ `
+    subscription OnUpdateToken($setUrn: String!) {
+        onUpdateToken(setUrn: $setUrn) {
+            description
+            name
+            urn
+            extensions
+            setUrn
+            metadata {
+                createdAt
             }
-            ... on Raw_Token_scalar {
-                description
-                extensions
-                metadata {
-                    createdAt
+            type
+            value {
+                ... on Raw_Token_scalar {
+                    value
                 }
-                name
-                setUrn
-                type
-                urn
-                value
+                ... on Raw_Token_typography {
+                    value
+                }
+                ... on Raw_Token_border {
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    value
+                }
             }
-            ... on Raw_Token_typography {
-                description
-                extensions
-                metadata {
-                    createdAt
+        }
+    }
+`;
+export const onDeleteToken = /* GraphQL */ `
+    subscription OnDeleteToken($setUrn: String!) {
+        onDeleteToken(setUrn: $setUrn) {
+            description
+            name
+            urn
+            extensions
+            setUrn
+            metadata {
+                createdAt
+            }
+            type
+            value {
+                ... on Raw_Token_scalar {
+                    value
                 }
-                name
-                setUrn
-                type
-                typography {
-                    fontFamily
-                    fontSize
-                    fontWeight
-                    letterSpacing
-                    lineHeight
-                    paragraphIndent
-                    paragraphSpacing
-                    textCase
-                    textDecoration
+                ... on Raw_Token_typography {
+                    value
                 }
-                urn
-                value
+                ... on Raw_Token_border {
+                    value
+                }
+                ... on Raw_Token_boxShadow {
+                    value
+                }
             }
         }
     }
@@ -126,303 +92,22 @@ export const onCreateToken = /* GraphQL */ `
 export const onCreateTokenSet = /* GraphQL */ `
     subscription OnCreateTokenSet($projectUrn: String!) {
         onCreateTokenSet(projectUrn: $projectUrn) {
-            createdAt
-            generatorUrn
+            urn
             metadata {
                 createdAt
             }
             name
             projectUrn
-            tokens {
-                ... on Raw_Token_border {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_boxShadow {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_color {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_scalar {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_typography {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-            }
             type
-            urn
-        }
-    }
-`;
-export const onDeleteToken = /* GraphQL */ `
-    subscription OnDeleteToken($setUrn: String!) {
-        onDeleteToken(setUrn: $setUrn) {
-            ... on Raw_Token_border {
-                border {
-                    color
-                    style
-                    width
-                }
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_boxShadow {
-                boxShadow {
-                    blur
-                    color
-                    spread
-                    type
-                    x
-                    y
-                }
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_color {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_scalar {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_typography {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                typography {
-                    fontFamily
-                    fontSize
-                    fontWeight
-                    letterSpacing
-                    lineHeight
-                    paragraphIndent
-                    paragraphSpacing
-                    textCase
-                    textDecoration
-                }
-                urn
-                value
-            }
-        }
-    }
-`;
-export const onDeleteTokenSet = /* GraphQL */ `
-    subscription OnDeleteTokenSet($projectUrn: String!) {
-        onDeleteTokenSet(projectUrn: $projectUrn) {
-            createdAt
             generatorUrn
-            metadata {
-                createdAt
-            }
-            name
-            projectUrn
+            createdAt
             tokens {
-                ... on Raw_Token_border {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_boxShadow {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_color {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_scalar {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_typography {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-            }
-            type
-            urn
-        }
-    }
-`;
-export const onUpdateToken = /* GraphQL */ `
-    subscription OnUpdateToken($setUrn: String!) {
-        onUpdateToken(setUrn: $setUrn) {
-            ... on Raw_Token_border {
-                border {
-                    color
-                    style
-                    width
-                }
                 description
-                extensions
-                metadata {
-                    createdAt
-                }
                 name
+                urn
+                extensions
                 setUrn
                 type
-                urn
-                value
-            }
-            ... on Raw_Token_boxShadow {
-                boxShadow {
-                    blur
-                    color
-                    spread
-                    type
-                    x
-                    y
-                }
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_color {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_scalar {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                urn
-                value
-            }
-            ... on Raw_Token_typography {
-                description
-                extensions
-                metadata {
-                    createdAt
-                }
-                name
-                setUrn
-                type
-                typography {
-                    fontFamily
-                    fontSize
-                    fontWeight
-                    letterSpacing
-                    lineHeight
-                    paragraphIndent
-                    paragraphSpacing
-                    textCase
-                    textDecoration
-                }
-                urn
-                value
             }
         }
     }
@@ -430,62 +115,78 @@ export const onUpdateToken = /* GraphQL */ `
 export const onUpdateTokenSet = /* GraphQL */ `
     subscription OnUpdateTokenSet($projectUrn: String!) {
         onUpdateTokenSet(projectUrn: $projectUrn) {
-            createdAt
-            generatorUrn
+            urn
             metadata {
                 createdAt
             }
             name
             projectUrn
+            type
+            generatorUrn
+            createdAt
             tokens {
-                ... on Raw_Token_border {
-                    description
-                    extensions
+                description
+                name
+                urn
+                extensions
+                setUrn
+                type
+            }
+        }
+    }
+`;
+export const onDeleteTokenSet = /* GraphQL */ `
+    subscription OnDeleteTokenSet($projectUrn: String!) {
+        onDeleteTokenSet(projectUrn: $projectUrn) {
+            urn
+            metadata {
+                createdAt
+            }
+            name
+            projectUrn
+            type
+            generatorUrn
+            createdAt
+            tokens {
+                description
+                name
+                urn
+                extensions
+                setUrn
+                type
+            }
+        }
+    }
+`;
+export const onCreateGroup = /* GraphQL */ `
+    subscription OnCreateGroup($organization: String!) {
+        onCreateGroup(organization: $organization) {
+            organization
+            createdAt
+            name
+            icon
+            urn
+            description
+            members {
+                ... on User {
                     name
-                    setUrn
-                    type
+                    givenName
                     urn
-                    value
+                    description
+                    icon
+                    visibility
                 }
-                ... on Raw_Token_boxShadow {
-                    description
-                    extensions
+                ... on APIKeyIdentity {
                     name
-                    setUrn
-                    type
                     urn
-                    value
-                }
-                ... on Raw_Token_color {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_scalar {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
-                }
-                ... on Raw_Token_typography {
-                    description
-                    extensions
-                    name
-                    setUrn
-                    type
-                    urn
-                    value
                 }
             }
-            type
-            urn
+            policy {
+                createdAt
+                name
+                urn
+                description
+            }
         }
     }
 `;

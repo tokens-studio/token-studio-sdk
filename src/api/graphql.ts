@@ -1,11 +1,7 @@
 import { API } from '@aws-amplify/api';
 import { ApiKey } from './apiKey';
 import { Configuration } from './configure';
-import {
-    GraphQLAPIClass,
-    GraphQLOptions,
-    GraphQLResult
-} from '@aws-amplify/api-graphql';
+import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
 
 /**
  * The namespace for executing graphql queries.
