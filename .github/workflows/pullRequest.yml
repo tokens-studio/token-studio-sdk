@@ -15,7 +15,7 @@ jobs:
                   node-version: 18
 
             - name: Install Dependencies
-              run: npm ci
+              run: yarn
 
             - name: Lint
               run: npm run lint
@@ -25,4 +25,5 @@ jobs:
               env: # Or as an environment variable
                   TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
                   TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+                  TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
                   TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
