@@ -2,46 +2,84 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type Organization = {
-    __typename: 'Organization';
-    account?: string | null;
-    apiKeys?: Array<APIKeyWithoutValue | null> | null;
-    createdAt?: string | null;
+export type ProjectInput = {
+    name: string;
     description?: string | null;
-    groups?: Array<Group | null> | null;
+    visibility: Visibility;
     icon?: string | null;
-    name?: string | null;
-    owner?: User | null;
-    payment?: string | null;
-    policies?: Array<Policy | null> | null;
-    projects?: Array<Project | null> | null;
-    ssoEnabled?: boolean | null;
-    tier?: OrganizationTier | null;
-    urn?: string | null;
-    users?: Array<User | null> | null;
-    visibility?: Visibility | null;
 };
 
-export type APIKeyWithoutValue = {
-    __typename: 'APIKeyWithoutValue';
+export enum Visibility {
+    PUBLIC = 'PUBLIC',
+    PRIVATE = 'PRIVATE'
+}
+
+export type Project = {
+    __typename: 'Project';
+    createdBy?: Entity | null;
+    createdAt: string;
+    name: string;
+    urn: string;
+    orgUrn?: string | null;
+    visibility?: Visibility | null;
+    icon?: string | null;
     description?: string | null;
-    lastUsed?: string | null;
+    summary?: ProjectSummary | null;
+    sets?: Array<TokenSet | null> | null;
+    resolvers?: Array<Resolver | null> | null;
+    generators?: Array<Generator | null> | null;
+    releases?: Array<Release | null> | null;
+    sdConfigs?: Array<SDConfig | null> | null;
+    releaseCount?: number | null;
+    tokenCount?: number | null;
+};
+
+export type Entity = User | APIKeyIdentity;
+
+export type User = {
+    __typename: 'User';
     name?: string | null;
+    givenName?: string | null;
     urn?: string | null;
+    description?: string | null;
+    icon?: string | null;
+    visibility?: Visibility | null;
+    groups?: Array<Group | null> | null;
 };
 
 export type Group = {
     __typename: 'Group';
+    organization?: string | null;
     createdAt: string;
-    description?: string | null;
+    name?: string | null;
     icon?: string | null;
-    members?: Array<Entity | null> | null;
-    name: string;
-    policy?: Policy | null;
     urn?: string | null;
+    description?: string | null;
+    members?: Array<Entity | null> | null;
+    policy?: Policy | null;
 };
 
-export type Entity = APIKeyIdentity | User;
+export type Policy = {
+    __typename: 'Policy';
+    createdAt?: string | null;
+    name: string;
+    urn?: string | null;
+    description?: string | null;
+    value: PolicyDoc;
+};
+
+export type PolicyDoc = {
+    __typename: 'PolicyDoc';
+    version: string;
+    statement: Array<PolicyStatement | null>;
+};
+
+export type PolicyStatement = {
+    __typename: 'PolicyStatement';
+    effect: string;
+    action: Array<string | null>;
+    resource: Array<string | null>;
+};
 
 export type APIKeyIdentity = {
     __typename: 'APIKeyIdentity';
@@ -49,139 +87,29 @@ export type APIKeyIdentity = {
     urn?: string | null;
 };
 
-export type User = {
-    __typename: 'User';
-    description?: string | null;
-    givenName?: string | null;
-    groups?: Array<Group | null> | null;
-    icon?: string | null;
-    name?: string | null;
-    urn?: string | null;
-    visibility?: Visibility | null;
+export type ProjectSummary = {
+    __typename: 'ProjectSummary';
+    sets?: SummarizedValue | null;
+    resolvers?: SummarizedValue | null;
+    generators?: SummarizedValue | null;
+    tokens?: SummarizedValue | null;
 };
 
-export enum Visibility {
-    PRIVATE = 'PRIVATE',
-    PUBLIC = 'PUBLIC'
-}
-
-export type Policy = {
-    __typename: 'Policy';
-    createdAt?: string | null;
-    description?: string | null;
-    name: string;
-    urn?: string | null;
-    value: PolicyDoc;
-};
-
-export type PolicyDoc = {
-    __typename: 'PolicyDoc';
-    statement: Array<PolicyStatement | null>;
-    version: string;
-};
-
-export type PolicyStatement = {
-    __typename: 'PolicyStatement';
-    action: Array<string | null>;
-    effect: string;
-    resource: Array<string | null>;
-};
-
-export type Project = {
-    __typename: 'Project';
-    createdAt: string;
-    createdBy?: Entity | null;
-    description?: string | null;
-    generators?: Array<Generator | null> | null;
-    icon?: string | null;
-    name: string;
-    orgUrn?: string | null;
-    releaseCount?: number | null;
-    releases?: Array<Release | null> | null;
-    resolvers?: Array<Resolver | null> | null;
-    sdConfigs?: Array<SDConfig | null> | null;
-    sets?: Array<TokenSet | null> | null;
-    summary?: ProjectSummary | null;
-    tokenCount?: number | null;
-    urn: string;
-    visibility?: Visibility | null;
-};
-
-export type Generator = {
-    __typename: 'Generator';
-    createdAt?: string | null;
-    description?: string | null;
-    graph?: string | null;
-    name?: string | null;
-    updatedAt?: string | null;
-    urn?: string | null;
-};
-
-export type Release = {
-    __typename: 'Release';
-    createdAt?: string | null;
-    description?: string | null;
-    download?: ReleaseDownload | null;
-    generators?: Array<ReleaseFile> | null;
-    name: string;
-    releasedBy?: Entity | null;
-    tokenSets?: Array<ReleaseFile> | null;
-    urn: string;
-    version: string;
-};
-
-export type ReleaseDownload = {
-    __typename: 'ReleaseDownload';
-    file?: Array<ReleaseFile | null> | null;
-    zipUrl?: ReleaseFile | null;
-};
-
-export type ReleaseFile = {
-    __typename: 'ReleaseFile';
-    name?: string | null;
-    path?: string | null;
-    type?: string | null;
-};
-
-export type Resolver = {
-    __typename: 'Resolver';
-    createdAt?: string | null;
-    description?: string | null;
-    graph?: string | null;
-    name?: string | null;
-    options?: Array<ResolverOption | null> | null;
-    updatedAt?: string | null;
-    urn?: string | null;
-};
-
-export type ResolverOption = {
-    __typename: 'ResolverOption';
-    description?: string | null;
-    name: string;
-    values?: Array<string | null> | null;
-};
-
-export type SDConfig = {
-    __typename: 'SDConfig';
-    config?: string | null;
-    createdAt: string;
-    functions?: string | null;
-    name: string;
-    projectUrn: string;
-    updatedAt: string;
-    urn: string;
+export type SummarizedValue = {
+    __typename: 'SummarizedValue';
+    total: number;
 };
 
 export type TokenSet = {
     __typename: 'TokenSet';
-    createdAt?: string | null;
-    generatorUrn?: string | null;
+    urn?: string | null;
     metadata?: Metadata | null;
     name?: string | null;
     projectUrn?: string | null;
-    tokens: Array<RawToken>;
     type?: TokenSetType | null;
-    urn?: string | null;
+    generatorUrn?: string | null;
+    createdAt?: string | null;
+    tokens: Array<RawToken>;
 };
 
 export type Metadata = {
@@ -191,57 +119,21 @@ export type Metadata = {
     lastUpdatedBy?: Entity | null;
 };
 
-export type RawToken =
-    | Raw_Token_border
-    | Raw_Token_boxShadow
-    | Raw_Token_color
-    | Raw_Token_scalar
-    | Raw_Token_typography;
+export enum TokenSetType {
+    STATIC = 'STATIC',
+    DYNAMIC = 'DYNAMIC'
+}
 
-export type Raw_Token_border = {
-    __typename: 'Raw_Token_border';
-    border?: Border | null;
+export type RawToken = {
+    __typename: 'RawToken';
     description?: string | null;
+    name?: string | null;
+    urn?: string | null;
     extensions?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
     setUrn?: string | null;
-    type?: TokenType | null;
-    urn?: string | null;
-    value?: string | null;
-};
-
-export type TokenInterface = {
-    __typename: 'TokenInterface';
-    description?: string | null;
     metadata?: Metadata | null;
-    name?: string | null;
-    setUrn?: string | null;
     type?: TokenType | null;
-    urn?: string | null;
-};
-
-export type Raw_Token_boxShadow = {
-    __typename: 'Raw_Token_boxShadow';
-    boxShadow?: Array<BoxShadow | null> | null;
-    description?: string | null;
-    extensions?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    setUrn?: string | null;
-    type?: TokenType | null;
-    urn?: string | null;
-    value?: string | null;
-};
-
-export type BoxShadow = {
-    __typename: 'BoxShadow';
-    blur?: string | null;
-    color?: string | null;
-    spread?: string | null;
-    type?: string | null;
-    x?: string | null;
-    y?: string | null;
+    value?: RawTokenValue | null;
 };
 
 export enum TokenType {
@@ -269,54 +161,40 @@ export enum TokenType {
     typography = 'typography'
 }
 
-export type Raw_Token_color = {
-    __typename: 'Raw_Token_color';
-    description?: string | null;
-    extensions?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    setUrn?: string | null;
-    type?: TokenType | null;
-    urn?: string | null;
-    value?: string | null;
-};
+export type RawTokenValue =
+    | Raw_Token_scalar
+    | Raw_Token_typography
+    | Raw_Token_border
+    | Raw_Token_boxShadow;
 
 export type Raw_Token_scalar = {
     __typename: 'Raw_Token_scalar';
-    description?: string | null;
-    extensions?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    setUrn?: string | null;
-    type?: TokenType | null;
-    urn?: string | null;
     value?: string | null;
 };
 
 export type Raw_Token_typography = {
     __typename: 'Raw_Token_typography';
-    description?: string | null;
-    extensions?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    setUrn?: string | null;
-    type?: TokenType | null;
-    typography?: Typography | null;
-    urn?: string | null;
     value?: string | null;
+    typography?: Typography | null;
 };
 
 export type Typography = {
     __typename: 'Typography';
     fontFamily?: string | null;
-    fontSize?: string | null;
     fontWeight?: string | null;
     letterSpacing?: string | null;
     lineHeight?: string | null;
+    fontSize?: string | null;
     paragraphIndent?: string | null;
     paragraphSpacing?: string | null;
     textCase?: string | null;
     textDecoration?: string | null;
+};
+
+export type Raw_Token_border = {
+    __typename: 'Raw_Token_border';
+    value?: string | null;
+    border?: Border | null;
 };
 
 export type Border = {
@@ -326,40 +204,189 @@ export type Border = {
     width?: string | null;
 };
 
-export enum TokenSetType {
-    DYNAMIC = 'DYNAMIC',
-    STATIC = 'STATIC'
-}
-
-export type ProjectSummary = {
-    __typename: 'ProjectSummary';
-    generators?: SummarizedValue | null;
-    resolvers?: SummarizedValue | null;
-    sets?: SummarizedValue | null;
-    tokens?: SummarizedValue | null;
+export type Raw_Token_boxShadow = {
+    __typename: 'Raw_Token_boxShadow';
+    value?: string | null;
+    boxShadow?: Array<BoxShadow | null> | null;
 };
 
-export type SummarizedValue = {
-    __typename: 'SummarizedValue';
-    total: number;
+export type BoxShadow = {
+    __typename: 'BoxShadow';
+    x?: string | null;
+    y?: string | null;
+    blur?: string | null;
+    spread?: string | null;
+    color?: string | null;
+    type?: string | null;
+};
+
+export type Resolver = {
+    __typename: 'Resolver';
+    name?: string | null;
+    description?: string | null;
+    createdAt?: string | null;
+    updatedAt?: string | null;
+    urn?: string | null;
+    graph?: string | null;
+    options?: Array<ResolverOption | null> | null;
+};
+
+export type ResolverOption = {
+    __typename: 'ResolverOption';
+    name: string;
+    description?: string | null;
+    values?: Array<string | null> | null;
+};
+
+export type Generator = {
+    __typename: 'Generator';
+    urn?: string | null;
+    name?: string | null;
+    description?: string | null;
+    createdAt?: string | null;
+    updatedAt?: string | null;
+    graph?: string | null;
+};
+
+export type Release = {
+    __typename: 'Release';
+    urn: string;
+    name: string;
+    download?: ReleaseDownload | null;
+    version: string;
+    description?: string | null;
+    tokenSets?: Array<ReleaseFile> | null;
+    generators?: Array<ReleaseFile> | null;
+    createdAt?: string | null;
+    releasedBy?: Entity | null;
+};
+
+export type ReleaseDownload = {
+    __typename: 'ReleaseDownload';
+    zipUrl?: ReleaseFile | null;
+    file?: Array<ReleaseFile | null> | null;
+};
+
+export type ReleaseFile = {
+    __typename: 'ReleaseFile';
+    path?: string | null;
+    name?: string | null;
+    type?: string | null;
+};
+
+export type SDConfig = {
+    __typename: 'SDConfig';
+    urn: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    projectUrn: string;
+    config?: string | null;
+    functions?: string | null;
+};
+
+export type PolicyInput = {
+    name: string;
+    description?: string | null;
+    value: PolicyDocInput;
+};
+
+export type PolicyDocInput = {
+    version: string;
+    statement: Array<PolicyStatementInput>;
+};
+
+export type PolicyStatementInput = {
+    effect: string;
+    action: Array<string | null>;
+    resource: Array<string | null>;
+};
+
+export type GroupInput = {
+    name: string;
+    description?: string | null;
+    icon?: string | null;
+    policy?: string | null;
+};
+
+export type OrganizationInput = {
+    name: string;
+    description?: string | null;
+    visibility: Visibility;
+    icon?: string | null;
+    tier: OrganizationTier;
 };
 
 export enum OrganizationTier {
-    ENTERPRISE = 'ENTERPRISE',
     FREE = 'FREE',
     STARTER = 'STARTER',
-    STUDIO = 'STUDIO'
+    STUDIO = 'STUDIO',
+    ENTERPRISE = 'ENTERPRISE'
 }
 
-export type TokenInput = {
-    border?: BorderInput | null;
-    boxShadow?: Array<BoxShadowInput | null> | null;
+export type Organization = {
+    __typename: 'Organization';
+    urn?: string | null;
+    createdAt?: string | null;
+    owner?: User | null;
+    name?: string | null;
     description?: string | null;
-    extensions?: string | null;
+    visibility?: Visibility | null;
+    account?: string | null;
+    payment?: string | null;
+    ssoEnabled?: boolean | null;
+    icon?: string | null;
+    tier?: OrganizationTier | null;
+    projects?: Array<Project | null> | null;
+    groups?: Array<Group | null> | null;
+    policies?: Array<Policy | null> | null;
+    apiKeys?: Array<APIKeyWithoutValue | null> | null;
+    users?: Array<User | null> | null;
+};
+
+export type APIKeyWithoutValue = {
+    __typename: 'APIKeyWithoutValue';
+    name?: string | null;
+    lastUsed?: string | null;
+    description?: string | null;
+    urn?: string | null;
+};
+
+export type APIKeyInput = {
+    name: string;
+    description?: string | null;
+    groups?: Array<string> | null;
+};
+
+export type APIKey = {
+    __typename: 'APIKey';
+    name?: string | null;
+    description?: string | null;
+    value?: string | null;
+    urn?: string | null;
+};
+
+export type TokenInput = {
+    description?: string | null;
     name: string;
     type: TokenType;
-    typography?: TypographyInput | null;
+    extensions?: string | null;
     value?: string | null;
+    typography?: TypographyInput | null;
+    border?: BorderInput | null;
+    boxShadow?: Array<BoxShadowInput | null> | null;
+};
+
+export type TypographyInput = {
+    fontFamily?: string | null;
+    fontWeight?: string | null;
+    letterSpacing?: string | null;
+    lineHeight?: string | null;
+    fontSize?: string | null;
+    paragraphIndent?: string | null;
+    paragraphSpacing?: string | null;
+    textCase?: string | null;
+    textDecoration?: string | null;
 };
 
 export type BorderInput = {
@@ -369,226 +396,138 @@ export type BorderInput = {
 };
 
 export type BoxShadowInput = {
-    blur?: string | null;
-    color?: string | null;
-    spread?: string | null;
-    type?: string | null;
     x?: string | null;
     y?: string | null;
-};
-
-export type TypographyInput = {
-    fontFamily?: string | null;
-    fontSize?: string | null;
-    fontWeight?: string | null;
-    letterSpacing?: string | null;
-    lineHeight?: string | null;
-    paragraphIndent?: string | null;
-    paragraphSpacing?: string | null;
-    textCase?: string | null;
-    textDecoration?: string | null;
-};
-
-export type APIKeyInput = {
-    description?: string | null;
-    groups?: Array<string> | null;
-    name: string;
-};
-
-export type APIKey = {
-    __typename: 'APIKey';
-    description?: string | null;
-    name?: string | null;
-    urn?: string | null;
-    value?: string | null;
-};
-
-export type GeneratorInput = {
-    description?: string | null;
-    graph?: string | null;
-    name: string;
-};
-
-export type GroupInput = {
-    description?: string | null;
-    icon?: string | null;
-    name: string;
-    policy?: string | null;
-};
-
-export type OrganizationInput = {
-    description?: string | null;
-    icon?: string | null;
-    name: string;
-    tier: OrganizationTier;
-    visibility: Visibility;
-};
-
-export type PolicyInput = {
-    description?: string | null;
-    name: string;
-    value: PolicyDocInput;
-};
-
-export type PolicyDocInput = {
-    statement: Array<PolicyStatementInput>;
-    version: string;
-};
-
-export type PolicyStatementInput = {
-    action: Array<string | null>;
-    effect: string;
-    resource: Array<string | null>;
-};
-
-export type ProjectInput = {
-    description?: string | null;
-    icon?: string | null;
-    name: string;
-    visibility: Visibility;
-};
-
-export type ReleaseInput = {
-    description?: string | null;
-    generators?: Array<string> | null;
-    name: string;
-    tokenSets?: Array<string> | null;
-    version: string;
-};
-
-export type ResolverInput = {
-    description?: string | null;
-    graph: string;
-    name: string;
-};
-
-export type SDConfigInput = {
-    config: string;
-    description?: string | null;
-    functions: string;
-    name: string;
+    blur?: string | null;
+    spread?: string | null;
+    color?: string | null;
+    type?: string | null;
 };
 
 export type TokenSetInput = {
+    name: string;
+    description?: string | null;
+    type?: TokenSetType | null;
+    graph?: string | null;
+};
+
+export type ResolverInput = {
+    name: string;
+    description?: string | null;
+    graph: string;
+};
+
+export type SDConfigInput = {
+    description?: string | null;
+    name: string;
+    config: string;
+    functions: string;
+};
+
+export type ReleaseInput = {
+    name: string;
+    description?: string | null;
+    version: string;
+    tokenSets?: Array<string> | null;
+    generators?: Array<string> | null;
+};
+
+export type GeneratorInput = {
+    name: string;
     description?: string | null;
     graph?: string | null;
-    name: string;
-    type?: TokenSetType | null;
 };
 
 export type Invitation = {
     __typename: 'Invitation';
-    confirmCode: string;
     organization: string;
+    user: string;
     status?: InvitationStatus | null;
     urn: string;
-    user: string;
+    confirmCode: string;
 };
 
 export enum InvitationStatus {
-    ACCEPTED = 'ACCEPTED',
+    PENDING = 'PENDING',
     DECLINED = 'DECLINED',
-    PENDING = 'PENDING'
+    ACCEPTED = 'ACCEPTED'
 }
 
-export type GroupUpdateInput = {
-    description?: string | null;
-    icon?: string | null;
-    name?: string | null;
-    policy?: string | null;
-};
-
-export type OrganizationUpdateInput = {
-    description?: string | null;
-    icon?: string | null;
-    name?: string | null;
-    tier?: OrganizationTier | null;
-    urn: string;
-    visibility?: Visibility | null;
-};
-
-export type PolicyInputUpdate = {
-    description?: string | null;
-    name?: string | null;
-    value?: PolicyDocInput | null;
-};
-
-export type ProjectUpdateInput = {
-    description?: string | null;
-    icon?: string | null;
-    name?: string | null;
-    visibility?: Visibility | null;
-};
-
-export type ResolverUpdateInput = {
-    description?: string | null;
-    graph?: string | null;
-    name?: string | null;
-};
-
 export type UpdateSelfInput = {
-    description?: string | null;
+    name?: string | null;
     givenName?: string | null;
     icon?: FileInput | null;
-    name?: string | null;
+    description?: string | null;
     visibility?: Visibility | null;
 };
 
 export type FileInput = {
-    data: string;
     name: string;
     type: string;
+    data: string;
 };
 
 export type TokenUpdateInput = {
+    description?: string | null;
+    name?: string | null;
+    extensions?: string | null;
     border?: BorderInput | null;
     boxShadow?: BoxShadowInput | null;
-    description?: string | null;
-    extensions?: string | null;
-    name?: string | null;
     typography?: TypographyInput | null;
     value?: string | null;
 };
 
 export type TokenSetUpdateInput = {
-    description?: string | null;
     name?: string | null;
+    description?: string | null;
 };
 
-export type ApiKeyFilterInput = {
-    name?: StringFilterInput | null;
-    urn?: StringFilterInput | null;
+export type ResolverUpdateInput = {
+    name?: string | null;
+    description?: string | null;
+    graph?: string | null;
 };
 
-export type StringFilterInput = {
-    beginsWith?: string | null;
-    eq?: string | null;
-    ne?: string | null;
+export type PolicyInputUpdate = {
+    name?: string | null;
+    description?: string | null;
+    value?: PolicyDocInput | null;
 };
 
-export type GeneratorFilterInput = {
-    name?: StringFilterInput | null;
-    urn?: StringFilterInput | null;
+export type ProjectUpdateInput = {
+    name?: string | null;
+    description?: string | null;
+    visibility?: Visibility | null;
+    icon?: string | null;
 };
 
-export type GroupFilterInput = {
-    name?: GroupStringFilterInput | null;
-    urn?: GroupUrnFilterInput | null;
+export type GroupUpdateInput = {
+    name?: string | null;
+    description?: string | null;
+    icon?: string | null;
+    policy?: string | null;
 };
 
-export type GroupStringFilterInput = {
-    eq?: string | null;
-};
-
-export type GroupUrnFilterInput = {
-    eq?: string | null;
+export type OrganizationUpdateInput = {
+    urn: string;
+    name?: string | null;
+    description?: string | null;
+    visibility?: Visibility | null;
+    icon?: string | null;
+    tier?: OrganizationTier | null;
 };
 
 export type OrganizationFilterInput = {
+    urn?: StringFilterInput | null;
     name?: StringFilterInput | null;
     owner?: StringFilterInput | null;
-    urn?: StringFilterInput | null;
     visibility?: VisibilityInput | null;
+};
+
+export type StringFilterInput = {
+    eq?: string | null;
+    ne?: string | null;
+    beginsWith?: string | null;
 };
 
 export type VisibilityInput = {
@@ -596,15 +535,52 @@ export type VisibilityInput = {
 };
 
 export type ProjectFilterInput = {
-    name?: StringFilterInput | null;
     urn?: StringFilterInput | null;
+    name?: StringFilterInput | null;
     visibility?: VisibilityInput | null;
 };
 
-export type ReleaseFilterInput = {
+export type GroupFilterInput = {
+    urn?: GroupUrnFilterInput | null;
+    name?: GroupStringFilterInput | null;
+};
+
+export type GroupUrnFilterInput = {
+    eq?: string | null;
+};
+
+export type GroupStringFilterInput = {
+    eq?: string | null;
+};
+
+export type TokenSetsFilterInput = {
     name?: StringFilterInput | null;
+};
+
+export type TokenFilterInput = {
     urn?: StringFilterInput | null;
-    version?: StringFilterInput | null;
+    name?: StringFilterInput | null;
+    type?: TokenTypeFilterInput | null;
+};
+
+export type TokenTypeFilterInput = {
+    eq?: TokenType | null;
+    ne?: TokenType | null;
+};
+
+export type Self = {
+    __typename: 'Self';
+    identity?: Identity | null;
+    invitations?: Array<Invitation | null> | null;
+    user?: User | null;
+    organizations?: Array<Organization | null> | null;
+    permissions?: Array<PolicyDoc | null> | null;
+};
+
+export type Identity = {
+    __typename: 'Identity';
+    urn?: string | null;
+    authenticated: boolean;
 };
 
 export type ResolverOptionsInput = {
@@ -613,489 +589,197 @@ export type ResolverOptionsInput = {
 };
 
 export type Token =
-    | Token_border
-    | Token_boxShadow
-    | Token_color
     | Token_scalar
-    | Token_typography;
-
-export type Token_border = {
-    __typename: 'Token_border';
-    border?: Border | null;
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
-    value?: string | null;
-};
-
-export type ResolvedTokenInterface = {
-    __typename: 'ResolvedTokenInterface';
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
-};
-
-export type Token_Composition = {
-    __typename: 'Token_Composition';
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
-    value?: string | null;
-};
-
-export type Token_boxShadow = {
-    __typename: 'Token_boxShadow';
-    boxShadow?: Array<BoxShadow | null> | null;
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
-    value?: string | null;
-};
-
-export type Token_color = {
-    __typename: 'Token_color';
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
-    value?: string | null;
-};
+    | Token_typography
+    | Token_border
+    | Token_boxShadow;
 
 export type Token_scalar = {
     __typename: 'Token_scalar';
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
     value?: string | null;
 };
 
 export type Token_typography = {
     __typename: 'Token_typography';
-    description?: string | null;
-    metadata?: Metadata | null;
-    name?: string | null;
-    type?: TokenType | null;
-    typography?: Typography | null;
     value?: string | null;
+    typography?: Typography | null;
+};
+
+export type Token_border = {
+    __typename: 'Token_border';
+    value?: string | null;
+    border?: Border | null;
+};
+
+export type Token_boxShadow = {
+    __typename: 'Token_boxShadow';
+    value?: string | null;
+    boxShadow?: Array<BoxShadow | null> | null;
 };
 
 export type ResolverFilterInput = {
-    name?: StringFilterInput | null;
     urn?: StringFilterInput | null;
-};
-
-export type Self = {
-    __typename: 'Self';
-    identity?: Identity | null;
-    invitations?: Array<Invitation | null> | null;
-    organizations?: Array<Organization | null> | null;
-    permissions?: Array<PolicyDoc | null> | null;
-    user?: User | null;
-};
-
-export type Identity = {
-    __typename: 'Identity';
-    authenticated: boolean;
-    urn?: string | null;
-};
-
-export type TokenSetsFilterInput = {
     name?: StringFilterInput | null;
 };
 
-export type TokenFilterInput = {
-    name?: StringFilterInput | null;
-    type?: TokenTypeFilterInput | null;
+export type GeneratorFilterInput = {
     urn?: StringFilterInput | null;
+    name?: StringFilterInput | null;
 };
 
-export type TokenTypeFilterInput = {
-    eq?: TokenType | null;
-    ne?: TokenType | null;
+export type ReleaseFilterInput = {
+    urn?: StringFilterInput | null;
+    name?: StringFilterInput | null;
+    version?: StringFilterInput | null;
 };
 
-export type AcceptInvitationMutationVariables = {
-    confirmCode: string;
-    urn: string;
+export type ApiKeyFilterInput = {
+    urn?: StringFilterInput | null;
+    name?: StringFilterInput | null;
 };
 
-export type AcceptInvitationMutation = {
-    acceptInvitation?: {
-        __typename: 'Organization';
-        account?: string | null;
-        apiKeys?: Array<{
-            __typename: 'APIKeyWithoutValue';
-            description?: string | null;
-            lastUsed?: string | null;
-            name?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        createdAt?: string | null;
-        description?: string | null;
-        groups?: Array<{
-            __typename: 'Group';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name?: string | null;
-        owner?: {
-            __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
-            name?: string | null;
-            urn?: string | null;
-            visibility?: Visibility | null;
-        } | null;
-        payment?: string | null;
-        policies?: Array<{
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        projects?: Array<{
-            __typename: 'Project';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            orgUrn?: string | null;
-            releaseCount?: number | null;
-            tokenCount?: number | null;
-            urn: string;
-            visibility?: Visibility | null;
-        } | null> | null;
-        ssoEnabled?: boolean | null;
-        tier?: OrganizationTier | null;
-        urn?: string | null;
-        users?: Array<{
-            __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
-            name?: string | null;
-            urn?: string | null;
-            visibility?: Visibility | null;
-        } | null> | null;
-        visibility?: Visibility | null;
-    } | null;
+export type CreateProjectMutationVariables = {
+    organization: string;
+    input: ProjectInput;
 };
 
-export type AddMemberToGroupMutationVariables = {
-    entity: string;
-    group: string;
-};
-
-export type AddMemberToGroupMutation = {
-    addMemberToGroup?: string | null;
-};
-
-export type AttachPolicyToGroupMutationVariables = {
-    group: string;
-    policy: string;
-};
-
-export type AttachPolicyToGroupMutation = {
-    attachPolicyToGroup?: {
-        __typename: 'Group';
-        createdAt: string;
-        description?: string | null;
-        icon?: string | null;
-        members: Array<
+export type CreateProjectMutation = {
+    createProject?: {
+        __typename: 'Project';
+        createdBy:
             | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
                   | {
                         __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
                     }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
               )
-            | null
-        > | null;
+            | null;
+        createdAt: string;
         name: string;
-        policy?: {
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
+        urn: string;
+        orgUrn?: string | null;
+        visibility?: Visibility | null;
+        icon?: string | null;
+        description?: string | null;
+        sets?: Array<{
+            __typename: 'TokenSet';
             urn?: string | null;
-        } | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type BulkCreateTokenMutationVariables = {
-    input: Array<TokenInput | null>;
-    set: string;
-};
-
-export type BulkCreateTokenMutation = {
-    bulkCreateToken: Array<
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null
-    > | null;
-};
-
-export type ConvertToStaticSetMutationVariables = {
-    urn: string;
-};
-
-export type ConvertToStaticSetMutation = {
-    convertToStaticSet?: {
-        __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
-        metadata?: {
-            __typename: 'Metadata';
+            name?: string | null;
+            projectUrn?: string | null;
+            type?: TokenSetType | null;
+            generatorUrn?: string | null;
             createdAt?: string | null;
-        } | null;
-        name?: string | null;
-        projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
-        type?: TokenSetType | null;
-        urn?: string | null;
+        } | null> | null;
+        resolvers?: Array<{
+            __typename: 'Resolver';
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            urn?: string | null;
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        releases?: Array<{
+            __typename: 'Release';
+            urn: string;
+            name: string;
+            version: string;
+            description?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        sdConfigs?: Array<{
+            __typename: 'SDConfig';
+            urn: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+            projectUrn: string;
+            config?: string | null;
+            functions?: string | null;
+        } | null> | null;
+        releaseCount?: number | null;
+        tokenCount?: number | null;
     } | null;
 };
 
-export type CreateAPIKeyMutationVariables = {
-    input: APIKeyInput;
+export type CreatePolicyMutationVariables = {
     organization: string;
+    input: PolicyInput;
 };
 
-export type CreateAPIKeyMutation = {
-    createAPIKey?: {
-        __typename: 'APIKey';
-        description?: string | null;
-        name?: string | null;
-        urn?: string | null;
-        value?: string | null;
-    } | null;
-};
-
-export type CreateGeneratorMutationVariables = {
-    input: GeneratorInput;
-    project: string;
-};
-
-export type CreateGeneratorMutation = {
-    createGenerator?: {
-        __typename: 'Generator';
+export type CreatePolicyMutation = {
+    createPolicy?: {
+        __typename: 'Policy';
         createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
-        name?: string | null;
-        updatedAt?: string | null;
+        name: string;
         urn?: string | null;
+        description?: string | null;
+        value: {
+            __typename: 'PolicyDoc';
+            version: string;
+        };
     } | null;
 };
 
 export type CreateGroupMutationVariables = {
-    input: GroupInput;
     organization: string;
+    input: GroupInput;
 };
 
 export type CreateGroupMutation = {
     createGroup?: {
         __typename: 'Group';
+        organization?: string | null;
         createdAt: string;
-        description?: string | null;
+        name?: string | null;
         icon?: string | null;
+        urn?: string | null;
+        description?: string | null;
         members: Array<
             | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
                   | {
                         __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
                     }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
               )
             | null
         > | null;
-        name: string;
         policy?: {
             __typename: 'Policy';
             createdAt?: string | null;
-            description?: string | null;
             name: string;
             urn?: string | null;
+            description?: string | null;
         } | null;
-        urn?: string | null;
     } | null;
 };
 
@@ -1106,997 +790,335 @@ export type CreateOrganizationMutationVariables = {
 export type CreateOrganizationMutation = {
     createOrganization?: {
         __typename: 'Organization';
-        account?: string | null;
-        apiKeys?: Array<{
-            __typename: 'APIKeyWithoutValue';
-            description?: string | null;
-            lastUsed?: string | null;
-            name?: string | null;
-            urn?: string | null;
-        } | null> | null;
+        urn?: string | null;
         createdAt?: string | null;
-        description?: string | null;
-        groups?: Array<{
-            __typename: 'Group';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name?: string | null;
         owner?: {
             __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
             name?: string | null;
+            givenName?: string | null;
             urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
             visibility?: Visibility | null;
         } | null;
+        name?: string | null;
+        description?: string | null;
+        visibility?: Visibility | null;
+        account?: string | null;
         payment?: string | null;
-        policies?: Array<{
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
+        ssoEnabled?: boolean | null;
+        icon?: string | null;
+        tier?: OrganizationTier | null;
         projects?: Array<{
             __typename: 'Project';
             createdAt: string;
-            description?: string | null;
-            icon?: string | null;
             name: string;
+            urn: string;
             orgUrn?: string | null;
+            visibility?: Visibility | null;
+            icon?: string | null;
+            description?: string | null;
             releaseCount?: number | null;
             tokenCount?: number | null;
-            urn: string;
-            visibility?: Visibility | null;
         } | null> | null;
-        ssoEnabled?: boolean | null;
-        tier?: OrganizationTier | null;
-        urn?: string | null;
+        groups?: Array<{
+            __typename: 'Group';
+            organization?: string | null;
+            createdAt: string;
+            name?: string | null;
+            icon?: string | null;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        policies?: Array<{
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        apiKeys?: Array<{
+            __typename: 'APIKeyWithoutValue';
+            name?: string | null;
+            lastUsed?: string | null;
+            description?: string | null;
+            urn?: string | null;
+        } | null> | null;
         users?: Array<{
             __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
             name?: string | null;
+            givenName?: string | null;
             urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
             visibility?: Visibility | null;
         } | null> | null;
-        visibility?: Visibility | null;
     } | null;
 };
 
-export type CreatePolicyMutationVariables = {
-    input: PolicyInput;
+export type CreateAPIKeyMutationVariables = {
     organization: string;
+    input: APIKeyInput;
 };
 
-export type CreatePolicyMutation = {
-    createPolicy?: {
-        __typename: 'Policy';
-        createdAt?: string | null;
-        description?: string | null;
-        name: string;
-        urn?: string | null;
-        value: {
-            __typename: 'PolicyDoc';
-            version: string;
-        };
-    } | null;
-};
-
-export type CreateProjectMutationVariables = {
-    input: ProjectInput;
-    organization: string;
-};
-
-export type CreateProjectMutation = {
-    createProject?: {
-        __typename: 'Project';
-        createdAt: string;
-        createdBy:
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name: string;
-        orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn: string;
-            version: string;
-        } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
-            name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
-        } | null> | null;
-        sets?: Array<{
-            __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
-            name?: string | null;
-            projectUrn?: string | null;
-            type?: TokenSetType | null;
-            urn?: string | null;
-        } | null> | null;
-        tokenCount?: number | null;
-        urn: string;
-        visibility?: Visibility | null;
-    } | null;
-};
-
-export type CreateReleaseMutationVariables = {
-    input: ReleaseInput;
-    project: string;
-};
-
-export type CreateReleaseMutation = {
-    createRelease?: {
-        __typename: 'Release';
-        createdAt?: string | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'ReleaseFile';
-            name?: string | null;
-            path?: string | null;
-            type?: string | null;
-        }> | null;
-        name: string;
-        releasedBy:
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null;
-        tokenSets?: Array<{
-            __typename: 'ReleaseFile';
-            name?: string | null;
-            path?: string | null;
-            type?: string | null;
-        }> | null;
-        urn: string;
-        version: string;
-    } | null;
-};
-
-export type CreateResolverMutationVariables = {
-    input: ResolverInput;
-    project: string;
-};
-
-export type CreateResolverMutation = {
-    createResolver?: {
-        __typename: 'Resolver';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
+export type CreateAPIKeyMutation = {
+    createAPIKey?: {
+        __typename: 'APIKey';
         name?: string | null;
-        options?: Array<{
-            __typename: 'ResolverOption';
-            description?: string | null;
-            name: string;
-            values?: Array<string | null> | null;
-        } | null> | null;
-        updatedAt?: string | null;
+        description?: string | null;
+        value?: string | null;
         urn?: string | null;
-    } | null;
-};
-
-export type CreateSDConfigMutationVariables = {
-    input: SDConfigInput;
-    urn: string;
-};
-
-export type CreateSDConfigMutation = {
-    createSDConfig?: {
-        __typename: 'SDConfig';
-        config?: string | null;
-        createdAt: string;
-        functions?: string | null;
-        name: string;
-        projectUrn: string;
-        updatedAt: string;
-        urn: string;
     } | null;
 };
 
 export type CreateTokenMutationVariables = {
-    input: TokenInput;
     set: string;
+    input: TokenInput;
 };
 
 export type CreateTokenMutation = {
-    createToken:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
+    createToken?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null;
+};
+
+export type BulkCreateTokenMutationVariables = {
+    set: string;
+    input: Array<TokenInput | null>;
+};
+
+export type BulkCreateTokenMutation = {
+    bulkCreateToken?: Array<{
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null> | null;
 };
 
 export type CreateTokenSetMutationVariables = {
-    input: TokenSetInput;
     project: string;
+    input: TokenSetInput;
 };
 
 export type CreateTokenSetMutation = {
     createTokenSet?: {
         __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
+        urn?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
         type?: TokenSetType | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type DeclineInvitationMutationVariables = {
-    urn: string;
-};
-
-export type DeclineInvitationMutation = {
-    declineInvitation?: string | null;
-};
-
-export type DeleteAPIKeyMutationVariables = {
-    urn: string;
-};
-
-export type DeleteAPIKeyMutation = {
-    deleteAPIKey?: {
-        __typename: 'APIKey';
-        description?: string | null;
-        name?: string | null;
-        urn?: string | null;
-        value?: string | null;
-    } | null;
-};
-
-export type DeleteGeneratorMutationVariables = {
-    urn: string;
-};
-
-export type DeleteGeneratorMutation = {
-    deleteGenerator?: {
-        __typename: 'Generator';
+        generatorUrn?: string | null;
         createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    } | null;
+};
+
+export type CreateResolverMutationVariables = {
+    project: string;
+    input: ResolverInput;
+};
+
+export type CreateResolverMutation = {
+    createResolver?: {
+        __typename: 'Resolver';
         name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
         updatedAt?: string | null;
         urn?: string | null;
-    } | null;
-};
-
-export type DeleteGroupMutationVariables = {
-    urn: string;
-};
-
-export type DeleteGroupMutation = {
-    deleteGroup?: {
-        __typename: 'Group';
-        createdAt: string;
-        description?: string | null;
-        icon?: string | null;
-        members: Array<
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null
-        > | null;
-        name: string;
-        policy?: {
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
+        graph?: string | null;
+        options?: Array<{
+            __typename: 'ResolverOption';
             name: string;
-            urn?: string | null;
-        } | null;
-        urn?: string | null;
+            description?: string | null;
+            values?: Array<string | null> | null;
+        } | null> | null;
     } | null;
 };
 
-export type DeleteInvitationMutationVariables = {
+export type CreateSDConfigMutationVariables = {
     urn: string;
+    input: SDConfigInput;
 };
 
-export type DeleteInvitationMutation = {
-    deleteInvitation?: {
-        __typename: 'Invitation';
-        confirmCode: string;
-        organization: string;
-        status?: InvitationStatus | null;
+export type CreateSDConfigMutation = {
+    createSDConfig?: {
+        __typename: 'SDConfig';
         urn: string;
-        user: string;
-    } | null;
-};
-
-export type DeleteOrganizationMutationVariables = {
-    urn: string;
-};
-
-export type DeleteOrganizationMutation = {
-    deleteOrganization?: {
-        __typename: 'Organization';
-        account?: string | null;
-        apiKeys?: Array<{
-            __typename: 'APIKeyWithoutValue';
-            description?: string | null;
-            lastUsed?: string | null;
-            name?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        createdAt?: string | null;
-        description?: string | null;
-        groups?: Array<{
-            __typename: 'Group';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name?: string | null;
-        owner?: {
-            __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
-            name?: string | null;
-            urn?: string | null;
-            visibility?: Visibility | null;
-        } | null;
-        payment?: string | null;
-        policies?: Array<{
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        projects?: Array<{
-            __typename: 'Project';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            orgUrn?: string | null;
-            releaseCount?: number | null;
-            tokenCount?: number | null;
-            urn: string;
-            visibility?: Visibility | null;
-        } | null> | null;
-        ssoEnabled?: boolean | null;
-        tier?: OrganizationTier | null;
-        urn?: string | null;
-        users?: Array<{
-            __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
-            name?: string | null;
-            urn?: string | null;
-            visibility?: Visibility | null;
-        } | null> | null;
-        visibility?: Visibility | null;
-    } | null;
-};
-
-export type DeletePolicyMutationVariables = {
-    urn: string;
-};
-
-export type DeletePolicyMutation = {
-    deletePolicy?: {
-        __typename: 'Policy';
-        createdAt?: string | null;
-        description?: string | null;
         name: string;
-        urn?: string | null;
-        value: {
-            __typename: 'PolicyDoc';
-            version: string;
-        };
+        createdAt: string;
+        updatedAt: string;
+        projectUrn: string;
+        config?: string | null;
+        functions?: string | null;
     } | null;
 };
 
-export type DeleteProjectMutationVariables = {
-    urn: string;
+export type CreateReleaseMutationVariables = {
+    project: string;
+    input: ReleaseInput;
 };
 
-export type DeleteProjectMutation = {
-    deleteProject?: {
-        __typename: 'Project';
-        createdAt: string;
-        createdBy:
+export type CreateReleaseMutation = {
+    createRelease?: {
+        __typename: 'Release';
+        urn: string;
+        name: string;
+        version: string;
+        description?: string | null;
+        tokenSets?: Array<{
+            __typename: 'ReleaseFile';
+            path?: string | null;
+            name?: string | null;
+            type?: string | null;
+        }> | null;
+        generators?: Array<{
+            __typename: 'ReleaseFile';
+            path?: string | null;
+            name?: string | null;
+            type?: string | null;
+        }> | null;
+        createdAt?: string | null;
+        releasedBy:
             | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
                   | {
                         __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
                     }
               )
             | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name: string;
-        orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn: string;
-            version: string;
-        } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
-            name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
-        } | null> | null;
-        sets?: Array<{
-            __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
-            name?: string | null;
-            projectUrn?: string | null;
-            type?: TokenSetType | null;
-            urn?: string | null;
-        } | null> | null;
-        tokenCount?: number | null;
-        urn: string;
-        visibility?: Visibility | null;
     } | null;
 };
 
-export type DeleteResolverMutationVariables = {
-    urn: string;
+export type CreateGeneratorMutationVariables = {
+    project: string;
+    input: GeneratorInput;
 };
 
-export type DeleteResolverMutation = {
-    deleteResolver?: {
-        __typename: 'Resolver';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
+export type CreateGeneratorMutation = {
+    createGenerator?: {
+        __typename: 'Generator';
+        urn?: string | null;
         name?: string | null;
-        options?: Array<{
-            __typename: 'ResolverOption';
-            description?: string | null;
-            name: string;
-            values?: Array<string | null> | null;
-        } | null> | null;
+        description?: string | null;
+        createdAt?: string | null;
         updatedAt?: string | null;
-        urn?: string | null;
+        graph?: string | null;
     } | null;
 };
 
-export type DeleteSDConfigMutationVariables = {
-    urn: string;
-};
-
-export type DeleteSDConfigMutation = {
-    deleteSDConfig?: {
-        __typename: 'SDConfig';
-        config?: string | null;
-        createdAt: string;
-        functions?: string | null;
-        name: string;
-        projectUrn: string;
-        updatedAt: string;
-        urn: string;
-    } | null;
-};
-
-export type DeleteTokenMutationVariables = {
-    urn: string;
-};
-
-export type DeleteTokenMutation = {
-    deleteToken:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
-};
-
-export type DeleteTokenSetMutationVariables = {
-    urn: string;
-};
-
-export type DeleteTokenSetMutation = {
-    deleteTokenSet?: {
-        __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
-        metadata?: {
-            __typename: 'Metadata';
-            createdAt?: string | null;
-        } | null;
-        name?: string | null;
-        projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
-        type?: TokenSetType | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type DetachPolicyFromGroupMutationVariables = {
+export type AddMemberToGroupMutationVariables = {
     group: string;
-    policy: string;
+    entity: string;
 };
 
-export type DetachPolicyFromGroupMutation = {
-    detachPolicyFromGroup?: {
-        __typename: 'Group';
-        createdAt: string;
-        description?: string | null;
-        icon?: string | null;
-        members: Array<
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null
-        > | null;
-        name: string;
-        policy?: {
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null;
-        urn?: string | null;
-    } | null;
+export type AddMemberToGroupMutation = {
+    addMemberToGroup?: string | null;
+};
+
+export type RemoveMemberFromGroupMutationVariables = {
+    group: string;
+    user: string;
+};
+
+export type RemoveMemberFromGroupMutation = {
+    removeMemberFromGroup?: string | null;
 };
 
 export type InviteToOrganizationMutationVariables = {
+    organization: string;
     email: string;
     groups?: Array<string> | null;
-    organization: string;
 };
 
 export type InviteToOrganizationMutation = {
     inviteToOrganization?: {
         __typename: 'Invitation';
-        confirmCode: string;
         organization: string;
+        user: string;
         status?: InvitationStatus | null;
         urn: string;
-        user: string;
-    } | null;
-};
-
-export type RegenerateApiKeyMutationVariables = {
-    urn: string;
-};
-
-export type RegenerateApiKeyMutation = {
-    regenerateApiKey?: {
-        __typename: 'APIKey';
-        description?: string | null;
-        name?: string | null;
-        urn?: string | null;
-        value?: string | null;
+        confirmCode: string;
     } | null;
 };
 
@@ -2109,329 +1131,86 @@ export type RemoveFromOrganizationMutation = {
     removeFromOrganization?: boolean | null;
 };
 
-export type RemoveMemberFromGroupMutationVariables = {
-    group: string;
-    user: string;
-};
-
-export type RemoveMemberFromGroupMutation = {
-    removeMemberFromGroup?: string | null;
-};
-
-export type UpdateGeneratorMutationVariables = {
-    input: GeneratorInput;
+export type AcceptInvitationMutationVariables = {
     urn: string;
+    confirmCode: string;
 };
 
-export type UpdateGeneratorMutation = {
-    updateGenerator?: {
-        __typename: 'Generator';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
-        name?: string | null;
-        updatedAt?: string | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type UpdateGroupMutationVariables = {
-    input: GroupUpdateInput;
-    urn: string;
-};
-
-export type UpdateGroupMutation = {
-    updateGroup?: {
-        __typename: 'Project';
-        createdAt: string;
-        createdBy:
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name: string;
-        orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn: string;
-            version: string;
-        } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
-            name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
-        } | null> | null;
-        sets?: Array<{
-            __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
-            name?: string | null;
-            projectUrn?: string | null;
-            type?: TokenSetType | null;
-            urn?: string | null;
-        } | null> | null;
-        tokenCount?: number | null;
-        urn: string;
-        visibility?: Visibility | null;
-    } | null;
-};
-
-export type UpdateOrganizationMutationVariables = {
-    input: OrganizationUpdateInput;
-    urn: string;
-};
-
-export type UpdateOrganizationMutation = {
-    updateOrganization?: {
+export type AcceptInvitationMutation = {
+    acceptInvitation?: {
         __typename: 'Organization';
-        account?: string | null;
-        apiKeys?: Array<{
-            __typename: 'APIKeyWithoutValue';
-            description?: string | null;
-            lastUsed?: string | null;
-            name?: string | null;
-            urn?: string | null;
-        } | null> | null;
+        urn?: string | null;
         createdAt?: string | null;
-        description?: string | null;
-        groups?: Array<{
-            __typename: 'Group';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name?: string | null;
         owner?: {
             __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
             name?: string | null;
+            givenName?: string | null;
             urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
             visibility?: Visibility | null;
         } | null;
+        name?: string | null;
+        description?: string | null;
+        visibility?: Visibility | null;
+        account?: string | null;
         payment?: string | null;
-        policies?: Array<{
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
+        ssoEnabled?: boolean | null;
+        icon?: string | null;
+        tier?: OrganizationTier | null;
         projects?: Array<{
             __typename: 'Project';
             createdAt: string;
-            description?: string | null;
-            icon?: string | null;
             name: string;
+            urn: string;
             orgUrn?: string | null;
+            visibility?: Visibility | null;
+            icon?: string | null;
+            description?: string | null;
             releaseCount?: number | null;
             tokenCount?: number | null;
-            urn: string;
-            visibility?: Visibility | null;
         } | null> | null;
-        ssoEnabled?: boolean | null;
-        tier?: OrganizationTier | null;
-        urn?: string | null;
+        groups?: Array<{
+            __typename: 'Group';
+            organization?: string | null;
+            createdAt: string;
+            name?: string | null;
+            icon?: string | null;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        policies?: Array<{
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        apiKeys?: Array<{
+            __typename: 'APIKeyWithoutValue';
+            name?: string | null;
+            lastUsed?: string | null;
+            description?: string | null;
+            urn?: string | null;
+        } | null> | null;
         users?: Array<{
             __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
             name?: string | null;
+            givenName?: string | null;
             urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
             visibility?: Visibility | null;
         } | null> | null;
-        visibility?: Visibility | null;
     } | null;
 };
 
-export type UpdatePolicyMutationVariables = {
-    input: PolicyInputUpdate;
+export type DeclineInvitationMutationVariables = {
     urn: string;
 };
 
-export type UpdatePolicyMutation = {
-    updatePolicy?: {
-        __typename: 'Policy';
-        createdAt?: string | null;
-        description?: string | null;
-        name: string;
-        urn?: string | null;
-        value: {
-            __typename: 'PolicyDoc';
-            version: string;
-        };
-    } | null;
-};
-
-export type UpdateProjectMutationVariables = {
-    input: ProjectUpdateInput;
-    urn: string;
-};
-
-export type UpdateProjectMutation = {
-    updateProject?: {
-        __typename: 'Project';
-        createdAt: string;
-        createdBy:
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name: string;
-        orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn: string;
-            version: string;
-        } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
-            name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
-        } | null> | null;
-        sets?: Array<{
-            __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
-            name?: string | null;
-            projectUrn?: string | null;
-            type?: TokenSetType | null;
-            urn?: string | null;
-        } | null> | null;
-        tokenCount?: number | null;
-        urn: string;
-        visibility?: Visibility | null;
-    } | null;
-};
-
-export type UpdateResolverMutationVariables = {
-    input: ResolverUpdateInput;
-    urn: string;
-};
-
-export type UpdateResolverMutation = {
-    updateResolver?: {
-        __typename: 'Resolver';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
-        name?: string | null;
-        options?: Array<{
-            __typename: 'ResolverOption';
-            description?: string | null;
-            name: string;
-            values?: Array<string | null> | null;
-        } | null> | null;
-        updatedAt?: string | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type UpdateSDConfigMutationVariables = {
-    input: SDConfigInput;
-    urn: string;
-};
-
-export type UpdateSDConfigMutation = {
-    updateSDConfig?: {
-        __typename: 'SDConfig';
-        config?: string | null;
-        createdAt: string;
-        functions?: string | null;
-        name: string;
-        projectUrn: string;
-        updatedAt: string;
-        urn: string;
-    } | null;
+export type DeclineInvitationMutation = {
+    declineInvitation?: string | null;
 };
 
 export type UpdateSelfMutationVariables = {
@@ -2441,298 +1220,941 @@ export type UpdateSelfMutationVariables = {
 export type UpdateSelfMutation = {
     updateSelf?: {
         __typename: 'User';
-        description?: string | null;
+        name?: string | null;
         givenName?: string | null;
+        urn?: string | null;
+        description?: string | null;
+        icon?: string | null;
+        visibility?: Visibility | null;
         groups?: Array<{
             __typename: 'Group';
+            organization?: string | null;
             createdAt: string;
-            description?: string | null;
+            name?: string | null;
             icon?: string | null;
-            name: string;
             urn?: string | null;
+            description?: string | null;
         } | null> | null;
-        icon?: string | null;
-        name?: string | null;
+    } | null;
+};
+
+export type UpdateGeneratorMutationVariables = {
+    urn: string;
+    input: GeneratorInput;
+};
+
+export type UpdateGeneratorMutation = {
+    updateGenerator?: {
+        __typename: 'Generator';
         urn?: string | null;
-        visibility?: Visibility | null;
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        graph?: string | null;
     } | null;
 };
 
 export type UpdateTokenMutationVariables = {
-    input: TokenUpdateInput;
     urn: string;
+    input: TokenUpdateInput;
 };
 
 export type UpdateTokenMutation = {
-    updateToken:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
+    updateToken?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null;
 };
 
 export type UpdateTokenSetMutationVariables = {
-    input: TokenSetUpdateInput;
     urn: string;
+    input: TokenSetUpdateInput;
 };
 
 export type UpdateTokenSetMutation = {
     updateTokenSet?: {
         __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
+        urn?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
         type?: TokenSetType | null;
-        urn?: string | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
     } | null;
 };
 
-export type ApiKeysQueryVariables = {
-    filter?: ApiKeyFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    organization: string;
-};
-
-export type ApiKeysQuery = {
-    apiKeys?: Array<{
-        __typename: 'APIKeyWithoutValue';
-        description?: string | null;
-        lastUsed?: string | null;
-        name?: string | null;
-        urn?: string | null;
-    } | null> | null;
-};
-
-export type GeneratorQueryVariables = {
+export type UpdateResolverMutationVariables = {
     urn: string;
+    input: ResolverUpdateInput;
 };
 
-export type GeneratorQuery = {
-    generator?: {
-        __typename: 'Generator';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
+export type UpdateResolverMutation = {
+    updateResolver?: {
+        __typename: 'Resolver';
         name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
         updatedAt?: string | null;
         urn?: string | null;
+        graph?: string | null;
+        options?: Array<{
+            __typename: 'ResolverOption';
+            name: string;
+            description?: string | null;
+            values?: Array<string | null> | null;
+        } | null> | null;
     } | null;
 };
 
-export type GeneratorsQueryVariables = {
-    filter?: GeneratorFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    project: string;
+export type UpdatePolicyMutationVariables = {
+    urn: string;
+    input: PolicyInputUpdate;
 };
 
-export type GeneratorsQuery = {
-    generators?: Array<{
-        __typename: 'Generator';
+export type UpdatePolicyMutation = {
+    updatePolicy?: {
+        __typename: 'Policy';
         createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
-        name?: string | null;
-        updatedAt?: string | null;
+        name: string;
         urn?: string | null;
-    } | null> | null;
-};
-
-export type GroupsQueryVariables = {
-    filter?: GroupFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    organization: string;
-};
-
-export type GroupsQuery = {
-    groups?: Array<{
-        __typename: 'Group';
-        createdAt: string;
         description?: string | null;
-        icon?: string | null;
-        members: Array<
+        value: {
+            __typename: 'PolicyDoc';
+            version: string;
+        };
+    } | null;
+};
+
+export type UpdateProjectMutationVariables = {
+    urn: string;
+    input: ProjectUpdateInput;
+};
+
+export type UpdateProjectMutation = {
+    updateProject?: {
+        __typename: 'Project';
+        createdBy:
             | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
                   | {
                         __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
                     }
+              )
+            | null;
+        createdAt: string;
+        name: string;
+        urn: string;
+        orgUrn?: string | null;
+        visibility?: Visibility | null;
+        icon?: string | null;
+        description?: string | null;
+        sets?: Array<{
+            __typename: 'TokenSet';
+            urn?: string | null;
+            name?: string | null;
+            projectUrn?: string | null;
+            type?: TokenSetType | null;
+            generatorUrn?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        resolvers?: Array<{
+            __typename: 'Resolver';
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            urn?: string | null;
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        releases?: Array<{
+            __typename: 'Release';
+            urn: string;
+            name: string;
+            version: string;
+            description?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        sdConfigs?: Array<{
+            __typename: 'SDConfig';
+            urn: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+            projectUrn: string;
+            config?: string | null;
+            functions?: string | null;
+        } | null> | null;
+        releaseCount?: number | null;
+        tokenCount?: number | null;
+    } | null;
+};
+
+export type UpdateGroupMutationVariables = {
+    urn: string;
+    input: GroupUpdateInput;
+};
+
+export type UpdateGroupMutation = {
+    updateGroup?: {
+        __typename: 'Project';
+        createdBy:
+            | (
                   | {
                         __typename: 'User';
-                        description?: string | null;
+                        name?: string | null;
                         givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
                         icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
+                    }
+              )
+            | null;
+        createdAt: string;
+        name: string;
+        urn: string;
+        orgUrn?: string | null;
+        visibility?: Visibility | null;
+        icon?: string | null;
+        description?: string | null;
+        sets?: Array<{
+            __typename: 'TokenSet';
+            urn?: string | null;
+            name?: string | null;
+            projectUrn?: string | null;
+            type?: TokenSetType | null;
+            generatorUrn?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        resolvers?: Array<{
+            __typename: 'Resolver';
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            urn?: string | null;
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        releases?: Array<{
+            __typename: 'Release';
+            urn: string;
+            name: string;
+            version: string;
+            description?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        sdConfigs?: Array<{
+            __typename: 'SDConfig';
+            urn: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+            projectUrn: string;
+            config?: string | null;
+            functions?: string | null;
+        } | null> | null;
+        releaseCount?: number | null;
+        tokenCount?: number | null;
+    } | null;
+};
+
+export type UpdateSDConfigMutationVariables = {
+    urn: string;
+    input: SDConfigInput;
+};
+
+export type UpdateSDConfigMutation = {
+    updateSDConfig?: {
+        __typename: 'SDConfig';
+        urn: string;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        projectUrn: string;
+        config?: string | null;
+        functions?: string | null;
+    } | null;
+};
+
+export type UpdateOrganizationMutationVariables = {
+    urn: string;
+    input: OrganizationUpdateInput;
+};
+
+export type UpdateOrganizationMutation = {
+    updateOrganization?: {
+        __typename: 'Organization';
+        urn?: string | null;
+        createdAt?: string | null;
+        owner?: {
+            __typename: 'User';
+            name?: string | null;
+            givenName?: string | null;
+            urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
+            visibility?: Visibility | null;
+        } | null;
+        name?: string | null;
+        description?: string | null;
+        visibility?: Visibility | null;
+        account?: string | null;
+        payment?: string | null;
+        ssoEnabled?: boolean | null;
+        icon?: string | null;
+        tier?: OrganizationTier | null;
+        projects?: Array<{
+            __typename: 'Project';
+            createdAt: string;
+            name: string;
+            urn: string;
+            orgUrn?: string | null;
+            visibility?: Visibility | null;
+            icon?: string | null;
+            description?: string | null;
+            releaseCount?: number | null;
+            tokenCount?: number | null;
+        } | null> | null;
+        groups?: Array<{
+            __typename: 'Group';
+            organization?: string | null;
+            createdAt: string;
+            name?: string | null;
+            icon?: string | null;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        policies?: Array<{
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        apiKeys?: Array<{
+            __typename: 'APIKeyWithoutValue';
+            name?: string | null;
+            lastUsed?: string | null;
+            description?: string | null;
+            urn?: string | null;
+        } | null> | null;
+        users?: Array<{
+            __typename: 'User';
+            name?: string | null;
+            givenName?: string | null;
+            urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
+            visibility?: Visibility | null;
+        } | null> | null;
+    } | null;
+};
+
+export type RegenerateApiKeyMutationVariables = {
+    urn: string;
+};
+
+export type RegenerateApiKeyMutation = {
+    regenerateApiKey?: {
+        __typename: 'APIKey';
+        name?: string | null;
+        description?: string | null;
+        value?: string | null;
+        urn?: string | null;
+    } | null;
+};
+
+export type DeletePolicyMutationVariables = {
+    urn: string;
+};
+
+export type DeletePolicyMutation = {
+    deletePolicy?: {
+        __typename: 'Policy';
+        createdAt?: string | null;
+        name: string;
+        urn?: string | null;
+        description?: string | null;
+        value: {
+            __typename: 'PolicyDoc';
+            version: string;
+        };
+    } | null;
+};
+
+export type DeleteAPIKeyMutationVariables = {
+    urn: string;
+};
+
+export type DeleteAPIKeyMutation = {
+    deleteAPIKey?: {
+        __typename: 'APIKey';
+        name?: string | null;
+        description?: string | null;
+        value?: string | null;
+        urn?: string | null;
+    } | null;
+};
+
+export type DeleteGeneratorMutationVariables = {
+    urn: string;
+};
+
+export type DeleteGeneratorMutation = {
+    deleteGenerator?: {
+        __typename: 'Generator';
+        urn?: string | null;
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        graph?: string | null;
+    } | null;
+};
+
+export type DeleteGroupMutationVariables = {
+    urn: string;
+};
+
+export type DeleteGroupMutation = {
+    deleteGroup?: {
+        __typename: 'Group';
+        organization?: string | null;
+        createdAt: string;
+        name?: string | null;
+        icon?: string | null;
+        urn?: string | null;
+        description?: string | null;
+        members: Array<
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
                         visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
                     }
               )
             | null
         > | null;
-        name: string;
         policy?: {
             __typename: 'Policy';
             createdAt?: string | null;
-            description?: string | null;
             name: string;
             urn?: string | null;
+            description?: string | null;
         } | null;
+    } | null;
+};
+
+export type DeleteResolverMutationVariables = {
+    urn: string;
+};
+
+export type DeleteResolverMutation = {
+    deleteResolver?: {
+        __typename: 'Resolver';
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
         urn?: string | null;
+        graph?: string | null;
+        options?: Array<{
+            __typename: 'ResolverOption';
+            name: string;
+            description?: string | null;
+            values?: Array<string | null> | null;
+        } | null> | null;
+    } | null;
+};
+
+export type DeleteTokenMutationVariables = {
+    urn: string;
+};
+
+export type DeleteTokenMutation = {
+    deleteToken?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null;
+};
+
+export type DeleteTokenSetMutationVariables = {
+    urn: string;
+};
+
+export type DeleteTokenSetMutation = {
+    deleteTokenSet?: {
+        __typename: 'TokenSet';
+        urn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        name?: string | null;
+        projectUrn?: string | null;
+        type?: TokenSetType | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    } | null;
+};
+
+export type DeleteProjectMutationVariables = {
+    urn: string;
+};
+
+export type DeleteProjectMutation = {
+    deleteProject?: {
+        __typename: 'Project';
+        createdBy:
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+              )
+            | null;
+        createdAt: string;
+        name: string;
+        urn: string;
+        orgUrn?: string | null;
+        visibility?: Visibility | null;
+        icon?: string | null;
+        description?: string | null;
+        sets?: Array<{
+            __typename: 'TokenSet';
+            urn?: string | null;
+            name?: string | null;
+            projectUrn?: string | null;
+            type?: TokenSetType | null;
+            generatorUrn?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        resolvers?: Array<{
+            __typename: 'Resolver';
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            urn?: string | null;
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        releases?: Array<{
+            __typename: 'Release';
+            urn: string;
+            name: string;
+            version: string;
+            description?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        sdConfigs?: Array<{
+            __typename: 'SDConfig';
+            urn: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+            projectUrn: string;
+            config?: string | null;
+            functions?: string | null;
+        } | null> | null;
+        releaseCount?: number | null;
+        tokenCount?: number | null;
+    } | null;
+};
+
+export type DeleteOrganizationMutationVariables = {
+    urn: string;
+};
+
+export type DeleteOrganizationMutation = {
+    deleteOrganization?: {
+        __typename: 'Organization';
+        urn?: string | null;
+        createdAt?: string | null;
+        owner?: {
+            __typename: 'User';
+            name?: string | null;
+            givenName?: string | null;
+            urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
+            visibility?: Visibility | null;
+        } | null;
+        name?: string | null;
+        description?: string | null;
+        visibility?: Visibility | null;
+        account?: string | null;
+        payment?: string | null;
+        ssoEnabled?: boolean | null;
+        icon?: string | null;
+        tier?: OrganizationTier | null;
+        projects?: Array<{
+            __typename: 'Project';
+            createdAt: string;
+            name: string;
+            urn: string;
+            orgUrn?: string | null;
+            visibility?: Visibility | null;
+            icon?: string | null;
+            description?: string | null;
+            releaseCount?: number | null;
+            tokenCount?: number | null;
+        } | null> | null;
+        groups?: Array<{
+            __typename: 'Group';
+            organization?: string | null;
+            createdAt: string;
+            name?: string | null;
+            icon?: string | null;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        policies?: Array<{
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        apiKeys?: Array<{
+            __typename: 'APIKeyWithoutValue';
+            name?: string | null;
+            lastUsed?: string | null;
+            description?: string | null;
+            urn?: string | null;
+        } | null> | null;
+        users?: Array<{
+            __typename: 'User';
+            name?: string | null;
+            givenName?: string | null;
+            urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
+            visibility?: Visibility | null;
+        } | null> | null;
+    } | null;
+};
+
+export type DeleteInvitationMutationVariables = {
+    urn: string;
+};
+
+export type DeleteInvitationMutation = {
+    deleteInvitation?: {
+        __typename: 'Invitation';
+        organization: string;
+        user: string;
+        status?: InvitationStatus | null;
+        urn: string;
+        confirmCode: string;
+    } | null;
+};
+
+export type AttachPolicyToGroupMutationVariables = {
+    group: string;
+    policy: string;
+};
+
+export type AttachPolicyToGroupMutation = {
+    attachPolicyToGroup?: {
+        __typename: 'Group';
+        organization?: string | null;
+        createdAt: string;
+        name?: string | null;
+        icon?: string | null;
+        urn?: string | null;
+        description?: string | null;
+        members: Array<
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+              )
+            | null
+        > | null;
+        policy?: {
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null;
+    } | null;
+};
+
+export type DetachPolicyFromGroupMutationVariables = {
+    group: string;
+    policy: string;
+};
+
+export type DetachPolicyFromGroupMutation = {
+    detachPolicyFromGroup?: {
+        __typename: 'Group';
+        organization?: string | null;
+        createdAt: string;
+        name?: string | null;
+        icon?: string | null;
+        urn?: string | null;
+        description?: string | null;
+        members: Array<
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+              )
+            | null
+        > | null;
+        policy?: {
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null;
+    } | null;
+};
+
+export type DeleteSDConfigMutationVariables = {
+    urn: string;
+};
+
+export type DeleteSDConfigMutation = {
+    deleteSDConfig?: {
+        __typename: 'SDConfig';
+        urn: string;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        projectUrn: string;
+        config?: string | null;
+        functions?: string | null;
+    } | null;
+};
+
+export type ConvertToStaticSetMutationVariables = {
+    urn: string;
+};
+
+export type ConvertToStaticSetMutation = {
+    convertToStaticSet?: {
+        __typename: 'TokenSet';
+        urn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        name?: string | null;
+        projectUrn?: string | null;
+        type?: TokenSetType | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    } | null;
+};
+
+export type UserInvitationsQueryVariables = {
+    limit?: number | null;
+};
+
+export type UserInvitationsQuery = {
+    userInvitations?: Array<{
+        __typename: 'Invitation';
+        organization: string;
+        user: string;
+        status?: InvitationStatus | null;
+        urn: string;
+        confirmCode: string;
+    } | null> | null;
+};
+
+export type PoliciesQueryVariables = {
+    organization: string;
+    limit?: number | null;
+    offset?: number | null;
+};
+
+export type PoliciesQuery = {
+    policies?: Array<{
+        __typename: 'Policy';
+        createdAt?: string | null;
+        name: string;
+        urn?: string | null;
+        description?: string | null;
+        value: {
+            __typename: 'PolicyDoc';
+            version: string;
+        };
     } | null> | null;
 };
 
@@ -2745,88 +2167,154 @@ export type OrganizationsQueryVariables = {
 export type OrganizationsQuery = {
     organizations?: Array<{
         __typename: 'Organization';
-        account?: string | null;
-        apiKeys?: Array<{
-            __typename: 'APIKeyWithoutValue';
-            description?: string | null;
-            lastUsed?: string | null;
-            name?: string | null;
-            urn?: string | null;
-        } | null> | null;
+        urn?: string | null;
         createdAt?: string | null;
-        description?: string | null;
-        groups?: Array<{
-            __typename: 'Group';
-            createdAt: string;
-            description?: string | null;
-            icon?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name?: string | null;
         owner?: {
             __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
             name?: string | null;
+            givenName?: string | null;
             urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
             visibility?: Visibility | null;
         } | null;
+        name?: string | null;
+        description?: string | null;
+        visibility?: Visibility | null;
+        account?: string | null;
         payment?: string | null;
-        policies?: Array<{
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null> | null;
+        ssoEnabled?: boolean | null;
+        icon?: string | null;
+        tier?: OrganizationTier | null;
         projects?: Array<{
             __typename: 'Project';
             createdAt: string;
-            description?: string | null;
-            icon?: string | null;
             name: string;
+            urn: string;
             orgUrn?: string | null;
+            visibility?: Visibility | null;
+            icon?: string | null;
+            description?: string | null;
             releaseCount?: number | null;
             tokenCount?: number | null;
-            urn: string;
-            visibility?: Visibility | null;
         } | null> | null;
-        ssoEnabled?: boolean | null;
-        tier?: OrganizationTier | null;
-        urn?: string | null;
+        groups?: Array<{
+            __typename: 'Group';
+            organization?: string | null;
+            createdAt: string;
+            name?: string | null;
+            icon?: string | null;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        policies?: Array<{
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null> | null;
+        apiKeys?: Array<{
+            __typename: 'APIKeyWithoutValue';
+            name?: string | null;
+            lastUsed?: string | null;
+            description?: string | null;
+            urn?: string | null;
+        } | null> | null;
         users?: Array<{
             __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
             name?: string | null;
+            givenName?: string | null;
             urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
             visibility?: Visibility | null;
         } | null> | null;
-        visibility?: Visibility | null;
     } | null> | null;
 };
 
-export type PoliciesQueryVariables = {
+export type ProjectsQueryVariables = {
+    organization: string;
+    filter?: ProjectFilterInput | null;
     limit?: number | null;
     offset?: number | null;
-    organization: string;
 };
 
-export type PoliciesQuery = {
-    policies?: Array<{
-        __typename: 'Policy';
-        createdAt?: string | null;
-        description?: string | null;
+export type ProjectsQuery = {
+    projects?: Array<{
+        __typename: 'Project';
+        createdBy:
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+              )
+            | null;
+        createdAt: string;
         name: string;
-        urn?: string | null;
-        value: {
-            __typename: 'PolicyDoc';
+        urn: string;
+        orgUrn?: string | null;
+        visibility?: Visibility | null;
+        icon?: string | null;
+        description?: string | null;
+        sets?: Array<{
+            __typename: 'TokenSet';
+            urn?: string | null;
+            name?: string | null;
+            projectUrn?: string | null;
+            type?: TokenSetType | null;
+            generatorUrn?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        resolvers?: Array<{
+            __typename: 'Resolver';
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            urn?: string | null;
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        releases?: Array<{
+            __typename: 'Release';
+            urn: string;
+            name: string;
             version: string;
-        };
+            description?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        sdConfigs?: Array<{
+            __typename: 'SDConfig';
+            urn: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+            projectUrn: string;
+            config?: string | null;
+            functions?: string | null;
+        } | null> | null;
+        releaseCount?: number | null;
+        tokenCount?: number | null;
     } | null> | null;
 };
 
@@ -2837,163 +2325,515 @@ export type ProjectQueryVariables = {
 export type ProjectQuery = {
     project?: {
         __typename: 'Project';
-        createdAt: string;
         createdBy:
             | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
                   | {
                         __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
                     }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
               )
             | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
+        createdAt: string;
         name: string;
+        urn: string;
         orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn: string;
-            version: string;
-        } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
-            name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
-        } | null> | null;
+        visibility?: Visibility | null;
+        icon?: string | null;
+        description?: string | null;
         sets?: Array<{
             __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
+            urn?: string | null;
             name?: string | null;
             projectUrn?: string | null;
             type?: TokenSetType | null;
-            urn?: string | null;
+            generatorUrn?: string | null;
+            createdAt?: string | null;
         } | null> | null;
+        resolvers?: Array<{
+            __typename: 'Resolver';
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            urn?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        generators?: Array<{
+            __typename: 'Generator';
+            urn?: string | null;
+            name?: string | null;
+            description?: string | null;
+            createdAt?: string | null;
+            updatedAt?: string | null;
+            graph?: string | null;
+        } | null> | null;
+        releases?: Array<{
+            __typename: 'Release';
+            urn: string;
+            name: string;
+            version: string;
+            description?: string | null;
+            createdAt?: string | null;
+        } | null> | null;
+        sdConfigs?: Array<{
+            __typename: 'SDConfig';
+            urn: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+            projectUrn: string;
+            config?: string | null;
+            functions?: string | null;
+        } | null> | null;
+        releaseCount?: number | null;
         tokenCount?: number | null;
-        urn: string;
-        visibility?: Visibility | null;
     } | null;
 };
 
-export type ProjectsQueryVariables = {
-    filter?: ProjectFilterInput | null;
+export type GroupsQueryVariables = {
+    organization: string;
+    filter?: GroupFilterInput | null;
     limit?: number | null;
     offset?: number | null;
-    organization: string;
 };
 
-export type ProjectsQuery = {
-    projects?: Array<{
-        __typename: 'Project';
+export type GroupsQuery = {
+    groups?: Array<{
+        __typename: 'Group';
+        organization?: string | null;
         createdAt: string;
-        createdBy:
+        name?: string | null;
+        icon?: string | null;
+        urn?: string | null;
+        description?: string | null;
+        members: Array<
             | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
                   | {
                         __typename: 'APIKeyIdentity';
                         name?: string | null;
                         urn?: string | null;
                     }
+              )
+            | null
+        > | null;
+        policy?: {
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null;
+    } | null> | null;
+};
+
+export type TokenSetQueryVariables = {
+    urn: string;
+};
+
+export type TokenSetQuery = {
+    tokenSet?: {
+        __typename: 'TokenSet';
+        urn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        name?: string | null;
+        projectUrn?: string | null;
+        type?: TokenSetType | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    } | null;
+};
+
+export type TokenSetsQueryVariables = {
+    project: string;
+    limit?: number | null;
+    offset?: number | null;
+    filter?: TokenSetsFilterInput | null;
+};
+
+export type TokenSetsQuery = {
+    tokenSets: Array<{
+        __typename: 'TokenSet';
+        urn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        name?: string | null;
+        projectUrn?: string | null;
+        type?: TokenSetType | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    }>;
+};
+
+export type TokenQueryVariables = {
+    urn: string;
+};
+
+export type TokenQuery = {
+    token?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
                   | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
                     }
               )
             | null;
+    } | null;
+};
+
+export type TokensQueryVariables = {
+    set: string;
+    filter?: TokenFilterInput | null;
+    limit?: number | null;
+    offset?: number | null;
+};
+
+export type TokensQuery = {
+    tokens: Array<{
+        __typename: 'RawToken';
         description?: string | null;
-        generators?: Array<{
-            __typename: 'Generator';
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
             createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    }>;
+};
+
+export type SelfQuery = {
+    self?: {
+        __typename: 'Self';
+        identity?: {
+            __typename: 'Identity';
             urn?: string | null;
-        } | null> | null;
-        icon?: string | null;
-        name: string;
-        orgUrn?: string | null;
-        releaseCount?: number | null;
-        releases?: Array<{
-            __typename: 'Release';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
+            authenticated: boolean;
+        } | null;
+        invitations?: Array<{
+            __typename: 'Invitation';
+            organization: string;
+            user: string;
+            status?: InvitationStatus | null;
             urn: string;
+            confirmCode: string;
+        } | null> | null;
+        user?: {
+            __typename: 'User';
+            name?: string | null;
+            givenName?: string | null;
+            urn?: string | null;
+            description?: string | null;
+            icon?: string | null;
+            visibility?: Visibility | null;
+        } | null;
+        organizations?: Array<{
+            __typename: 'Organization';
+            urn?: string | null;
+            createdAt?: string | null;
+            name?: string | null;
+            description?: string | null;
+            visibility?: Visibility | null;
+            account?: string | null;
+            payment?: string | null;
+            ssoEnabled?: boolean | null;
+            icon?: string | null;
+            tier?: OrganizationTier | null;
+        } | null> | null;
+        permissions?: Array<{
+            __typename: 'PolicyDoc';
             version: string;
         } | null> | null;
-        resolvers?: Array<{
-            __typename: 'Resolver';
-            createdAt?: string | null;
-            description?: string | null;
-            graph?: string | null;
-            name?: string | null;
-            updatedAt?: string | null;
-            urn?: string | null;
-        } | null> | null;
-        sdConfigs?: Array<{
-            __typename: 'SDConfig';
-            config?: string | null;
-            createdAt: string;
-            functions?: string | null;
+    } | null;
+};
+
+export type ResolveQueryVariables = {
+    resolver: string;
+    options?: Array<ResolverOptionsInput | null> | null;
+};
+
+export type ResolveQuery = {
+    resolve: Array<
+        | (
+              | {
+                    __typename: 'Token_scalar';
+                    value?: string | null;
+                }
+              | {
+                    __typename: 'Token_typography';
+                    value?: string | null;
+                    typography?: {
+                        __typename: string;
+                        fontFamily?: string | null;
+                        fontWeight?: string | null;
+                        letterSpacing?: string | null;
+                        lineHeight?: string | null;
+                        fontSize?: string | null;
+                        paragraphIndent?: string | null;
+                        paragraphSpacing?: string | null;
+                        textCase?: string | null;
+                        textDecoration?: string | null;
+                    } | null;
+                }
+              | {
+                    __typename: 'Token_border';
+                    value?: string | null;
+                    border?: {
+                        __typename: string;
+                        color?: string | null;
+                        style?: string | null;
+                        width?: string | null;
+                    } | null;
+                }
+              | {
+                    __typename: 'Token_boxShadow';
+                    value?: string | null;
+                    boxShadow?: Array<{
+                        __typename: string;
+                        x?: string | null;
+                        y?: string | null;
+                        blur?: string | null;
+                        spread?: string | null;
+                        color?: string | null;
+                        type?: string | null;
+                    } | null> | null;
+                }
+          )
+        | null
+    > | null;
+};
+
+export type ResolversQueryVariables = {
+    project: string;
+    filter?: ResolverFilterInput | null;
+    limit?: number | null;
+    offset?: number | null;
+};
+
+export type ResolversQuery = {
+    resolvers?: Array<{
+        __typename: 'Resolver';
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        urn?: string | null;
+        graph?: string | null;
+        options?: Array<{
+            __typename: 'ResolverOption';
             name: string;
-            projectUrn: string;
-            updatedAt: string;
-            urn: string;
+            description?: string | null;
+            values?: Array<string | null> | null;
         } | null> | null;
-        sets?: Array<{
-            __typename: 'TokenSet';
-            createdAt?: string | null;
-            generatorUrn?: string | null;
-            name?: string | null;
-            projectUrn?: string | null;
-            type?: TokenSetType | null;
-            urn?: string | null;
+    } | null> | null;
+};
+
+export type ResolverQueryVariables = {
+    urn: string;
+};
+
+export type ResolverQuery = {
+    resolver?: {
+        __typename: 'Resolver';
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        urn?: string | null;
+        graph?: string | null;
+        options?: Array<{
+            __typename: 'ResolverOption';
+            name: string;
+            description?: string | null;
+            values?: Array<string | null> | null;
         } | null> | null;
-        tokenCount?: number | null;
+    } | null;
+};
+
+export type GeneratorQueryVariables = {
+    urn: string;
+};
+
+export type GeneratorQuery = {
+    generator?: {
+        __typename: 'Generator';
+        urn?: string | null;
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        graph?: string | null;
+    } | null;
+};
+
+export type GeneratorsQueryVariables = {
+    project: string;
+    filter?: GeneratorFilterInput | null;
+    limit?: number | null;
+    offset?: number | null;
+};
+
+export type GeneratorsQuery = {
+    generators?: Array<{
+        __typename: 'Generator';
+        urn?: string | null;
+        name?: string | null;
+        description?: string | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        graph?: string | null;
+    } | null> | null;
+};
+
+export type ReleasesQueryVariables = {
+    project: string;
+    filter?: ReleaseFilterInput | null;
+    limit?: number | null;
+    offset?: number | null;
+};
+
+export type ReleasesQuery = {
+    releases?: Array<{
+        __typename: 'Release';
         urn: string;
-        visibility?: Visibility | null;
+        name: string;
+        version: string;
+        description?: string | null;
+        tokenSets?: Array<{
+            __typename: 'ReleaseFile';
+            path?: string | null;
+            name?: string | null;
+            type?: string | null;
+        }> | null;
+        generators?: Array<{
+            __typename: 'ReleaseFile';
+            path?: string | null;
+            name?: string | null;
+            type?: string | null;
+        }> | null;
+        createdAt?: string | null;
+        releasedBy:
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+              )
+            | null;
+    } | null> | null;
+};
+
+export type ApiKeysQueryVariables = {
+    organization: string;
+    filter?: ApiKeyFilterInput | null;
+    limit?: number | null;
+    offset?: number | null;
+};
+
+export type ApiKeysQuery = {
+    apiKeys?: Array<{
+        __typename: 'APIKeyWithoutValue';
+        name?: string | null;
+        lastUsed?: string | null;
+        description?: string | null;
+        urn?: string | null;
     } | null> | null;
 };
 
@@ -3005,349 +2845,6 @@ export type ReleaseCountQuery = {
     releaseCount?: number | null;
 };
 
-export type ReleasesQueryVariables = {
-    filter?: ReleaseFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    project: string;
-};
-
-export type ReleasesQuery = {
-    releases?: Array<{
-        __typename: 'Release';
-        createdAt?: string | null;
-        description?: string | null;
-        generators?: Array<{
-            __typename: 'ReleaseFile';
-            name?: string | null;
-            path?: string | null;
-            type?: string | null;
-        }> | null;
-        name: string;
-        releasedBy:
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null;
-        tokenSets?: Array<{
-            __typename: 'ReleaseFile';
-            name?: string | null;
-            path?: string | null;
-            type?: string | null;
-        }> | null;
-        urn: string;
-        version: string;
-    } | null> | null;
-};
-
-export type ResolveQueryVariables = {
-    options?: Array<ResolverOptionsInput | null> | null;
-    resolver: string;
-};
-
-export type ResolveQuery = {
-    resolve: Array<
-        | (
-              | {
-                    __typename: 'Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    type?: TokenType | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    type?: TokenType | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Token_color';
-                    description?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    type?: TokenType | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Token_scalar';
-                    description?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    type?: TokenType | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Token_typography';
-                    description?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    value?: string | null;
-                }
-          )
-        | null
-    > | null;
-};
-
-export type ResolverQueryVariables = {
-    urn: string;
-};
-
-export type ResolverQuery = {
-    resolver?: {
-        __typename: 'Resolver';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
-        name?: string | null;
-        options?: Array<{
-            __typename: 'ResolverOption';
-            description?: string | null;
-            name: string;
-            values?: Array<string | null> | null;
-        } | null> | null;
-        updatedAt?: string | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type ResolversQueryVariables = {
-    filter?: ResolverFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    project: string;
-};
-
-export type ResolversQuery = {
-    resolvers?: Array<{
-        __typename: 'Resolver';
-        createdAt?: string | null;
-        description?: string | null;
-        graph?: string | null;
-        name?: string | null;
-        options?: Array<{
-            __typename: 'ResolverOption';
-            description?: string | null;
-            name: string;
-            values?: Array<string | null> | null;
-        } | null> | null;
-        updatedAt?: string | null;
-        urn?: string | null;
-    } | null> | null;
-};
-
-export type SelfQuery = {
-    self?: {
-        __typename: 'Self';
-        identity?: {
-            __typename: 'Identity';
-            authenticated: boolean;
-            urn?: string | null;
-        } | null;
-        invitations?: Array<{
-            __typename: 'Invitation';
-            confirmCode: string;
-            organization: string;
-            status?: InvitationStatus | null;
-            urn: string;
-            user: string;
-        } | null> | null;
-        organizations?: Array<{
-            __typename: 'Organization';
-            account?: string | null;
-            createdAt?: string | null;
-            description?: string | null;
-            icon?: string | null;
-            name?: string | null;
-            payment?: string | null;
-            ssoEnabled?: boolean | null;
-            tier?: OrganizationTier | null;
-            urn?: string | null;
-            visibility?: Visibility | null;
-        } | null> | null;
-        permissions?: Array<{
-            __typename: 'PolicyDoc';
-            version: string;
-        } | null> | null;
-        user?: {
-            __typename: 'User';
-            description?: string | null;
-            givenName?: string | null;
-            icon?: string | null;
-            name?: string | null;
-            urn?: string | null;
-            visibility?: Visibility | null;
-        } | null;
-    } | null;
-};
-
-export type TokenQueryVariables = {
-    urn: string;
-};
-
-export type TokenQuery = {
-    token:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
-};
-
 export type TokenCountQueryVariables = {
     project: string;
 };
@@ -3356,424 +2853,124 @@ export type TokenCountQuery = {
     tokenCount?: number | null;
 };
 
-export type TokenSetQueryVariables = {
-    urn: string;
-};
-
-export type TokenSetQuery = {
-    tokenSet?: {
-        __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
-        metadata?: {
-            __typename: 'Metadata';
-            createdAt?: string | null;
-        } | null;
-        name?: string | null;
-        projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
-        type?: TokenSetType | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type TokenSetsQueryVariables = {
-    filter?: TokenSetsFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    project: string;
-};
-
-export type TokenSetsQuery = {
-    tokenSets: Array<{
-        __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
-        metadata?: {
-            __typename: 'Metadata';
-            createdAt?: string | null;
-        } | null;
-        name?: string | null;
-        projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
-        type?: TokenSetType | null;
-        urn?: string | null;
-    }>;
-};
-
-export type TokensQueryVariables = {
-    filter?: TokenFilterInput | null;
-    limit?: number | null;
-    offset?: number | null;
-    set: string;
-};
-
-export type TokensQuery = {
-    tokens: Array<
-        | {
-              __typename: 'Raw_Token_border';
-              border?: {
-                  __typename: string;
-                  color?: string | null;
-                  style?: string | null;
-                  width?: string | null;
-              } | null;
-              description?: string | null;
-              extensions?: string | null;
-              metadata?: {
-                  __typename: string;
-                  createdAt?: string | null;
-              } | null;
-              name?: string | null;
-              setUrn?: string | null;
-              type?: TokenType | null;
-              urn?: string | null;
-              value?: string | null;
-          }
-        | {
-              __typename: 'Raw_Token_boxShadow';
-              boxShadow?: Array<{
-                  __typename: string;
-                  blur?: string | null;
-                  color?: string | null;
-                  spread?: string | null;
-                  type?: string | null;
-                  x?: string | null;
-                  y?: string | null;
-              } | null> | null;
-              description?: string | null;
-              extensions?: string | null;
-              metadata?: {
-                  __typename: string;
-                  createdAt?: string | null;
-              } | null;
-              name?: string | null;
-              setUrn?: string | null;
-              type?: TokenType | null;
-              urn?: string | null;
-              value?: string | null;
-          }
-        | {
-              __typename: 'Raw_Token_color';
-              description?: string | null;
-              extensions?: string | null;
-              metadata?: {
-                  __typename: string;
-                  createdAt?: string | null;
-              } | null;
-              name?: string | null;
-              setUrn?: string | null;
-              type?: TokenType | null;
-              urn?: string | null;
-              value?: string | null;
-          }
-        | {
-              __typename: 'Raw_Token_scalar';
-              description?: string | null;
-              extensions?: string | null;
-              metadata?: {
-                  __typename: string;
-                  createdAt?: string | null;
-              } | null;
-              name?: string | null;
-              setUrn?: string | null;
-              type?: TokenType | null;
-              urn?: string | null;
-              value?: string | null;
-          }
-        | {
-              __typename: 'Raw_Token_typography';
-              description?: string | null;
-              extensions?: string | null;
-              metadata?: {
-                  __typename: string;
-                  createdAt?: string | null;
-              } | null;
-              name?: string | null;
-              setUrn?: string | null;
-              type?: TokenType | null;
-              typography?: {
-                  __typename: string;
-                  fontFamily?: string | null;
-                  fontSize?: string | null;
-                  fontWeight?: string | null;
-                  letterSpacing?: string | null;
-                  lineHeight?: string | null;
-                  paragraphIndent?: string | null;
-                  paragraphSpacing?: string | null;
-                  textCase?: string | null;
-                  textDecoration?: string | null;
-              } | null;
-              urn?: string | null;
-              value?: string | null;
-          }
-    >;
-};
-
-export type UserInvitationsQueryVariables = {
-    limit?: number | null;
-};
-
-export type UserInvitationsQuery = {
-    userInvitations?: Array<{
-        __typename: 'Invitation';
-        confirmCode: string;
-        organization: string;
-        status?: InvitationStatus | null;
-        urn: string;
-        user: string;
-    } | null> | null;
-};
-
-export type OnCreateGroupSubscriptionVariables = {
-    organization: string;
-};
-
-export type OnCreateGroupSubscription = {
-    onCreateGroup?: {
-        __typename: 'Group';
-        createdAt: string;
-        description?: string | null;
-        icon?: string | null;
-        members: Array<
-            | (
-                  | {
-                        __typename: 'APIKeyIdentity';
-                        name?: string | null;
-                        urn?: string | null;
-                    }
-                  | {
-                        __typename: 'User';
-                        description?: string | null;
-                        givenName?: string | null;
-                        icon?: string | null;
-                        name?: string | null;
-                        urn?: string | null;
-                        visibility?: Visibility | null;
-                    }
-              )
-            | null
-        > | null;
-        name: string;
-        policy?: {
-            __typename: 'Policy';
-            createdAt?: string | null;
-            description?: string | null;
-            name: string;
-            urn?: string | null;
-        } | null;
-        urn?: string | null;
-    } | null;
-};
-
 export type OnCreateTokenSubscriptionVariables = {
     setUrn: string;
 };
 
 export type OnCreateTokenSubscription = {
-    onCreateToken:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
+    onCreateToken?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null;
+};
+
+export type OnUpdateTokenSubscriptionVariables = {
+    setUrn: string;
+};
+
+export type OnUpdateTokenSubscription = {
+    onUpdateToken?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null;
+};
+
+export type OnDeleteTokenSubscriptionVariables = {
+    setUrn: string;
+};
+
+export type OnDeleteTokenSubscription = {
+    onDeleteToken?: {
+        __typename: 'RawToken';
+        description?: string | null;
+        name?: string | null;
+        urn?: string | null;
+        extensions?: string | null;
+        setUrn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        type?: TokenType | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Raw_Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_typography';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Raw_Token_boxShadow';
+                        value?: string | null;
+                    }
+              )
+            | null;
+    } | null;
 };
 
 export type OnCreateTokenSetSubscriptionVariables = {
@@ -3783,357 +2980,26 @@ export type OnCreateTokenSetSubscriptionVariables = {
 export type OnCreateTokenSetSubscription = {
     onCreateTokenSet?: {
         __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
+        urn?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
         type?: TokenSetType | null;
-        urn?: string | null;
-    } | null;
-};
-
-export type OnDeleteTokenSubscriptionVariables = {
-    setUrn: string;
-};
-
-export type OnDeleteTokenSubscription = {
-    onDeleteToken:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
-};
-
-export type OnDeleteTokenSetSubscriptionVariables = {
-    projectUrn: string;
-};
-
-export type OnDeleteTokenSetSubscription = {
-    onDeleteTokenSet?: {
-        __typename: 'TokenSet';
-        createdAt?: string | null;
         generatorUrn?: string | null;
-        metadata?: {
-            __typename: 'Metadata';
-            createdAt?: string | null;
-        } | null;
-        name?: string | null;
-        projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
-        type?: TokenSetType | null;
-        urn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
     } | null;
-};
-
-export type OnUpdateTokenSubscriptionVariables = {
-    setUrn: string;
-};
-
-export type OnUpdateTokenSubscription = {
-    onUpdateToken:
-        | (
-              | {
-                    __typename: 'Raw_Token_border';
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_boxShadow';
-                    boxShadow?: Array<{
-                        __typename: string;
-                        blur?: string | null;
-                        color?: string | null;
-                        spread?: string | null;
-                        type?: string | null;
-                        x?: string | null;
-                        y?: string | null;
-                    } | null> | null;
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_color';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_scalar';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Raw_Token_typography';
-                    description?: string | null;
-                    extensions?: string | null;
-                    metadata?: {
-                        __typename: string;
-                        createdAt?: string | null;
-                    } | null;
-                    name?: string | null;
-                    setUrn?: string | null;
-                    type?: TokenType | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontSize?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                    urn?: string | null;
-                    value?: string | null;
-                }
-          )
-        | null;
 };
 
 export type OnUpdateTokenSetSubscriptionVariables = {
@@ -4143,67 +3009,95 @@ export type OnUpdateTokenSetSubscriptionVariables = {
 export type OnUpdateTokenSetSubscription = {
     onUpdateTokenSet?: {
         __typename: 'TokenSet';
-        createdAt?: string | null;
-        generatorUrn?: string | null;
+        urn?: string | null;
         metadata?: {
             __typename: 'Metadata';
             createdAt?: string | null;
         } | null;
         name?: string | null;
         projectUrn?: string | null;
-        tokens: Array<
-            | {
-                  __typename: 'Raw_Token_border';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_boxShadow';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_color';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_scalar';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-            | {
-                  __typename: 'Raw_Token_typography';
-                  description?: string | null;
-                  extensions?: string | null;
-                  name?: string | null;
-                  setUrn?: string | null;
-                  type?: TokenType | null;
-                  urn?: string | null;
-                  value?: string | null;
-              }
-        >;
         type?: TokenSetType | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    } | null;
+};
+
+export type OnDeleteTokenSetSubscriptionVariables = {
+    projectUrn: string;
+};
+
+export type OnDeleteTokenSetSubscription = {
+    onDeleteTokenSet?: {
+        __typename: 'TokenSet';
         urn?: string | null;
+        metadata?: {
+            __typename: 'Metadata';
+            createdAt?: string | null;
+        } | null;
+        name?: string | null;
+        projectUrn?: string | null;
+        type?: TokenSetType | null;
+        generatorUrn?: string | null;
+        createdAt?: string | null;
+        tokens: Array<{
+            __typename: 'RawToken';
+            description?: string | null;
+            name?: string | null;
+            urn?: string | null;
+            extensions?: string | null;
+            setUrn?: string | null;
+            type?: TokenType | null;
+        }>;
+    } | null;
+};
+
+export type OnCreateGroupSubscriptionVariables = {
+    organization: string;
+};
+
+export type OnCreateGroupSubscription = {
+    onCreateGroup?: {
+        __typename: 'Group';
+        organization?: string | null;
+        createdAt: string;
+        name?: string | null;
+        icon?: string | null;
+        urn?: string | null;
+        description?: string | null;
+        members: Array<
+            | (
+                  | {
+                        __typename: 'User';
+                        name?: string | null;
+                        givenName?: string | null;
+                        urn?: string | null;
+                        description?: string | null;
+                        icon?: string | null;
+                        visibility?: Visibility | null;
+                    }
+                  | {
+                        __typename: 'APIKeyIdentity';
+                        name?: string | null;
+                        urn?: string | null;
+                    }
+              )
+            | null
+        > | null;
+        policy?: {
+            __typename: 'Policy';
+            createdAt?: string | null;
+            name: string;
+            urn?: string | null;
+            description?: string | null;
+        } | null;
     } | null;
 };
