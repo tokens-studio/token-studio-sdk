@@ -46,7 +46,7 @@
     "@aws-amplify/auth": "^5.1.13",
     "@aws-amplify/core": "^5.1.2",
     "@aws-amplify/pubsub": "^5.1.2",
-    "is-ci": "^3.0.1"
+    "@tokens-studio/types": "^0.3.0"
   },
   "optionalDependencies": {
     "eslint": "^8.31.0",
@@ -67,6 +67,7 @@
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.3",
+    "is-ci": "^3.0.1",
     "jest": "^29.4.0",
     "jest-junit": "^15.0.0",
     "lint-staged": "^13.2.1",
