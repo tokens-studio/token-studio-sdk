@@ -588,22 +588,19 @@ export type ResolverOptionsInput = {
     value: string;
 };
 
-export type Token =
-    | Token_scalar
-    | Token_typography
+export type ResolvedToken = {
+    __typename: 'ResolvedToken';
+    description?: string | null;
+    name?: string | null;
+    value?: ResolvedTokenValue | null;
+    type?: TokenType | null;
+};
+
+export type ResolvedTokenValue =
     | Token_border
-    | Token_boxShadow;
-
-export type Token_scalar = {
-    __typename: 'Token_scalar';
-    value?: string | null;
-};
-
-export type Token_typography = {
-    __typename: 'Token_typography';
-    value?: string | null;
-    typography?: Typography | null;
-};
+    | Token_boxShadow
+    | Token_scalar
+    | Token_typography;
 
 export type Token_border = {
     __typename: 'Token_border';
@@ -615,6 +612,17 @@ export type Token_boxShadow = {
     __typename: 'Token_boxShadow';
     value?: string | null;
     boxShadow?: Array<BoxShadow | null> | null;
+};
+
+export type Token_scalar = {
+    __typename: 'Token_scalar';
+    value?: string | null;
+};
+
+export type Token_typography = {
+    __typename: 'Token_typography';
+    value?: string | null;
+    typography?: Typography | null;
 };
 
 export type ResolverFilterInput = {
@@ -2640,54 +2648,32 @@ export type ResolveQueryVariables = {
 };
 
 export type ResolveQuery = {
-    resolve: Array<
-        | (
-              | {
-                    __typename: 'Token_scalar';
-                    value?: string | null;
-                }
-              | {
-                    __typename: 'Token_typography';
-                    value?: string | null;
-                    typography?: {
-                        __typename: string;
-                        fontFamily?: string | null;
-                        fontWeight?: string | null;
-                        letterSpacing?: string | null;
-                        lineHeight?: string | null;
-                        fontSize?: string | null;
-                        paragraphIndent?: string | null;
-                        paragraphSpacing?: string | null;
-                        textCase?: string | null;
-                        textDecoration?: string | null;
-                    } | null;
-                }
-              | {
-                    __typename: 'Token_border';
-                    value?: string | null;
-                    border?: {
-                        __typename: string;
-                        color?: string | null;
-                        style?: string | null;
-                        width?: string | null;
-                    } | null;
-                }
-              | {
-                    __typename: 'Token_boxShadow';
-                    value?: string | null;
-                    boxShadow?: Array<{
-                        __typename: string;
-                        x?: string | null;
-                        y?: string | null;
-                        blur?: string | null;
-                        spread?: string | null;
-                        color?: string | null;
-                        type?: string | null;
-                    } | null> | null;
-                }
-          )
-        | null
-    > | null;
+    resolve?: Array<{
+        __typename: 'ResolvedToken';
+        description?: string | null;
+        name?: string | null;
+        value:
+            | (
+                  | {
+                        __typename: 'Token_border';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Token_boxShadow';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Token_scalar';
+                        value?: string | null;
+                    }
+                  | {
+                        __typename: 'Token_typography';
+                        value?: string | null;
+                    }
+              )
+            | null;
+        type?: TokenType | null;
+    } | null> | null;
 };
 
 export type ResolversQueryVariables = {

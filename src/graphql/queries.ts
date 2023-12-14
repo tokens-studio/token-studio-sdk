@@ -445,42 +445,23 @@ export const self = /* GraphQL */ `
 export const resolve = /* GraphQL */ `
     query Resolve($resolver: String!, $options: [ResolverOptionsInput]) {
         resolve(resolver: $resolver, options: $options) {
-            ... on Token_scalar {
-                value
-            }
-            ... on Token_typography {
-                value
-                typography {
-                    fontFamily
-                    fontWeight
-                    letterSpacing
-                    lineHeight
-                    fontSize
-                    paragraphIndent
-                    paragraphSpacing
-                    textCase
-                    textDecoration
+            description
+            name
+            value {
+                ... on Token_border {
+                    value
+                }
+                ... on Token_boxShadow {
+                    value
+                }
+                ... on Token_scalar {
+                    value
+                }
+                ... on Token_typography {
+                    value
                 }
             }
-            ... on Token_border {
-                value
-                border {
-                    color
-                    style
-                    width
-                }
-            }
-            ... on Token_boxShadow {
-                value
-                boxShadow {
-                    x
-                    y
-                    blur
-                    spread
-                    color
-                    type
-                }
-            }
+            type
         }
     }
 `;

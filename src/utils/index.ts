@@ -5,6 +5,7 @@ import {
     Raw_Token_border,
     Raw_Token_boxShadow,
     Raw_Token_typography,
+    ResolvedToken,
     TokenType
 } from '../graphqlTypes';
 import {
@@ -16,12 +17,12 @@ import {
 } from '@tokens-studio/types';
 import { removeNullProperties } from './removeNullProps';
 
-export interface ResolvedToken {
+export interface ReifiedResolvedToken {
     name: string;
     type: TokenTypes;
     value: RawTokenValue;
     description?: string;
-    extensions?: string;
+    $extensions?: string;
 }
 
 const parseValue = (value: string | undefined | null) => {
@@ -43,47 +44,49 @@ export const rawTokenToSingleToken = (
         throw new Error(`Invalid token "${token}"`);
     }
 
+    const extend = {
+        name: token?.name,
+        description: token?.description,
+        $extensions: JSON.parse((token as RawToken).extensions || 'null')
+    };
+
     switch (token.type) {
         case TokenType.boxShadow: {
             const boxShadowToken = token.value as Raw_Token_boxShadow;
             return {
                 type: TokenTypes.BOX_SHADOW,
-                name: token?.name,
-                description: token?.description,
+
                 value:
                     boxShadowToken?.value ||
-                    removeNullProperties(boxShadowToken?.boxShadow)
+                    removeNullProperties(boxShadowToken?.boxShadow),
+                ...extend
             } as SingleBoxShadowToken;
         }
         case TokenType.border: {
             const borderToken = token.value as Raw_Token_border;
             return {
                 type: TokenTypes.BORDER,
-                name: token?.name,
-                description: token?.description,
                 value:
                     borderToken?.value ||
-                    removeNullProperties(borderToken?.border)
+                    removeNullProperties(borderToken?.border),
+                ...extend
             } as SingleBorderToken;
         }
         case TokenType.typography: {
             const typographyToken = token.value as Raw_Token_typography;
             return {
                 type: TokenTypes.TYPOGRAPHY,
-                name: token?.name,
-                description: token?.description,
                 value:
                     typographyToken?.value ||
-                    removeNullProperties(typographyToken?.typography)
+                    removeNullProperties(typographyToken?.typography),
+                ...extend
             } as SingleTypographyToken;
         }
         default:
             return {
                 type: token?.type as unknown as TokenTypes,
-                name: token?.name,
-                description: token?.description,
                 value: parseValue(token?.value?.value),
-                $extensions: JSON.parse(token?.extensions || 'null')
+                ...extend
             } as SingleToken;
     }
 };

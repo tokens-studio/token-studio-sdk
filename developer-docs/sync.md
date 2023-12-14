@@ -27,3 +27,5 @@ aws appsync get-introspection-schema --api-id wdr3mttiqbgoxm2ytghyzkcki4 --forma
 ```bash
 amplify codegen
 ```
+
+Note that this was done with amplify@11.0.3 and should not require any credentials

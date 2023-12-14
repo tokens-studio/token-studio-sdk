@@ -425,17 +425,19 @@ type RawToken @aws_lambda
 	setUrn: String
 	metadata: Metadata
 	type: TokenType
-	value: RawTokenValue
+	value: RawTokenValue 
 }
 
 
-type Raw_Token_border  {
+type Raw_Token_border @aws_lambda
+	@aws_cognito_user_pools  {
 	# Use when setting a reference to a another border token
 	value: String
 	border: Border
 }
 
-type Raw_Token_boxShadow {
+type Raw_Token_boxShadow @aws_lambda
+	@aws_cognito_user_pools {
 	value: String
 	boxShadow: [BoxShadow]
 }
@@ -444,11 +446,13 @@ type Raw_Token_boxShadow {
 # Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
 ##### assets - Assumes a string output with a URL
 ##### opacity - Assumes a simple numeric output
-type Raw_Token_scalar {
+type Raw_Token_scalar @aws_lambda
+	@aws_cognito_user_pools {
 	value: String
 }
 
-type Raw_Token_typography  {
+type Raw_Token_typography @aws_lambda
+	@aws_cognito_user_pools  {
 	value: String
 	typography: Typography
 }
@@ -547,7 +551,7 @@ input ResolverInput {
 	graph: AWSJSON!
 }
 
-input ResolverOptionsInput{
+input ResolverOptionsInput {
 	name: String!
 	value: String!
 }
@@ -560,7 +564,6 @@ input ResolverUpdateInput {
 	# The graph for the resolver. Options will be automatically extracted
 	graph: AWSJSON
 }
-
 
 type Self {
 	identity: Identity @aws_api_key @aws_lambda @aws_cognito_user_pools
@@ -584,10 +587,6 @@ type SummarizedValue {
 	total: Int!
 }
 
-union Token = Token_scalar
-	| Token_typography
-	| Token_border
-	| Token_boxShadow
 
 input TokenFilterInput {
 	urn: StringFilterInput
@@ -607,7 +606,6 @@ input TokenInput {
 	border: BorderInput
 	boxShadow: [BoxShadowInput]
 }
-
 
 type TokenSet @aws_lambda @aws_cognito_user_pools {
 	urn: String
@@ -691,13 +689,11 @@ input TokenUpdateInput {
 	value: String
 }
 
-
 type ResolvedToken {
 	description: String
 	name: String
 	value: ResolvedTokenValue
 	type: TokenType
-	metadata: Metadata
 }
 
 union ResolvedTokenValue = Token_border
@@ -999,7 +995,7 @@ type Query @aws_lambda @aws_cognito_user_pools {
 	# Gets the callers identity
 	self: Self @aws_lambda @aws_api_key @aws_cognito_user_pools
 	# Resolves the resolver and returns the expected tokens
-	resolve(resolver: String!, options: [ResolverOptionsInput]): [Token]
+	resolve(resolver: String!, options: [ResolverOptionsInput]): [ResolvedToken]
 		@aws_lambda
 		@aws_cognito_user_pools
 	#Returns all resolvers for a project
