@@ -21,7 +21,7 @@ const defaultEntries = [
             }
         ],
         plugins: [
-            cleanupDir.default(),
+            // cleanupDir.default(),
             typescript({
                 tsconfig: 'tsconfig.prod.json'
             })
