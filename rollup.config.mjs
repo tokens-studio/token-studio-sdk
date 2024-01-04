@@ -1,4 +1,3 @@
-import cleanupDir from 'rollup-plugin-cleanup-dir';
 import typescript from 'rollup-plugin-typescript2';
 
 const defaultEntries = [
@@ -21,7 +20,6 @@ const defaultEntries = [
             }
         ],
         plugins: [
-            // cleanupDir.default(),
             typescript({
                 tsconfig: 'tsconfig.prod.json'
             })
