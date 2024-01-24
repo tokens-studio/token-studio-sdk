@@ -898,7 +898,7 @@ type Mutation @aws_lambda @aws_cognito_user_pools {
 	updateProject(urn: String!, input: ProjectUpdateInput!): Project
 		@aws_lambda
 		@aws_cognito_user_pools
-	updateGroup(urn: String!, input: GroupUpdateInput!): Project
+	updateGroup(urn: String!, input: GroupUpdateInput!): Group
 		@aws_lambda
 		@aws_cognito_user_pools
 
