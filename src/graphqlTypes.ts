@@ -315,16 +315,7 @@ export type OrganizationInput = {
   description?: string | null,
   visibility: Visibility,
   icon?: string | null,
-  tier: OrganizationTier,
 };
-
-export enum OrganizationTier {
-  FREE = "FREE",
-  STARTER = "STARTER",
-  STUDIO = "STUDIO",
-  ENTERPRISE = "ENTERPRISE",
-}
-
 
 export type Organization = {
   __typename: "Organization",
@@ -345,6 +336,12 @@ export type Organization = {
   apiKeys?:  Array<APIKeyWithoutValue | null > | null,
   users?:  Array<User | null > | null,
 };
+
+export enum OrganizationTier {
+  FREE = "FREE",
+  PRO = "PRO",
+}
+
 
 export type APIKeyWithoutValue = {
   __typename: "APIKeyWithoutValue",
@@ -517,6 +514,9 @@ export type OrganizationUpdateInput = {
   description?: string | null,
   visibility?: Visibility | null,
   icon?: string | null,
+};
+
+export type AdminOrganizationUpdateInput = {
   tier?: OrganizationTier | null,
 };
 
@@ -2023,6 +2023,80 @@ export type ConvertToStaticSetMutation = {
       setUrn?: string | null,
       type?: TokenType | null,
     } >,
+  } | null,
+};
+
+export type AdminUpdateOrganizationMutationVariables = {
+  urn: string,
+  input: AdminOrganizationUpdateInput,
+};
+
+export type AdminUpdateOrganizationMutation = {
+  adminUpdateOrganization?:  {
+    __typename: "Organization",
+    urn?: string | null,
+    createdAt?: string | null,
+    owner?:  {
+      __typename: "User",
+      name?: string | null,
+      givenName?: string | null,
+      urn?: string | null,
+      description?: string | null,
+      icon?: string | null,
+      visibility?: Visibility | null,
+    } | null,
+    name?: string | null,
+    description?: string | null,
+    visibility?: Visibility | null,
+    account?: string | null,
+    payment?: string | null,
+    ssoEnabled?: boolean | null,
+    icon?: string | null,
+    tier?: OrganizationTier | null,
+    projects?:  Array< {
+      __typename: "Project",
+      createdAt: string,
+      name: string,
+      urn: string,
+      orgUrn?: string | null,
+      visibility?: Visibility | null,
+      icon?: string | null,
+      description?: string | null,
+      releaseCount?: number | null,
+      tokenCount?: number | null,
+    } | null > | null,
+    groups?:  Array< {
+      __typename: "Group",
+      organization?: string | null,
+      createdAt: string,
+      name?: string | null,
+      icon?: string | null,
+      urn?: string | null,
+      description?: string | null,
+    } | null > | null,
+    policies?:  Array< {
+      __typename: "Policy",
+      createdAt?: string | null,
+      name: string,
+      urn?: string | null,
+      description?: string | null,
+    } | null > | null,
+    apiKeys?:  Array< {
+      __typename: "APIKeyWithoutValue",
+      name?: string | null,
+      lastUsed?: string | null,
+      description?: string | null,
+      urn?: string | null,
+    } | null > | null,
+    users?:  Array< {
+      __typename: "User",
+      name?: string | null,
+      givenName?: string | null,
+      urn?: string | null,
+      description?: string | null,
+      icon?: string | null,
+      visibility?: Visibility | null,
+    } | null > | null,
   } | null,
 };
 

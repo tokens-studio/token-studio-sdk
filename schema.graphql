@@ -262,7 +262,6 @@ input OrganizationInput {
 	description: String
 	visibility: Visibility!
 	icon: String
-	tier: OrganizationTier!
 }
 
 type OrganizationMemberShip {
@@ -271,9 +270,7 @@ type OrganizationMemberShip {
 
 enum OrganizationTier {
 	FREE
-	STARTER
-	STUDIO
-	ENTERPRISE
+	PRO
 }
 
 input OrganizationUpdateInput {
@@ -282,6 +279,9 @@ input OrganizationUpdateInput {
 	description: String
 	visibility: Visibility
 	icon: String
+}
+
+input AdminOrganizationUpdateInput {
 	tier: OrganizationTier
 }
 
@@ -936,6 +936,14 @@ type Mutation @aws_lambda @aws_cognito_user_pools {
 	deleteSDConfig(urn: String!): SDConfig @aws_lambda @aws_cognito_user_pools
 
 	convertToStaticSet(urn: String!): TokenSet @aws_lambda @aws_cognito_user_pools
+
+	adminUpdateOrganization(
+		urn: String!
+		input: AdminOrganizationUpdateInput!
+	): Organization 
+	@aws_lambda 
+	@aws_cognito_user_pools 
+	@aws_auth(cognito_groups: ["Admin"])
 }
 
 type Query @aws_lambda @aws_cognito_user_pools {

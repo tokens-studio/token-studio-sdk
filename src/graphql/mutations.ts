@@ -1129,3 +1129,69 @@ export const convertToStaticSet = /* GraphQL */ `
     }
   }
 `;
+export const adminUpdateOrganization = /* GraphQL */ `
+  mutation AdminUpdateOrganization(
+    $urn: String!
+    $input: AdminOrganizationUpdateInput!
+  ) {
+    adminUpdateOrganization(urn: $urn, input: $input) {
+      urn
+      createdAt
+      owner {
+        name
+        givenName
+        urn
+        description
+        icon
+        visibility
+      }
+      name
+      description
+      visibility
+      account
+      payment
+      ssoEnabled
+      icon
+      tier
+      projects {
+        createdAt
+        name
+        urn
+        orgUrn
+        visibility
+        icon
+        description
+        releaseCount
+        tokenCount
+      }
+      groups {
+        organization
+        createdAt
+        name
+        icon
+        urn
+        description
+      }
+      policies {
+        createdAt
+        name
+        urn
+        description
+      }
+      apiKeys {
+        name
+        lastUsed
+        description
+        urn
+      }
+      users {
+        name
+        givenName
+        urn
+        description
+        icon
+        visibility
+      }
+    }
+  }
+`;
