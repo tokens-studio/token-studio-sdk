@@ -348,7 +348,7 @@ type SDConfig {
 	updatedAt: AWSDateTime!
 	projectUrn: String!
 	config: AWSJSON
-	functions: AWSJSON
+	functions: String
 }
 
 type Project @aws_lambda @aws_cognito_user_pools {
@@ -425,7 +425,7 @@ type RawToken @aws_lambda
 	setUrn: String
 	metadata: Metadata
 	type: TokenType
-	value: RawTokenValue 
+	value: RawTokenValue
 }
 
 
@@ -798,14 +798,14 @@ input SDConfigInput {
 	description: String
 	name: String!
 	config: AWSJSON!
-	functions: AWSJSON!
+	functions: String!
 }
 
 input SDConfigUpdateInput {
 	description: String
 	name: String
 	config: AWSJSON
-	functions: AWSJSON
+	functions: String
 }
 
 type Mutation @aws_lambda @aws_cognito_user_pools {
