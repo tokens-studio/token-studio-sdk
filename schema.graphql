@@ -842,7 +842,7 @@ type Mutation @aws_lambda @aws_cognito_user_pools {
 	createResolver(project: String!, input: ResolverInput!): Resolver
 		@aws_lambda
 		@aws_cognito_user_pools
-	createSDConfig(urn: String!, input: SDConfigInput!): SDConfig
+	createSDConfig(project: String!, input: SDConfigInput!): SDConfig
 		@aws_lambda
 		@aws_cognito_user_pools
 	# Creates a release by freezing a resolvers output

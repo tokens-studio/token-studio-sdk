@@ -288,8 +288,8 @@ export const createResolver = /* GraphQL */ `
   }
 `;
 export const createSDConfig = /* GraphQL */ `
-  mutation CreateSDConfig($urn: String!, $input: SDConfigInput!) {
-    createSDConfig(urn: $urn, input: $input) {
+  mutation CreateSDConfig($project: String!, $input: SDConfigInput!) {
+    createSDConfig(project: $project, input: $input) {
       urn
       name
       createdAt

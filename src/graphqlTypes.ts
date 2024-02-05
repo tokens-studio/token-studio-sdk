@@ -994,7 +994,7 @@ export type CreateResolverMutation = {
 };
 
 export type CreateSDConfigMutationVariables = {
-  urn: string,
+  project: string,
   input: SDConfigInput,
 };
 
