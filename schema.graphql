@@ -61,6 +61,7 @@ type BoxShadow @aws_lambda @aws_cognito_user_pools {
 	spread: String
 	color: String
 	type: String
+	blendMode: String
 }
 
 ## Note this is atomic. You cannot partially update this value
@@ -71,6 +72,7 @@ input BoxShadowInput {
 	spread: String
 	color: String
 	type: String
+	blendMode: String
 }
 
 type ColorValue {
@@ -213,6 +215,14 @@ input Order {
 enum OrderDirection {
 	ASC
 	DESC
+}
+
+type OrganizationInfo {
+	urn: String
+	name: String
+	tier: OrganizationTier
+	account: String
+	createdAt: AWSDateTime
 }
 
 type Organization @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -411,13 +421,13 @@ input ProjectUpdateInput {
 }
 
 # Raw tokens are the tokens that are formatted after being input into the system. They do not reflect the final token values from resolved tokens
-union RawTokenValue = Raw_Token_scalar
+union RawTokenValue =
+	  Raw_Token_scalar
 	| Raw_Token_typography
 	| Raw_Token_border
 	| Raw_Token_boxShadow
 
-type RawToken @aws_lambda
-	@aws_cognito_user_pools  {
+type RawToken @aws_lambda @aws_cognito_user_pools {
 	description: String
 	name: String
 	urn: String
@@ -428,31 +438,25 @@ type RawToken @aws_lambda
 	value: RawTokenValue
 }
 
-
-type Raw_Token_border @aws_lambda
-	@aws_cognito_user_pools  {
+type Raw_Token_border @aws_lambda @aws_cognito_user_pools {
 	# Use when setting a reference to a another border token
 	value: String
 	border: Border
 }
 
-type Raw_Token_boxShadow @aws_lambda
-	@aws_cognito_user_pools {
+type Raw_Token_boxShadow @aws_lambda @aws_cognito_user_pools {
 	value: String
 	boxShadow: [BoxShadow]
 }
 
-
 # Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
 ##### assets - Assumes a string output with a URL
 ##### opacity - Assumes a simple numeric output
-type Raw_Token_scalar @aws_lambda
-	@aws_cognito_user_pools {
+type Raw_Token_scalar @aws_lambda @aws_cognito_user_pools {
 	value: String
 }
 
-type Raw_Token_typography @aws_lambda
-	@aws_cognito_user_pools  {
+type Raw_Token_typography @aws_lambda @aws_cognito_user_pools {
 	value: String
 	typography: Typography
 }
@@ -587,7 +591,6 @@ type SummarizedValue {
 	total: Int!
 }
 
-
 input TokenFilterInput {
 	urn: StringFilterInput
 	name: StringFilterInput
@@ -650,7 +653,7 @@ input TokenSetsFilterInput {
 
 enum TokenType {
 	any
-	assets
+	asset
 	border
 	borderRadius
 	borderWidth
@@ -683,7 +686,7 @@ input TokenUpdateInput {
 	name: String
 	extensions: AWSJSON
 	border: BorderInput
-	boxShadow: BoxShadowInput
+	boxShadow: [BoxShadowInput]
 	typography: TypographyInput
 	## Use for scalars or references
 	value: String
@@ -696,12 +699,13 @@ type ResolvedToken {
 	type: TokenType
 }
 
-union ResolvedTokenValue = Token_border
+union ResolvedTokenValue =
+	  Token_border
 	| Token_boxShadow
 	| Token_scalar
 	| Token_typography
 
-type Token_Composition  {
+type Token_Composition {
 	## TODO this needs to be able to support the type of the composition
 	value: String
 }
@@ -718,11 +722,11 @@ type Token_boxShadow {
 }
 
 type Token_scalar {
-value: String
+	value: String
 }
 
-type Token_typography  {
-value: String
+type Token_typography {
+	value: String
 	typography: Typography
 }
 
@@ -923,7 +927,7 @@ type Mutation @aws_lambda @aws_cognito_user_pools {
 	deleteToken(urn: String!): RawToken @aws_lambda @aws_cognito_user_pools
 	deleteTokenSet(urn: String!): TokenSet @aws_lambda @aws_cognito_user_pools
 	deleteProject(urn: String!): Project @aws_lambda @aws_cognito_user_pools
-	deleteOrganization(urn: String!):Organization @aws_cognito_user_pools
+	deleteOrganization(urn: String!): Organization @aws_cognito_user_pools
 	# Deletes an invitation from your organization to a user
 	deleteInvitation(urn: String!): Invitation @aws_lambda @aws_cognito_user_pools
 	attachPolicyToGroup(group: String!, policy: String!): Group
@@ -940,10 +944,7 @@ type Mutation @aws_lambda @aws_cognito_user_pools {
 	adminUpdateOrganization(
 		urn: String!
 		input: AdminOrganizationUpdateInput!
-	): Organization 
-	@aws_lambda 
-	@aws_cognito_user_pools 
-	@aws_auth(cognito_groups: ["Admin"])
+	): OrganizationInfo @aws_cognito_user_pools @aws_auth(cognito_groups: ["Admin"])
 }
 
 type Query @aws_lambda @aws_cognito_user_pools {
@@ -1040,6 +1041,20 @@ type Query @aws_lambda @aws_cognito_user_pools {
 
 	releaseCount(project: String!): Int @aws_lambda @aws_cognito_user_pools
 	tokenCount(project: String!): Int @aws_lambda @aws_cognito_user_pools
+
+	### Admin
+	##### Retrieves all orgs
+	adminOrganizations(
+		filter: OrganizationFilterInput
+		limit: Int
+		offset: Int
+	): [OrganizationInfo]
+		@aws_cognito_user_pools
+		@aws_auth(cognito_groups: ["Admin"])
+
+	adminOrganization(urn: String!): OrganizationInfo
+		@aws_cognito_user_pools
+		@aws_auth(cognito_groups: ["Admin"])
 }
 
 type Subscription @aws_lambda @aws_cognito_user_pools {

@@ -618,3 +618,29 @@ export const tokenCount = /* GraphQL */ `
     tokenCount(project: $project)
   }
 `;
+export const adminOrganizations = /* GraphQL */ `
+  query AdminOrganizations(
+    $filter: OrganizationFilterInput
+    $limit: Int
+    $offset: Int
+  ) {
+    adminOrganizations(filter: $filter, limit: $limit, offset: $offset) {
+      urn
+      name
+      tier
+      account
+      createdAt
+    }
+  }
+`;
+export const adminOrganization = /* GraphQL */ `
+  query AdminOrganization($urn: String!) {
+    adminOrganization(urn: $urn) {
+      urn
+      name
+      tier
+      account
+      createdAt
+    }
+  }
+`;
