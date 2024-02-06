@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.0.1
+
+### Patch Changes
+
+-   567489d: Fix SDConfigs functions property type, change from AWSJSON to String.
+
 ## 1.0.0
 
 ### Major Changes
