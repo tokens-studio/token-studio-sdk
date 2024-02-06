@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.0.2
+
+### Patch Changes
+
+-   f1127f0: Fix createSDConfig mutation to use "project" urn to initialize, rather than its own "urn" (which does not exist yet).
+
 ## 1.0.1
 
 ### Patch Changes
