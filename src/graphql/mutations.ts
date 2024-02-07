@@ -1129,3 +1129,17 @@ export const convertToStaticSet = /* GraphQL */ `
     }
   }
 `;
+export const adminUpdateOrganization = /* GraphQL */ `
+  mutation AdminUpdateOrganization(
+    $urn: String!
+    $input: AdminOrganizationUpdateInput!
+  ) {
+    adminUpdateOrganization(urn: $urn, input: $input) {
+      urn
+      name
+      tier
+      account
+      createdAt
+    }
+  }
+`;

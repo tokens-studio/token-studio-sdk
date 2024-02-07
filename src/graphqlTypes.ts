@@ -141,7 +141,7 @@ export type RawToken = {
 
 export enum TokenType {
   any = "any",
-  assets = "assets",
+  asset = "asset",
   border = "border",
   borderRadius = "borderRadius",
   borderWidth = "borderWidth",
@@ -219,6 +219,7 @@ export type BoxShadow = {
   spread?: string | null,
   color?: string | null,
   type?: string | null,
+  blendMode?: string | null,
 };
 
 export type Resolver = {
@@ -315,16 +316,7 @@ export type OrganizationInput = {
   description?: string | null,
   visibility: Visibility,
   icon?: string | null,
-  tier: OrganizationTier,
 };
-
-export enum OrganizationTier {
-  FREE = "FREE",
-  STARTER = "STARTER",
-  STUDIO = "STUDIO",
-  ENTERPRISE = "ENTERPRISE",
-}
-
 
 export type Organization = {
   __typename: "Organization",
@@ -345,6 +337,12 @@ export type Organization = {
   apiKeys?:  Array<APIKeyWithoutValue | null > | null,
   users?:  Array<User | null > | null,
 };
+
+export enum OrganizationTier {
+  FREE = "FREE",
+  PRO = "PRO",
+}
+
 
 export type APIKeyWithoutValue = {
   __typename: "APIKeyWithoutValue",
@@ -404,6 +402,7 @@ export type BoxShadowInput = {
   spread?: string | null,
   color?: string | null,
   type?: string | null,
+  blendMode?: string | null,
 };
 
 export type TokenSetInput = {
@@ -475,7 +474,7 @@ export type TokenUpdateInput = {
   name?: string | null,
   extensions?: string | null,
   border?: BorderInput | null,
-  boxShadow?: BoxShadowInput | null,
+  boxShadow?: Array< BoxShadowInput | null > | null,
   typography?: TypographyInput | null,
   value?: string | null,
 };
@@ -517,7 +516,19 @@ export type OrganizationUpdateInput = {
   description?: string | null,
   visibility?: Visibility | null,
   icon?: string | null,
+};
+
+export type AdminOrganizationUpdateInput = {
   tier?: OrganizationTier | null,
+};
+
+export type OrganizationInfo = {
+  __typename: "OrganizationInfo",
+  urn?: string | null,
+  name?: string | null,
+  tier?: OrganizationTier | null,
+  account?: string | null,
+  createdAt?: string | null,
 };
 
 export type OrganizationFilterInput = {
@@ -2026,6 +2037,22 @@ export type ConvertToStaticSetMutation = {
   } | null,
 };
 
+export type AdminUpdateOrganizationMutationVariables = {
+  urn: string,
+  input: AdminOrganizationUpdateInput,
+};
+
+export type AdminUpdateOrganizationMutation = {
+  adminUpdateOrganization?:  {
+    __typename: "OrganizationInfo",
+    urn?: string | null,
+    name?: string | null,
+    tier?: OrganizationTier | null,
+    account?: string | null,
+    createdAt?: string | null,
+  } | null,
+};
+
 export type UserInvitationsQueryVariables = {
   limit?: number | null,
 };
@@ -2697,6 +2724,38 @@ export type TokenCountQueryVariables = {
 
 export type TokenCountQuery = {
   tokenCount?: number | null,
+};
+
+export type AdminOrganizationsQueryVariables = {
+  filter?: OrganizationFilterInput | null,
+  limit?: number | null,
+  offset?: number | null,
+};
+
+export type AdminOrganizationsQuery = {
+  adminOrganizations?:  Array< {
+    __typename: "OrganizationInfo",
+    urn?: string | null,
+    name?: string | null,
+    tier?: OrganizationTier | null,
+    account?: string | null,
+    createdAt?: string | null,
+  } | null > | null,
+};
+
+export type AdminOrganizationQueryVariables = {
+  urn: string,
+};
+
+export type AdminOrganizationQuery = {
+  adminOrganization?:  {
+    __typename: "OrganizationInfo",
+    urn?: string | null,
+    name?: string | null,
+    tier?: OrganizationTier | null,
+    account?: string | null,
+    createdAt?: string | null,
+  } | null,
 };
 
 export type OnCreateTokenSubscriptionVariables = {
