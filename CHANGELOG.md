@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.1.0
+
+### Minor Changes
+
+-   f9b6026: Add admin queries and mutations for internal use
+
 ## 1.0.2
 
 ### Patch Changes
