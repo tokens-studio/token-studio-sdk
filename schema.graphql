@@ -17,7 +17,7 @@ input APIKeyInput {
     groups: [String!]
 }
 
-type APIKeyWithoutValue @aws_lambda @aws_cognito_user_pools {
+type APIKeyWithoutValue @aws_api_key @aws_lambda @aws_cognito_user_pools {
     name: String
     lastUsed: AWSDateTime
     description: String
@@ -54,7 +54,7 @@ input BorderInput {
     width: String
 }
 
-type BoxShadow @aws_lambda @aws_cognito_user_pools {
+type BoxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
     x: String
     y: String
     blur: String
@@ -118,15 +118,15 @@ input GeneratorInputUpdate {
     graph: AWSJSON
 }
 
-type Group @aws_lambda @aws_cognito_user_pools {
+type Group @aws_api_key @aws_lambda @aws_cognito_user_pools {
     organization: String
-    createdAt: AWSDateTime! @aws_lambda @aws_cognito_user_pools
-    name: String @aws_lambda @aws_cognito_user_pools
-    icon: String @aws_lambda @aws_cognito_user_pools
-    urn: String @aws_lambda @aws_cognito_user_pools
-    description: String @aws_lambda @aws_cognito_user_pools
-    members: [Entity] @aws_lambda @aws_cognito_user_pools
-    policy: Policy @aws_lambda @aws_cognito_user_pools
+    createdAt: AWSDateTime! @aws_api_key @aws_lambda @aws_cognito_user_pools
+    name: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    icon: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    urn: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    description: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    members: [Entity] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    policy: Policy @aws_api_key @aws_lambda @aws_cognito_user_pools
 }
 
 input GroupFilterInput {
@@ -295,7 +295,7 @@ input AdminOrganizationUpdateInput {
     tier: OrganizationTier
 }
 
-type Policy @aws_lambda @aws_cognito_user_pools {
+type Policy @aws_api_key @aws_lambda @aws_cognito_user_pools {
     createdAt: AWSDateTime
     name: String!
     urn: String
@@ -857,7 +857,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
-    createSDConfig(project: String!, input: SDConfigInput!): SDConfig
+    createSDConfig(urn: String!, input: SDConfigInput!): SDConfig
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
@@ -886,7 +886,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         organization: String!
         email: String!
         groups: [String!]
-    ): Invitation @aws_lambda @aws_cognito_user_pools
+    ): Invitation @aws_api_key @aws_lambda @aws_cognito_user_pools
     # Removes a member from an organization
     removeFromOrganization(organization: String!, user: String!): Boolean
         @aws_api_key
@@ -937,7 +937,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
     updateOrganization(
         urn: String!
         input: OrganizationUpdateInput!
-    ): Organization @aws_lambda @aws_cognito_user_pools
+    ): Organization @aws_api_key @aws_lambda @aws_cognito_user_pools
     # Regenerates an API Key, removing its value from use
     regenerateApiKey(urn: String!): APIKey @aws_cognito_user_pools
     ### Deletion
@@ -945,7 +945,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
     deletePolicy(urn: String!): Policy @aws_lambda @aws_cognito_user_pools
     deleteAPIKey(urn: String!): APIKey @aws_lambda @aws_cognito_user_pools
     #### Deletes a generator from a project
-    deleteGenerator(urn: String!): Generator @aws_lambda @aws_cognito_user_pools
+    deleteGenerator(urn: String!): Generator
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
     deleteGroup(urn: String!): Group
         @aws_api_key
         @aws_lambda
@@ -978,16 +981,23 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_lambda
         @aws_cognito_user_pools
 
-    deleteSDConfig(urn: String!): SDConfig @aws_lambda @aws_cognito_user_pools
+    deleteSDConfig(urn: String!): SDConfig
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
     convertToStaticSet(urn: String!): TokenSet
+        @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
 
     adminUpdateOrganization(
         urn: String!
         input: AdminOrganizationUpdateInput!
-    ): Organization @aws_cognito_user_pools @aws_auth(cognito_groups: ["Admin"])
+    ): Organization
+        @aws_api_key
+        @aws_cognito_user_pools
+        @aws_auth(cognito_groups: ["Admin"])
 }
 
 type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -999,6 +1009,7 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
     # queries policies available to the org. The organization is the organization urn
     policies(organization: String!, limit: Int, offset: Int): [Policy]
         @aws_lambda
+        @aws_api_key
         @aws_cognito_user_pools
     # Retrieves information about the organizations
     organizations(
@@ -1024,7 +1035,7 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
         filter: GroupFilterInput
         limit: Int
         offset: Int
-    ): [Group] @aws_lambda @aws_cognito_user_pools
+    ): [Group] @aws_api_key @aws_lambda @aws_cognito_user_pools
     #  Retrieves a specific tokenset
     tokenSet(urn: String!): TokenSet
         @aws_api_key
@@ -1119,7 +1130,7 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_auth(cognito_groups: ["Admin"])
 }
 
-type Subscription @aws_lambda @aws_cognito_user_pools {
+type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
     ### Tokens
     #####  Subscribe to all new tokens created in a token set
     onCreateToken(setUrn: String!): RawToken
