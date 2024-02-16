@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.1.1
+
+### Patch Changes
+
+-   0a1301c: Revert faulty createSDConfig schema change.
+
 ## 1.1.0
 
 ### Minor Changes
