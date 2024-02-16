@@ -857,7 +857,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
-    createSDConfig(urn: String!, input: SDConfigInput!): SDConfig
+    createSDConfig(project: String!, input: SDConfigInput!): SDConfig
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
