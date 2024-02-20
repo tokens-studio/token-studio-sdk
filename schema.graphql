@@ -1,20 +1,20 @@
 type APIKey {
-	name: String
-	description: String
-	value: String
-	urn: String
+    name: String
+    description: String
+    value: String
+    urn: String
 }
 
 type APIKeyIdentity {
-	name: String
-	urn: String
+    name: String
+    urn: String
 }
 
 input APIKeyInput {
-	name: String!
-	description: String
-	# Optional groups to add the key to on creation
-	groups: [String!]
+    name: String!
+    description: String
+    # Optional groups to add the key to on creation
+    groups: [String!]
 }
 
 type APIKeyWithoutValue @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -25,33 +25,33 @@ type APIKeyWithoutValue @aws_api_key @aws_lambda @aws_cognito_user_pools {
 }
 
 input AliasTokenSetInput {
-	# The name of the alias
-	alias: String!
-	# The urn of the set we want to alias
-	set: String!
+    # The name of the alias
+    alias: String!
+    # The urn of the set we want to alias
+    set: String!
 }
 
 input AliasTuple {
-	name: String!
-	value: String!
+    name: String!
+    value: String!
 }
 
 input ApiKeyFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 type Border {
-	color: String
-	style: String
-	width: String
+    color: String
+    style: String
+    width: String
 }
 
 ## Note this is atomic. You cannot partially update this value
 input BorderInput {
-	color: String
-	style: String
-	width: String
+    color: String
+    style: String
+    width: String
 }
 
 type BoxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -66,56 +66,56 @@ type BoxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
 
 ## Note this is atomic. You cannot partially update this value
 input BoxShadowInput {
-	x: String
-	y: String
-	blur: String
-	spread: String
-	color: String
-	type: String
-	blendMode: String
+    x: String
+    y: String
+    blur: String
+    spread: String
+    color: String
+    type: String
+    blendMode: String
 }
 
 type ColorValue {
-	raw: String
-	hex: String
-	hsla: [Int]
-	rgba: [Int]
+    raw: String
+    hex: String
+    hsla: [Int]
+    rgba: [Int]
 }
 
 union Entity = User | APIKeyIdentity
 
 input FileInput {
-	name: String!
-	# The extension of the file as a string eg "png"
-	type: String!
-	# Base64 encoded file
-	data: String!
+    name: String!
+    # The extension of the file as a string eg "png"
+    type: String!
+    # Base64 encoded file
+    data: String!
 }
 
 type Generator {
-	urn: String
-	name: String
-	description: String
-	createdAt: AWSDateTime
-	updatedAt: AWSDateTime
-	graph: AWSJSON
+    urn: String
+    name: String
+    description: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+    graph: AWSJSON
 }
 
 input GeneratorFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 input GeneratorInput {
-	name: String!
-	description: String
-	graph: AWSJSON
+    name: String!
+    description: String
+    graph: AWSJSON
 }
 
 input GeneratorInputUpdate {
-	name: String
-	description: String
-	graph: AWSJSON
+    name: String
+    description: String
+    graph: AWSJSON
 }
 
 type Group @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -126,7 +126,7 @@ type Group @aws_api_key @aws_lambda @aws_cognito_user_pools {
     urn: String @aws_api_key @aws_lambda @aws_cognito_user_pools
     description: String @aws_api_key @aws_lambda @aws_cognito_user_pools
     members: [Entity] @aws_api_key @aws_lambda @aws_cognito_user_pools
-    policy: Policy @aws_lambda @aws_cognito_user_pools
+    policy: Policy @aws_api_key @aws_lambda @aws_cognito_user_pools
 }
 
 input GroupFilterInput {
@@ -362,7 +362,7 @@ type SDConfig {
     default: Boolean
 }
 
-type Project @aws_lambda @aws_cognito_user_pools {
+type Project @aws_api_key @aws_lambda @aws_cognito_user_pools {
     ## The entity that created the project
     createdBy: Entity
     createdAt: AWSDateTime!
@@ -888,7 +888,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         organization: String!
         email: String!
         groups: [String!]
-    ): Invitation @aws_lambda @aws_cognito_user_pools
+    ): Invitation @aws_api_key @aws_lambda @aws_cognito_user_pools
     # Removes a member from an organization
     removeFromOrganization(organization: String!, user: String!): Boolean
         @aws_api_key
@@ -947,7 +947,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
     deletePolicy(urn: String!): Policy @aws_lambda @aws_cognito_user_pools
     deleteAPIKey(urn: String!): APIKey @aws_lambda @aws_cognito_user_pools
     #### Deletes a generator from a project
-    deleteGenerator(urn: String!): Generator @aws_lambda @aws_cognito_user_pools
+    deleteGenerator(urn: String!): Generator
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
     deleteGroup(urn: String!): Group
         @aws_api_key
         @aws_lambda
@@ -981,7 +984,6 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
-
     deleteSDConfig(urn: String!): SDConfig
         @aws_api_key
         @aws_lambda
@@ -994,7 +996,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
     adminUpdateOrganization(
         urn: String!
         input: AdminOrganizationUpdateInput!
-    ): Organization @aws_cognito_user_pools @aws_auth(cognito_groups: ["admin"])
+    ): Organization
+        @aws_api_key
+        @aws_cognito_user_pools
+        @aws_auth(cognito_groups: ["Admin"])
 }
 
 type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -1005,8 +1010,8 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_cognito_user_pools
     # queries policies available to the org. The organization is the organization urn
     policies(organization: String!, limit: Int, offset: Int): [Policy]
-        @aws_api_key
         @aws_lambda
+        @aws_api_key
         @aws_cognito_user_pools
     # Retrieves information about the organizations
     organizations(
@@ -1120,11 +1125,11 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
         offset: Int
     ): [OrganizationInfo]
         @aws_cognito_user_pools
-        @aws_auth(cognito_groups: ["admin"])
+        @aws_auth(cognito_groups: ["Admin"])
 
     adminOrganization(urn: String!): OrganizationInfo
         @aws_cognito_user_pools
-        @aws_auth(cognito_groups: ["admin"])
+        @aws_auth(cognito_groups: ["Admin"])
 }
 
 type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -1153,7 +1158,7 @@ type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
 }
 
 schema {
-	query: Query
-	mutation: Mutation
-	subscription: Subscription
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
 }
