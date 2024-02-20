@@ -359,6 +359,7 @@ type SDConfig {
     projectUrn: String!
     config: AWSJSON
     functions: String
+    default: Boolean
 }
 
 type Project @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -807,6 +808,7 @@ input SDConfigInput {
     name: String!
     config: AWSJSON!
     functions: String!
+    default: Boolean
 }
 
 input SDConfigUpdateInput {
@@ -975,17 +977,17 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_lambda
         @aws_cognito_user_pools
     attachPolicyToGroup(group: String!, policy: String!): Group
+        @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
     detachPolicyFromGroup(group: String!, policy: String!): Group
+        @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
-
     deleteSDConfig(urn: String!): SDConfig
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
-
     convertToStaticSet(urn: String!): TokenSet
         @aws_api_key
         @aws_lambda
