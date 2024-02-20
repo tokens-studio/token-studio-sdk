@@ -17,11 +17,11 @@ input APIKeyInput {
 	groups: [String!]
 }
 
-type APIKeyWithoutValue @aws_lambda @aws_cognito_user_pools {
-	name: String
-	lastUsed: AWSDateTime
-	description: String
-	urn: String
+type APIKeyWithoutValue @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    name: String
+    lastUsed: AWSDateTime
+    description: String
+    urn: String
 }
 
 input AliasTokenSetInput {
@@ -54,14 +54,14 @@ input BorderInput {
 	width: String
 }
 
-type BoxShadow @aws_lambda @aws_cognito_user_pools {
-	x: String
-	y: String
-	blur: String
-	spread: String
-	color: String
-	type: String
-	blendMode: String
+type BoxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    x: String
+    y: String
+    blur: String
+    spread: String
+    color: String
+    type: String
+    blendMode: String
 }
 
 ## Note this is atomic. You cannot partially update this value
@@ -118,1030 +118,1038 @@ input GeneratorInputUpdate {
 	graph: AWSJSON
 }
 
-type Group @aws_lambda @aws_cognito_user_pools {
-	organization: String
-	createdAt: AWSDateTime! @aws_lambda @aws_cognito_user_pools
-	name: String @aws_lambda @aws_cognito_user_pools
-	icon: String @aws_lambda @aws_cognito_user_pools
-	urn: String @aws_lambda @aws_cognito_user_pools
-	description: String @aws_lambda @aws_cognito_user_pools
-	members: [Entity] @aws_lambda @aws_cognito_user_pools
-	policy: Policy @aws_lambda @aws_cognito_user_pools
+type Group @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    organization: String
+    createdAt: AWSDateTime! @aws_api_key @aws_lambda @aws_cognito_user_pools
+    name: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    icon: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    urn: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    description: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    members: [Entity] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    policy: Policy @aws_lambda @aws_cognito_user_pools
 }
 
 input GroupFilterInput {
-	urn: GroupUrnFilterInput
-	name: GroupStringFilterInput
+    urn: GroupUrnFilterInput
+    name: GroupStringFilterInput
 }
 
 input GroupInput {
-	name: String!
-	description: String
-	icon: String
-	# Policy Urn
-	policy: String
+    name: String!
+    description: String
+    icon: String
+    # Policy Urn
+    policy: String
 }
 
 input GroupStringFilterInput {
-	# Equal to
-	eq: String
+    # Equal to
+    eq: String
 }
 
 input GroupUpdateInput {
-	name: String
-	description: String
-	icon: String
-	# Policy Urn
-	policy: String
+    name: String
+    description: String
+    icon: String
+    # Policy Urn
+    policy: String
 }
 
 input GroupUrnFilterInput {
-	# Equal to
-	eq: String
+    # Equal to
+    eq: String
 }
 
 type Identity @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	# The urn of the underlying identity you are operation as .
-	urn: String
-	# Whether your identity is authenticated or not
-	authenticated: Boolean!
+    # The urn of the underlying identity you are operation as .
+    urn: String
+    # Whether your identity is authenticated or not
+    authenticated: Boolean!
 }
 
 input IntFilterInput {
-	# Equal to
-	eq: Int
-	# Not equal to
-	ne: Int
-	# Less than
-	lt: Int
-	# Greater than
-	gt: Int
-	# less than or equal to
-	le: Int
-	# greater than or equal to
-	ge: Int
+    # Equal to
+    eq: Int
+    # Not equal to
+    ne: Int
+    # Less than
+    lt: Int
+    # Greater than
+    gt: Int
+    # less than or equal to
+    le: Int
+    # greater than or equal to
+    ge: Int
 }
 
 type Invitation @aws_lambda @aws_cognito_user_pools {
-	# Organization urn
-	organization: String!
-	# User urn
-	user: String!
-	status: InvitationStatus
-	urn: String!
-	confirmCode: String!
+    # Organization urn
+    organization: String!
+    # User urn
+    user: String!
+    status: InvitationStatus
+    urn: String!
+    confirmCode: String!
 }
 
 enum InvitationStatus {
-	PENDING
-	DECLINED
-	ACCEPTED
+    PENDING
+    DECLINED
+    ACCEPTED
 }
 
 type Metadata {
-	# Time of creation of the resource
-	createdAt: AWSDateTime
-	#  The entity who initially created this token
-	createdBy: Entity
-	#  The last entity to update the token directly.
-	lastUpdatedBy: Entity
+    # Time of creation of the resource
+    createdAt: AWSDateTime
+    #  The entity who initially created this token
+    createdBy: Entity
+    #  The last entity to update the token directly.
+    lastUpdatedBy: Entity
 }
 
 input Order {
-	field: String!
-	direction: OrderDirection!
+    field: String!
+    direction: OrderDirection!
 }
 
 enum OrderDirection {
-	ASC
-	DESC
+    ASC
+    DESC
 }
 
 type OrganizationInfo {
-	urn: String
-	name: String
-	tier: OrganizationTier
-	account: String
-	createdAt: AWSDateTime
+    urn: String
+    name: String
+    tier: OrganizationTier
+    account: String
+    createdAt: AWSDateTime
 }
 
 type Organization @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	# Unique id of the organization
-	urn: String
-	# Date that the org was created
-	createdAt: AWSDateTime
-	# The user that created the organization
-	owner: User
-	# Name is not unique
-	name: String
-	# Optional description
-	description: String
-	# Visibility of the org to the public
-	visibility: Visibility
-	# The account id
-	account: String
-	# The stripe account id. Might be null if user is on free tier
-	payment: String
-	# Whether or not SSO is enabled
-	ssoEnabled: Boolean
-	# Optional icon
-	icon: String
-	# The tier associated with the organization
-	tier: OrganizationTier
-	# Projects inside the organization
-	projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
-	# Groups inside the organization
-	groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
-	# Policies inside the organization
-	policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
-	# The api keys owned by the organization
-	apiKeys: [APIKeyWithoutValue]
-	# User of the organization
-	users(filter: UserFilterInput, limit: Int, offset: Int): [User]
+    # Unique id of the organization
+    urn: String
+    # Date that the org was created
+    createdAt: AWSDateTime
+    # The user that created the organization
+    owner: User
+    # Name is not unique
+    name: String
+    # Optional description
+    description: String
+    # Visibility of the org to the public
+    visibility: Visibility
+    # The account id
+    account: String
+    # The stripe account id. Might be null if user is on free tier
+    payment: String
+    # Whether or not SSO is enabled
+    ssoEnabled: Boolean
+    # Optional icon
+    icon: String
+    # The tier associated with the organization
+    tier: OrganizationTier
+    # Projects inside the organization
+    projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
+    # Groups inside the organization
+    groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
+    # Policies inside the organization
+    policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
+    # The api keys owned by the organization
+    apiKeys: [APIKeyWithoutValue]
+    # User of the organization
+    users(filter: UserFilterInput, limit: Int, offset: Int): [User]
 }
 
 input OrganizationFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
-	owner: StringFilterInput
-	visibility: VisibilityInput
+    urn: StringFilterInput
+    name: StringFilterInput
+    owner: StringFilterInput
+    visibility: VisibilityInput
 }
 
 input OrganizationInput {
-	name: String!
-	description: String
-	visibility: Visibility!
-	icon: String
+    name: String!
+    description: String
+    visibility: Visibility!
+    icon: String
 }
 
 type OrganizationMemberShip {
-	createdAt: AWSDateTime!
+    createdAt: AWSDateTime!
 }
 
 enum OrganizationTier {
-	FREE
-	PRO
+    FREE
+    PRO
 }
 
 input OrganizationUpdateInput {
-	urn: String!
-	name: String
-	description: String
-	visibility: Visibility
-	icon: String
+    urn: String!
+    name: String
+    description: String
+    visibility: Visibility
+    icon: String
 }
 
 input AdminOrganizationUpdateInput {
-	tier: OrganizationTier
+    tier: OrganizationTier
 }
 
-type Policy @aws_lambda @aws_cognito_user_pools {
-	createdAt: AWSDateTime
-	name: String!
-	urn: String
-	description: String
-	value: PolicyDoc!
+type Policy @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    createdAt: AWSDateTime
+    name: String!
+    urn: String
+    description: String
+    value: PolicyDoc!
 }
 
 type PolicyDoc {
-	version: String!
-	statement: [PolicyStatement]!
+    version: String!
+    statement: [PolicyStatement]!
 }
 
 input PolicyDocInput {
-	version: String!
-	statement: [PolicyStatementInput!]!
+    version: String!
+    statement: [PolicyStatementInput!]!
 }
 
 input PolicyFilterInput {
-	name: PolicyStringFilterInput
-	urn: String
+    name: PolicyStringFilterInput
+    urn: String
 }
 
 input PolicyInput {
-	name: String!
-	description: String
-	value: PolicyDocInput!
+    name: String!
+    description: String
+    value: PolicyDocInput!
 }
 
 input PolicyInputUpdate {
-	name: String
-	description: String
-	value: PolicyDocInput
+    name: String
+    description: String
+    value: PolicyDocInput
 }
 
 type PolicyStatement {
-	effect: String!
-	action: [String]!
-	resource: [String]!
+    effect: String!
+    action: [String]!
+    resource: [String]!
 }
 
 input PolicyStatementInput {
-	effect: String!
-	action: [String]!
-	resource: [String]!
+    effect: String!
+    action: [String]!
+    resource: [String]!
 }
 
 input PolicyStringFilterInput {
-	eq: String
+    eq: String
 }
 
 input SDConfigFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 type SDConfig {
-	urn: String!
-	name: String!
-	createdAt: AWSDateTime!
-	updatedAt: AWSDateTime!
-	projectUrn: String!
-	config: AWSJSON
-	functions: String
+    urn: String!
+    name: String!
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+    projectUrn: String!
+    config: AWSJSON
+    functions: String
+    default: Boolean
 }
 
-type Project @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  ## The entity that created the project
-	  createdBy: Entity
-	  createdAt: AWSDateTime!
-	  name: String!
-	  urn: String!
-	  orgUrn: String
-	  visibility: Visibility
-	  icon: String
-	  description: String
-	  summary: ProjectSummary
-	  sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
-	  resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
-	  generators(
-	  	  filter: GeneratorFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Generator]
-	  releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
+type Project @aws_lambda @aws_cognito_user_pools {
+    ## The entity that created the project
+    createdBy: Entity
+    createdAt: AWSDateTime!
+    name: String!
+    urn: String!
+    orgUrn: String
+    visibility: Visibility
+    icon: String
+    description: String
+    summary: ProjectSummary
+    sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
+    resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
+    generators(
+        filter: GeneratorFilterInput
+        limit: Int
+        offset: Int
+    ): [Generator]
+    releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
 
-	  sdConfigs(filter: SDConfigFilterInput, limit: Int, offset: Int): [SDConfig]
+    sdConfigs(filter: SDConfigFilterInput, limit: Int, offset: Int): [SDConfig]
 
-	  releaseCount: Int
-	  tokenCount: Int
+    releaseCount: Int
+    tokenCount: Int
 }
 
 input ProjectFilterInput {
-	  urn: StringFilterInput
-	  name: StringFilterInput
-	  visibility: VisibilityInput
+    urn: StringFilterInput
+    name: StringFilterInput
+    visibility: VisibilityInput
 }
 
 input ProjectInput {
-	  # Unique name of the project
-	  name: String!
-	  # Optional description of the project
-	  description: String
-	  # Visibility of the project
-	  visibility: Visibility!
-	  # Icon associated with your project as a base64 string
-	  icon: String
+    # Unique name of the project
+    name: String!
+    # Optional description of the project
+    description: String
+    # Visibility of the project
+    visibility: Visibility!
+    # Icon associated with your project as a base64 string
+    icon: String
 }
 
 type ProjectSummary {
-	  ## Total number of sets for this project
-	  sets: SummarizedValue
-	  ## Total number of resolvers for this project
-	  resolvers: SummarizedValue
-	  generators: SummarizedValue
-	  tokens: SummarizedValue
+    ## Total number of sets for this project
+    sets: SummarizedValue
+    ## Total number of resolvers for this project
+    resolvers: SummarizedValue
+    generators: SummarizedValue
+    tokens: SummarizedValue
 }
 
 input ProjectUpdateInput {
-	  # Unique name of the project
-	  name: String
-	  # Optional description of the project
-	  description: String
-	  # Visibility of the project
-	  visibility: Visibility
-	  # Icon associated with your project
-	  icon: String
+    # Unique name of the project
+    name: String
+    # Optional description of the project
+    description: String
+    # Visibility of the project
+    visibility: Visibility
+    # Icon associated with your project
+    icon: String
 }
 
 # Raw tokens are the tokens that are formatted after being input into the system. They do not reflect the final token values from resolved tokens
 union RawTokenValue =
-	    Raw_Token_scalar
-	  | Raw_Token_typography
-	  | Raw_Token_border
-	  | Raw_Token_boxShadow
+      Raw_Token_scalar
+    | Raw_Token_typography
+    | Raw_Token_border
+    | Raw_Token_boxShadow
 
 type RawToken @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  description: String
-	  name: String
-	  urn: String
-	  extensions: AWSJSON
-	  setUrn: String
-	  metadata: Metadata
-	  type: TokenType
-	  value: RawTokenValue
+    description: String
+    name: String
+    urn: String
+    extensions: AWSJSON
+    setUrn: String
+    metadata: Metadata
+    type: TokenType
+    value: RawTokenValue
 }
 
 type Raw_Token_border @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  # Use when setting a reference to a another border token
-	  value: String
-	  border: Border
+    # Use when setting a reference to a another border token
+    value: String
+    border: Border
 }
 
 type Raw_Token_boxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  value: String
-	  boxShadow: [BoxShadow]
+    value: String
+    boxShadow: [BoxShadow]
 }
 
 # Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
 ##### assets - Assumes a string output with a URL
 ##### opacity - Assumes a simple numeric output
 type Raw_Token_scalar @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  value: String
+    value: String
 }
 
 type Raw_Token_typography @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  value: String
-	  typography: Typography
+    value: String
+    typography: Typography
 }
 
 type Release {
-	  urn: String!
-	  name: String!
-	  download: ReleaseDownload
-	  version: String!
-	  description: String
-	  # Urns of the sets at the time of release
-	  tokenSets: [ReleaseFile!]
-	  # Urns of the generators at the time of release
-	  generators: [ReleaseFile!]
-	  createdAt: AWSDateTime
-	  releasedBy: Entity
+    urn: String!
+    name: String!
+    download: ReleaseDownload
+    version: String!
+    description: String
+    # Urns of the sets at the time of release
+    tokenSets: [ReleaseFile!]
+    # Urns of the generators at the time of release
+    generators: [ReleaseFile!]
+    createdAt: AWSDateTime
+    releasedBy: Entity
 }
 
 type ReleaseDownload {
-	  # The full release as a single url
-	  zipUrl: ReleaseFile
-	  file(filter: ReleaseDownloadFilter, limit: Int, offset: Int): [ReleaseFile]
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
+    # The full release as a single url
+    zipUrl: ReleaseFile
+    file(filter: ReleaseDownloadFilter, limit: Int, offset: Int): [ReleaseFile]
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 }
 
 input ReleaseDownloadFilter {
-	  name: StringFilterInput
-	  type: ReleaseDownloadType
+    name: StringFilterInput
+    type: ReleaseDownloadType
 }
 
 enum ReleaseDownloadType {
-	  FULLZIP
-	  SET
-	  GENERATOR
+    FULLZIP
+    SET
+    GENERATOR
 }
 
 type ReleaseFile {
-	  path: String
-	  name: String
-	  type: String
+    path: String
+    name: String
+    type: String
 }
 
 input ReleaseFilterInput {
-	  urn: StringFilterInput
-	  name: StringFilterInput
-	  version: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
+    version: StringFilterInput
 }
 
 input ReleaseInput {
-	  name: String!
-	  description: String
-	  # The next version you wish to release. This must be greater than the current version
-	  version: String!
-	  # Token set urns from the project to freeze
-	  tokenSets: [String!]
-	  # Generator urns from the project to freeze
-	  generators: [String!]
+    name: String!
+    description: String
+    # The next version you wish to release. This must be greater than the current version
+    version: String!
+    # Token set urns from the project to freeze
+    tokenSets: [String!]
+    # Generator urns from the project to freeze
+    generators: [String!]
 }
 
 interface ResolvedTokenInterface {
-	  description: String
-	  name: String
-	  type: TokenType
-	  metadata: Metadata
+    description: String
+    name: String
+    type: TokenType
+    metadata: Metadata
 }
 
 type Resolver @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  name: String
-	  description: String
-	  createdAt: AWSDateTime
-	  updatedAt: AWSDateTime
-	  urn: String
-	  graph: AWSJSON
-	  options: [ResolverOption]
+    name: String
+    description: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+    urn: String
+    graph: AWSJSON
+    options: [ResolverOption]
 }
 
 type ResolverOption {
-	  name: String!
-	  description: String
-	  values: [String]
+    name: String!
+    description: String
+    values: [String]
 }
 
 input ResolverFilterInput {
-	  urn: StringFilterInput
-	  name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 input ResolverInput {
-	  # Name of the resolver
-	  name: String!
-	  # Optional description of the resolver
-	  description: String
-	  # The graph for the resolver. Options will be automatically extracted
-	  graph: AWSJSON!
+    # Name of the resolver
+    name: String!
+    # Optional description of the resolver
+    description: String
+    # The graph for the resolver. Options will be automatically extracted
+    graph: AWSJSON!
 }
 
 input ResolverOptionsInput {
-	  name: String!
-	  value: String!
+    name: String!
+    value: String!
 }
 
 input ResolverUpdateInput {
-	  # Name of the resolver
-	  name: String
-	  # Optional description of the resolver
-	  description: String
-	  # The graph for the resolver. Options will be automatically extracted
-	  graph: AWSJSON
+    # Name of the resolver
+    name: String
+    # Optional description of the resolver
+    description: String
+    # The graph for the resolver. Options will be automatically extracted
+    graph: AWSJSON
 }
 
 type Self {
-	  identity: Identity @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  # Any invitation of the user when logged in with user auth
-	  invitations: [Invitation]
-	  # information about the user if logged in with user auth
-	  user: User
-	  # Organizations that the user owns
-	  organizations: [Organization]
-	  # Retrieves the applicable permissions for yourself in the context of an organization
-	  permissions(orgUrn: String): [PolicyDoc]
+    identity: Identity @aws_api_key @aws_lambda @aws_cognito_user_pools
+    # Any invitation of the user when logged in with user auth
+    invitations: [Invitation]
+    # information about the user if logged in with user auth
+    user: User
+    # Organizations that the user owns
+    organizations: [Organization]
+    # Retrieves the applicable permissions for yourself in the context of an organization
+    permissions(orgUrn: String): [PolicyDoc]
 }
 
 input StringFilterInput {
-	  eq: String
-	  ne: String
-	  beginsWith: String
+    eq: String
+    ne: String
+    beginsWith: String
 }
 
 type SummarizedValue {
-	  total: Int!
+    total: Int!
 }
 
 input TokenFilterInput {
-	  urn: StringFilterInput
-	  name: StringFilterInput
-	  type: TokenTypeFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
+    type: TokenTypeFilterInput
 }
 
 input TokenInput {
-	  description: String
-	  name: String!
-	  type: TokenType!
-	  extensions: AWSJSON
-	  # Used for references and scalars
-	  value: String
-	  # Specific types
-	  typography: TypographyInput
-	  border: BorderInput
-	  boxShadow: [BoxShadowInput]
+    description: String
+    name: String!
+    type: TokenType!
+    extensions: AWSJSON
+    # Used for references and scalars
+    value: String
+    # Specific types
+    typography: TypographyInput
+    border: BorderInput
+    boxShadow: [BoxShadowInput]
 }
 
 type TokenSet @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  urn: String
-	  metadata: Metadata
-	  name: String
-	  projectUrn: String
-	  type: TokenSetType
-	  generatorUrn: String
-	  createdAt: AWSDateTime
-	  tokens(
-	  	  filter: TokenFilterInput # Limit of tokens to return
-	  	  limit: Int # offset from the start of tokens
-	  	  offset: Int
-	  ): [RawToken!]!
+    urn: String
+    metadata: Metadata
+    name: String
+    projectUrn: String
+    type: TokenSetType
+    generatorUrn: String
+    createdAt: AWSDateTime
+    tokens(
+        filter: TokenFilterInput # Limit of tokens to return
+        limit: Int # offset from the start of tokens
+        offset: Int
+    ): [RawToken!]!
 }
 
 input TokenSetFilterInput {
-	  urn: StringFilterInput
-	  name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 input TokenSetInput {
-	  name: String!
-	  description: String
-	  type: TokenSetType
-	  graph: AWSJSON
+    name: String!
+    description: String
+    type: TokenSetType
+    graph: AWSJSON
 }
 
 enum TokenSetType {
-	  STATIC
-	  DYNAMIC
+    STATIC
+    DYNAMIC
 }
 
 input TokenSetUpdateInput {
-	  name: String
-	  description: String
+    name: String
+    description: String
 }
 
 input TokenSetsFilterInput {
-	  name: StringFilterInput
+    name: StringFilterInput
 }
 
 enum TokenType {
-	  any
-	  asset
-	  border
-	  borderRadius
-	  borderWidth
-	  boxShadow
-	  color
-	  composition
-	  dimension
-	  fontFamilies
-	  fontSizes
-	  fontWeights
-	  letterSpacing
-	  lineHeights
-	  opacity
-	  other
-	  paragraphSpacing
-	  sizing
-	  spacing
-	  textCase
-	  textDecoration
-	  typography
+    any
+    asset
+    border
+    borderRadius
+    borderWidth
+    boxShadow
+    color
+    composition
+    dimension
+    fontFamilies
+    fontSizes
+    fontWeights
+    letterSpacing
+    lineHeights
+    opacity
+    other
+    paragraphSpacing
+    sizing
+    spacing
+    textCase
+    textDecoration
+    typography
 }
 
 input TokenTypeFilterInput {
-	  eq: TokenType
-	  ne: TokenType
+    eq: TokenType
+    ne: TokenType
 }
 
 input TokenUpdateInput {
-	  description: String
-	  name: String
-	  extensions: AWSJSON
-	  border: BorderInput
-	  boxShadow: [BoxShadowInput]
-	  typography: TypographyInput
-	  ## Use for scalars or references
-	  value: String
+    description: String
+    name: String
+    extensions: AWSJSON
+    border: BorderInput
+    boxShadow: [BoxShadowInput]
+    typography: TypographyInput
+    ## Use for scalars or references
+    value: String
 }
 
 type ResolvedToken {
-	  description: String
-	  name: String
-	  value: ResolvedTokenValue
-	  type: TokenType
+    description: String
+    name: String
+    value: ResolvedTokenValue
+    type: TokenType
 }
 
 union ResolvedTokenValue =
-	    Token_border
-	  | Token_boxShadow
-	  | Token_scalar
-	  | Token_typography
+      Token_border
+    | Token_boxShadow
+    | Token_scalar
+    | Token_typography
 
 type Token_Composition {
-	  ## TODO this needs to be able to support the type of the composition
-	  value: String
+    ## TODO this needs to be able to support the type of the composition
+    value: String
 }
 
 type Token_border {
-	  value: String
-	  border: Border
+    value: String
+    border: Border
 }
 
 type Token_boxShadow {
-	  # Only in the case of partial resolution
-	  value: String
-	  boxShadow: [BoxShadow]
+    # Only in the case of partial resolution
+    value: String
+    boxShadow: [BoxShadow]
 }
 
 type Token_scalar {
-	  value: String
+    value: String
 }
 
 type Token_typography {
-	  value: String
-	  typography: Typography
+    value: String
+    typography: Typography
 }
 
 type Typography @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  fontFamily: String
-	  fontWeight: String
-	  letterSpacing: String
-	  lineHeight: String
-	  fontSize: String
-	  paragraphIndent: String
-	  paragraphSpacing: String
-	  textCase: String
-	  textDecoration: String
+    fontFamily: String
+    fontWeight: String
+    letterSpacing: String
+    lineHeight: String
+    fontSize: String
+    paragraphIndent: String
+    paragraphSpacing: String
+    textCase: String
+    textDecoration: String
 }
 
 ## Note this is atomic. You cannot partially update this value
 input TypographyInput {
-	  fontFamily: String
-	  fontWeight: String
-	  letterSpacing: String
-	  lineHeight: String
-	  fontSize: String
-	  paragraphIndent: String
-	  paragraphSpacing: String
-	  textCase: String
-	  textDecoration: String
+    fontFamily: String
+    fontWeight: String
+    letterSpacing: String
+    lineHeight: String
+    fontSize: String
+    paragraphIndent: String
+    paragraphSpacing: String
+    textCase: String
+    textDecoration: String
 }
 
 input UpdateSelfInput {
-	  # Display name of the user
-	  name: String
-	  # A preferred name of the user
-	  givenName: String
-	  # An icon in base64 format
-	  icon: FileInput
-	  # Optional User description
-	  description: String
-	  # Visibility of the user to search
-	  visibility: Visibility
+    # Display name of the user
+    name: String
+    # A preferred name of the user
+    givenName: String
+    # An icon in base64 format
+    icon: FileInput
+    # Optional User description
+    description: String
+    # Visibility of the user to search
+    visibility: Visibility
 }
 
 type User {
-	  # Display name of the user
-	  name: String
-	  # A preferred name of the user
-	  givenName: String
-	  # Urn of the user
-	  urn: String
-	  # Optional User description
-	  description: String
-	  # The icon of the user as html link to an image
-	  icon: String
-	  # Visibility of the user to search
-	  visibility: Visibility
-	  # Groups the user is part of
-	  groups: [Group]
+    # Display name of the user
+    name: String
+    # A preferred name of the user
+    givenName: String
+    # Urn of the user
+    urn: String
+    # Optional User description
+    description: String
+    # The icon of the user as html link to an image
+    icon: String
+    # Visibility of the user to search
+    visibility: Visibility
+    # Groups the user is part of
+    groups: [Group]
 }
 
 input UserFilterInput {
-	  name: StringFilterInput
+    name: StringFilterInput
 }
 
 enum Visibility {
-	  PUBLIC
-	  PRIVATE
+    PUBLIC
+    PRIVATE
 }
 
 input VisibilityInput {
-	  eq: Visibility
+    eq: Visibility
 }
 
 input SDConfigInput {
-	  description: String
-	  name: String!
-	  config: AWSJSON!
-	  functions: String!
+    description: String
+    name: String!
+    config: AWSJSON!
+    functions: String!
+    default: Boolean
 }
 
 input SDConfigUpdateInput {
-	  description: String
-	  name: String
-	  config: AWSJSON
-	  functions: String
+    description: String
+    name: String
+    config: AWSJSON
+    functions: String
 }
 
 type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  ### Creation
-	  ##### Creates a new project for the organization
-	  createProject(organization: String!, input: ProjectInput!): Project
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a new policy for the organization
-	  createPolicy(organization: String!, input: PolicyInput!): Policy
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a new group that can have an associated policy to control it
-	  createGroup(organization: String!, input: GroupInput!): Group
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a new organization
-	  createOrganization(input: OrganizationInput!): Organization
-	  # Creates a new API Keyt
-	  createAPIKey(organization: String!, input: APIKeyInput!): APIKey
-	  # Creates a new Token
-	  createToken(set: String!, input: TokenInput!): RawToken
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Bulk token creation. Limit of 50 tokens at a time
-	  bulkCreateToken(set: String!, input: [TokenInput]!): [RawToken]
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a new token set
-	  createTokenSet(project: String!, input: TokenSetInput!): TokenSet
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a new Resolver
-	  createResolver(project: String!, input: ResolverInput!): Resolver
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  createSDConfig(urn: String!, input: SDConfigInput!): SDConfig
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a release by freezing a resolvers output
-	  createRelease(project: String!, input: ReleaseInput!): Release
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Creates a new generator definition
-	  createGenerator(project: String!, input: GeneratorInput!): Generator
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  ### Membership
-	  ##### Adds a member that already exists as part of your organization to a group
-	  addMemberToGroup(group: String!, entity: String!): String
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Removes a member from a group in your organization
-	  removeMemberFromGroup(group: String!, user: String!): String
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # request that a member join your organization if they haven't already.
-	  inviteToOrganization(
-	  	  organization: String!
-	  	  email: String!
-	  	  groups: [String!]
-	  ): Invitation @aws_lambda @aws_cognito_user_pools
-	  # Removes a member from an organization
-	  removeFromOrganization(organization: String!, user: String!): Boolean
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Accepts an invitation to join an organization
-	  acceptInvitation(urn: String!, confirmCode: String!): Organization
-	  	  @aws_cognito_user_pools
-	  # Declines an invitation to join an organization
-	  declineInvitation(urn: String!): String @aws_cognito_user_pools
-	  ### Updates
-	  ##### Update the values of an existing token
-	  updateSelf(input: UpdateSelfInput): User @aws_cognito_user_pools
-	  updateGenerator(urn: String!, input: GeneratorInput!): Generator
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  updateToken(urn: String!, input: TokenUpdateInput!): RawToken
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  updateTokenSet(urn: String!, input: TokenSetUpdateInput!): TokenSet
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  updateResolver(urn: String!, input: ResolverUpdateInput!): Resolver
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  updatePolicy(urn: String!, input: PolicyInputUpdate!): Policy
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  updateProject(urn: String!, input: ProjectUpdateInput!): Project
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  updateGroup(urn: String!, input: GroupUpdateInput!): Group
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
+    ### Creation
+    ##### Creates a new project for the organization
+    createProject(organization: String!, input: ProjectInput!): Project
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a new policy for the organization
+    createPolicy(organization: String!, input: PolicyInput!): Policy
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a new group that can have an associated policy to control it
+    createGroup(organization: String!, input: GroupInput!): Group
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a new organization
+    createOrganization(input: OrganizationInput!): Organization
+    # Creates a new API Keyt
+    createAPIKey(organization: String!, input: APIKeyInput!): APIKey
+    # Creates a new Token
+    createToken(set: String!, input: TokenInput!): RawToken
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Bulk token creation. Limit of 50 tokens at a time
+    bulkCreateToken(set: String!, input: [TokenInput]!): [RawToken]
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a new token set
+    createTokenSet(project: String!, input: TokenSetInput!): TokenSet
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a new Resolver
+    createResolver(project: String!, input: ResolverInput!): Resolver
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    createSDConfig(project: String!, input: SDConfigInput!): SDConfig
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a release by freezing a resolvers output
+    createRelease(project: String!, input: ReleaseInput!): Release
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Creates a new generator definition
+    createGenerator(project: String!, input: GeneratorInput!): Generator
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    ### Membership
+    ##### Adds a member that already exists as part of your organization to a group
+    addMemberToGroup(group: String!, entity: String!): String
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Removes a member from a group in your organization
+    removeMemberFromGroup(group: String!, user: String!): String
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # request that a member join your organization if they haven't already.
+    inviteToOrganization(
+        organization: String!
+        email: String!
+        groups: [String!]
+    ): Invitation @aws_lambda @aws_cognito_user_pools
+    # Removes a member from an organization
+    removeFromOrganization(organization: String!, user: String!): Boolean
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Accepts an invitation to join an organization
+    acceptInvitation(urn: String!, confirmCode: String!): Organization
+        @aws_cognito_user_pools
+    # Declines an invitation to join an organization
+    declineInvitation(urn: String!): String @aws_cognito_user_pools
+    ### Updates
+    ##### Update the values of an existing token
+    updateSelf(input: UpdateSelfInput): User @aws_cognito_user_pools
+    updateGenerator(urn: String!, input: GeneratorInput!): Generator
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    updateToken(urn: String!, input: TokenUpdateInput!): RawToken
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    updateTokenSet(urn: String!, input: TokenSetUpdateInput!): TokenSet
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    updateResolver(urn: String!, input: ResolverUpdateInput!): Resolver
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    updatePolicy(urn: String!, input: PolicyInputUpdate!): Policy
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    updateProject(urn: String!, input: ProjectUpdateInput!): Project
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    updateGroup(urn: String!, input: GroupUpdateInput!): Group
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
-	  updateSDConfig(urn: String!, input: SDConfigInput!): SDConfig
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
+    updateSDConfig(urn: String!, input: SDConfigInput!): SDConfig
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
-	  updateOrganization(
-	  	  urn: String!
-	  	  input: OrganizationUpdateInput!
-	  ): Organization @aws_lambda @aws_cognito_user_pools
-	  # Regenerates an API Key, removing its value from use
-	  regenerateApiKey(urn: String!): APIKey @aws_cognito_user_pools
-	  ### Deletion
-	  ##### Deletes a token from a set
-	  deletePolicy(urn: String!): Policy @aws_lambda @aws_cognito_user_pools
-	  deleteAPIKey(urn: String!): APIKey @aws_lambda @aws_cognito_user_pools
-	  #### Deletes a generator from a project
-	  deleteGenerator(urn: String!): Generator @aws_lambda @aws_cognito_user_pools
-	  deleteGroup(urn: String!): Group
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  deleteResolver(urn: String!): Resolver
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  deleteToken(urn: String!): RawToken
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  deleteTokenSet(urn: String!): TokenSet
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  deleteProject(urn: String!): Project
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  deleteOrganization(urn: String!): Organization @aws_cognito_user_pools
-	  # Deletes an invitation from your organization to a user
-	  deleteInvitation(urn: String!): Invitation
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  attachPolicyToGroup(group: String!, policy: String!): Group
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  detachPolicyFromGroup(group: String!, policy: String!): Group
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
+    updateOrganization(
+        urn: String!
+        input: OrganizationUpdateInput!
+    ): Organization @aws_api_key @aws_lambda @aws_cognito_user_pools
+    # Regenerates an API Key, removing its value from use
+    regenerateApiKey(urn: String!): APIKey @aws_cognito_user_pools
+    ### Deletion
+    ##### Deletes a token from a set
+    deletePolicy(urn: String!): Policy @aws_lambda @aws_cognito_user_pools
+    deleteAPIKey(urn: String!): APIKey @aws_lambda @aws_cognito_user_pools
+    #### Deletes a generator from a project
+    deleteGenerator(urn: String!): Generator @aws_lambda @aws_cognito_user_pools
+    deleteGroup(urn: String!): Group
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    deleteResolver(urn: String!): Resolver
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    deleteToken(urn: String!): RawToken
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    deleteTokenSet(urn: String!): TokenSet
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    deleteProject(urn: String!): Project
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    deleteOrganization(urn: String!): Organization @aws_cognito_user_pools
+    # Deletes an invitation from your organization to a user
+    deleteInvitation(urn: String!): Invitation
+        @aws_lambda
+        @aws_cognito_user_pools
+    attachPolicyToGroup(group: String!, policy: String!): Group
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    detachPolicyFromGroup(group: String!, policy: String!): Group
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
-	  deleteSDConfig(urn: String!): SDConfig @aws_lambda @aws_cognito_user_pools
+    deleteSDConfig(urn: String!): SDConfig
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    convertToStaticSet(urn: String!): TokenSet
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
-	  convertToStaticSet(urn: String!): TokenSet
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-
-	  adminUpdateOrganization(
-	  	  urn: String!
-	  	  input: AdminOrganizationUpdateInput!
-	  ): Organization @aws_cognito_user_pools @aws_auth(cognito_groups: ["Admin"])
+    adminUpdateOrganization(
+        urn: String!
+        input: AdminOrganizationUpdateInput!
+    ): Organization @aws_cognito_user_pools @aws_auth(cognito_groups: ["admin"])
 }
 
 type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	  # Retrieves all invitations in the context of your user
-	  userInvitations(limit: Int): [Invitation]
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # queries policies available to the org. The organization is the organization urn
-	  policies(organization: String!, limit: Int, offset: Int): [Policy]
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  # Retrieves information about the organizations
-	  organizations(
-	  	  filter: OrganizationFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Organization] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  # Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
-	  projects(
-	  	  organization: String!
-	  	  filter: ProjectFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
-	  # Retrieve a specific project
-	  project(urn: String!): Project
-	  	  @aws_api_key
-	  	  @aws_cognito_user_pools
-	  	  @aws_lambda
-	  # Retrieves all projects for an organization
-	  groups(
-	  	  organization: String!
-	  	  filter: GroupFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Group] @aws_lambda @aws_cognito_user_pools
-	  #  Retrieves a specific tokenset
-	  tokenSet(urn: String!): TokenSet
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  #  Retrieves all accessible tokensets for the current project
-	  tokenSets(
-	  	  project: String!
-	  	  limit: Int
-	  	  offset: Int
-	  	  filter: TokenSetsFilterInput
-	  ): [TokenSet!]! @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  # Retrieves a specific token
-	  token(urn: String!): RawToken @aws_api_key @aws_cognito_user_pools
-	  # Retrieves all tokens of the current set
-	  tokens(
-	  	  # The urn of the token set. See the Urn format in the documentation
-	  	  set: String!
-	  	  # An optional filter for the tokens
-	  	  filter: TokenFilterInput
-	  	  # Limit of tokens to return
-	  	  limit: Int
-	  	  # offset from the start of tokens
-	  	  offset: Int
-	  ): [RawToken!]! @aws_api_key @aws_cognito_user_pools
-	  # Gets the callers identity
-	  self: Self @aws_lambda @aws_api_key @aws_cognito_user_pools
-	  # Resolves the resolver and returns the expected tokens
-	  resolve(
-	  	  resolver: String!
-	  	  options: [ResolverOptionsInput]
-	  ): [ResolvedToken] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  #Returns all resolvers for a project
-	  resolvers(
-	  	  project: String!
-	  	  filter: ResolverFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Resolver] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  #Returns a single resolver
-	  resolver(urn: String!): Resolver
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  #Returns a specific generator
-	  generator(urn: String!): Generator
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  #Returns all generators for a project
-	  generators(
-	  	  project: String!
-	  	  filter: GeneratorFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Generator] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  #Returns all releases for a project
-	  releases(
-	  	  project: String!
-	  	  filter: ReleaseFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [Release] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	  apiKeys(
-	  	  organization: String!
-	  	  filter: ApiKeyFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [APIKeyWithoutValue] @aws_api_key @aws_cognito_user_pools @aws_lambda
+    # Retrieves all invitations in the context of your user
+    userInvitations(limit: Int): [Invitation]
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # queries policies available to the org. The organization is the organization urn
+    policies(organization: String!, limit: Int, offset: Int): [Policy]
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # Retrieves information about the organizations
+    organizations(
+        filter: OrganizationFilterInput
+        limit: Int
+        offset: Int
+    ): [Organization] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    # Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
+    projects(
+        organization: String!
+        filter: ProjectFilterInput
+        limit: Int
+        offset: Int
+    ): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
+    # Retrieve a specific project
+    project(urn: String!): Project
+        @aws_api_key
+        @aws_cognito_user_pools
+        @aws_lambda
+    # Retrieves all projects for an organization
+    groups(
+        organization: String!
+        filter: GroupFilterInput
+        limit: Int
+        offset: Int
+    ): [Group] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #  Retrieves a specific tokenset
+    tokenSet(urn: String!): TokenSet
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    #  Retrieves all accessible tokensets for the current project
+    tokenSets(
+        project: String!
+        limit: Int
+        offset: Int
+        filter: TokenSetsFilterInput
+    ): [TokenSet!]! @aws_api_key @aws_lambda @aws_cognito_user_pools
+    # Retrieves a specific token
+    token(urn: String!): RawToken @aws_api_key @aws_cognito_user_pools
+    # Retrieves all tokens of the current set
+    tokens(
+        # The urn of the token set. See the Urn format in the documentation
+        set: String!
+        # An optional filter for the tokens
+        filter: TokenFilterInput
+        # Limit of tokens to return
+        limit: Int
+        # offset from the start of tokens
+        offset: Int
+    ): [RawToken!]! @aws_api_key @aws_cognito_user_pools
+    # Gets the callers identity
+    self: Self @aws_lambda @aws_api_key @aws_cognito_user_pools
+    # Resolves the resolver and returns the expected tokens
+    resolve(
+        resolver: String!
+        options: [ResolverOptionsInput]
+    ): [ResolvedToken] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #Returns all resolvers for a project
+    resolvers(
+        project: String!
+        filter: ResolverFilterInput
+        limit: Int
+        offset: Int
+    ): [Resolver] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #Returns a single resolver
+    resolver(urn: String!): Resolver
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    #Returns a specific generator
+    generator(urn: String!): Generator
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    #Returns all generators for a project
+    generators(
+        project: String!
+        filter: GeneratorFilterInput
+        limit: Int
+        offset: Int
+    ): [Generator] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #Returns all releases for a project
+    releases(
+        project: String!
+        filter: ReleaseFilterInput
+        limit: Int
+        offset: Int
+    ): [Release] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    apiKeys(
+        organization: String!
+        filter: ApiKeyFilterInput
+        limit: Int
+        offset: Int
+    ): [APIKeyWithoutValue] @aws_api_key @aws_cognito_user_pools @aws_lambda
 
-	  releaseCount(project: String!): Int
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
-	  tokenCount(project: String!): Int
-	  	  @aws_api_key
-	  	  @aws_lambda
-	  	  @aws_cognito_user_pools
+    releaseCount(project: String!): Int
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    tokenCount(project: String!): Int
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
-	  ### Admin
-	  ##### Retrieves all orgs
-	  adminOrganizations(
-	  	  filter: OrganizationFilterInput
-	  	  limit: Int
-	  	  offset: Int
-	  ): [OrganizationInfo]
-	  	  @aws_cognito_user_pools
-	  	  @aws_auth(cognito_groups: ["Admin"])
+    ### Admin
+    ##### Retrieves all orgs
+    adminOrganizations(
+        filter: OrganizationFilterInput
+        limit: Int
+        offset: Int
+    ): [OrganizationInfo]
+        @aws_cognito_user_pools
+        @aws_auth(cognito_groups: ["admin"])
 
-	  adminOrganization(urn: String!): OrganizationInfo
-	  	  @aws_cognito_user_pools
-	  	  @aws_auth(cognito_groups: ["Admin"])
+    adminOrganization(urn: String!): OrganizationInfo
+        @aws_cognito_user_pools
+        @aws_auth(cognito_groups: ["admin"])
 }
 
-type Subscription @aws_lambda @aws_cognito_user_pools {
-	### Tokens
-	#####  Subscribe to all new tokens created in a token set
-	onCreateToken(setUrn: String!): RawToken
-		@aws_subscribe(mutations: ["createToken"])
-	#  Subscribe to token Changes
-	onUpdateToken(setUrn: String!): RawToken
-		@aws_subscribe(mutations: ["updateToken"])
-	onDeleteToken(setUrn: String!): RawToken
-		@aws_subscribe(mutations: ["deleteToken"])
-	### TokenSets
-	#####  Subscribe to all new tokens sets created by an organization
-	onCreateTokenSet(projectUrn: String!): TokenSet
-		@aws_subscribe(mutations: ["createTokenSet"])
-	#  Subscribe to all new tokens sets created by an organization
-	onUpdateTokenSet(projectUrn: String!): TokenSet
-		@aws_subscribe(mutations: ["updateTokenSet"])
-	#Subscribe to tokenSet deletions
-	onDeleteTokenSet(projectUrn: String!): TokenSet
-		@aws_subscribe(mutations: ["deleteTokenSet"])
-	#  Subscribe to all new groups created for the organization
-	onCreateGroup(organization: String!): Group
-		@aws_subscribe(mutations: ["createGroup"])
+type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    ### Tokens
+    #####  Subscribe to all new tokens created in a token set
+    onCreateToken(setUrn: String!): RawToken
+        @aws_subscribe(mutations: ["createToken"])
+    #  Subscribe to token Changes
+    onUpdateToken(setUrn: String!): RawToken
+        @aws_subscribe(mutations: ["updateToken"])
+    onDeleteToken(setUrn: String!): RawToken
+        @aws_subscribe(mutations: ["deleteToken"])
+    ### TokenSets
+    #####  Subscribe to all new tokens sets created by an organization
+    onCreateTokenSet(projectUrn: String!): TokenSet
+        @aws_subscribe(mutations: ["createTokenSet"])
+    #  Subscribe to all new tokens sets created by an organization
+    onUpdateTokenSet(projectUrn: String!): TokenSet
+        @aws_subscribe(mutations: ["updateTokenSet"])
+    #Subscribe to tokenSet deletions
+    onDeleteTokenSet(projectUrn: String!): TokenSet
+        @aws_subscribe(mutations: ["deleteTokenSet"])
+    #  Subscribe to all new groups created for the organization
+    onCreateGroup(organization: String!): Group
+        @aws_subscribe(mutations: ["createGroup"])
 }
 
 schema {
