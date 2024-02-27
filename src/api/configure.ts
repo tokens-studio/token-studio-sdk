@@ -1,6 +1,6 @@
 import { Amplify } from '@aws-amplify/core';
 import { ApiKey } from './apiKey';
-import config, { oauth } from '../aws-exports';
+import { devConfig, devOauth, prodConfig, prodOauth } from '../aws-exports';
 
 /**
  * There are 3 authentication modes available.
@@ -29,6 +29,10 @@ export namespace Configuration {
         // Then you need to sync those items into the memory in this method
         sync(): Promise<void>;
     }
+
+    const config =
+        process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
+    const oauth = process.env.NODE_ENV === 'production' ? prodOauth : devOauth;
 
     export const defaultConfig = {
         ...config,

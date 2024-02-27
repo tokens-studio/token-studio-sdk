@@ -2,7 +2,7 @@ import { API } from '@aws-amplify/api';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
 import { Hub } from '@aws-amplify/core';
-import { oauth } from '../aws-exports';
+import { devOauth, prodOauth } from '../aws-exports';
 import type { FederatedSignInOptions } from '@aws-amplify/auth/lib/types/Auth';
 
 /**
@@ -113,6 +113,9 @@ export namespace UserAuth {
     export const federatedSignIn = async (
         options: IFederatedSignInOptions
     ): Promise<void> => {
+        const oauth =
+            process.env.NODE_ENV === 'production' ? prodOauth : devOauth;
+
         // Configure the oauth flow
         API.Auth.configure({
             oauth: {
