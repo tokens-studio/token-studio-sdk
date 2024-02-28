@@ -999,7 +999,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
     ): Organization
         @aws_api_key
         @aws_cognito_user_pools
-        @aws_auth(cognito_groups: ["Admin"])
+        @aws_auth(cognito_groups: ["admin"])
 }
 
 type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -1125,11 +1125,11 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
         offset: Int
     ): [OrganizationInfo]
         @aws_cognito_user_pools
-        @aws_auth(cognito_groups: ["Admin"])
+        @aws_auth(cognito_groups: ["admin"])
 
     adminOrganization(urn: String!): OrganizationInfo
         @aws_cognito_user_pools
-        @aws_auth(cognito_groups: ["Admin"])
+        @aws_auth(cognito_groups: ["admin"])
 }
 
 type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
