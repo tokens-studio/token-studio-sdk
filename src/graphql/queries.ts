@@ -168,6 +168,14 @@ export const projects = /* GraphQL */ `
         functions
         default
       }
+      themeGroups {
+        urn
+        name
+        createdAt
+        updatedAt
+        projectUrn
+        options
+      }
       releaseCount
       tokenCount
     }
@@ -237,6 +245,14 @@ export const project = /* GraphQL */ `
         config
         functions
         default
+      }
+      themeGroups {
+        urn
+        name
+        createdAt
+        updatedAt
+        projectUrn
+        options
       }
       releaseCount
       tokenCount

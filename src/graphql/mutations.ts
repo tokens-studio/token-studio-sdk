@@ -67,6 +67,14 @@ export const createProject = /* GraphQL */ `
         functions
         default
       }
+      themeGroups {
+        urn
+        name
+        createdAt
+        updatedAt
+        projectUrn
+        options
+      }
       releaseCount
       tokenCount
     }
@@ -299,6 +307,18 @@ export const createSDConfig = /* GraphQL */ `
       config
       functions
       default
+    }
+  }
+`;
+export const createThemeGroup = /* GraphQL */ `
+  mutation CreateThemeGroup($project: String!, $input: ThemeGroupInput!) {
+    createThemeGroup(project: $project, input: $input) {
+      urn
+      name
+      createdAt
+      updatedAt
+      projectUrn
+      options
     }
   }
 `;
@@ -630,6 +650,14 @@ export const updateProject = /* GraphQL */ `
         functions
         default
       }
+      themeGroups {
+        urn
+        name
+        createdAt
+        updatedAt
+        projectUrn
+        options
+      }
       releaseCount
       tokenCount
     }
@@ -678,6 +706,18 @@ export const updateSDConfig = /* GraphQL */ `
       config
       functions
       default
+    }
+  }
+`;
+export const updateThemeGroup = /* GraphQL */ `
+  mutation UpdateThemeGroup($urn: String!, $input: ThemeGroupInput!) {
+    updateThemeGroup(urn: $urn, input: $input) {
+      urn
+      name
+      createdAt
+      updatedAt
+      projectUrn
+      options
     }
   }
 `;
@@ -955,6 +995,14 @@ export const deleteProject = /* GraphQL */ `
         functions
         default
       }
+      themeGroups {
+        urn
+        name
+        createdAt
+        updatedAt
+        projectUrn
+        options
+      }
       releaseCount
       tokenCount
     }
@@ -1109,6 +1157,18 @@ export const deleteSDConfig = /* GraphQL */ `
       config
       functions
       default
+    }
+  }
+`;
+export const deleteThemeGroup = /* GraphQL */ `
+  mutation DeleteThemeGroup($urn: String!) {
+    deleteThemeGroup(urn: $urn) {
+      urn
+      name
+      createdAt
+      updatedAt
+      projectUrn
+      options
     }
   }
 `;
