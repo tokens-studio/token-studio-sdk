@@ -73,7 +73,6 @@ export const createProject = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
-        options
       }
       releaseCount
       tokenCount
@@ -318,7 +317,12 @@ export const createThemeGroup = /* GraphQL */ `
       createdAt
       updatedAt
       projectUrn
-      options
+      options {
+        name
+        urn
+        figmaStyleReferences
+        selectedTokenSets
+      }
     }
   }
 `;
@@ -656,7 +660,6 @@ export const updateProject = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
-        options
       }
       releaseCount
       tokenCount
@@ -717,7 +720,12 @@ export const updateThemeGroup = /* GraphQL */ `
       createdAt
       updatedAt
       projectUrn
-      options
+      options {
+        name
+        urn
+        figmaStyleReferences
+        selectedTokenSets
+      }
     }
   }
 `;
@@ -1001,7 +1009,6 @@ export const deleteProject = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
-        options
       }
       releaseCount
       tokenCount
@@ -1168,7 +1175,12 @@ export const deleteThemeGroup = /* GraphQL */ `
       createdAt
       updatedAt
       projectUrn
-      options
+      options {
+        name
+        urn
+        figmaStyleReferences
+        selectedTokenSets
+      }
     }
   }
 `;

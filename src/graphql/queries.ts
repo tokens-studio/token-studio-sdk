@@ -174,7 +174,6 @@ export const projects = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
-        options
       }
       releaseCount
       tokenCount
@@ -252,7 +251,6 @@ export const project = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
-        options
       }
       releaseCount
       tokenCount

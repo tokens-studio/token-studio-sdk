@@ -296,7 +296,15 @@ export type ThemeGroup = {
   createdAt: string,
   updatedAt: string,
   projectUrn?: string | null,
-  options?: string | null,
+  options?:  Array<ThemeOption | null > | null,
+};
+
+export type ThemeOption = {
+  __typename: "ThemeOption",
+  name: string,
+  urn: string,
+  figmaStyleReferences?: string | null,
+  selectedTokenSets?: string | null,
 };
 
 export type PolicyInput = {
@@ -440,7 +448,14 @@ export type SDConfigInput = {
 
 export type ThemeGroupInput = {
   name?: string | null,
-  options?: string | null,
+  options?: Array< ThemeOptionInput | null > | null,
+};
+
+export type ThemeOptionInput = {
+  name: string,
+  urn: string,
+  figmaStyleReferences?: string | null,
+  selectedTokenSets?: string | null,
 };
 
 export type ReleaseInput = {
@@ -757,7 +772,6 @@ export type CreateProjectMutation = {
       createdAt: string,
       updatedAt: string,
       projectUrn?: string | null,
-      options?: string | null,
     } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
@@ -1064,7 +1078,13 @@ export type CreateThemeGroupMutation = {
     createdAt: string,
     updatedAt: string,
     projectUrn?: string | null,
-    options?: string | null,
+    options?:  Array< {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -1484,7 +1504,6 @@ export type UpdateProjectMutation = {
       createdAt: string,
       updatedAt: string,
       projectUrn?: string | null,
-      options?: string | null,
     } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
@@ -1561,7 +1580,13 @@ export type UpdateThemeGroupMutation = {
     createdAt: string,
     updatedAt: string,
     projectUrn?: string | null,
-    options?: string | null,
+    options?:  Array< {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -1904,7 +1929,6 @@ export type DeleteProjectMutation = {
       createdAt: string,
       updatedAt: string,
       projectUrn?: string | null,
-      options?: string | null,
     } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
@@ -2105,7 +2129,13 @@ export type DeleteThemeGroupMutation = {
     createdAt: string,
     updatedAt: string,
     projectUrn?: string | null,
-    options?: string | null,
+    options?:  Array< {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -2406,7 +2436,6 @@ export type ProjectsQuery = {
       createdAt: string,
       updatedAt: string,
       projectUrn?: string | null,
-      options?: string | null,
     } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
@@ -2494,7 +2523,6 @@ export type ProjectQuery = {
       createdAt: string,
       updatedAt: string,
       projectUrn?: string | null,
-      options?: string | null,
     } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,

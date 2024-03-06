@@ -356,18 +356,32 @@ input ThemeGroupFilterInput {
     name: StringFilterInput
 }
 
-type ThemeGroup {
+type ThemeOption {
+    name: String!
+    urn: String!
+    figmaStyleReferences: AWSJSON
+    selectedTokenSets: AWSJSON
+}
+
+input ThemeOptionInput {
+    name: String!
+    urn: String
+    figmaStyleReferences: AWSJSON
+    selectedTokenSets: AWSJSON
+}
+
+type ThemeGroup @aws_api_key @aws_lambda @aws_cognito_user_pools {
     urn: String!
     name: String!
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
     projectUrn: String
-    options: AWSJSON
+    options: [ThemeOption]
 }
 
 input ThemeGroupInput {
     name: String
-    options: String
+    options: [ThemeOptionInput]
 }
 
 type SDConfig {
