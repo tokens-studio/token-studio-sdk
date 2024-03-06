@@ -453,7 +453,7 @@ export type ThemeGroupInput = {
 
 export type ThemeOptionInput = {
   name: string,
-  urn: string,
+  urn?: string | null,
   figmaStyleReferences?: string | null,
   selectedTokenSets?: string | null,
 };
