@@ -31,6 +31,7 @@ export type Project = {
   generators?:  Array<Generator | null > | null,
   releases?:  Array<Release | null > | null,
   sdConfigs?:  Array<SDConfig | null > | null,
+  themeGroups?:  Array<ThemeGroup | null > | null,
   releaseCount?: number | null,
   tokenCount?: number | null,
 };
@@ -288,6 +289,25 @@ export type SDConfig = {
   default?: boolean | null,
 };
 
+export type ThemeGroup = {
+  __typename: "ThemeGroup",
+  urn: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  projectUrn?: string | null,
+  options?:  Array<ThemeOption | null > | null,
+};
+
+export type ThemeOption = {
+  __typename: "ThemeOption",
+  name: string,
+  urn: string,
+  figmaStyleReferences?: string | null,
+  figmaVariableReferences?: string | null,
+  selectedTokenSets?: string | null,
+};
+
 export type PolicyInput = {
   name: string,
   description?: string | null,
@@ -425,6 +445,19 @@ export type SDConfigInput = {
   config: string,
   functions: string,
   default?: boolean | null,
+};
+
+export type ThemeGroupInput = {
+  name?: string | null,
+  options?: Array< ThemeOptionInput | null > | null,
+};
+
+export type ThemeOptionInput = {
+  name: string,
+  urn?: string | null,
+  figmaStyleReferences?: string | null,
+  figmaVariableReferences?: string | null,
+  selectedTokenSets?: string | null,
 };
 
 export type ReleaseInput = {
@@ -734,6 +767,14 @@ export type CreateProjectMutation = {
       functions?: string | null,
       default?: boolean | null,
     } | null > | null,
+    themeGroups?:  Array< {
+      __typename: "ThemeGroup",
+      urn: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      projectUrn?: string | null,
+    } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -1023,6 +1064,30 @@ export type CreateSDConfigMutation = {
     config?: string | null,
     functions?: string | null,
     default?: boolean | null,
+  } | null,
+};
+
+export type CreateThemeGroupMutationVariables = {
+  project: string,
+  input: ThemeGroupInput,
+};
+
+export type CreateThemeGroupMutation = {
+  createThemeGroup?:  {
+    __typename: "ThemeGroup",
+    urn: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    projectUrn?: string | null,
+    options?:  Array< {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -1435,6 +1500,14 @@ export type UpdateProjectMutation = {
       functions?: string | null,
       default?: boolean | null,
     } | null > | null,
+    themeGroups?:  Array< {
+      __typename: "ThemeGroup",
+      urn: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      projectUrn?: string | null,
+    } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -1494,6 +1567,30 @@ export type UpdateSDConfigMutation = {
     config?: string | null,
     functions?: string | null,
     default?: boolean | null,
+  } | null,
+};
+
+export type UpdateThemeGroupMutationVariables = {
+  urn: string,
+  input: ThemeGroupInput,
+};
+
+export type UpdateThemeGroupMutation = {
+  updateThemeGroup?:  {
+    __typename: "ThemeGroup",
+    urn: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    projectUrn?: string | null,
+    options?:  Array< {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -1829,6 +1926,14 @@ export type DeleteProjectMutation = {
       functions?: string | null,
       default?: boolean | null,
     } | null > | null,
+    themeGroups?:  Array< {
+      __typename: "ThemeGroup",
+      urn: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      projectUrn?: string | null,
+    } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -2013,6 +2118,29 @@ export type DeleteSDConfigMutation = {
     config?: string | null,
     functions?: string | null,
     default?: boolean | null,
+  } | null,
+};
+
+export type DeleteThemeGroupMutationVariables = {
+  urn: string,
+};
+
+export type DeleteThemeGroupMutation = {
+  deleteThemeGroup?:  {
+    __typename: "ThemeGroup",
+    urn: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    projectUrn?: string | null,
+    options?:  Array< {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -2306,6 +2434,14 @@ export type ProjectsQuery = {
       functions?: string | null,
       default?: boolean | null,
     } | null > | null,
+    themeGroups?:  Array< {
+      __typename: "ThemeGroup",
+      urn: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      projectUrn?: string | null,
+    } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null > | null,
@@ -2384,6 +2520,14 @@ export type ProjectQuery = {
       config?: string | null,
       functions?: string | null,
       default?: boolean | null,
+    } | null > | null,
+    themeGroups?:  Array< {
+      __typename: "ThemeGroup",
+      urn: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      projectUrn?: string | null,
     } | null > | null,
     releaseCount?: number | null,
     tokenCount?: number | null,

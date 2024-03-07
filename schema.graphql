@@ -351,6 +351,41 @@ input SDConfigFilterInput {
     name: StringFilterInput
 }
 
+input ThemeGroupFilterInput {
+    urn: StringFilterInput
+    name: StringFilterInput
+}
+
+type ThemeOption {
+    name: String!
+    urn: String!
+    figmaStyleReferences: AWSJSON
+    figmaVariableReferences: AWSJSON
+    selectedTokenSets: AWSJSON
+}
+
+input ThemeOptionInput {
+    name: String!
+    urn: String
+    figmaStyleReferences: AWSJSON
+    figmaVariableReferences: AWSJSON
+    selectedTokenSets: AWSJSON
+}
+
+type ThemeGroup @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    urn: String!
+    name: String!
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+    projectUrn: String
+    options: [ThemeOption]
+}
+
+input ThemeGroupInput {
+    name: String
+    options: [ThemeOptionInput]
+}
+
 type SDConfig {
     urn: String!
     name: String!
@@ -381,9 +416,12 @@ type Project @aws_api_key @aws_lambda @aws_cognito_user_pools {
         offset: Int
     ): [Generator]
     releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
-
     sdConfigs(filter: SDConfigFilterInput, limit: Int, offset: Int): [SDConfig]
-
+    themeGroups(
+        filter: ThemeGroupFilterInput
+        limit: Int
+        offset: Int
+    ): [ThemeGroup]
     releaseCount: Int
     tokenCount: Int
 }
@@ -863,6 +901,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
+    createThemeGroup(project: String!, input: ThemeGroupInput!): ThemeGroup
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
     # Creates a release by freezing a resolvers output
     createRelease(project: String!, input: ReleaseInput!): Release
         @aws_api_key
@@ -935,6 +977,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
+    updateThemeGroup(urn: String!, input: ThemeGroupInput!): ThemeGroup
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
     updateOrganization(
         urn: String!
@@ -984,7 +1030,12 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
+
     deleteSDConfig(urn: String!): SDConfig
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    deleteThemeGroup(urn: String!): ThemeGroup
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
