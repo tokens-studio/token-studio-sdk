@@ -231,7 +231,7 @@ export type Resolver = {
   updatedAt?: string | null,
   urn?: string | null,
   graph?: string | null,
-  options?:  Array<ResolverOption | null > | null,
+  resolverOptions?:  Array<ResolverOption | null > | null,
 };
 
 export type ResolverOption = {
@@ -1039,7 +1039,7 @@ export type CreateResolverMutation = {
     updatedAt?: string | null,
     urn?: string | null,
     graph?: string | null,
-    options?:  Array< {
+    resolverOptions?:  Array< {
       __typename: "ResolverOption",
       name: string,
       description?: string | null,
@@ -1397,7 +1397,7 @@ export type UpdateResolverMutation = {
     updatedAt?: string | null,
     urn?: string | null,
     graph?: string | null,
-    options?:  Array< {
+    resolverOptions?:  Array< {
       __typename: "ResolverOption",
       name: string,
       description?: string | null,
@@ -1780,7 +1780,7 @@ export type DeleteResolverMutation = {
     updatedAt?: string | null,
     urn?: string | null,
     graph?: string | null,
-    options?:  Array< {
+    resolverOptions?:  Array< {
       __typename: "ResolverOption",
       name: string,
       description?: string | null,
@@ -2795,7 +2795,7 @@ export type ResolversQuery = {
     updatedAt?: string | null,
     urn?: string | null,
     graph?: string | null,
-    options?:  Array< {
+    resolverOptions?:  Array< {
       __typename: "ResolverOption",
       name: string,
       description?: string | null,
@@ -2817,7 +2817,7 @@ export type ResolverQuery = {
     updatedAt?: string | null,
     urn?: string | null,
     graph?: string | null,
-    options?:  Array< {
+    resolverOptions?:  Array< {
       __typename: "ResolverOption",
       name: string,
       description?: string | null,
