@@ -304,6 +304,7 @@ export type ThemeOption = {
   name: string,
   urn: string,
   figmaStyleReferences?: string | null,
+  figmaVariableReferences?: string | null,
   selectedTokenSets?: string | null,
 };
 
@@ -455,6 +456,7 @@ export type ThemeOptionInput = {
   name: string,
   urn?: string | null,
   figmaStyleReferences?: string | null,
+  figmaVariableReferences?: string | null,
   selectedTokenSets?: string | null,
 };
 
@@ -1083,6 +1085,7 @@ export type CreateThemeGroupMutation = {
       name: string,
       urn: string,
       figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
       selectedTokenSets?: string | null,
     } | null > | null,
   } | null,
@@ -1585,6 +1588,7 @@ export type UpdateThemeGroupMutation = {
       name: string,
       urn: string,
       figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
       selectedTokenSets?: string | null,
     } | null > | null,
   } | null,
@@ -2134,6 +2138,7 @@ export type DeleteThemeGroupMutation = {
       name: string,
       urn: string,
       figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
       selectedTokenSets?: string | null,
     } | null > | null,
   } | null,

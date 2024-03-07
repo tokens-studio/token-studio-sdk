@@ -360,6 +360,7 @@ type ThemeOption {
     name: String!
     urn: String!
     figmaStyleReferences: AWSJSON
+    figmaVariableReferences: AWSJSON
     selectedTokenSets: AWSJSON
 }
 
@@ -367,6 +368,7 @@ input ThemeOptionInput {
     name: String!
     urn: String
     figmaStyleReferences: AWSJSON
+    figmaVariableReferences: AWSJSON
     selectedTokenSets: AWSJSON
 }
 

@@ -321,6 +321,7 @@ export const createThemeGroup = /* GraphQL */ `
         name
         urn
         figmaStyleReferences
+        figmaVariableReferences
         selectedTokenSets
       }
     }
@@ -724,6 +725,7 @@ export const updateThemeGroup = /* GraphQL */ `
         name
         urn
         figmaStyleReferences
+        figmaVariableReferences
         selectedTokenSets
       }
     }
@@ -1179,6 +1181,7 @@ export const deleteThemeGroup = /* GraphQL */ `
         name
         urn
         figmaStyleReferences
+        figmaVariableReferences
         selectedTokenSets
       }
     }
