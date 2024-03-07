@@ -575,7 +575,7 @@ type Resolver @aws_api_key @aws_lambda @aws_cognito_user_pools {
     updatedAt: AWSDateTime
     urn: String
     graph: AWSJSON
-    options: [ResolverOption]
+    resolverOptions: [ResolverOption]
 }
 
 type ResolverOption {

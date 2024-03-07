@@ -500,7 +500,7 @@ export const resolvers = /* GraphQL */ `
       updatedAt
       urn
       graph
-      options {
+      resolverOptions {
         name
         description
         values
@@ -517,7 +517,7 @@ export const resolver = /* GraphQL */ `
       updatedAt
       urn
       graph
-      options {
+      resolverOptions {
         name
         description
         values

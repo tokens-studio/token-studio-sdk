@@ -287,7 +287,7 @@ export const createResolver = /* GraphQL */ `
       updatedAt
       urn
       graph
-      options {
+      resolverOptions {
         name
         description
         values
@@ -569,7 +569,7 @@ export const updateResolver = /* GraphQL */ `
       updatedAt
       urn
       graph
-      options {
+      resolverOptions {
         name
         description
         values
@@ -880,7 +880,7 @@ export const deleteResolver = /* GraphQL */ `
       updatedAt
       urn
       graph
-      options {
+      resolverOptions {
         name
         description
         values
