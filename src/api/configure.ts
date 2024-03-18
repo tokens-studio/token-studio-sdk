@@ -90,7 +90,7 @@ export namespace Configuration {
      * ```
      * @param token
      */
-    export const setAPIKey = (token: string, env: 'dev' | 'prod' = 'dev') => {
+    export const setAPIKey = (token: string, env: 'dev' | 'prod' = 'prod') => {
         const selectedConfig = env === 'prod' ? prodConfig : devConfig;
         const selectedOauth = env === 'prod' ? prodOauth : devOauth;
     
