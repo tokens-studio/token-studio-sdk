@@ -90,10 +90,14 @@ export namespace Configuration {
      * ```
      * @param token
      */
-    export const setAPIKey = (token: string) => {
-        //Take the default config and change the config type
+    export const setAPIKey = (token: string, env: 'dev' | 'prod' = 'dev') => {
+        const selectedConfig = env === 'prod' ? prodConfig : devConfig;
+        const selectedOauth = env === 'prod' ? prodOauth : devOauth;
+    
+        // Update the configuration to use the selected settings
         configuration = Amplify.configure({
-            ...config,
+            ...selectedConfig,
+            oauth: selectedOauth,
             // eslint-disable-next-line camelcase
             aws_appsync_authenticationType: 'AWS_LAMBDA'
         }) as IConfiguration;
