@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.1.2
+
+### Patch Changes
+
+-   b36f3ad: Prod setup for sdk setApiKey config method. By default SDK should point to prod environment as dev should be for internal usage.
+
 ## 1.1.1
 
 ### Patch Changes
