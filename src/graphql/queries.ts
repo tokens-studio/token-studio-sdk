@@ -133,6 +133,7 @@ export const projects = /* GraphQL */ `
         projectUrn
         type
         generatorUrn
+        orderIndex
         createdAt
       }
       resolvers {
@@ -210,6 +211,7 @@ export const project = /* GraphQL */ `
         projectUrn
         type
         generatorUrn
+        orderIndex
         createdAt
       }
       resolvers {
@@ -310,6 +312,7 @@ export const tokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
@@ -343,6 +346,7 @@ export const tokenSets = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description

@@ -111,6 +111,7 @@ export type TokenSet = {
   projectUrn?: string | null,
   type?: TokenSetType | null,
   generatorUrn?: string | null,
+  orderIndex?: string | null,
   createdAt?: string | null,
   tokens:  Array<RawToken >,
 };
@@ -430,6 +431,7 @@ export type TokenSetInput = {
   name: string,
   description?: string | null,
   type?: TokenSetType | null,
+  index?: string | null,
   graph?: string | null,
 };
 
@@ -543,6 +545,11 @@ export type GroupUpdateInput = {
   description?: string | null,
   icon?: string | null,
   policy?: string | null,
+};
+
+export type TokenSetOrderUpdateInput = {
+  urn?: string | null,
+  orderIndex?: string | null,
 };
 
 export type OrganizationUpdateInput = {
@@ -728,6 +735,7 @@ export type CreateProjectMutation = {
       projectUrn?: string | null,
       type?: TokenSetType | null,
       generatorUrn?: string | null,
+      orderIndex?: string | null,
       createdAt?: string | null,
     } | null > | null,
     resolvers?:  Array< {
@@ -1012,6 +1020,7 @@ export type CreateTokenSetMutation = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -1370,6 +1379,7 @@ export type UpdateTokenSetMutation = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -1461,6 +1471,7 @@ export type UpdateProjectMutation = {
       projectUrn?: string | null,
       type?: TokenSetType | null,
       generatorUrn?: string | null,
+      orderIndex?: string | null,
       createdAt?: string | null,
     } | null > | null,
     resolvers?:  Array< {
@@ -1592,6 +1603,14 @@ export type UpdateThemeGroupMutation = {
       selectedTokenSets?: string | null,
     } | null > | null,
   } | null,
+};
+
+export type UpdateTokenSetOrderMutationVariables = {
+  input?: Array< TokenSetOrderUpdateInput | null > | null,
+};
+
+export type UpdateTokenSetOrderMutation = {
+  updateTokenSetOrder?: boolean | null,
 };
 
 export type UpdateOrganizationMutationVariables = {
@@ -1839,6 +1858,7 @@ export type DeleteTokenSetMutation = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -1887,6 +1907,7 @@ export type DeleteProjectMutation = {
       projectUrn?: string | null,
       type?: TokenSetType | null,
       generatorUrn?: string | null,
+      orderIndex?: string | null,
       createdAt?: string | null,
     } | null > | null,
     resolvers?:  Array< {
@@ -2160,6 +2181,7 @@ export type ConvertToStaticSetMutation = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -2395,6 +2417,7 @@ export type ProjectsQuery = {
       projectUrn?: string | null,
       type?: TokenSetType | null,
       generatorUrn?: string | null,
+      orderIndex?: string | null,
       createdAt?: string | null,
     } | null > | null,
     resolvers?:  Array< {
@@ -2482,6 +2505,7 @@ export type ProjectQuery = {
       projectUrn?: string | null,
       type?: TokenSetType | null,
       generatorUrn?: string | null,
+      orderIndex?: string | null,
       createdAt?: string | null,
     } | null > | null,
     resolvers?:  Array< {
@@ -2590,6 +2614,7 @@ export type TokenSetQuery = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -2622,6 +2647,7 @@ export type TokenSetsQuery = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -3088,6 +3114,7 @@ export type OnCreateTokenSetSubscription = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -3117,6 +3144,7 @@ export type OnUpdateTokenSetSubscription = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",
@@ -3146,6 +3174,7 @@ export type OnDeleteTokenSetSubscription = {
     projectUrn?: string | null,
     type?: TokenSetType | null,
     generatorUrn?: string | null,
+    orderIndex?: string | null,
     createdAt?: string | null,
     tokens:  Array< {
       __typename: "RawToken",

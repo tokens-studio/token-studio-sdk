@@ -100,6 +100,7 @@ export const onCreateTokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
@@ -123,6 +124,7 @@ export const onUpdateTokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
@@ -146,6 +148,7 @@ export const onDeleteTokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description

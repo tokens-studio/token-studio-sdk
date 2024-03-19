@@ -32,6 +32,7 @@ export const createProject = /* GraphQL */ `
         projectUrn
         type
         generatorUrn
+        orderIndex
         createdAt
       }
       resolvers {
@@ -266,6 +267,7 @@ export const createTokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
@@ -548,6 +550,7 @@ export const updateTokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
@@ -620,6 +623,7 @@ export const updateProject = /* GraphQL */ `
         projectUrn
         type
         generatorUrn
+        orderIndex
         createdAt
       }
       resolvers {
@@ -729,6 +733,11 @@ export const updateThemeGroup = /* GraphQL */ `
         selectedTokenSets
       }
     }
+  }
+`;
+export const updateTokenSetOrder = /* GraphQL */ `
+  mutation UpdateTokenSetOrder($input: [TokenSetOrderUpdateInput]) {
+    updateTokenSetOrder(input: $input)
   }
 `;
 export const updateOrganization = /* GraphQL */ `
@@ -928,6 +937,7 @@ export const deleteTokenSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
@@ -970,6 +980,7 @@ export const deleteProject = /* GraphQL */ `
         projectUrn
         type
         generatorUrn
+        orderIndex
         createdAt
       }
       resolvers {
@@ -1198,6 +1209,7 @@ export const convertToStaticSet = /* GraphQL */ `
       projectUrn
       type
       generatorUrn
+      orderIndex
       createdAt
       tokens {
         description
