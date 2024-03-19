@@ -660,6 +660,7 @@ type TokenSet @aws_api_key @aws_lambda @aws_cognito_user_pools {
     projectUrn: String
     type: TokenSetType
     generatorUrn: String
+    orderIndex: String
     createdAt: AWSDateTime
     tokens(
         filter: TokenFilterInput # Limit of tokens to return
@@ -677,6 +678,7 @@ input TokenSetInput {
     name: String!
     description: String
     type: TokenSetType
+    index: String
     graph: AWSJSON
 }
 
@@ -688,6 +690,11 @@ enum TokenSetType {
 input TokenSetUpdateInput {
     name: String
     description: String
+}
+
+input TokenSetOrderUpdateInput {
+    urn: String
+    orderIndex: String
 }
 
 input TokenSetsFilterInput {
@@ -981,7 +988,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
-
+    updateTokenSetOrder(input: [TokenSetOrderUpdateInput]): Boolean
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
     updateOrganization(
         urn: String!
         input: OrganizationUpdateInput!
