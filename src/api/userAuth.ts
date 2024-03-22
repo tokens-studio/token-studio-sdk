@@ -114,7 +114,7 @@ export namespace UserAuth {
         options: IFederatedSignInOptions
     ): Promise<void> => {
         const oauth =
-            process.env.NODE_ENV === 'production' ? prodOauth : devOauth;
+            process.env.APP_ENV === 'production' ? prodOauth : devOauth;
 
         // Configure the oauth flow
         API.Auth.configure({
