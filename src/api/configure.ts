@@ -31,8 +31,8 @@ export namespace Configuration {
     }
 
     const config =
-        process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
-    const oauth = process.env.NODE_ENV === 'production' ? prodOauth : devOauth;
+        process.env.APP_ENV === 'production' ? prodConfig : devConfig;
+    const oauth = process.env.APP_ENV === 'production' ? prodOauth : devOauth;
 
     export const defaultConfig = {
         ...config,
