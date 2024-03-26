@@ -30,9 +30,12 @@ export namespace Configuration {
         sync(): Promise<void>;
     }
 
-    const config =
-        process.env.APP_ENV === 'production' ? prodConfig : devConfig;
-    const oauth = process.env.APP_ENV === 'production' ? prodOauth : devOauth;
+    const getConfigs = (stage: 'development' | 'production') => ({
+        config: stage === 'production' ? prodConfig : devConfig,
+        oauth: stage === 'production' ? prodOauth : devOauth
+    });
+
+    const { config, oauth } = getConfigs('production');
 
     export const defaultConfig = {
         ...config,
@@ -56,6 +59,7 @@ export namespace Configuration {
         };
         //Custom auth storage
         storage: Storage;
+        stage: 'development' | 'production';
     }>;
 
     let configuration: IConfiguration = config;
@@ -66,15 +70,17 @@ export namespace Configuration {
      * @param config
      */
     export const configure = (config: IConfiguration = {}) => {
+        const stageConfig = getConfigs(config.stage || 'production');
         configuration = Amplify.configure({
-            ...defaultConfig,
+            ...stageConfig.config,
             ...config,
             oauth: {
-                ...defaultConfig.oauth,
+                ...stageConfig.oauth,
                 ...config.oauth
             }
         }) as IConfiguration;
     };
+
     /**
      * Returns the current internal configuration
      * @private
@@ -91,10 +97,8 @@ export namespace Configuration {
      * @param token
      */
     export const setAPIKey = (token: string, env: 'dev' | 'prod' = 'prod') => {
-        const selectedConfig = env === 'prod' ? prodConfig : devConfig;
-        const selectedOauth = env === 'prod' ? prodOauth : devOauth;
-    
-        // Update the configuration to use the selected settings
+        const { config: selectedConfig, oauth: selectedOauth } = getConfigs(env === 'prod' ? 'production' : 'development');
+        
         configuration = Amplify.configure({
             ...selectedConfig,
             oauth: selectedOauth,

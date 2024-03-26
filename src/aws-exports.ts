@@ -31,5 +31,3 @@ export const prodOauth = {
     scope: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
     responseType: 'code'
 };
-
-export default devConfig;
