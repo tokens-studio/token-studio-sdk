@@ -356,7 +356,7 @@ input ThemeGroupFilterInput {
     name: StringFilterInput
 }
 
-type ThemeOption {
+type ThemeOption @aws_api_key @aws_lambda @aws_cognito_user_pools {
     name: String!
     urn: String!
     figmaStyleReferences: AWSJSON
