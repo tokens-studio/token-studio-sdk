@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.1.3
+
+### Patch Changes
+
+-   8d6b509: Make theme group option accessible via api
+
 ## 1.1.2
 
 ### Patch Changes
