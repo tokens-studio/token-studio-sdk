@@ -67,6 +67,7 @@ export const createProject = /* GraphQL */ `
         config
         functions
         default
+        themeOptions
       }
       themeGroups {
         urn
@@ -308,6 +309,7 @@ export const createSDConfig = /* GraphQL */ `
       config
       functions
       default
+      themeOptions
     }
   }
 `;
@@ -658,6 +660,7 @@ export const updateProject = /* GraphQL */ `
         config
         functions
         default
+        themeOptions
       }
       themeGroups {
         urn
@@ -714,6 +717,7 @@ export const updateSDConfig = /* GraphQL */ `
       config
       functions
       default
+      themeOptions
     }
   }
 `;
@@ -1015,6 +1019,7 @@ export const deleteProject = /* GraphQL */ `
         config
         functions
         default
+        themeOptions
       }
       themeGroups {
         urn
@@ -1177,6 +1182,7 @@ export const deleteSDConfig = /* GraphQL */ `
       config
       functions
       default
+      themeOptions
     }
   }
 `;

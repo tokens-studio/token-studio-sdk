@@ -288,6 +288,7 @@ export type SDConfig = {
   config?: string | null,
   functions?: string | null,
   default?: boolean | null,
+  themeOptions?: string | null,
 };
 
 export type ThemeGroup = {
@@ -447,6 +448,7 @@ export type SDConfigInput = {
   config: string,
   functions: string,
   default?: boolean | null,
+  themeOptions?: string | null,
 };
 
 export type ThemeGroupInput = {
@@ -774,6 +776,7 @@ export type CreateProjectMutation = {
       config?: string | null,
       functions?: string | null,
       default?: boolean | null,
+      themeOptions?: string | null,
     } | null > | null,
     themeGroups?:  Array< {
       __typename: "ThemeGroup",
@@ -1073,6 +1076,7 @@ export type CreateSDConfigMutation = {
     config?: string | null,
     functions?: string | null,
     default?: boolean | null,
+    themeOptions?: string | null,
   } | null,
 };
 
@@ -1510,6 +1514,7 @@ export type UpdateProjectMutation = {
       config?: string | null,
       functions?: string | null,
       default?: boolean | null,
+      themeOptions?: string | null,
     } | null > | null,
     themeGroups?:  Array< {
       __typename: "ThemeGroup",
@@ -1578,6 +1583,7 @@ export type UpdateSDConfigMutation = {
     config?: string | null,
     functions?: string | null,
     default?: boolean | null,
+    themeOptions?: string | null,
   } | null,
 };
 
@@ -1946,6 +1952,7 @@ export type DeleteProjectMutation = {
       config?: string | null,
       functions?: string | null,
       default?: boolean | null,
+      themeOptions?: string | null,
     } | null > | null,
     themeGroups?:  Array< {
       __typename: "ThemeGroup",
@@ -2139,6 +2146,7 @@ export type DeleteSDConfigMutation = {
     config?: string | null,
     functions?: string | null,
     default?: boolean | null,
+    themeOptions?: string | null,
   } | null,
 };
 
@@ -2456,6 +2464,7 @@ export type ProjectsQuery = {
       config?: string | null,
       functions?: string | null,
       default?: boolean | null,
+      themeOptions?: string | null,
     } | null > | null,
     themeGroups?:  Array< {
       __typename: "ThemeGroup",
@@ -2544,6 +2553,7 @@ export type ProjectQuery = {
       config?: string | null,
       functions?: string | null,
       default?: boolean | null,
+      themeOptions?: string | null,
     } | null > | null,
     themeGroups?:  Array< {
       __typename: "ThemeGroup",

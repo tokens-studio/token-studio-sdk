@@ -168,6 +168,7 @@ export const projects = /* GraphQL */ `
         config
         functions
         default
+        themeOptions
       }
       themeGroups {
         urn
@@ -246,6 +247,7 @@ export const project = /* GraphQL */ `
         config
         functions
         default
+        themeOptions
       }
       themeGroups {
         urn
