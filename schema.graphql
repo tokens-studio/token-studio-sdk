@@ -357,11 +357,11 @@ input ThemeGroupFilterInput {
 }
 
 type ThemeOption @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	name: String!
-	urn: String!
-	figmaStyleReferences: AWSJSON
-	figmaVariableReferences: AWSJSON
-	selectedTokenSets: AWSJSON
+    name: String!
+    urn: String!
+    figmaStyleReferences: AWSJSON
+    figmaVariableReferences: AWSJSON
+    selectedTokenSets: AWSJSON
 }
 
 input ThemeOptionInput {

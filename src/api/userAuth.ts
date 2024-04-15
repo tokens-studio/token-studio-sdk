@@ -113,13 +113,14 @@ export namespace UserAuth {
     export const federatedSignIn = async (
         options: IFederatedSignInOptions
     ): Promise<void> => {
-        const oauth =
-            process.env.APP_ENV === 'production' ? prodOauth : devOauth;
+        const isProdEnvironment = window.location.hostname.includes('app.tokens');
+        const oauthConfig = isProdEnvironment ? prodOauth : devOauth;
+        
 
         // Configure the oauth flow
         API.Auth.configure({
             oauth: {
-                ...oauth,
+                ...oauthConfig,
                 ...(options.oauth || {})
             }
         });
