@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.1.4
+
+### Patch Changes
+
+-   9d0b525: Add support for api calls of border tokens
+
 ## 1.1.3
 
 ### Patch Changes
