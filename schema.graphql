@@ -41,7 +41,7 @@ input ApiKeyFilterInput {
 	name: StringFilterInput
 }
 
-type Border {
+type Border @aws_api_key @aws_lambda @aws_cognito_user_pools {
 	color: String
 	style: String
 	width: String
