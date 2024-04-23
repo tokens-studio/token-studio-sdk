@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.1.5
+
+### Patch Changes
+
+-   09e3a63: Add support for api calls of generator
+
 ## 1.1.4
 
 ### Patch Changes
