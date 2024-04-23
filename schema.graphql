@@ -92,7 +92,7 @@ input FileInput {
 	data: String!
 }
 
-type Generator {
+type Generator @aws_api_key @aws_lambda @aws_cognito_user_pools {
 	urn: String
 	name: String
 	description: String
