@@ -480,6 +480,13 @@ export const declineInvitation = /* GraphQL */ `
     declineInvitation(urn: $urn)
   }
 `;
+
+export const resendInvitation = /* GraphQL */ `
+  mutation ResendInvitation($urn: String!) {
+    resendInvitation(urn: $urn)
+  }
+`;
+
 export const updateSelf = /* GraphQL */ `
   mutation UpdateSelf($input: UpdateSelfInput) {
     updateSelf(input: $input) {

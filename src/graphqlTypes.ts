@@ -484,6 +484,7 @@ export type Invitation = {
   user: string,
   status?: InvitationStatus | null,
   urn: string,
+  email: string,
   confirmCode: string,
 };
 
@@ -1287,6 +1288,14 @@ export type DeclineInvitationMutationVariables = {
 
 export type DeclineInvitationMutation = {
   declineInvitation?: string | null,
+};
+
+export type ResendInvitationMutationVariables = {
+  urn: string,
+};
+
+export type ResendInvitationMutation = {
+  resendInvitation?: string | null,
 };
 
 export type UpdateSelfMutationVariables = {
@@ -2279,13 +2288,16 @@ export type AdminUpdateOrganizationMutation = {
 
 export type UserInvitationsQueryVariables = {
   limit?: number | null,
+  organization: string,
 };
 
 export type UserInvitationsQuery = {
   userInvitations?:  Array< {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string,
+    email?: string,
+    groups?: Array<string>,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
