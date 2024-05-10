@@ -268,27 +268,27 @@ input OrganizationFilterInput {
 }
 
 input OrganizationInput {
-	name: String!
-	description: String
-	visibility: Visibility!
-	icon: String
+    name: String!
+    description: String
+    visibility: Visibility!
+    icon: FileInput
 }
 
 type OrganizationMemberShip {
-	createdAt: AWSDateTime!
+    createdAt: AWSDateTime!
 }
 
 enum OrganizationTier {
-	FREE
-	PRO
+    FREE
+    PRO
 }
 
 input OrganizationUpdateInput {
-	urn: String!
-	name: String
-	description: String
-	visibility: Visibility
-	icon: String
+    urn: String!
+    name: String
+    description: String
+    visibility: Visibility
+    icon: FileInput
 }
 
 input AdminOrganizationUpdateInput {
@@ -365,99 +365,103 @@ type ThemeOption @aws_api_key @aws_lambda @aws_cognito_user_pools {
 }
 
 input ThemeOptionInput {
-	name: String!
-	urn: String
-	figmaStyleReferences: AWSJSON
-	figmaVariableReferences: AWSJSON
-	selectedTokenSets: AWSJSON
+    name: String!
+    urn: String
+    figmaStyleReferences: AWSJSON
+    figmaVariableReferences: AWSJSON
+    selectedTokenSets: AWSJSON
 }
 
 type ThemeGroup @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	urn: String!
-	name: String!
-	createdAt: AWSDateTime!
-	updatedAt: AWSDateTime!
-	projectUrn: String
-	options: [ThemeOption]
+    urn: String!
+    name: String!
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+    projectUrn: String
+    options: [ThemeOption]
 }
 
 input ThemeGroupInput {
-	name: String
-	options: [ThemeOptionInput]
+    name: String
+    options: [ThemeOptionInput]
 }
 
 type SDConfig {
-	urn: String!
-	name: String!
-	createdAt: AWSDateTime!
-	updatedAt: AWSDateTime!
-	projectUrn: String!
-	config: AWSJSON
-	functions: String
-	default: Boolean
-	themeOptions: AWSJSON
+    urn: String!
+    name: String!
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+    projectUrn: String!
+    config: AWSJSON
+    functions: String
+    default: Boolean
+    themeOptions: AWSJSON
 }
 
 type Project @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	## The entity that created the project
-	createdBy: Entity
-	createdAt: AWSDateTime!
-	name: String!
-	urn: String!
-	orgUrn: String
-	visibility: Visibility
-	icon: String
-	description: String
-	summary: ProjectSummary
-	sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
-	resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
-	generators(filter: GeneratorFilterInput, limit: Int, offset: Int): [Generator]
-	releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
-	sdConfigs(filter: SDConfigFilterInput, limit: Int, offset: Int): [SDConfig]
-	themeGroups(
-		filter: ThemeGroupFilterInput
-		limit: Int
-		offset: Int
-	): [ThemeGroup]
-	releaseCount: Int
-	tokenCount: Int
+    ## The entity that created the project
+    createdBy: Entity
+    createdAt: AWSDateTime!
+    name: String!
+    urn: String!
+    orgUrn: String
+    visibility: Visibility
+    icon: String
+    description: String
+    summary: ProjectSummary
+    sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
+    resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
+    generators(
+        filter: GeneratorFilterInput
+        limit: Int
+        offset: Int
+    ): [Generator]
+    releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
+    sdConfigs(filter: SDConfigFilterInput, limit: Int, offset: Int): [SDConfig]
+    themeGroups(
+        filter: ThemeGroupFilterInput
+        limit: Int
+        offset: Int
+    ): [ThemeGroup]
+    releaseCount: Int
+    tokenCount: Int
 }
 
 input ProjectFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
-	visibility: VisibilityInput
+    urn: StringFilterInput
+    name: StringFilterInput
+    visibility: VisibilityInput
 }
 
 input ProjectInput {
-	# Unique name of the project
-	name: String!
-	# Optional description of the project
-	description: String
-	# Visibility of the project
-	visibility: Visibility!
-	# Icon associated with your project as a base64 string
-	icon: String
+    # Unique name of the project
+    name: String!
+    # Optional description of the project
+    description: String
+    # Visibility of the project
+    visibility: Visibility!
+    # An icon in base64 format
+    icon: FileInput
 }
 
 type ProjectSummary {
-	## Total number of sets for this project
-	sets: SummarizedValue
-	## Total number of resolvers for this project
-	resolvers: SummarizedValue
-	generators: SummarizedValue
-	tokens: SummarizedValue
+    ## Total number of sets for this project
+    sets: SummarizedValue
+    ## Total number of resolvers for this project
+    resolvers: SummarizedValue
+    generators: SummarizedValue
+    tokens: SummarizedValue
 }
 
 input ProjectUpdateInput {
-	# Unique name of the project
-	name: String
-	# Optional description of the project
-	description: String
-	# Visibility of the project
-	visibility: Visibility
-	# Icon associated with your project
-	icon: String
+    # Unique name of the project
+    name: String
+    # Optional description of the project
+    description: String
+    # Visibility of the project
+    visibility: Visibility
+    # Icon associated with your project
+    icon: FileInput
 }
 
 # Raw tokens are the tokens that are formatted after being input into the system. They do not reflect the final token values from resolved tokens

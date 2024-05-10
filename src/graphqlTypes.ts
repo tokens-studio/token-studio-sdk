@@ -6,7 +6,7 @@ export type ProjectInput = {
   name: string,
   description?: string | null,
   visibility: Visibility,
-  icon?: string | null,
+  icon?: FileInput | null,
 };
 
 export enum Visibility {
@@ -14,6 +14,12 @@ export enum Visibility {
   PRIVATE = "PRIVATE",
 }
 
+
+export type FileInput = {
+  name: string,
+  type: string,
+  data: string,
+};
 
 export type Project = {
   __typename: "Project",
@@ -338,7 +344,7 @@ export type OrganizationInput = {
   name: string,
   description?: string | null,
   visibility: Visibility,
-  icon?: string | null,
+  icon?: FileInput | null,
 };
 
 export type Organization = {
@@ -502,12 +508,6 @@ export type UpdateSelfInput = {
   visibility?: Visibility | null,
 };
 
-export type FileInput = {
-  name: string,
-  type: string,
-  data: string,
-};
-
 export type TokenUpdateInput = {
   description?: string | null,
   name?: string | null,
@@ -539,7 +539,7 @@ export type ProjectUpdateInput = {
   name?: string | null,
   description?: string | null,
   visibility?: Visibility | null,
-  icon?: string | null,
+  icon?: FileInput | null,
 };
 
 export type GroupUpdateInput = {
@@ -559,7 +559,7 @@ export type OrganizationUpdateInput = {
   name?: string | null,
   description?: string | null,
   visibility?: Visibility | null,
-  icon?: string | null,
+  icon?: FileInput | null,
 };
 
 export type AdminOrganizationUpdateInput = {
