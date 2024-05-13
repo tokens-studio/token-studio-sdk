@@ -3,13 +3,14 @@
 // this is an auto generated file. This will be overwritten
 
 export const userInvitations = /* GraphQL */ `
-  query UserInvitations($limit: Int) {
-    userInvitations(limit: $limit) {
+  query UserInvitations($organization: String!, $limit: Int) {
+    userInvitations(organization: $organization, limit: $limit) {
       organization
       user
       status
       urn
       confirmCode
+      email
     }
   }
 `;

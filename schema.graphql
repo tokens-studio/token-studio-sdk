@@ -186,8 +186,9 @@ type Invitation @aws_lambda @aws_cognito_user_pools {
 	# Organization urn
 	organization: String!
 	# User urn
-	user: String!
+	user: String
 	status: InvitationStatus
+	email: String
 	urn: String!
 	confirmCode: String!
 }
@@ -950,6 +951,8 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
 		@aws_cognito_user_pools
 	# Declines an invitation to join an organization
 	declineInvitation(urn: String!): String @aws_cognito_user_pools
+	# Resends an invitation to join an organization
+	resendInvitation(urn: String!): String @aws_cognito_user_pools
 	### Updates
 	##### Update the values of an existing token
 	updateSelf(input: UpdateSelfInput): User @aws_cognito_user_pools
@@ -1065,7 +1068,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
 
 type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
 	# Retrieves all invitations in the context of your user
-	userInvitations(limit: Int): [Invitation]
+	userInvitations(organization: String!, limit: Int): [Invitation]
 		@aws_api_key
 		@aws_lambda
 		@aws_cognito_user_pools
