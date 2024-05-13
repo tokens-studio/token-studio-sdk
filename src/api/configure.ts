@@ -97,8 +97,10 @@ export namespace Configuration {
      * @param token
      */
     export const setAPIKey = (token: string, env: 'dev' | 'prod' = 'prod') => {
-        const { config: selectedConfig, oauth: selectedOauth } = getConfigs(env === 'prod' ? 'production' : 'development');
-        
+        const { config: selectedConfig, oauth: selectedOauth } = getConfigs(
+            env === 'prod' ? 'production' : 'development'
+        );
+
         configuration = Amplify.configure({
             ...selectedConfig,
             oauth: selectedOauth,
