@@ -173,7 +173,7 @@ export enum TokenType {
 }
 
 
-export type RawTokenValue = Raw_Token_scalar | Raw_Token_typography | Raw_Token_border | Raw_Token_boxShadow
+export type RawTokenValue = Raw_Token_scalar | Raw_Token_typography | Raw_Token_border | Raw_Token_boxShadow | Raw_Token_composition
 
 
 export type Raw_Token_scalar = {
@@ -228,6 +228,58 @@ export type BoxShadow = {
   color?: string | null,
   type?: string | null,
   blendMode?: string | null,
+};
+
+export type Raw_Token_composition = {
+  __typename: "Raw_Token_composition",
+  value?: string | null,
+  composition?: Composition | null,
+};
+
+export type Composition = {
+  __typename: "Composition",
+  sizing?: string | null,
+  height?: string | null,
+  width?: string | null,
+  spacing?: string | null,
+  verticalPadding?: string | null,
+  horizontalPadding?: string | null,
+  paddingTop?: string | null,
+  paddingRight?: string | null,
+  paddingBottom?: string | null,
+  paddingLeft?: string | null,
+  itemSpacing?: string | null,
+  fill?: string | null,
+  backgroundBlur?: string | null,
+  border?: string | null,
+  borderTop?: string | null,
+  borderRight?: string | null,
+  borderBottom?: string | null,
+  borderLeft?: string | null,
+  borderColor?: string | null,
+  borderRadius?: string | null,
+  borderRadiusTopLeft?: string | null,
+  borderRadiusTopRight?: string | null,
+  borderRadiusBottomRight?: string | null,
+  borderRadiusBottomLeft?: string | null,
+  borderWidth?: string | null,
+  borderWidthTop?: string | null,
+  borderWidthRight?: string | null,
+  borderWidthBottom?: string | null,
+  borderWidthLeft?: string | null,
+  boxShadow?: string | null,
+  opacity?: string | null,
+  fontFamilies?: string | null,
+  fontWeights?: string | null,
+  fontSizes?: string | null,
+  lineHeights?: string | null,
+  typography?: string | null,
+  letterSpacing?: string | null,
+  paragraphSpacing?: string | null,
+  textCase?: string | null,
+  dimension?: string | null,
+  textDecoration?: string | null,
+  asset?: string | null,
 };
 
 export type Resolver = {
@@ -404,6 +456,7 @@ export type TokenInput = {
   typography?: TypographyInput | null,
   border?: BorderInput | null,
   boxShadow?: Array< BoxShadowInput | null > | null,
+  composition?: CompositionInput | null,
 };
 
 export type TypographyInput = {
@@ -432,6 +485,51 @@ export type BoxShadowInput = {
   color?: string | null,
   type?: string | null,
   blendMode?: string | null,
+};
+
+export type CompositionInput = {
+  sizing?: string | null,
+  height?: string | null,
+  width?: string | null,
+  spacing?: string | null,
+  verticalPadding?: string | null,
+  horizontalPadding?: string | null,
+  paddingTop?: string | null,
+  paddingRight?: string | null,
+  paddingBottom?: string | null,
+  paddingLeft?: string | null,
+  itemSpacing?: string | null,
+  fill?: string | null,
+  backgroundBlur?: string | null,
+  border?: string | null,
+  borderTop?: string | null,
+  borderRight?: string | null,
+  borderBottom?: string | null,
+  borderLeft?: string | null,
+  borderColor?: string | null,
+  borderRadius?: string | null,
+  borderRadiusTopLeft?: string | null,
+  borderRadiusTopRight?: string | null,
+  borderRadiusBottomRight?: string | null,
+  borderRadiusBottomLeft?: string | null,
+  borderWidth?: string | null,
+  borderWidthTop?: string | null,
+  borderWidthRight?: string | null,
+  borderWidthBottom?: string | null,
+  borderWidthLeft?: string | null,
+  boxShadow?: string | null,
+  opacity?: string | null,
+  fontFamilies?: string | null,
+  fontWeights?: string | null,
+  fontSizes?: string | null,
+  lineHeights?: string | null,
+  typography?: string | null,
+  letterSpacing?: string | null,
+  paragraphSpacing?: string | null,
+  textCase?: string | null,
+  dimension?: string | null,
+  textDecoration?: string | null,
+  asset?: string | null,
 };
 
 export type TokenSetInput = {
@@ -487,10 +585,10 @@ export type GeneratorInput = {
 export type Invitation = {
   __typename: "Invitation",
   organization: string,
-  user: string,
+  user?: string | null,
+  email?: string | null,
   status?: InvitationStatus | null,
   urn: string,
-  email: string,
   confirmCode: string,
 };
 
@@ -646,7 +744,7 @@ export type ResolvedToken = {
   type?: TokenType | null,
 };
 
-export type ResolvedTokenValue = Token_border | Token_boxShadow | Token_scalar | Token_typography
+export type ResolvedTokenValue = Token_border | Token_boxShadow | Token_scalar | Token_typography | Token_composition
 
 
 export type Token_border = {
@@ -670,6 +768,12 @@ export type Token_typography = {
   __typename: "Token_typography",
   value?: string | null,
   typography?: Typography | null,
+};
+
+export type Token_composition = {
+  __typename: "Token_composition",
+  value?: string | null,
+  composition?: Composition | null,
 };
 
 export type ResolverFilterInput = {
@@ -967,6 +1071,9 @@ export type CreateTokenMutation = {
       } | {
         __typename: "Raw_Token_boxShadow",
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
+        value?: string | null,
       }
     ) | null,
   } | null,
@@ -1001,6 +1108,9 @@ export type BulkCreateTokenMutation = {
         value?: string | null,
       } | {
         __typename: "Raw_Token_boxShadow",
+        value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
         value?: string | null,
       }
     ) | null,
@@ -1192,7 +1302,8 @@ export type InviteToOrganizationMutation = {
   inviteToOrganization?:  {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string | null,
+    email?: string | null,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
@@ -1369,6 +1480,9 @@ export type UpdateTokenMutation = {
         value?: string | null,
       } | {
         __typename: "Raw_Token_boxShadow",
+        value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
         value?: string | null,
       }
     ) | null,
@@ -1852,6 +1966,9 @@ export type DeleteTokenMutation = {
       } | {
         __typename: "Raw_Token_boxShadow",
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
+        value?: string | null,
       }
     ) | null,
   } | null,
@@ -2057,7 +2174,8 @@ export type DeleteInvitationMutation = {
   deleteInvitation?:  {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string | null,
+    email?: string | null,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
@@ -2287,17 +2405,16 @@ export type AdminUpdateOrganizationMutation = {
 };
 
 export type UserInvitationsQueryVariables = {
-  limit?: number | null,
   organization: string,
+  limit?: number | null,
 };
 
 export type UserInvitationsQuery = {
   userInvitations?:  Array< {
     __typename: "Invitation",
     organization: string,
-    user?: string,
-    email?: string,
-    groups?: Array<string>,
+    user?: string | null,
+    email?: string | null,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
@@ -2712,6 +2829,9 @@ export type TokenQuery = {
       } | {
         __typename: "Raw_Token_boxShadow",
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
+        value?: string | null,
       }
     ) | null,
   } | null,
@@ -2749,6 +2869,9 @@ export type TokensQuery = {
       } | {
         __typename: "Raw_Token_boxShadow",
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
+        value?: string | null,
       }
     ) | null,
   } >,
@@ -2765,7 +2888,8 @@ export type SelfQuery = {
     invitations?:  Array< {
       __typename: "Invitation",
       organization: string,
-      user: string,
+      user?: string | null,
+      email?: string | null,
       status?: InvitationStatus | null,
       urn: string,
       confirmCode: string,
@@ -2820,6 +2944,9 @@ export type ResolveQuery = {
         value?: string | null,
       } | {
         __typename: "Token_typography",
+        value?: string | null,
+      } | {
+        __typename: "Token_composition",
         value?: string | null,
       }
     ) | null,
@@ -3047,6 +3174,9 @@ export type OnCreateTokenSubscription = {
       } | {
         __typename: "Raw_Token_boxShadow",
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
+        value?: string | null,
       }
     ) | null,
   } | null,
@@ -3081,6 +3211,9 @@ export type OnUpdateTokenSubscription = {
       } | {
         __typename: "Raw_Token_boxShadow",
         value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
+        value?: string | null,
       }
     ) | null,
   } | null,
@@ -3114,6 +3247,9 @@ export type OnDeleteTokenSubscription = {
         value?: string | null,
       } | {
         __typename: "Raw_Token_boxShadow",
+        value?: string | null,
+      } | {
+        __typename: "Raw_Token_composition",
         value?: string | null,
       }
     ) | null,
