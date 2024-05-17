@@ -7,10 +7,10 @@ export const userInvitations = /* GraphQL */ `
     userInvitations(organization: $organization, limit: $limit) {
       organization
       user
+      email
       status
       urn
       confirmCode
-      email
     }
   }
 `;
@@ -435,6 +435,7 @@ export const self = /* GraphQL */ `
       invitations {
         organization
         user
+        email
         status
         urn
         confirmCode

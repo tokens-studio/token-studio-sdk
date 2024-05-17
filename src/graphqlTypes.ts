@@ -487,10 +487,10 @@ export type GeneratorInput = {
 export type Invitation = {
   __typename: "Invitation",
   organization: string,
-  user: string,
+  user?: string | null,
+  email?: string | null,
   status?: InvitationStatus | null,
   urn: string,
-  email: string,
   confirmCode: string,
 };
 
@@ -1192,7 +1192,8 @@ export type InviteToOrganizationMutation = {
   inviteToOrganization?:  {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string | null,
+    email?: string | null,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
@@ -1857,6 +1858,14 @@ export type DeleteTokenMutation = {
   } | null,
 };
 
+export type DeleteTokensMutationVariables = {
+  urns: Array< string | null >,
+};
+
+export type DeleteTokensMutation = {
+  deleteTokens?: Array< string | null > | null,
+};
+
 export type DeleteTokenSetMutationVariables = {
   urn: string,
 };
@@ -2057,7 +2066,8 @@ export type DeleteInvitationMutation = {
   deleteInvitation?:  {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string | null,
+    email?: string | null,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
@@ -2287,17 +2297,16 @@ export type AdminUpdateOrganizationMutation = {
 };
 
 export type UserInvitationsQueryVariables = {
-  limit?: number | null,
   organization: string,
+  limit?: number | null,
 };
 
 export type UserInvitationsQuery = {
   userInvitations?:  Array< {
     __typename: "Invitation",
     organization: string,
-    user?: string,
-    email?: string,
-    groups?: Array<string>,
+    user?: string | null,
+    email?: string | null,
     status?: InvitationStatus | null,
     urn: string,
     confirmCode: string,
@@ -2765,7 +2774,8 @@ export type SelfQuery = {
     invitations?:  Array< {
       __typename: "Invitation",
       organization: string,
-      user: string,
+      user?: string | null,
+      email?: string | null,
       status?: InvitationStatus | null,
       urn: string,
       confirmCode: string,

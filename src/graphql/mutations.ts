@@ -401,6 +401,7 @@ export const inviteToOrganization = /* GraphQL */ `
     ) {
       organization
       user
+      email
       status
       urn
       confirmCode
@@ -480,13 +481,11 @@ export const declineInvitation = /* GraphQL */ `
     declineInvitation(urn: $urn)
   }
 `;
-
 export const resendInvitation = /* GraphQL */ `
   mutation ResendInvitation($urn: String!) {
     resendInvitation(urn: $urn)
   }
 `;
-
 export const updateSelf = /* GraphQL */ `
   mutation UpdateSelf($input: UpdateSelfInput) {
     updateSelf(input: $input) {
@@ -937,6 +936,11 @@ export const deleteToken = /* GraphQL */ `
     }
   }
 `;
+export const deleteTokens = /* GraphQL */ `
+  mutation DeleteTokens($urns: [String]!) {
+    deleteTokens(urns: $urns)
+  }
+`;
 export const deleteTokenSet = /* GraphQL */ `
   mutation DeleteTokenSet($urn: String!) {
     deleteTokenSet(urn: $urn) {
@@ -1108,6 +1112,7 @@ export const deleteInvitation = /* GraphQL */ `
     deleteInvitation(urn: $urn) {
       organization
       user
+      email
       status
       urn
       confirmCode
