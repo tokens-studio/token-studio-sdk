@@ -8,9 +8,9 @@ export const userInvitations = /* GraphQL */ `
       organization
       user
       status
+      email
       urn
       confirmCode
-      email
     }
   }
 `;
@@ -436,6 +436,7 @@ export const self = /* GraphQL */ `
         organization
         user
         status
+        email
         urn
         confirmCode
       }

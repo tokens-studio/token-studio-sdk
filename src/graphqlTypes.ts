@@ -487,10 +487,10 @@ export type GeneratorInput = {
 export type Invitation = {
   __typename: "Invitation",
   organization: string,
-  user: string,
+  user?: string | null,
   status?: InvitationStatus | null,
+  email?: string | null,
   urn: string,
-  email: string,
   confirmCode: string,
 };
 
@@ -1175,7 +1175,7 @@ export type AddMemberToGroupMutation = {
 
 export type RemoveMemberFromGroupMutationVariables = {
   group: string,
-  user: string,
+  entity: string,
 };
 
 export type RemoveMemberFromGroupMutation = {
@@ -1192,8 +1192,9 @@ export type InviteToOrganizationMutation = {
   inviteToOrganization?:  {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string | null,
     status?: InvitationStatus | null,
+    email?: string | null,
     urn: string,
     confirmCode: string,
   } | null,
@@ -2057,8 +2058,9 @@ export type DeleteInvitationMutation = {
   deleteInvitation?:  {
     __typename: "Invitation",
     organization: string,
-    user: string,
+    user?: string | null,
     status?: InvitationStatus | null,
+    email?: string | null,
     urn: string,
     confirmCode: string,
   } | null,
@@ -2287,18 +2289,17 @@ export type AdminUpdateOrganizationMutation = {
 };
 
 export type UserInvitationsQueryVariables = {
-  limit?: number | null,
   organization: string,
+  limit?: number | null,
 };
 
 export type UserInvitationsQuery = {
   userInvitations?:  Array< {
     __typename: "Invitation",
     organization: string,
-    user?: string,
-    email?: string,
-    groups?: Array<string>,
+    user?: string | null,
     status?: InvitationStatus | null,
+    email?: string | null,
     urn: string,
     confirmCode: string,
   } | null > | null,
@@ -2765,8 +2766,9 @@ export type SelfQuery = {
     invitations?:  Array< {
       __typename: "Invitation",
       organization: string,
-      user: string,
+      user?: string | null,
       status?: InvitationStatus | null,
+      email?: string | null,
       urn: string,
       confirmCode: string,
     } | null > | null,

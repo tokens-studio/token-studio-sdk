@@ -384,8 +384,8 @@ export const addMemberToGroup = /* GraphQL */ `
   }
 `;
 export const removeMemberFromGroup = /* GraphQL */ `
-  mutation RemoveMemberFromGroup($group: String!, $user: String!) {
-    removeMemberFromGroup(group: $group, user: $user)
+  mutation RemoveMemberFromGroup($group: String!, $entity: String!) {
+    removeMemberFromGroup(group: $group, entity: $entity)
   }
 `;
 export const inviteToOrganization = /* GraphQL */ `
@@ -402,6 +402,7 @@ export const inviteToOrganization = /* GraphQL */ `
       organization
       user
       status
+      email
       urn
       confirmCode
     }
@@ -480,13 +481,11 @@ export const declineInvitation = /* GraphQL */ `
     declineInvitation(urn: $urn)
   }
 `;
-
 export const resendInvitation = /* GraphQL */ `
   mutation ResendInvitation($urn: String!) {
     resendInvitation(urn: $urn)
   }
 `;
-
 export const updateSelf = /* GraphQL */ `
   mutation UpdateSelf($input: UpdateSelfInput) {
     updateSelf(input: $input) {
@@ -1109,6 +1108,7 @@ export const deleteInvitation = /* GraphQL */ `
       organization
       user
       status
+      email
       urn
       confirmCode
     }
