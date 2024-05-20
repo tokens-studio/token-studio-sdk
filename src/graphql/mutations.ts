@@ -224,6 +224,9 @@ export const createToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -251,6 +254,9 @@ export const bulkCreateToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -401,6 +407,7 @@ export const inviteToOrganization = /* GraphQL */ `
     ) {
       organization
       user
+      email
       status
       urn
       confirmCode
@@ -480,13 +487,11 @@ export const declineInvitation = /* GraphQL */ `
     declineInvitation(urn: $urn)
   }
 `;
-
 export const resendInvitation = /* GraphQL */ `
   mutation ResendInvitation($urn: String!) {
     resendInvitation(urn: $urn)
   }
 `;
-
 export const updateSelf = /* GraphQL */ `
   mutation UpdateSelf($input: UpdateSelfInput) {
     updateSelf(input: $input) {
@@ -542,6 +547,9 @@ export const updateToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -933,6 +941,9 @@ export const deleteToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -1108,6 +1119,7 @@ export const deleteInvitation = /* GraphQL */ `
     deleteInvitation(urn: $urn) {
       organization
       user
+      email
       status
       urn
       confirmCode
