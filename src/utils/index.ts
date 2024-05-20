@@ -4,6 +4,7 @@ import {
     RawTokenValue,
     Raw_Token_border,
     Raw_Token_boxShadow,
+    Raw_Token_composition,
     Raw_Token_typography,
     ResolvedToken,
     TokenType
@@ -11,6 +12,7 @@ import {
 import {
     SingleBorderToken,
     SingleBoxShadowToken,
+    SingleCompositionToken,
     SingleToken,
     SingleTypographyToken,
     TokenTypes
@@ -81,6 +83,16 @@ export const rawTokenToSingleToken = (
                     removeNullProperties(typographyToken?.typography),
                 ...extend
             } as SingleTypographyToken;
+        }
+        case TokenType.composition: {
+            const compositionToken = token.value as Raw_Token_composition;
+            return {
+                type: TokenTypes.COMPOSITION,
+                value:
+                    compositionToken?.value ||
+                    removeNullProperties(compositionToken?.composition),
+                ...extend
+            } as SingleCompositionToken;
         }
         default:
             return {

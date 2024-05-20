@@ -387,6 +387,9 @@ export const token = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -419,6 +422,9 @@ export const tokens = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -482,6 +488,9 @@ export const resolve = /* GraphQL */ `
           value
         }
         ... on Token_typography {
+          value
+        }
+        ... on Token_composition {
           value
         }
       }

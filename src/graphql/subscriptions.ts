@@ -27,6 +27,9 @@ export const onCreateToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -56,6 +59,9 @@ export const onUpdateToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -83,6 +89,9 @@ export const onDeleteToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }

@@ -194,78 +194,78 @@ type Invitation @aws_lambda @aws_cognito_user_pools {
 }
 
 enum InvitationStatus {
-	PENDING
-	DECLINED
-	ACCEPTED
+    PENDING
+    DECLINED
+    ACCEPTED
 }
 
 type Metadata {
-	# Time of creation of the resource
-	createdAt: AWSDateTime
-	#  The entity who initially created this token
-	createdBy: Entity
-	#  The last entity to update the token directly.
-	lastUpdatedBy: Entity
+    # Time of creation of the resource
+    createdAt: AWSDateTime
+    #  The entity who initially created this token
+    createdBy: Entity
+    #  The last entity to update the token directly.
+    lastUpdatedBy: Entity
 }
 
 input Order {
-	field: String!
-	direction: OrderDirection!
+    field: String!
+    direction: OrderDirection!
 }
 
 enum OrderDirection {
-	ASC
-	DESC
+    ASC
+    DESC
 }
 
 type OrganizationInfo {
-	urn: String
-	name: String
-	tier: OrganizationTier
-	account: String
-	createdAt: AWSDateTime
+    urn: String
+    name: String
+    tier: OrganizationTier
+    account: String
+    createdAt: AWSDateTime
 }
 
 type Organization @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	# Unique id of the organization
-	urn: String
-	# Date that the org was created
-	createdAt: AWSDateTime
-	# The user that created the organization
-	owner: User
-	# Name is not unique
-	name: String
-	# Optional description
-	description: String
-	# Visibility of the org to the public
-	visibility: Visibility
-	# The account id
-	account: String
-	# The stripe account id. Might be null if user is on free tier
-	payment: String
-	# Whether or not SSO is enabled
-	ssoEnabled: Boolean
-	# Optional icon
-	icon: String
-	# The tier associated with the organization
-	tier: OrganizationTier
-	# Projects inside the organization
-	projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
-	# Groups inside the organization
-	groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
-	# Policies inside the organization
-	policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
-	# The api keys owned by the organization
-	apiKeys: [APIKeyWithoutValue]
-	# User of the organization
-	users(filter: UserFilterInput, limit: Int, offset: Int): [User]
+    # Unique id of the organization
+    urn: String
+    # Date that the org was created
+    createdAt: AWSDateTime
+    # The user that created the organization
+    owner: User
+    # Name is not unique
+    name: String
+    # Optional description
+    description: String
+    # Visibility of the org to the public
+    visibility: Visibility
+    # The account id
+    account: String
+    # The stripe account id. Might be null if user is on free tier
+    payment: String
+    # Whether or not SSO is enabled
+    ssoEnabled: Boolean
+    # Optional icon
+    icon: String
+    # The tier associated with the organization
+    tier: OrganizationTier
+    # Projects inside the organization
+    projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
+    # Groups inside the organization
+    groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
+    # Policies inside the organization
+    policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
+    # The api keys owned by the organization
+    apiKeys: [APIKeyWithoutValue]
+    # User of the organization
+    users(filter: UserFilterInput, limit: Int, offset: Int): [User]
 }
 
 input OrganizationFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
-	owner: StringFilterInput
-	visibility: VisibilityInput
+    urn: StringFilterInput
+    name: StringFilterInput
+    owner: StringFilterInput
+    visibility: VisibilityInput
 }
 
 input OrganizationInput {
@@ -293,68 +293,68 @@ input OrganizationUpdateInput {
 }
 
 input AdminOrganizationUpdateInput {
-	tier: OrganizationTier
+    tier: OrganizationTier
 }
 
 type Policy @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	createdAt: AWSDateTime
-	name: String!
-	urn: String
-	description: String
-	value: PolicyDoc!
+    createdAt: AWSDateTime
+    name: String!
+    urn: String
+    description: String
+    value: PolicyDoc!
 }
 
 type PolicyDoc {
-	version: String!
-	statement: [PolicyStatement]!
+    version: String!
+    statement: [PolicyStatement]!
 }
 
 input PolicyDocInput {
-	version: String!
-	statement: [PolicyStatementInput!]!
+    version: String!
+    statement: [PolicyStatementInput!]!
 }
 
 input PolicyFilterInput {
-	name: PolicyStringFilterInput
-	urn: String
+    name: PolicyStringFilterInput
+    urn: String
 }
 
 input PolicyInput {
-	name: String!
-	description: String
-	value: PolicyDocInput!
+    name: String!
+    description: String
+    value: PolicyDocInput!
 }
 
 input PolicyInputUpdate {
-	name: String
-	description: String
-	value: PolicyDocInput
+    name: String
+    description: String
+    value: PolicyDocInput
 }
 
 type PolicyStatement {
-	effect: String!
-	action: [String]!
-	resource: [String]!
+    effect: String!
+    action: [String]!
+    resource: [String]!
 }
 
 input PolicyStatementInput {
-	effect: String!
-	action: [String]!
-	resource: [String]!
+    effect: String!
+    action: [String]!
+    resource: [String]!
 }
 
 input PolicyStringFilterInput {
-	eq: String
+    eq: String
 }
 
 input SDConfigFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 input ThemeGroupFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 type ThemeOption @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -471,6 +471,7 @@ union RawTokenValue =
     | Raw_Token_typography
     | Raw_Token_border
     | Raw_Token_boxShadow
+    | Raw_Token_composition
 
 type RawToken @aws_api_key @aws_lambda @aws_cognito_user_pools {
     description: String
@@ -487,6 +488,11 @@ type Raw_Token_border @aws_api_key @aws_lambda @aws_cognito_user_pools {
     # Use when setting a reference to a another border token
     value: String
     border: Border
+}
+
+type Raw_Token_composition @aws_api_key @aws_lambda @aws_cognito_user_pools {
+    value: String
+    composition: Composition
 }
 
 type Raw_Token_boxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -653,6 +659,7 @@ input TokenInput {
     typography: TypographyInput
     border: BorderInput
     boxShadow: [BoxShadowInput]
+    composition: CompositionInput
 }
 
 type TokenSet @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -756,10 +763,12 @@ union ResolvedTokenValue =
     | Token_boxShadow
     | Token_scalar
     | Token_typography
+    | Token_composition
+    
 
-type Token_Composition {
-    ## TODO this needs to be able to support the type of the composition
+type Token_composition {
     value: String
+    composition: Composition
 }
 
 type Token_border {
@@ -780,6 +789,51 @@ type Token_scalar {
 type Token_typography {
     value: String
     typography: Typography
+}
+
+type Composition {
+    sizing: String
+    height: String
+    width: String
+    spacing: String
+    verticalPadding: String
+    horizontalPadding: String
+    paddingTop: String
+    paddingRight: String
+    paddingBottom: String
+    paddingLeft: String
+    itemSpacing: String
+    fill: String
+    backgroundBlur: String
+    border: String
+    borderTop: String
+    borderRight: String
+    borderBottom: String
+    borderLeft: String
+    borderColor: String
+    borderRadius: String
+    borderRadiusTopLeft: String
+    borderRadiusTopRight: String
+    borderRadiusBottomRight: String
+    borderRadiusBottomLeft: String
+    borderWidth: String
+    borderWidthTop: String
+    borderWidthRight: String
+    borderWidthBottom: String
+    borderWidthLeft: String
+    boxShadow: String
+    opacity: String
+    fontFamilies: String
+    fontWeights: String
+    fontSizes: String
+    lineHeights: String
+    typography: String
+    letterSpacing: String
+    paragraphSpacing: String
+    textCase: String
+    dimension: String
+    textDecoration: String
+    asset: String
 }
 
 type Typography @aws_api_key @aws_lambda @aws_cognito_user_pools {
@@ -805,6 +859,51 @@ input TypographyInput {
     paragraphSpacing: String
     textCase: String
     textDecoration: String
+}
+
+input CompositionInput {
+    sizing: String
+    height: String
+    width: String
+    spacing: String
+    verticalPadding: String
+    horizontalPadding: String
+    paddingTop: String
+    paddingRight: String
+    paddingBottom: String
+    paddingLeft: String
+    itemSpacing: String
+    fill: String
+    backgroundBlur: String
+    border: String
+    borderTop: String
+    borderRight: String
+    borderBottom: String
+    borderLeft: String
+    borderColor: String
+    borderRadius: String
+    borderRadiusTopLeft: String
+    borderRadiusTopRight: String
+    borderRadiusBottomRight: String
+    borderRadiusBottomLeft: String
+    borderWidth: String
+    borderWidthTop: String
+    borderWidthRight: String
+    borderWidthBottom: String
+    borderWidthLeft: String
+    boxShadow: String
+    opacity: String
+    fontFamilies: String
+    fontWeights: String
+    fontSizes: String
+    lineHeights: String
+    typography: String
+    letterSpacing: String
+    paragraphSpacing: String
+    textCase: String
+    dimension: String
+    textDecoration: String
+    asset: String
 }
 
 input UpdateSelfInput {

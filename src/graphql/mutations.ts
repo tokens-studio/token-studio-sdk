@@ -224,6 +224,9 @@ export const createToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -251,6 +254,9 @@ export const bulkCreateToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -541,6 +547,9 @@ export const updateToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -930,6 +939,9 @@ export const deleteToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
