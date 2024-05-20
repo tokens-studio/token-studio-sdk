@@ -390,8 +390,8 @@ export const addMemberToGroup = /* GraphQL */ `
   }
 `;
 export const removeMemberFromGroup = /* GraphQL */ `
-  mutation RemoveMemberFromGroup($group: String!, $user: String!) {
-    removeMemberFromGroup(group: $group, user: $user)
+  mutation RemoveMemberFromGroup($group: String!, $entity: String!) {
+    removeMemberFromGroup(group: $group, entity: $entity)
   }
 `;
 export const inviteToOrganization = /* GraphQL */ `

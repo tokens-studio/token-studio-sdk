@@ -1285,7 +1285,7 @@ export type AddMemberToGroupMutation = {
 
 export type RemoveMemberFromGroupMutationVariables = {
   group: string,
-  user: string,
+  entity: string,
 };
 
 export type RemoveMemberFromGroupMutation = {
