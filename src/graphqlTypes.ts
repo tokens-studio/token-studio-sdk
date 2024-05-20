@@ -1974,6 +1974,14 @@ export type DeleteTokenMutation = {
   } | null,
 };
 
+export type DeleteTokensMutationVariables = {
+  urns: Array< string | null >,
+};
+
+export type DeleteTokensMutation = {
+  deleteTokens?: Array< string | null > | null,
+};
+
 export type DeleteTokenSetMutationVariables = {
   urn: string,
 };

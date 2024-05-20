@@ -948,6 +948,11 @@ export const deleteToken = /* GraphQL */ `
     }
   }
 `;
+export const deleteTokens = /* GraphQL */ `
+  mutation DeleteTokens($urns: [String]!) {
+    deleteTokens(urns: $urns)
+  }
+`;
 export const deleteTokenSet = /* GraphQL */ `
   mutation DeleteTokenSet($urn: String!) {
     deleteTokenSet(urn: $urn) {
