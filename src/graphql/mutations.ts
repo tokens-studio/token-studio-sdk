@@ -224,6 +224,9 @@ export const createToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -251,6 +254,9 @@ export const bulkCreateToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -401,6 +407,7 @@ export const inviteToOrganization = /* GraphQL */ `
     ) {
       organization
       user
+      email
       status
       email
       urn
@@ -541,6 +548,9 @@ export const updateToken = /* GraphQL */ `
           value
         }
         ... on Raw_Token_boxShadow {
+          value
+        }
+        ... on Raw_Token_composition {
           value
         }
       }
@@ -932,8 +942,16 @@ export const deleteToken = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
+  }
+`;
+export const deleteTokens = /* GraphQL */ `
+  mutation DeleteTokens($urns: [String]!) {
+    deleteTokens(urns: $urns)
   }
 `;
 export const deleteTokenSet = /* GraphQL */ `
@@ -1107,6 +1125,7 @@ export const deleteInvitation = /* GraphQL */ `
     deleteInvitation(urn: $urn) {
       organization
       user
+      email
       status
       email
       urn

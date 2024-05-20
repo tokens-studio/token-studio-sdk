@@ -7,6 +7,7 @@ export const userInvitations = /* GraphQL */ `
     userInvitations(organization: $organization, limit: $limit) {
       organization
       user
+      email
       status
       email
       urn
@@ -387,6 +388,9 @@ export const token = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -421,6 +425,9 @@ export const tokens = /* GraphQL */ `
         ... on Raw_Token_boxShadow {
           value
         }
+        ... on Raw_Token_composition {
+          value
+        }
       }
     }
   }
@@ -435,6 +442,7 @@ export const self = /* GraphQL */ `
       invitations {
         organization
         user
+        email
         status
         email
         urn
@@ -482,6 +490,9 @@ export const resolve = /* GraphQL */ `
           value
         }
         ... on Token_typography {
+          value
+        }
+        ... on Token_composition {
           value
         }
       }
