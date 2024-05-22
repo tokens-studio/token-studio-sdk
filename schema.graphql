@@ -710,30 +710,7 @@ input TokenSetsFilterInput {
     name: StringFilterInput
 }
 
-enum TokenType {
-    any
-    asset
-    border
-    borderRadius
-    borderWidth
-    boxShadow
-    color
-    composition
-    dimension
-    fontFamilies
-    fontSizes
-    fontWeights
-    letterSpacing
-    lineHeights
-    opacity
-    other
-    paragraphSpacing
-    sizing
-    spacing
-    textCase
-    textDecoration
-    typography
-}
+scalar TokenType
 
 input TokenTypeFilterInput {
     eq: TokenType
@@ -747,6 +724,7 @@ input TokenUpdateInput {
     border: BorderInput
     boxShadow: [BoxShadowInput]
     typography: TypographyInput
+    composition: CompositionInput
     ## Use for scalars or references
     value: String
 }
@@ -764,7 +742,6 @@ union ResolvedTokenValue =
     | Token_scalar
     | Token_typography
     | Token_composition
-    
 
 type Token_composition {
     value: String
@@ -1030,7 +1007,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_lambda
         @aws_cognito_user_pools
     # Removes a member from a group in your organization
-    removeMemberFromGroup(group: String!, entity: String!): String
+    removeMemberFromGroup(group: String!, user: String!): String
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools

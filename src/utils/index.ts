@@ -6,8 +6,7 @@ import {
     Raw_Token_boxShadow,
     Raw_Token_composition,
     Raw_Token_typography,
-    ResolvedToken,
-    TokenType
+    ResolvedToken
 } from '../graphqlTypes';
 import {
     SingleBorderToken,
@@ -53,7 +52,7 @@ export const rawTokenToSingleToken = (
     };
 
     switch (token.type) {
-        case TokenType.boxShadow: {
+        case TokenTypes.BOX_SHADOW: {
             const boxShadowToken = token.value as Raw_Token_boxShadow;
             return {
                 type: TokenTypes.BOX_SHADOW,
@@ -64,7 +63,7 @@ export const rawTokenToSingleToken = (
                 ...extend
             } as SingleBoxShadowToken;
         }
-        case TokenType.border: {
+        case TokenTypes.BORDER: {
             const borderToken = token.value as Raw_Token_border;
             return {
                 type: TokenTypes.BORDER,
@@ -74,7 +73,7 @@ export const rawTokenToSingleToken = (
                 ...extend
             } as SingleBorderToken;
         }
-        case TokenType.typography: {
+        case TokenTypes.TYPOGRAPHY: {
             const typographyToken = token.value as Raw_Token_typography;
             return {
                 type: TokenTypes.TYPOGRAPHY,
@@ -84,7 +83,7 @@ export const rawTokenToSingleToken = (
                 ...extend
             } as SingleTypographyToken;
         }
-        case TokenType.composition: {
+        case TokenTypes.COMPOSITION: {
             const compositionToken = token.value as Raw_Token_composition;
             return {
                 type: TokenTypes.COMPOSITION,
