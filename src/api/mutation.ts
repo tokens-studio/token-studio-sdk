@@ -2,8 +2,7 @@ import * as mutations from '../graphql/mutations';
 import {
     CreateTokenMutation,
     CreateTokenMutationVariables,
-    TokenInput as GraphqlTokenInput,
-    TokenType
+    TokenInput as GraphqlTokenInput
 } from '../graphqlTypes';
 import { Graphql } from './graphql';
 
@@ -16,7 +15,7 @@ export namespace Mutation {
     export interface ITokenInput {
         description?: string;
         name: string;
-        type: TokenType;
+        type: string;
         metadata: Record<string, any>;
     }
 
