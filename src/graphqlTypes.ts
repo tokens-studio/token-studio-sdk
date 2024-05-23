@@ -143,35 +143,9 @@ export type RawToken = {
   extensions?: string | null,
   setUrn?: string | null,
   metadata?: Metadata | null,
-  type?: TokenType | null,
+  type?: string | null,
   value?: RawTokenValue | null,
 };
-
-export enum TokenType {
-  any = "any",
-  asset = "asset",
-  border = "border",
-  borderRadius = "borderRadius",
-  borderWidth = "borderWidth",
-  boxShadow = "boxShadow",
-  color = "color",
-  composition = "composition",
-  dimension = "dimension",
-  fontFamilies = "fontFamilies",
-  fontSizes = "fontSizes",
-  fontWeights = "fontWeights",
-  letterSpacing = "letterSpacing",
-  lineHeights = "lineHeights",
-  opacity = "opacity",
-  other = "other",
-  paragraphSpacing = "paragraphSpacing",
-  sizing = "sizing",
-  spacing = "spacing",
-  textCase = "textCase",
-  textDecoration = "textDecoration",
-  typography = "typography",
-}
-
 
 export type RawTokenValue = Raw_Token_scalar | Raw_Token_typography | Raw_Token_border | Raw_Token_boxShadow | Raw_Token_composition
 
@@ -450,7 +424,7 @@ export type APIKey = {
 export type TokenInput = {
   description?: string | null,
   name: string,
-  type: TokenType,
+  type: string,
   extensions?: string | null,
   value?: string | null,
   typography?: TypographyInput | null,
@@ -614,6 +588,7 @@ export type TokenUpdateInput = {
   border?: BorderInput | null,
   boxShadow?: Array< BoxShadowInput | null > | null,
   typography?: TypographyInput | null,
+  composition?: CompositionInput | null,
   value?: string | null,
 };
 
@@ -712,8 +687,8 @@ export type TokenFilterInput = {
 };
 
 export type TokenTypeFilterInput = {
-  eq?: TokenType | null,
-  ne?: TokenType | null,
+  eq?: string | null,
+  ne?: string | null,
 };
 
 export type Self = {
@@ -741,7 +716,7 @@ export type ResolvedToken = {
   description?: string | null,
   name?: string | null,
   value?: ResolvedTokenValue | null,
-  type?: TokenType | null,
+  type?: string | null,
 };
 
 export type ResolvedTokenValue = Token_border | Token_boxShadow | Token_scalar | Token_typography | Token_composition
@@ -1058,7 +1033,7 @@ export type CreateTokenMutation = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -1096,7 +1071,7 @@ export type BulkCreateTokenMutation = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -1143,7 +1118,7 @@ export type CreateTokenSetMutation = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -1285,7 +1260,7 @@ export type AddMemberToGroupMutation = {
 
 export type RemoveMemberFromGroupMutationVariables = {
   group: string,
-  entity: string,
+  user: string,
 };
 
 export type RemoveMemberFromGroupMutation = {
@@ -1468,7 +1443,7 @@ export type UpdateTokenMutation = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -1515,7 +1490,7 @@ export type UpdateTokenSetMutation = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -1953,7 +1928,7 @@ export type DeleteTokenMutation = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -2007,7 +1982,7 @@ export type DeleteTokenSetMutation = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -2333,7 +2308,7 @@ export type ConvertToStaticSetMutation = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -2770,7 +2745,7 @@ export type TokenSetQuery = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -2803,7 +2778,7 @@ export type TokenSetsQuery = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } >,
 };
@@ -2824,7 +2799,7 @@ export type TokenQuery = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -2864,7 +2839,7 @@ export type TokensQuery = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -2958,7 +2933,7 @@ export type ResolveQuery = {
         value?: string | null,
       }
     ) | null,
-    type?: TokenType | null,
+    type?: string | null,
   } | null > | null,
 };
 
@@ -3169,7 +3144,7 @@ export type OnCreateTokenSubscription = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -3206,7 +3181,7 @@ export type OnUpdateTokenSubscription = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -3243,7 +3218,7 @@ export type OnDeleteTokenSubscription = {
       __typename: "Metadata",
       createdAt?: string | null,
     } | null,
-    type?: TokenType | null,
+    type?: string | null,
     value: ( {
         __typename: "Raw_Token_scalar",
         value?: string | null,
@@ -3289,7 +3264,7 @@ export type OnCreateTokenSetSubscription = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -3319,7 +3294,7 @@ export type OnUpdateTokenSetSubscription = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
@@ -3349,7 +3324,7 @@ export type OnDeleteTokenSetSubscription = {
       urn?: string | null,
       extensions?: string | null,
       setUrn?: string | null,
-      type?: TokenType | null,
+      type?: string | null,
     } >,
   } | null,
 };
