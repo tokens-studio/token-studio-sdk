@@ -1007,7 +1007,7 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_lambda
         @aws_cognito_user_pools
     # Removes a member from a group in your organization
-    removeMemberFromGroup(group: String!, user: String!): String
+    removeMemberFromGroup(group: String!, entity: String!): String
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
