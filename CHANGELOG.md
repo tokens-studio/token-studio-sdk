@@ -1,5 +1,11 @@
 # @tokens-studio/sdk
 
+## 1.2.0
+
+### Minor Changes
+
+-   906f8eb: Change TokenType to be of type string
+
 ## 1.1.5
 
 ### Patch Changes
