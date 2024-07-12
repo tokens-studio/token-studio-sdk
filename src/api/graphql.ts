@@ -1,7 +1,10 @@
-import { API } from '@aws-amplify/api';
-import { ApiKey } from './apiKey';
-import { Configuration } from './configure';
-import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
+import { ApolloClient, InMemoryCache, NormalizedCacheObject, gql } from '@apollo/client';
+
+// Initialize Apollo Client
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    uri: 'http://localhost:4200/graphql',
+    cache: new InMemoryCache()
+});
 
 /**
  * The namespace for executing graphql queries.
@@ -23,33 +26,34 @@ export namespace Graphql {
      * @param input
      */
     export const exec = async <T>(
-        input: GraphQLOptions
-    ): Promise<GraphQLResult<T>> => {
-        const extend: any = {};
-        // Use to inject the auth token
-        if (
-            Configuration.get().aws_appsync_authenticationType === 'AWS_LAMBDA'
-        ) {
-            extend.authToken = ApiKey.get();
-        }
-        return (await API.graphql({
-            ...input,
-            ...extend
-        })) as Promise<GraphQLResult<T>>;
+        input: { query: string, variables?: Record<string, any> }
+    ): Promise<{ data?: T, errors?: any }> => {
+        
+        const { query, variables } = input;
+        console.log('Executing query:', query);
+        const gqlQuery = gql([query]);
+
+        const response = await client.query<T>({
+            query: gqlQuery,
+            variables
+        });
+
+        return {
+            data: response.data,
+            errors: response.errors
+        };
     };
 
     /**
      * A convenience wrapper to create a GraphQLOptions type input for exec
      */
     export const op = <T extends Record<string, any>>(
-        query: any,
+        query: string,
         variables?: T
-    ): GraphQLOptions => ({
+    ): { query: string, variables?: T } => ({
         query,
         variables
     });
 
-    export const getConfig = () => API.configure({});
+    export const getConfig = () => client;
 }
-
-export type { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';

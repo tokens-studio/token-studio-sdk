@@ -1,9 +1,45 @@
-import { API } from '@aws-amplify/api';
-import { AWSAppSyncRealTimeProvider } from '@aws-amplify/pubsub';
-import { ApiKey } from './apiKey';
-import { Configuration } from './configure';
-import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
-import Observable from 'zen-observable-ts';
+import { ApolloClient, HttpLink, InMemoryCache, gql, split } from '@apollo/client';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
+import { getMainDefinition } from '@apollo/client/utilities';
+
+// Configuration for HTTP and WebSocket links
+const httpLink = new HttpLink({
+  uri: 'https://your-graphql-endpoint',
+  headers: {
+    Authorization: 'Bearer ' + 'YOUR_AUTH_TOKEN'
+  }
+});
+
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: 'wss://your-graphql-endpoint',
+    connectionParams: {
+      headers: {
+        Authorization: 'Bearer ' + 'YOUR_AUTH_TOKEN'
+      }
+    }
+  })
+);
+
+// Split links to route queries/mutations over HTTP and subscriptions over WebSocket
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
+
+// Apollo Client setup
+const client = new ApolloClient({
+  link: splitLink,
+  cache: new InMemoryCache()
+});
 
 /**
  * Simplifies subscriptions and realtime data
@@ -17,63 +53,60 @@ import Observable from 'zen-observable-ts';
  *
  */
 export namespace Subscription {
-    export type SubscriptionResponse<T> = {
-        provider: AWSAppSyncRealTimeProvider;
-        value: GraphQLResult<T>;
+  export type SubscriptionResponse<T> = {
+    value: T;
+  };
+
+  export type SubscriptionHandler<T> = {
+    next: (response: SubscriptionResponse<T>) => void;
+    error: (error: Error) => void;
+  };
+
+  /**
+   * Subscribes to a graphql subscription
+   *
+   * @example
+   * This examples shows how to listen to changes in the groups of an organization
+   * ```ts
+   * import { Graphql, Group, OnNewGroupSubscription, Subscription, Subscriptions, OnNewGroupSubscriptionVariables } from '@tokens-studio/sdk';
+   *
+   * // Assumes we are already authed
+   *
+   * const filter: OnNewGroupSubscriptionVariables = { organization: 'urn:ts:....' };
+   *
+   * const subscription = Subscription.subscribe<Group>(Graphql.op(Subscriptions.OnNewGroupSubscription, filter), {
+   *      next: ({ value }) => console.log(value),
+   *      error: (err) => console.error(err),
+   * });
+   *
+   * // At some point during cleanup
+   * subscription.unsubscribe();
+   * ```
+   *
+   * @param input
+   * @param handler
+   * @returns
+   */
+  export const subscribe = <T>(
+    input: { query: any; variables?: any },
+    handler: SubscriptionHandler<T>
+  ) => {
+    const subscription = client.subscribe({
+      query: gql(input.query),
+      variables: input.variables
+    });
+
+    const subscriptionObserver = subscription.subscribe({
+      next(result) {
+        handler.next({ value: result.data });
+      },
+      error(err) {
+        handler.error(err);
+      }
+    });
+
+    return {
+      unsubscribe: () => subscriptionObserver.unsubscribe()
     };
-
-    export type Subscription<T> = Observable<SubscriptionResponse<T>>;
-
-    export type SubscriptionHandler<T> = {
-        next: (response: SubscriptionResponse<T>) => void;
-        error: (error: Error) => void;
-    };
-
-    /**
-     * Subscribes to a graphql subscription
-     *
-     * @example
-     * This examples shows how to listen to changes in the groups of an organization
-     * ```ts
-     * import {Graphql, Group, OnNewGroupSubscription, Subscription,Subscriptions, OnNewGroupSubscriptionVariables} from '@tokens-studio/sdk';
-     *
-     * //Assumes we are already authed
-     *
-     *  const filter : OnNewGroupSubscriptionVariables = { organization: 'urn:ts:....'};
-     *
-     *
-     * const subscription = Subscription.subscribe<Group>(Graphql.op(Subscriptions.OnNewGroupSubscription,filter),
-     * {
-     *      next:({value})=>console.log(value)
-     *      error:(err)=>console.error(err)
-     * })
-     *
-     * // At some point during cleanup
-     * subscription.unsubscribe();
-     *
-     *
-     * ```
-     *
-     * @param input
-     * @param handler
-     * @returns
-     */
-    export const subscribe = <T>(
-        input: GraphQLOptions,
-        handler: SubscriptionHandler<T>
-    ) => {
-        const extend: any = {};
-        // Use to inject the auth token
-        if (
-            Configuration.get().aws_appsync_authenticationType === 'AWS_LAMBDA'
-        ) {
-            extend.authToken = ApiKey.get();
-        }
-        const subscription = API.graphql({
-            ...input,
-            ...extend
-        }) as Subscription<T>;
-
-        return subscription.subscribe(handler);
-    };
+  };
 }
