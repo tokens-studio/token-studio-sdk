@@ -1,0 +1,39 @@
+mutation CreateToken($set: String!, $input: TokenInput!) {
+  createToken(set: $set, input: $input) {
+    description
+    name
+    id
+    extensions
+    setId
+    
+    type
+    value {
+      ... on Raw_Token_scalar {
+        value
+      }
+      ... on Raw_Token_typography {
+        value
+      }
+      ... on Raw_Token_border {
+        value
+      }
+      ... on Raw_Token_boxShadow {
+        value
+      }
+    }
+  }
+}
+
+  mutation CreateOrganization($input: OrganizationInput!) {
+    createOrganization(input: $input) {
+      id
+      createdAt
+      name
+      description
+      visibility
+      account
+      payment
+      tier
+    }
+  }
+

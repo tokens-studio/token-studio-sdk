@@ -1,0 +1,52 @@
+query getTokenSets($projectId: String!) {
+    tokenSets(project: $projectId, limit: 1000) {
+        name
+        id
+        createdAt
+        type
+        orderIndex
+        tokens {
+            name
+            id
+            type
+            value {
+                ... on Raw_Token_scalar {
+                    value
+                }
+                ... on Raw_Token_typography {
+                    value
+                    typography {
+                        fontFamily
+                        fontWeight
+                        letterSpacing
+                        lineHeight
+                        fontSize
+                        paragraphIndent
+                        paragraphSpacing
+                        textCase
+                        textDecoration
+                    }
+                }
+                ... on Raw_Token_border {
+                    value
+                    border {
+                        color
+                        style
+                        width
+                    }
+                }
+                ... on Raw_Token_boxShadow {
+                    value
+                    boxShadow {
+                        x
+                        y
+                        blur
+                        spread
+                        color
+                        type
+                    }
+                }
+            }
+        }
+    }
+}

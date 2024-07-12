@@ -1,0 +1,1095 @@
+scalar JSON
+
+type APIKey {
+	name: String
+	description: String
+	value: String
+	id: String
+}
+
+type APIKeyIdentity {
+	name: String
+	id: String
+}
+
+input APIKeyInput {
+	name: String!
+	description: String
+	# Optional groups to add the key to on creation
+	groups: [String!]
+}
+
+type APIKeyWithoutValue   {
+	name: String
+	lastUsed: String
+	description: String
+	id: String
+}
+
+input AliasTokenSetInput {
+	# The name of the alias
+	alias: String!
+	# The id: of the set we want to alias
+	set: String!
+}
+
+input AliasTuple {
+	name: String!
+	value: String!
+}
+
+input ApiKeyFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+}
+
+type Border {
+	color: String
+	style: String
+	width: String
+}
+
+## Note this is atomic. You cannot partially update this value
+input BorderInput {
+	color: String
+	style: String
+	width: String
+}
+
+type BoxShadow   {
+	x: String
+	y: String
+	blur: String
+	spread: String
+	color: String
+	type: String
+}
+
+## Note this is atomic. You cannot partially update this value
+input BoxShadowInput {
+	x: String
+	y: String
+	blur: String
+	spread: String
+	color: String
+	type: String
+}
+
+type ColorValue {
+	raw: String
+	hex: String
+	hsla: [Int]
+	rgba: [Int]
+}
+
+union Entity = User | APIKeyIdentity
+
+input FileInput {
+	name: String!
+	# The extension of the file as a string eg "png"
+	type: String!
+	# Base64 encoded file
+	data: String!
+}
+
+type Generator {
+	id: String
+	name: String
+	description: String
+	createdAt: String
+	updatedAt: String
+	graph: String
+}
+
+input GeneratorFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+}
+
+input GeneratorInput {
+	name: String!
+	description: String
+	graph: String
+}
+
+input GeneratorInputUpdate {
+	name: String
+	description: String
+	graph: String
+}
+
+type Group   {
+	organization: String
+	createdAt: String!  
+	name: String  
+	icon: String  
+	id: String  
+	description: String  
+	members: [Entity]  
+	policy: Policy  
+}
+
+input GroupFilterInput {
+	id: String
+	name: GroupStringFilterInput
+}
+
+input GroupInput {
+	name: String!
+	description: String
+	icon: String
+	# Policy id:
+	policy: String
+}
+
+input GroupStringFilterInput {
+	# Equal to
+	eq: String
+}
+
+input GroupUpdateInput {
+	name: String
+	description: String
+	icon: String
+	# Policy id:
+	policy: String
+}
+
+input Groupid {
+	# Equal to
+	eq: String
+}
+
+type Identity    {
+	# The id: of the underlying identity you are operation as .
+	id: String
+	# Whether your identity is authenticated or not
+	authenticated: Boolean!
+}
+
+input IntFilterInput {
+	# Equal to
+	eq: Int
+	# Not equal to
+	ne: Int
+	# Less than
+	lt: Int
+	# Greater than
+	gt: Int
+	# less than or equal to
+	le: Int
+	# greater than or equal to
+	ge: Int
+}
+
+type Invitation   {
+	# Organization id:
+	organization: String!
+	# User id:
+	user: String!
+	status: InvitationStatus
+	id: String!
+	confirmCode: String!
+}
+
+enum InvitationStatus {
+	PENDING
+	DECLINED
+	ACCEPTED
+}
+
+type Metadata {
+	# Time of creation of the resource
+	createdAt: String
+	#  The entity who initially created this token
+	createdBy: Entity
+	#  The last entity to update the token directly.
+	lastUpdatedBy: Entity
+}
+
+input Order {
+	field: String!
+	direction: OrderDirection!
+}
+
+enum OrderDirection {
+	ASC
+	DESC
+}
+
+type Organization    {
+	# Unique id of the organization
+	id: String
+	# Date that the org was created
+	createdAt: String
+	# The user that created the organization
+	owner: User
+	# Name is not unique
+	name: String
+	# Optional description
+	description: String
+	# Visibility of the org to the public
+	visibility: Visibility
+	# The account id
+	account: String
+	# The stripe account id. Might be null if user is on free tier
+	payment: String
+	# Whether or not SSO is enabled
+	ssoEnabled: Boolean
+	# Optional icon
+	icon: String
+	# The tier associated with the organization
+	tier: OrganizationTier
+	# Projects inside the organization
+	projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
+	# Groups inside the organization
+	groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
+	# Policies inside the organization
+	policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
+	# The api keys owned by the organization
+	apiKeys: [APIKeyWithoutValue]
+	# User of the organization
+	users(filter: UserFilterInput, limit: Int, offset: Int): [User]
+}
+
+input OrganizationFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+	owner: StringFilterInput
+	visibility: VisibilityInput
+}
+
+input OrganizationInput {
+	name: String!
+	description: String
+	visibility: Visibility!
+	icon: FileInput
+	tier: OrganizationTier!
+}
+
+type OrganizationMemberShip {
+	createdAt: String!
+}
+
+enum OrganizationTier {
+	FREE
+	STARTER
+	STUDIO
+	ENTERPRISE
+}
+
+input OrganizationUpdateInput {
+	id: String!
+	name: String
+	description: String
+	visibility: Visibility
+	icon: String
+	tier: OrganizationTier
+}
+
+type Policy   {
+	createdAt: String
+	name: String!
+	id: String
+	description: String
+	value: PolicyDoc!
+}
+
+type PolicyDoc {
+	version: String!
+	statement: [PolicyStatement]!
+}
+
+input PolicyDocInput {
+	version: String!
+	statement: [PolicyStatementInput!]!
+}
+
+input PolicyFilterInput {
+	name: PolicyStringFilterInput
+	id: String
+}
+
+input PolicyInput {
+	name: String!
+	description: String
+	value: PolicyDocInput!
+}
+
+input PolicyInputUpdate {
+	name: String
+	description: String
+	value: PolicyDocInput
+}
+
+type PolicyStatement {
+	effect: String!
+	action: [String]!
+	resource: [String]!
+}
+
+input PolicyStatementInput {
+	effect: String!
+	action: [String]!
+	resource: [String]!
+}
+
+input PolicyStringFilterInput {
+	eq: String
+}
+
+input SDConfigFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+}
+
+type SDConfig {
+	id: String!
+	name: String!
+	createdAt: String!
+	updatedAt: String!
+	projectId: String!
+	config: String
+	functions: String
+	default: Boolean
+    themeOptions: String
+}
+
+type ThemeOption {
+    name: String!
+    urn: String!
+    figmaStyleReferences: JSON
+    figmaVariableReferences: JSON
+    selectedTokenSets: JSON
+}
+
+
+type Project   {
+	## The entity that created the project
+	createdBy: Entity
+	createdAt: Int!
+	name: String!
+	id: String!
+	organizationId: String!
+	visibility: Visibility!
+	icon: String
+	description: String
+	themeGroups: String
+	summary: ProjectSummary
+	sets(filter: TokenSetFilterInput, limit: Int, offset: Int): [TokenSet]
+	resolvers(filter: ResolverFilterInput, limit: Int, offset: Int): [Resolver]
+	generators(filter: GeneratorFilterInput, limit: Int, offset: Int): [Generator]
+	releases(filter: ReleaseFilterInput, limit: Int, offset: Int): [Release]
+
+	sdConfigs(filter: SDConfigFilterInput, limit: Int, offset: Int): [SDConfig]
+  	themeGroups(
+        filter: ThemeGroupFilterInput
+        limit: Int
+        offset: Int
+    ): [ThemeGroup]
+	releaseCount: Int
+	tokenCount: Int
+}
+
+input StringFilterInput {
+    eq: String
+    ne: String
+    beginsWith: String
+}
+
+input ThemeGroupFilterInput {
+    id: StringFilterInput
+    name: StringFilterInput
+}
+
+type ThemeGroup {
+    id: String!
+    name: String!
+    createdAt: String!
+    updatedAt: String!
+    projectId: String
+    options: [ThemeOption]
+}
+
+input ProjectFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+	visibility: VisibilityInput
+}
+
+
+input ProjectInput {
+	# Unique name of the project
+	name: String!
+	# Optional description of the project
+	description: String
+	# Visibility of the project
+	visibility: Visibility!
+	# Icon associated with your project as a base64 string
+	icon: FileInput
+}
+
+type ProjectSummary {
+	## Total number of sets for this project
+	sets: SummarizedValue
+	## Total number of resolvers for this project
+	resolvers: SummarizedValue
+	generators: SummarizedValue
+	tokens: SummarizedValue
+}
+
+input ProjectUpdateInput {
+	# Unique name of the project
+	name: String
+	# Optional description of the project
+	description: String
+	# Visibility of the project
+	visibility: Visibility
+	# Icon associated with your project
+	icon: String
+}
+
+# Raw tokens are the tokens that are formatted after being input into the system. They do not reflect the final token values from resolved tokens
+union RawTokenValue = Raw_Token_scalar
+	| Raw_Token_typography
+	| Raw_Token_border
+	| Raw_Token_boxShadow
+
+type RawToken {
+	description: String
+	name: String
+	id: String
+	extensions: String
+	setId: String
+	metadata: Metadata
+	type: TokenType
+	value: RawTokenValue 	
+}
+	  
+
+
+
+type Raw_Token_border {
+	# Use when setting a reference to a another border token
+	value: String
+	border: Border
+}
+
+type Raw_Token_boxShadow {
+	value: String
+	boxShadow: [BoxShadow]
+}
+
+
+# Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
+##### assets - Assumes a string output with a URL
+##### opacity - Assumes a simple numeric output
+type Raw_Token_scalar {
+	value: String
+}
+
+type Raw_Token_typography {
+	value: String
+	typography: Typography
+}
+
+type Release {
+	id: String!
+	name: String!
+	download: ReleaseDownload
+	version: String!
+	description: String
+	# id:s of the sets at the time of release
+	tokenSets: [ReleaseFile!]
+	# id:s of the generators at the time of release
+	generators: [ReleaseFile!]
+	createdAt: String
+	releasedBy: Entity
+}
+
+type ReleaseDownload {
+	# The full release as a single url
+	zipUrl: ReleaseFile
+	file(filter: ReleaseDownloadFilter, limit: Int, offset: Int): [ReleaseFile]
+		
+		
+		
+}
+
+input ReleaseDownloadFilter {
+	name: StringFilterInput
+	type: ReleaseDownloadType
+}
+
+enum ReleaseDownloadType {
+	FULLZIP
+	SET
+	GENERATOR
+}
+
+type ReleaseFile {
+	path: String
+	name: String
+	type: String
+}
+
+input ReleaseFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+	version: StringFilterInput
+}
+
+input ReleaseInput {
+	name: String!
+	description: String
+	# The next version you wish to release. This must be greater than the current version
+	version: String!
+	# Token set id:s from the project to freeze
+	tokenSets: [String!]
+	# Generator id:s from the project to freeze
+	generators: [String!]
+}
+
+interface ResolvedTokenInterface {
+	description: String
+	name: String
+	type: TokenType
+	metadata: Metadata
+}
+
+type Resolver   {
+	name: String
+	description: String
+	createdAt: String
+	updatedAt: String
+	id: String
+	graph: String
+	options: [ResolverOption]
+}
+
+type ResolverOption {
+	name: String!
+	description: String
+	values: [String]
+}
+
+input ResolverFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+}
+
+input ResolverInput {
+	# Name of the resolver
+	name: String!
+	# Optional description of the resolver
+	description: String
+	# The graph for the resolver. Options will be automatically extracted
+	graph: String!
+}
+
+input ResolverOptionsInput {
+	name: String!
+	value: String!
+}
+
+input ResolverUpdateInput {
+	# Name of the resolver
+	name: String
+	# Optional description of the resolver
+	description: String
+	# The graph for the resolver. Options will be automatically extracted
+	graph: String
+}
+
+type Self {
+	identity: Identity   
+	# Any invitation of the user when logged in with user auth
+	invitations: [Invitation]
+	# information about the user if logged in with user auth
+	user: User
+	# Organizations that the user owns
+	organizations: [Organization]
+	# Retrieves the applicable permissions for yourself in the context of an organization
+	permissions(orgid: String): [PolicyDoc]
+}
+
+input StringFilterInput {
+	eq: String
+	ne: String
+	beginsWith: String
+}
+
+type SummarizedValue {
+	total: Int!
+}
+
+
+input TokenFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+	type: TokenTypeFilterInput
+}
+
+input TokenInput {
+	description: String
+	name: String!
+	type: TokenType!
+	extensions: String
+	# Used for references and scalars
+	value: String
+	# Specific types
+	typography: TypographyInput
+	border: BorderInput
+	boxShadow: [BoxShadowInput]
+}
+
+type TokenSet   {
+	id: String
+	metadata: Metadata
+	name: String
+	projectId: String
+	type: TokenSetType
+	generatorId: String
+	orderIndex: String
+	createdAt: String
+	tokens(
+		filter: TokenFilterInput # Limit of tokens to retid:
+		limit: Int # offset from the start of tokens
+		offset: Int
+	): [RawToken!]!
+}
+
+input TokenSetFilterInput {
+	id: StringFilterInput
+	name: StringFilterInput
+}
+
+input TokenSetInput {
+	name: String!
+	description: String
+	type: TokenSetType
+	graph: String
+}
+
+enum TokenSetType {
+	STATIC
+	DYNAMIC
+}
+
+input TokenSetUpdateInput {
+	name: String
+	description: String
+}
+
+input TokenSetsFilterInput {
+	name: StringFilterInput
+}
+
+enum TokenType {
+	any
+	assets
+	border
+	borderRadius
+	borderWidth
+	boxShadow
+	color
+	composition
+	dimension
+	fontFamilies
+	fontSizes
+	fontWeights
+	letterSpacing
+	lineHeights
+	opacity
+	other
+	paragraphSpacing
+	sizing
+	spacing
+	textCase
+	textDecoration
+	typography
+}
+
+input TokenTypeFilterInput {
+	eq: TokenType
+	ne: TokenType
+}
+
+input TokenUpdateInput {
+	description: String
+	name: String
+	extensions: String
+	border: BorderInput
+	boxShadow: [BoxShadowInput]
+	typography: TypographyInput
+	## Use for scalars or references
+	value: String
+}
+
+type ResolvedToken {
+	description: String
+	name: String
+	value: ResolvedTokenValue
+	type: TokenType
+}
+
+union ResolvedTokenValue = Token_border
+	| Token_boxShadow
+	| Token_scalar
+	| Token_typography
+
+type Token_Composition  {
+	## TODO this needs to be able to support the type of the composition
+	value: String
+}
+
+type Token_border {
+	value: String
+	border: Border
+}
+
+type Token_boxShadow {
+	# Only in the case of partial resolution
+	value: String
+	boxShadow: [BoxShadow]
+}
+
+type Token_scalar {
+value: String
+}
+
+type Token_typography  {
+value: String
+	typography: Typography
+}
+
+type Typography   {
+	fontFamily: String
+	fontWeight: String
+	letterSpacing: String
+	lineHeight: String
+	fontSize: String
+	paragraphIndent: String
+	paragraphSpacing: String
+	textCase: String
+	textDecoration: String
+}
+
+## Note this is atomic. You cannot partially update this value
+input TypographyInput {
+	fontFamily: String
+	fontWeight: String
+	letterSpacing: String
+	lineHeight: String
+	fontSize: String
+	paragraphIndent: String
+	paragraphSpacing: String
+	textCase: String
+	textDecoration: String
+}
+
+input UpdateSelfInput {
+	# Display name of the user
+	name: String
+	# A preferred name of the user
+	givenName: String
+	# An icon in base64 format
+	icon: FileInput
+	# Optional User description
+	description: String
+	# Visibility of the user to search
+	visibility: Visibility
+}
+
+type User {
+	# Display name of the user
+	name: String
+	# A preferred name of the user
+	givenName: String
+	# id: of the user
+	id: String
+	# Optional User description
+	description: String
+	# The icon of the user as html link to an image
+	icon: String
+	# Visibility of the user to search
+	visibility: Visibility
+	# Groups the user is part of
+	groups: [Group]
+}
+
+input UserFilterInput {
+	name: StringFilterInput
+}
+
+enum Visibility {
+	PUBLIC
+	PRIVATE
+}
+
+input VisibilityInput {
+	eq: Visibility
+}
+
+input SDConfigInput {
+	description: String
+	name: String!
+	config: String!
+	functions: String!
+}
+
+input SDConfigUpdateInput {
+	description: String
+	name: String
+	config: String
+	functions: String
+}
+
+type Mutation   {
+	### Creation
+	##### Creates a new project for the organization
+	createProject(organization: String!, input: ProjectInput!): Project
+		
+	# Creates a new policy for the organization
+	createPolicy(organization: String!, input: PolicyInput!): Policy
+		
+		
+	# Creates a new group that can have an associated policy to control it
+	createGroup(organization: String!, input: GroupInput!): Group
+		
+		
+	# Creates a new organization
+	createOrganization(input: OrganizationInput!): Organization
+	# Creates a new API Keyt
+	createAPIKey(organization: String!, input: APIKeyInput!): APIKey
+	# Creates a new Token
+	createToken(set: String!, input: TokenInput!): RawToken
+		
+		
+	# Bulk token creation. Limit of 50 tokens at a time
+	bulkCreateToken(set: String!, input: [TokenInput]!): [RawToken]
+		
+		
+	# Creates a new token set
+	createTokenSet(project: String!, input: TokenSetInput!): TokenSet
+		
+		
+	# Creates a new Resolver
+	createResolver(project: String!, input: ResolverInput!): Resolver
+		
+		
+	createSDConfig(id: String!, input: SDConfigInput!): SDConfig
+		
+		
+	# Creates a release by freezing a resolvers output
+	createRelease(project: String!, input: ReleaseInput!): Release
+		
+		
+	# Creates a new generator definition
+	createGenerator(project: String!, input: GeneratorInput!): Generator
+		
+		
+	### Membership
+	##### Adds a member that already exists as part of your organization to a group
+	addMemberToGroup(group: String!, entity: String!): String
+		
+		
+	# Removes a member from a group in your organization
+	removeMemberFromGroup(group: String!, user: String!): String
+		
+		
+	# request that a member join your organization if they haven't already.
+	inviteToOrganization(
+		organization: String!
+		email: String!
+		groups: [String!]
+	): Invitation  
+	# Removes a member from an organization
+	removeFromOrganization(organization: String!, user: String!): Boolean
+		
+		
+	# Accepts an invitation to join an organization
+	acceptInvitation(id: String!, confirmCode: String!): Organization
+		
+	# Declines an invitation to join an organization
+	declineInvitation(id: String!): String 
+	### Updates
+	##### Update the values of an existing token
+	updateSelf(input: UpdateSelfInput): User 
+	updateGenerator(id: String!, input: GeneratorInput!): Generator
+		
+		
+	updateToken(id: String!, input: TokenUpdateInput!): RawToken
+		
+		
+	updateTokenSet(id: String!, input: TokenSetUpdateInput!): TokenSet
+		
+		
+	updateResolver(id: String!, input: ResolverUpdateInput!): Resolver
+		
+		
+	updatePolicy(id: String!, input: PolicyInputUpdate!): Policy
+		
+		
+	updateProject(id: String!, input: ProjectUpdateInput!): Project
+		
+		
+	updateGroup(id: String!, input: GroupUpdateInput!): Project
+		
+		
+
+	updateSDConfig(id: String!, input: SDConfigInput!): SDConfig
+		
+		
+
+	updateOrganization(
+		id: String!
+		input: OrganizationUpdateInput!
+	): Organization  
+	# Regenerates an API Key, removing its value from use
+	regenerateApiKey(id: String!): APIKey 
+	### Deletion
+	##### Deletes a token from a set
+	deletePolicy(id: String!): Policy  
+	deleteAPIKey(id: String!): APIKey  
+	#### Deletes a generator from a project
+	deleteGenerator(id: String!): Generator  
+	deleteGroup(id: String!): Group  
+	deleteResolver(id: String!): Resolver  
+	deleteToken(id: String!): RawToken  
+	deleteTokenSet(id: String!): TokenSet  
+	deleteProject(id: String!): Project  
+	deleteOrganization(id: String!):Organization 
+	# Deletes an invitation from your organization to a user
+	deleteInvitation(id: String!): Invitation  
+	attachPolicyToGroup(group: String!, policy: String!): Group
+		
+		
+	detachPolicyFromGroup(group: String!, policy: String!): Group
+		
+		
+
+	deleteSDConfig(id: String!): SDConfig  
+
+	convertToStaticSet(id: String!): TokenSet  
+}
+
+type Query   {
+	# Retrieves all invitations in the context of your user
+	userInvitations(limit: Int): [Invitation]  
+	# queries policies available to the org. The organization is the organization id:
+	policies(organization: String!, limit: Int, offset: Int): [Policy]
+		
+		
+	# Retrieves information about the organizations
+	organizations(
+		filter: OrganizationFilterInput
+		limit: Int
+		offset: Int
+	): [Organization]   
+	# Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
+	projects(
+		organization: String!
+		filter: ProjectFilterInput
+		limit: Int
+		offset: Int
+	): [Project]   
+	# Retrieve a specific project
+	project(id: String!): Project
+		
+		
+		
+	# Retrieves all projects for an organization
+	groups(
+		organization: String!
+		filter: GroupFilterInput
+		limit: Int
+		offset: Int
+	): [Group]  
+	#  Retrieves a specific tokenset
+	tokenSet(id: String!): TokenSet  
+	#  Retrieves all accessible tokensets for the current project
+	tokenSets(
+		project: String!
+		limit: Int
+		offset: Int
+		filter: TokenSetsFilterInput
+	): [TokenSet!]!  
+	# Retrieves a specific token
+	token(id: String!): RawToken  
+	# Retrieves all tokens of the current set
+	tokens(
+		# The id: of the token set. See the id: format in the documentation
+		set: String!
+		# An optional filter for the tokens
+		filter: TokenFilterInput
+		# Limit of tokens to retid:
+		limit: Int
+		# offset from the start of tokens
+		offset: Int
+	): [RawToken!]!  
+	# Gets the callers identity
+	self: Self   
+	# Resolves the resolver and retid:s the expected tokens
+	resolve(resolver: String!, options: [ResolverOptionsInput]): [ResolvedToken]
+		
+		
+	#Retid:s all resolvers for a project
+	resolvers(
+		project: String!
+		filter: ResolverFilterInput
+		limit: Int
+		offset: Int
+	): [Resolver]  
+	#Retid:s a single resolver
+	resolver(id: String!): Resolver  
+	#Retid:s a specific generator
+	generator(id: String!): Generator  
+	#Retid:s all generators for a project
+	generators(
+		project: String!
+		filter: GeneratorFilterInput
+		limit: Int
+		offset: Int
+	): [Generator]  
+	#Retid:s all releases for a project
+	releases(
+		project: String!
+		filter: ReleaseFilterInput
+		limit: Int
+		offset: Int
+	): [Release]  
+	apiKeys(
+		organization: String!
+		filter: ApiKeyFilterInput
+		limit: Int
+		offset: Int
+	): [APIKeyWithoutValue]   
+
+	releaseCount(project: String!): Int  
+	tokenCount(project: String!): Int  
+}
+
+type Subscription {
+	### Tokens
+	#####  Subscribe to all new tokens created in a token set
+	onCreateToken(setid: String!): RawToken
+	#  Subscribe to token Changes
+	onUpdateToken(setid: String!): RawToken
+	onDeleteToken(setid: String!): RawToken
+	### TokenSets
+	#####  Subscribe to all new tokens sets created by an organization
+	onCreateTokenSet(projectId: String!): TokenSet
+	#  Subscribe to all new tokens sets created by an organization
+	onUpdateTokenSet(projectId: String!): TokenSet
+	# Subscribe to tokenSet deletions
+	onDeleteTokenSet(projectId: String!): TokenSet
+	#  Subscribe to all new groups created for the organization
+	onCreateGroup(organization: String!): Group
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}

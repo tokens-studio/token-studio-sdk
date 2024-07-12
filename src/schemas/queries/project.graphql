@@ -1,0 +1,54 @@
+query getProject($id: String!) {
+  project(id: $id) {
+    name
+    id
+    icon
+    tokenCount
+    
+    releaseCount
+  }
+}
+
+query getProjects($organization: String!) {
+  projects(organization: $organization) {
+    name
+    id
+    icon
+    tokenCount
+    description
+    id
+    releaseCount
+  }
+}
+
+
+query getProjectsWithTokenSets($organization: String!) {
+    projects(organization: $organization) {
+    id
+    name
+    icon
+    sets {
+        name
+    }
+    }
+}
+
+
+
+query getLatestRelease($project: String!) {
+    releases(project: $project) {
+    description
+    name
+    id
+    version
+    createdAt              
+    tokenSets  {
+        name
+        type
+        path
+    }
+    generators {
+        name
+    } 
+    }
+}

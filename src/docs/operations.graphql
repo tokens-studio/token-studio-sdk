@@ -1,0 +1,130 @@
+type Mutation   {
+	### Creation
+	##### Creates a new project for the organization
+	createProject(organization: String!, input: ProjectInput!): Boolean
+		
+	createProjectt(organization: String!, input: ProjectInput!): Boolean
+
+	# Creates a new policy for the organization
+	createPolicy(organization: String!, input: PolicyInput!): Policy
+		
+		
+	# Creates a new group that can have an associated policy to control it
+	createGroup(organization: String!, input: GroupInput!): Group
+		
+		
+	# Creates a new organization
+	createOrganization(input: OrganizationInput!): Organization
+	# Creates a new API Keyt
+	createAPIKey(organization: String!, input: APIKeyInput!): APIKey
+	# Creates a new Token
+	createToken(set: String!, input: TokenInput!): RawToken
+		
+		
+	# Bulk token creation. Limit of 50 tokens at a time
+	bulkCreateToken(set: String!, input: [TokenInput]!): [RawToken]
+		
+		
+	# Creates a new token set
+	createTokenSet(project: String!, input: TokenSetInput!): TokenSet
+		
+		
+	# Creates a new Resolver
+	createResolver(project: String!, input: ResolverInput!): Resolver
+		
+		
+	createSDConfig(id: String!, input: SDConfigInput!): SDConfig
+		
+		
+	# Creates a release by freezing a resolvers output
+	createRelease(project: String!, input: ReleaseInput!): Release
+		
+		
+	# Creates a new generator definition
+	createGenerator(project: String!, input: GeneratorInput!): Generator
+		
+		
+	### Membership
+	##### Adds a member that already exists as part of your organization to a group
+	addMemberToGroup(group: String!, entity: String!): String
+		
+		
+	# Removes a member from a group in your organization
+	removeMemberFromGroup(group: String!, user: String!): String
+		
+		
+	# request that a member join your organization if they haven't already.
+	inviteToOrganization(
+		organization: String!
+		email: String!
+		groups: [String!]
+	): Invitation  
+	# Removes a member from an organization
+	removeFromOrganization(organization: String!, user: String!): Boolean
+		
+		
+	# Accepts an invitation to join an organization
+	acceptInvitation(id: String!, confirmCode: String!): Organization
+		
+	# Declines an invitation to join an organization
+	declineInvitation(id: String!): String 
+	### Updates
+	##### Update the values of an existing token
+	updateSelf(input: UpdateSelfInput): User 
+	updateGenerator(id: String!, input: GeneratorInput!): Generator
+		
+		
+	updateToken(id: String!, input: TokenUpdateInput!): RawToken
+		
+		
+	updateTokenSet(id: String!, input: TokenSetUpdateInput!): TokenSet
+		
+		
+	updateResolver(id: String!, input: ResolverUpdateInput!): Resolver
+		
+		
+	updatePolicy(id: String!, input: PolicyInputUpdate!): Policy
+		
+		
+	updateProject(id: String!, input: ProjectUpdateInput!): Project
+		
+		
+	updateGroup(id: String!, input: GroupUpdateInput!): Project
+		
+		
+
+	updateSDConfig(id: String!, input: SDConfigInput!): SDConfig
+		
+		
+
+	updateOrganization(
+		id: String!
+		input: OrganizationUpdateInput!
+	): Organization  
+	# Regenerates an API Key, removing its value from use
+	regenerateApiKey(id: String!): APIKey 
+	### Deletion
+	##### Deletes a token from a set
+	deletePolicy(id: String!): Policy  
+	deleteAPIKey(id: String!): APIKey  
+	#### Deletes a generator from a project
+	deleteGenerator(id: String!): Generator  
+	deleteGroup(id: String!): Group  
+	deleteResolver(id: String!): Resolver  
+	deleteToken(id: String!): RawToken  
+	deleteTokenSet(id: String!): TokenSet  
+	deleteProject(id: String!): Project  
+	deleteOrganization(id: String!):Organization 
+	# Deletes an invitation from your organization to a user
+	deleteInvitation(id: String!): Invitation  
+	attachPolicyToGroup(group: String!, policy: String!): Group
+		
+		
+	detachPolicyFromGroup(group: String!, policy: String!): Group
+		
+		
+
+	deleteSDConfig(id: String!): SDConfig  
+
+	convertToStaticSet(id: String!): TokenSet  
+}

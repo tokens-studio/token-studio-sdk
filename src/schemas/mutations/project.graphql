@@ -1,0 +1,65 @@
+
+
+  mutation CreateProject($organization: String!, $input: ProjectInput!) {
+    createProject(organization: $organization, input: $input) {
+      createdAt
+      name
+      id
+      organizationId
+      visibility
+      icon
+      description
+      sets {
+        id
+        name
+        projectId
+        type
+        generatorId
+        orderIndex
+        createdAt
+      }
+      resolvers {
+        name
+        description
+        createdAt
+        updatedAt
+        id
+      }
+      releases {
+        id
+        name
+        version
+        description
+        createdAt
+      }
+      sdConfigs {
+        id
+        name
+        createdAt
+        updatedAt
+        projectId
+        config
+        functions
+        default
+        themeOptions
+      }
+      themeGroups {
+        id
+        name
+        createdAt
+        updatedAt
+        projectId
+      }
+      releaseCount
+      tokenCount
+    }
+  }
+
+  mutation DeleteProject($id: String!) {
+    deleteProject(id: $id) {
+      id
+    }
+  }
+
+
+
