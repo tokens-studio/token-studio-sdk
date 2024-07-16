@@ -1,0 +1,16 @@
+# This configuration file tells GraphQL Code Generator how
+# to generate types based on our schema.
+schema: "./src/schemas/schema.graphql"
+overwrite: true
+documents: "./src/schemas/*/*.graphql" 
+generates:
+  # Specify where our generated types should live.
+  ./src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+    useIndexSignature: true
+          # More on this below!
+    contextType: "../context#Context"

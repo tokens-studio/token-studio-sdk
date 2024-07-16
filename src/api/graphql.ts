@@ -1,55 +1,103 @@
-import { API } from '@aws-amplify/api';
-import { ApiKey } from './apiKey';
-import { Configuration } from './configure';
-import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
+/* eslint-disable @typescript-eslint/no-namespace */
+import { ApolloClient, InMemoryCache, NormalizedCacheObject, gql } from '@apollo/client';
+
+// Initialize Apollo Client
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    uri: 'http://localhost:4200/graphql',
+    cache: new InMemoryCache()
+});
 
 /**
- * The namespace for executing graphql queries.
+ * The namespace for executing GraphQL queries.
  *
  * This will likely be the most common namespace used
  */
 export namespace Graphql {
     /**
-     * Executes a graphQL query against the API.
-     *
-     * @example
-     * This examples shows how to retrieve the current identity of the caller
-     * ```
-     * import { Graphql,Query,SelfQuery, Identity  } from '@tokens-studio/sdk';
-     * const response = await Graphql.exec<SelfQuery>({ query:Query.raw.self});
-     * const identity = response.data?.self as Identity;
-     * ```
+     * Executes a GraphQL query or mutation against the API.
      *
      * @param input
      */
     export const exec = async <T>(
-        input: GraphQLOptions
-    ): Promise<GraphQLResult<T>> => {
-        const extend: any = {};
-        // Use to inject the auth token
-        if (
-            Configuration.get().aws_appsync_authenticationType === 'AWS_LAMBDA'
-        ) {
-            extend.authToken = ApiKey.get();
+        input: { query: string, variables?: Record<string, any> }
+    ): Promise<{ data?: T, errors?: any }> => {
+        
+        const { query, variables } = input;
+        console.log('Executing query:', query);
+        const gqlQuery = gql([query]);
+
+        try {
+            const response = await client.query<T>({
+                query: gqlQuery,
+                variables
+            });
+
+            return {
+                data: response.data ?? undefined, // Handle null case
+                errors: response.errors
+            };
+        } catch (error) {
+            console.error('Error executing query:', error);
+            return {
+                data: undefined,
+                errors: error
+            };
         }
-        return (await API.graphql({
-            ...input,
-            ...extend
-        })) as Promise<GraphQLResult<T>>;
+    };
+
+    /**
+     * Executes a GraphQL mutation against the API.
+     *
+     * @param input
+     */
+    export const mutate = async <T>(
+        input: { mutation: string, variables?: Record<string, any> }
+    ): Promise<{ data?: T, errors?: any }> => {
+        
+        const { mutation, variables } = input;
+        console.log('Executing mutation:', mutation);
+        const gqlMutation = gql([mutation]);
+
+        try {
+            const response = await client.mutate<T>({
+                mutation: gqlMutation,
+                variables
+            });
+
+            return {
+                data: response.data ?? undefined, // Handle null case
+                errors: response.errors
+            };
+        } catch (error) {
+            console.error('Error executing mutation:', error);
+            return {
+                data: undefined,
+                errors: error
+            };
+        }
     };
 
     /**
      * A convenience wrapper to create a GraphQLOptions type input for exec
      */
     export const op = <T extends Record<string, any>>(
-        query: any,
+        query: string,
         variables?: T
-    ): GraphQLOptions => ({
+    ): { query: string, variables?: T } => ({
         query,
         variables
     });
 
-    export const getConfig = () => API.configure({});
-}
+    /**
+     * A convenience wrapper to create a GraphQLOptions type input for mutate
+     */
+    export const opMutate = <T extends Record<string, any>>(
+        mutation: string,
+        variables?: T
+    ): { mutation: string, variables?: T } => ({
+        mutation,
+        variables
+    });
 
-export type { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
+    export const getConfig = () => client;
+}

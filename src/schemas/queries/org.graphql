@@ -1,0 +1,29 @@
+  query GetOrganizations {
+    organizations {
+      id
+      name
+      icon
+      tier
+    }
+  }
+
+          query getPolicies($organization: String!) {
+            policies(organization: $organization) {
+                createdAt
+                description
+                id
+                name
+                value {
+                  version
+                  statement {
+                    action
+                    resource
+                    effect
+                  }
+                }
+              }
+
+        }
+
+
+

@@ -29,7 +29,7 @@
     "cypress:open": "cypress open",
     "dev": "npm-run-all --parallel dev:rollup generate-types",
     "dev:rollup": "rollup -w --bundleConfigAsCjs --config rollup.config.mjs",
-    "generate-types": "chokidar 'schema.graphql' -c 'amplify codegen'",
+    "generate-types": "graphql-codegen",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
@@ -43,13 +43,6 @@
   },
   "sideEffects": false,
   "types": "./dist/esm/index.d.ts",
-  "dependencies": {
-    "@aws-amplify/api": "^5.0.19",
-    "@aws-amplify/auth": "^5.1.13",
-    "@aws-amplify/core": "^5.1.2",
-    "@aws-amplify/pubsub": "^5.1.2",
-    "@tokens-studio/types": "^0.3.0"
-  },
   "optionalDependencies": {
     "eslint": "^8.31.0",
     "prettier": "^2.8.3"
@@ -100,5 +93,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "jsnext:main": "./dist/esm/index.js"
+  "jsnext:main": "./dist/esm/index.js",
+  "dependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
+    "@graphql-codegen/typescript-resolvers": "4.0.1"
+  }
 }
+/Users/piotrkalinski/Documents/hyma2/studio-app/packages/sdkV2/codegen.yaml

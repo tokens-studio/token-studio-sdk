@@ -40,8 +40,4 @@
  */
 
 export * from './api';
-export * from './graphqlTypes';
-export * as Mutations from './graphql/mutations';
-export * as Queries from './graphql/queries';
-export * as Subscriptions from './graphql/subscriptions';
-export * from './utils';
+export * from './generated/graphql';
