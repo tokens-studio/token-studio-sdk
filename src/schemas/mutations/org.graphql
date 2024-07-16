@@ -4,8 +4,7 @@ mutation CreateToken($set: String!, $input: TokenInput!) {
     name
     id
     extensions
-    setId
-    
+    setId 
     type
     value {
       ... on Raw_Token_scalar {
@@ -37,3 +36,4 @@ mutation CreateToken($set: String!, $input: TokenInput!) {
     }
   }
 
+dasdas4

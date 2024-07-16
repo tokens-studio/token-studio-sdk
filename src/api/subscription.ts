@@ -65,6 +65,7 @@ export namespace Subscription {
   /**
    * Subscribes to a graphql subscription
    *
+   * 
    * @example
    * This examples shows how to listen to changes in the groups of an organization
    * ```ts

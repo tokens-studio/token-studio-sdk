@@ -1,0 +1,8 @@
+mutation CreateTokenSet($project: String!, $input: TokenSetInput!) {
+    createTokenSet(project: $project, input: $input) {
+    id
+    name
+    type
+    }
+}
+

@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: Date; output: Date; }
   JSON: { input: any; output: any; }
 };
 
@@ -99,6 +100,52 @@ export type ColorValue = {
   hsla?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
   raw?: Maybe<Scalars['String']['output']>;
   rgba?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
+};
+
+export type Composition = {
+  __typename?: 'Composition';
+  asset?: Maybe<Scalars['String']['output']>;
+  backgroundBlur?: Maybe<Scalars['String']['output']>;
+  border?: Maybe<Scalars['String']['output']>;
+  borderBottom?: Maybe<Scalars['String']['output']>;
+  borderColor?: Maybe<Scalars['String']['output']>;
+  borderLeft?: Maybe<Scalars['String']['output']>;
+  borderRadius?: Maybe<Scalars['String']['output']>;
+  borderRadiusBottomLeft?: Maybe<Scalars['String']['output']>;
+  borderRadiusBottomRight?: Maybe<Scalars['String']['output']>;
+  borderRadiusTopLeft?: Maybe<Scalars['String']['output']>;
+  borderRadiusTopRight?: Maybe<Scalars['String']['output']>;
+  borderRight?: Maybe<Scalars['String']['output']>;
+  borderTop?: Maybe<Scalars['String']['output']>;
+  borderWidth?: Maybe<Scalars['String']['output']>;
+  borderWidthBottom?: Maybe<Scalars['String']['output']>;
+  borderWidthLeft?: Maybe<Scalars['String']['output']>;
+  borderWidthRight?: Maybe<Scalars['String']['output']>;
+  borderWidthTop?: Maybe<Scalars['String']['output']>;
+  boxShadow?: Maybe<Scalars['String']['output']>;
+  dimension?: Maybe<Scalars['String']['output']>;
+  fill?: Maybe<Scalars['String']['output']>;
+  fontFamilies?: Maybe<Scalars['String']['output']>;
+  fontSizes?: Maybe<Scalars['String']['output']>;
+  fontWeights?: Maybe<Scalars['String']['output']>;
+  height?: Maybe<Scalars['String']['output']>;
+  horizontalPadding?: Maybe<Scalars['String']['output']>;
+  itemSpacing?: Maybe<Scalars['String']['output']>;
+  letterSpacing?: Maybe<Scalars['String']['output']>;
+  lineHeights?: Maybe<Scalars['String']['output']>;
+  opacity?: Maybe<Scalars['String']['output']>;
+  paddingBottom?: Maybe<Scalars['String']['output']>;
+  paddingLeft?: Maybe<Scalars['String']['output']>;
+  paddingRight?: Maybe<Scalars['String']['output']>;
+  paddingTop?: Maybe<Scalars['String']['output']>;
+  paragraphSpacing?: Maybe<Scalars['String']['output']>;
+  sizing?: Maybe<Scalars['String']['output']>;
+  spacing?: Maybe<Scalars['String']['output']>;
+  textCase?: Maybe<Scalars['String']['output']>;
+  textDecoration?: Maybe<Scalars['String']['output']>;
+  typography?: Maybe<Scalars['String']['output']>;
+  verticalPadding?: Maybe<Scalars['String']['output']>;
+  width?: Maybe<Scalars['String']['output']>;
 };
 
 export type Entity = ApiKeyIdentity | User;
@@ -652,7 +699,7 @@ export type PolicyStringFilterInput = {
 
 export type Project = {
   __typename?: 'Project';
-  createdAt: Scalars['Int']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<Entity>;
   description?: Maybe<Scalars['String']['output']>;
   generators?: Maybe<Array<Maybe<Generator>>>;
@@ -901,7 +948,7 @@ export type RawToken = {
   value?: Maybe<RawTokenValue>;
 };
 
-export type RawTokenValue = Raw_Token_Border | Raw_Token_BoxShadow | Raw_Token_Scalar | Raw_Token_Typography;
+export type RawTokenValue = Raw_Token_Border | Raw_Token_BoxShadow | Raw_Token_Composition | Raw_Token_Scalar | Raw_Token_Typography;
 
 export type Raw_Token_Border = {
   __typename?: 'Raw_Token_border';
@@ -912,6 +959,12 @@ export type Raw_Token_Border = {
 export type Raw_Token_BoxShadow = {
   __typename?: 'Raw_Token_boxShadow';
   boxShadow?: Maybe<Array<Maybe<BoxShadow>>>;
+  value?: Maybe<Scalars['String']['output']>;
+};
+
+export type Raw_Token_Composition = {
+  __typename?: 'Raw_Token_composition';
+  composition?: Maybe<Composition>;
   value?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1362,7 +1415,7 @@ export type CreateTokenMutationVariables = Exact<{
 }>;
 
 
-export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'RawToken', description?: string | null, name?: string | null, id?: string | null, extensions?: string | null, setId?: string | null, type?: TokenType | null, value?: { __typename?: 'Raw_Token_border', value?: string | null } | { __typename?: 'Raw_Token_boxShadow', value?: string | null } | { __typename?: 'Raw_Token_scalar', value?: string | null } | { __typename?: 'Raw_Token_typography', value?: string | null } | null } | null };
+export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'RawToken', description?: string | null, name?: string | null, id?: string | null, extensions?: string | null, setId?: string | null, type?: TokenType | null, value?: { __typename?: 'Raw_Token_border', value?: string | null } | { __typename?: 'Raw_Token_boxShadow', value?: string | null } | { __typename?: 'Raw_Token_composition' } | { __typename?: 'Raw_Token_scalar', value?: string | null } | { __typename?: 'Raw_Token_typography', value?: string | null } | null } | null };
 
 export type CreateOrganizationMutationVariables = Exact<{
   input: OrganizationInput;
@@ -1377,7 +1430,7 @@ export type CreateProjectMutationVariables = Exact<{
 }>;
 
 
-export type CreateProjectMutation = { __typename?: 'Mutation', createProject?: { __typename?: 'Project', createdAt: number, name: string, id: string, organizationId: string, visibility: Visibility, icon?: string | null, description?: string | null, releaseCount?: number | null, tokenCount?: number | null, sets?: Array<{ __typename?: 'TokenSet', id?: string | null, name?: string | null, projectId?: string | null, type?: TokenSetType | null, generatorId?: string | null, orderIndex?: string | null, createdAt?: string | null } | null> | null, resolvers?: Array<{ __typename?: 'Resolver', name?: string | null, description?: string | null, createdAt?: string | null, updatedAt?: string | null, id?: string | null } | null> | null, releases?: Array<{ __typename?: 'Release', id: string, name: string, version: string, description?: string | null, createdAt?: string | null } | null> | null, sdConfigs?: Array<{ __typename?: 'SDConfig', id: string, name: string, createdAt: string, updatedAt: string, projectId: string, config?: string | null, functions?: string | null, default?: boolean | null, themeOptions?: string | null } | null> | null, themeGroups?: Array<{ __typename?: 'ThemeGroup', id: string, name: string, createdAt: string, updatedAt: string, projectId?: string | null } | null> | null } | null };
+export type CreateProjectMutation = { __typename?: 'Mutation', createProject?: { __typename?: 'Project', createdAt?: Date | null, name: string, id: string, organizationId: string, visibility: Visibility, icon?: string | null, description?: string | null, releaseCount?: number | null, tokenCount?: number | null, sets?: Array<{ __typename?: 'TokenSet', id?: string | null, name?: string | null, projectId?: string | null, type?: TokenSetType | null, generatorId?: string | null, orderIndex?: string | null, createdAt?: string | null } | null> | null, resolvers?: Array<{ __typename?: 'Resolver', name?: string | null, description?: string | null, createdAt?: string | null, updatedAt?: string | null, id?: string | null } | null> | null, releases?: Array<{ __typename?: 'Release', id: string, name: string, version: string, description?: string | null, createdAt?: string | null } | null> | null, sdConfigs?: Array<{ __typename?: 'SDConfig', id: string, name: string, createdAt: string, updatedAt: string, projectId: string, config?: string | null, functions?: string | null, default?: boolean | null, themeOptions?: string | null } | null> | null, themeGroups?: Array<{ __typename?: 'ThemeGroup', id: string, name: string, createdAt: string, updatedAt: string, projectId?: string | null } | null> | null } | null };
 
 export type DeleteProjectMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1385,6 +1438,14 @@ export type DeleteProjectMutationVariables = Exact<{
 
 
 export type DeleteProjectMutation = { __typename?: 'Mutation', deleteProject?: { __typename?: 'Project', id: string } | null };
+
+export type CreateTokenSetMutationVariables = Exact<{
+  project: Scalars['String']['input'];
+  input: TokenSetInput;
+}>;
+
+
+export type CreateTokenSetMutation = { __typename?: 'Mutation', createTokenSet?: { __typename?: 'TokenSet', id?: string | null, name?: string | null, type?: TokenSetType | null } | null };
 
 export type GetOrganizationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1431,7 +1492,7 @@ export type GetTokenSetsQueryVariables = Exact<{
 }>;
 
 
-export type GetTokenSetsQuery = { __typename?: 'Query', tokenSets: Array<{ __typename?: 'TokenSet', name?: string | null, id?: string | null, createdAt?: string | null, type?: TokenSetType | null, orderIndex?: string | null, tokens: Array<{ __typename?: 'RawToken', name?: string | null, id?: string | null, type?: TokenType | null, value?: { __typename?: 'Raw_Token_border', value?: string | null, border?: { __typename?: 'Border', color?: string | null, style?: string | null, width?: string | null } | null } | { __typename?: 'Raw_Token_boxShadow', value?: string | null, boxShadow?: Array<{ __typename?: 'BoxShadow', x?: string | null, y?: string | null, blur?: string | null, spread?: string | null, color?: string | null, type?: string | null } | null> | null } | { __typename?: 'Raw_Token_scalar', value?: string | null } | { __typename?: 'Raw_Token_typography', value?: string | null, typography?: { __typename?: 'Typography', fontFamily?: string | null, fontWeight?: string | null, letterSpacing?: string | null, lineHeight?: string | null, fontSize?: string | null, paragraphIndent?: string | null, paragraphSpacing?: string | null, textCase?: string | null, textDecoration?: string | null } | null } | null }> }> };
+export type GetTokenSetsQuery = { __typename?: 'Query', tokenSets: Array<{ __typename?: 'TokenSet', name?: string | null, id?: string | null, createdAt?: string | null, type?: TokenSetType | null, orderIndex?: string | null, tokens: Array<{ __typename?: 'RawToken', name?: string | null, id?: string | null, type?: TokenType | null, value?: { __typename?: 'Raw_Token_border', value?: string | null, border?: { __typename?: 'Border', color?: string | null, style?: string | null, width?: string | null } | null } | { __typename?: 'Raw_Token_boxShadow', value?: string | null, boxShadow?: Array<{ __typename?: 'BoxShadow', x?: string | null, y?: string | null, blur?: string | null, spread?: string | null, color?: string | null, type?: string | null } | null> | null } | { __typename?: 'Raw_Token_composition' } | { __typename?: 'Raw_Token_scalar', value?: string | null } | { __typename?: 'Raw_Token_typography', value?: string | null, typography?: { __typename?: 'Typography', fontFamily?: string | null, fontWeight?: string | null, letterSpacing?: string | null, lineHeight?: string | null, fontSize?: string | null, paragraphIndent?: string | null, paragraphSpacing?: string | null, textCase?: string | null, textDecoration?: string | null } | null } | null }> }> };
 
 
 export const CreateTokenDocument = gql`
@@ -1643,6 +1704,42 @@ export function useDeleteProjectMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteProjectMutationHookResult = ReturnType<typeof useDeleteProjectMutation>;
 export type DeleteProjectMutationResult = Apollo.MutationResult<DeleteProjectMutation>;
 export type DeleteProjectMutationOptions = Apollo.BaseMutationOptions<DeleteProjectMutation, DeleteProjectMutationVariables>;
+export const CreateTokenSetDocument = gql`
+    mutation CreateTokenSet($project: String!, $input: TokenSetInput!) {
+  createTokenSet(project: $project, input: $input) {
+    id
+    name
+    type
+  }
+}
+    `;
+export type CreateTokenSetMutationFn = Apollo.MutationFunction<CreateTokenSetMutation, CreateTokenSetMutationVariables>;
+
+/**
+ * __useCreateTokenSetMutation__
+ *
+ * To run a mutation, you first call `useCreateTokenSetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTokenSetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTokenSetMutation, { data, loading, error }] = useCreateTokenSetMutation({
+ *   variables: {
+ *      project: // value for 'project'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTokenSetMutation(baseOptions?: Apollo.MutationHookOptions<CreateTokenSetMutation, CreateTokenSetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTokenSetMutation, CreateTokenSetMutationVariables>(CreateTokenSetDocument, options);
+      }
+export type CreateTokenSetMutationHookResult = ReturnType<typeof useCreateTokenSetMutation>;
+export type CreateTokenSetMutationResult = Apollo.MutationResult<CreateTokenSetMutation>;
+export type CreateTokenSetMutationOptions = Apollo.BaseMutationOptions<CreateTokenSetMutation, CreateTokenSetMutationVariables>;
 export const GetOrganizationsDocument = gql`
     query GetOrganizations {
   organizations {
