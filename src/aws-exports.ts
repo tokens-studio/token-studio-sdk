@@ -9,7 +9,7 @@ export const devConfig = {
 };
 
 export const prodConfig = {
-    aws_appsync_graphqlEndpoint: 'https://query.api.tokens.studio/graphql',
+    aws_appsync_graphqlEndpoint: 'http://localhost:3002/graphql',
     aws_appsync_region: 'eu-central-1',
     aws_user_pools_id: 'eu-central-1_3wNrQGcBd',
     aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',

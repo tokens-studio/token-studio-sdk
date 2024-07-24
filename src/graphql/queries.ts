@@ -178,6 +178,13 @@ export const projects = /* GraphQL */ `
         updatedAt
         projectUrn
       }
+      themeOption {
+        name
+        urn
+        figmaStyleReferences
+        figmaVariableReferences
+        selectedTokenSets
+      }
       releaseCount
       tokenCount
     }
@@ -256,6 +263,13 @@ export const project = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
+      }
+      themeOption {
+        name
+        urn
+        figmaStyleReferences
+        figmaVariableReferences
+        selectedTokenSets
       }
       releaseCount
       tokenCount
@@ -674,6 +688,17 @@ export const adminOrganization = /* GraphQL */ `
       tier
       account
       createdAt
+    }
+  }
+`;
+export const themeOption = /* GraphQL */ `
+  query ThemeOption($urn: String!) {
+    themeOption(urn: $urn) {
+      name
+      urn
+      figmaStyleReferences
+      figmaVariableReferences
+      selectedTokenSets
     }
   }
 `;

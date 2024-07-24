@@ -424,6 +424,7 @@ type Project @aws_api_key @aws_lambda @aws_cognito_user_pools {
         limit: Int
         offset: Int
     ): [ThemeGroup]
+    themeOption(urn: String): ThemeOption
     releaseCount: Int
     tokenCount: Int
 }
@@ -1077,6 +1078,10 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
         urn: String!
         input: OrganizationUpdateInput!
     ): Organization @aws_api_key @aws_lambda @aws_cognito_user_pools
+    updateThemeOption(urn: String!, input: ThemeOptionInput): ThemeOption
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
     # Regenerates an API Key, removing its value from use
     regenerateApiKey(urn: String!): APIKey @aws_cognito_user_pools
     ### Deletion
@@ -1149,133 +1154,137 @@ type Mutation @aws_api_key @aws_lambda @aws_cognito_user_pools {
 }
 
 type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	# Retrieves all invitations in the context of your user
-	userInvitations(organization: String!, limit: Int): [Invitation]
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
-	# queries policies available to the org. The organization is the organization urn
-	policies(organization: String!, limit: Int, offset: Int): [Policy]
-		@aws_lambda
-		@aws_api_key
-		@aws_cognito_user_pools
-	# Retrieves information about the organizations
-	organizations(
-		filter: OrganizationFilterInput
-		limit: Int
-		offset: Int
-	): [Organization] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	# Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
-	projects(
-		organization: String!
-		filter: ProjectFilterInput
-		limit: Int
-		offset: Int
-	): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
-	# Retrieve a specific project
-	project(urn: String!): Project
-		@aws_api_key
-		@aws_cognito_user_pools
-		@aws_lambda
-	# Retrieves all projects for an organization
-	groups(
-		organization: String!
-		filter: GroupFilterInput
-		limit: Int
-		offset: Int
-	): [Group] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	#  Retrieves a specific tokenset
-	tokenSet(urn: String!): TokenSet
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
-	#  Retrieves all accessible tokensets for the current project
-	tokenSets(
-		project: String!
-		limit: Int
-		offset: Int
-		filter: TokenSetsFilterInput
-	): [TokenSet!]! @aws_api_key @aws_lambda @aws_cognito_user_pools
-	# Retrieves a specific token
-	token(urn: String!): RawToken @aws_api_key @aws_cognito_user_pools
-	# Retrieves all tokens of the current set
-	tokens(
-		# The urn of the token set. See the Urn format in the documentation
-		set: String!
-		# An optional filter for the tokens
-		filter: TokenFilterInput
-		# Limit of tokens to return
-		limit: Int
-		# offset from the start of tokens
-		offset: Int
-	): [RawToken!]! @aws_api_key @aws_cognito_user_pools
-	# Gets the callers identity
-	self: Self @aws_lambda @aws_api_key @aws_cognito_user_pools
-	# Resolves the resolver and returns the expected tokens
-	resolve(resolver: String!, options: [ResolverOptionsInput]): [ResolvedToken]
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
-	#Returns all resolvers for a project
-	resolvers(
-		project: String!
-		filter: ResolverFilterInput
-		limit: Int
-		offset: Int
-	): [Resolver] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	#Returns a single resolver
-	resolver(urn: String!): Resolver
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
-	#Returns a specific generator
-	generator(urn: String!): Generator
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
-	#Returns all generators for a project
-	generators(
-		project: String!
-		filter: GeneratorFilterInput
-		limit: Int
-		offset: Int
-	): [Generator] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	#Returns all releases for a project
-	releases(
-		project: String!
-		filter: ReleaseFilterInput
-		limit: Int
-		offset: Int
-	): [Release] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	apiKeys(
-		organization: String!
-		filter: ApiKeyFilterInput
-		limit: Int
-		offset: Int
-	): [APIKeyWithoutValue] @aws_api_key @aws_cognito_user_pools @aws_lambda
+    # Retrieves all invitations in the context of your user
+    userInvitations(organization: String!, limit: Int): [Invitation]
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    # queries policies available to the org. The organization is the organization urn
+    policies(organization: String!, limit: Int, offset: Int): [Policy]
+        @aws_lambda
+        @aws_api_key
+        @aws_cognito_user_pools
+    # Retrieves information about the organizations
+    organizations(
+        filter: OrganizationFilterInput
+        limit: Int
+        offset: Int
+    ): [Organization] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    # Retrieves all projects for an organization. When using the public api key mode you cannot ask for non public resources
+    projects(
+        organization: String!
+        filter: ProjectFilterInput
+        limit: Int
+        offset: Int
+    ): [Project] @aws_api_key @aws_cognito_user_pools @aws_lambda
+    # Retrieve a specific project
+    project(urn: String!): Project
+        @aws_api_key
+        @aws_cognito_user_pools
+        @aws_lambda
+    # Retrieves all projects for an organization
+    groups(
+        organization: String!
+        filter: GroupFilterInput
+        limit: Int
+        offset: Int
+    ): [Group] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #  Retrieves a specific tokenset
+    tokenSet(urn: String!): TokenSet
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    #  Retrieves all accessible tokensets for the current project
+    tokenSets(
+        project: String!
+        limit: Int
+        offset: Int
+        filter: TokenSetsFilterInput
+    ): [TokenSet!]! @aws_api_key @aws_lambda @aws_cognito_user_pools
+    # Retrieves a specific token
+    token(urn: String!): RawToken @aws_api_key @aws_cognito_user_pools
+    # Retrieves all tokens of the current set
+    tokens(
+        # The urn of the token set. See the Urn format in the documentation
+        set: String!
+        # An optional filter for the tokens
+        filter: TokenFilterInput
+        # Limit of tokens to return
+        limit: Int
+        # offset from the start of tokens
+        offset: Int
+    ): [RawToken!]! @aws_api_key @aws_cognito_user_pools
+    # Gets the callers identity
+    self: Self @aws_lambda @aws_api_key @aws_cognito_user_pools
+    # Resolves the resolver and returns the expected tokens
+    resolve(
+        resolver: String!
+        options: [ResolverOptionsInput]
+    ): [ResolvedToken] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #Returns all resolvers for a project
+    resolvers(
+        project: String!
+        filter: ResolverFilterInput
+        limit: Int
+        offset: Int
+    ): [Resolver] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #Returns a single resolver
+    resolver(urn: String!): Resolver
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    #Returns a specific generator
+    generator(urn: String!): Generator
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    #Returns all generators for a project
+    generators(
+        project: String!
+        filter: GeneratorFilterInput
+        limit: Int
+        offset: Int
+    ): [Generator] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    #Returns all releases for a project
+    releases(
+        project: String!
+        filter: ReleaseFilterInput
+        limit: Int
+        offset: Int
+    ): [Release] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    apiKeys(
+        organization: String!
+        filter: ApiKeyFilterInput
+        limit: Int
+        offset: Int
+    ): [APIKeyWithoutValue] @aws_api_key @aws_cognito_user_pools @aws_lambda
 
-	releaseCount(project: String!): Int
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
-	tokenCount(project: String!): Int
-		@aws_api_key
-		@aws_lambda
-		@aws_cognito_user_pools
+    releaseCount(project: String!): Int
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
+    tokenCount(project: String!): Int
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
-	### Admin
-	##### Retrieves all orgs
-	adminOrganizations(
-		filter: OrganizationFilterInput
-		limit: Int
-		offset: Int
-	): [OrganizationInfo]
-		@aws_cognito_user_pools
-		@aws_auth(cognito_groups: ["admin"])
+    ### Admin
+    ##### Retrieves all orgs
+    adminOrganizations(
+        filter: OrganizationFilterInput
+        limit: Int
+        offset: Int
+    ): [OrganizationInfo]
+        @aws_cognito_user_pools
+        @aws_auth(cognito_groups: ["admin"])
 
-	adminOrganization(urn: String!): OrganizationInfo
-		@aws_cognito_user_pools
-		@aws_auth(cognito_groups: ["admin"])
+    adminOrganization(urn: String!): OrganizationInfo
+        @aws_cognito_user_pools
+        @aws_auth(cognito_groups: ["admin"])
+    themeOption(urn: String!): ThemeOption
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 }
 
 type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
