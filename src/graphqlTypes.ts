@@ -584,6 +584,7 @@ export type UpdateSelfInput = {
 export type TokenUpdateInput = {
   description?: string | null,
   name?: string | null,
+  type?: string | null,
   extensions?: string | null,
   border?: BorderInput | null,
   boxShadow?: Array< BoxShadowInput | null > | null,

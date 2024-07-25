@@ -720,6 +720,7 @@ input TokenTypeFilterInput {
 input TokenUpdateInput {
     description: String
     name: String
+    type: TokenType
     extensions: AWSJSON
     border: BorderInput
     boxShadow: [BoxShadowInput]
