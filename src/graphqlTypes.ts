@@ -38,6 +38,7 @@ export type Project = {
   releases?:  Array<Release | null > | null,
   sdConfigs?:  Array<SDConfig | null > | null,
   themeGroups?:  Array<ThemeGroup | null > | null,
+  themeOption?: ThemeOption | null,
   releaseCount?: number | null,
   tokenCount?: number | null,
 };
@@ -867,6 +868,14 @@ export type CreateProjectMutation = {
       updatedAt: string,
       projectUrn?: string | null,
     } | null > | null,
+    themeOption?:  {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -1623,6 +1632,14 @@ export type UpdateProjectMutation = {
       updatedAt: string,
       projectUrn?: string | null,
     } | null > | null,
+    themeOption?:  {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -1789,6 +1806,22 @@ export type UpdateOrganizationMutation = {
       icon?: string | null,
       visibility?: Visibility | null,
     } | null > | null,
+  } | null,
+};
+
+export type UpdateThemeOptionMutationVariables = {
+  urn: string,
+  input?: ThemeOptionInput | null,
+};
+
+export type UpdateThemeOptionMutation = {
+  updateThemeOption?:  {
+    __typename: "ThemeOption",
+    name: string,
+    urn: string,
+    figmaStyleReferences?: string | null,
+    figmaVariableReferences?: string | null,
+    selectedTokenSets?: string | null,
   } | null,
 };
 
@@ -2072,6 +2105,14 @@ export type DeleteProjectMutation = {
       updatedAt: string,
       projectUrn?: string | null,
     } | null > | null,
+    themeOption?:  {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -2587,6 +2628,14 @@ export type ProjectsQuery = {
       updatedAt: string,
       projectUrn?: string | null,
     } | null > | null,
+    themeOption?:  {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null > | null,
@@ -2676,6 +2725,14 @@ export type ProjectQuery = {
       updatedAt: string,
       projectUrn?: string | null,
     } | null > | null,
+    themeOption?:  {
+      __typename: "ThemeOption",
+      name: string,
+      urn: string,
+      figmaStyleReferences?: string | null,
+      figmaVariableReferences?: string | null,
+      selectedTokenSets?: string | null,
+    } | null,
     releaseCount?: number | null,
     tokenCount?: number | null,
   } | null,
@@ -3126,6 +3183,21 @@ export type AdminOrganizationQuery = {
     tier?: OrganizationTier | null,
     account?: string | null,
     createdAt?: string | null,
+  } | null,
+};
+
+export type ThemeOptionQueryVariables = {
+  urn: string,
+};
+
+export type ThemeOptionQuery = {
+  themeOption?:  {
+    __typename: "ThemeOption",
+    name: string,
+    urn: string,
+    figmaStyleReferences?: string | null,
+    figmaVariableReferences?: string | null,
+    selectedTokenSets?: string | null,
   } | null,
 };
 

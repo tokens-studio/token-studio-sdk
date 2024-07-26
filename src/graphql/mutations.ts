@@ -76,6 +76,13 @@ export const createProject = /* GraphQL */ `
         updatedAt
         projectUrn
       }
+      themeOption {
+        name
+        urn
+        figmaStyleReferences
+        figmaVariableReferences
+        selectedTokenSets
+      }
       releaseCount
       tokenCount
     }
@@ -684,6 +691,13 @@ export const updateProject = /* GraphQL */ `
         updatedAt
         projectUrn
       }
+      themeOption {
+        name
+        urn
+        figmaStyleReferences
+        figmaVariableReferences
+        selectedTokenSets
+      }
       releaseCount
       tokenCount
     }
@@ -819,6 +833,17 @@ export const updateOrganization = /* GraphQL */ `
         icon
         visibility
       }
+    }
+  }
+`;
+export const updateThemeOption = /* GraphQL */ `
+  mutation UpdateThemeOption($urn: String!, $input: ThemeOptionInput) {
+    updateThemeOption(urn: $urn, input: $input) {
+      name
+      urn
+      figmaStyleReferences
+      figmaVariableReferences
+      selectedTokenSets
     }
   }
 `;
@@ -1050,6 +1075,13 @@ export const deleteProject = /* GraphQL */ `
         createdAt
         updatedAt
         projectUrn
+      }
+      themeOption {
+        name
+        urn
+        figmaStyleReferences
+        figmaVariableReferences
+        selectedTokenSets
       }
       releaseCount
       tokenCount
