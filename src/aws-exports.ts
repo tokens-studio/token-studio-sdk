@@ -11,9 +11,9 @@ export const devConfig = {
 export const prodConfig = {
     aws_appsync_graphqlEndpoint: 'https://query.api.tokens.studio/graphql',
     aws_appsync_region: 'eu-central-1',
-    aws_user_pools_id: 'eu-central-1_ni60xbUBe',
+    aws_user_pools_id: 'eu-central-1_3wNrQGcBd',
     aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',
-    aws_user_pools_web_client_id: '4sp4dlvarnslglg2feth8b07qh'
+    aws_user_pools_web_client_id: '6im7dll0n7d359o3vlmbl4tgjs'
 };
 
 export const devOauth = {
