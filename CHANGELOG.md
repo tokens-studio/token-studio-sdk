@@ -1,5 +1,16 @@
 # @tokens-studio/sdk
 
+## 1.2.0
+
+### Minor Changes
+
+-   dcd3341: Add mutation and query for individual theme group options
+-   906f8eb: Change TokenType to be of type string
+
+### Patch Changes
+
+-   96d70e3: Allow editing of token types
+
 ## 1.1.5
 
 ### Patch Changes
