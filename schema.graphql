@@ -1,196 +1,196 @@
 type APIKey {
-	name: String
-	description: String
-	value: String
-	urn: String
+    name: String
+    description: String
+    value: String
+    urn: String
 }
 
 type APIKeyIdentity {
-	name: String
-	urn: String
+    name: String
+    urn: String
 }
 
 input APIKeyInput {
-	name: String!
-	description: String
-	# Optional groups to add the key to on creation
-	groups: [String!]
+    name: String!
+    description: String
+    # Optional groups to add the key to on creation
+    groups: [String!]
 }
 
 type APIKeyWithoutValue @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	name: String
-	lastUsed: AWSDateTime
-	description: String
-	urn: String
+    name: String
+    lastUsed: AWSDateTime
+    description: String
+    urn: String
 }
 
 input AliasTokenSetInput {
-	# The name of the alias
-	alias: String!
-	# The urn of the set we want to alias
-	set: String!
+    # The name of the alias
+    alias: String!
+    # The urn of the set we want to alias
+    set: String!
 }
 
 input AliasTuple {
-	name: String!
-	value: String!
+    name: String!
+    value: String!
 }
 
 input ApiKeyFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 type Border @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	color: String
-	style: String
-	width: String
+    color: String
+    style: String
+    width: String
 }
 
 ## Note this is atomic. You cannot partially update this value
 input BorderInput {
-	color: String
-	style: String
-	width: String
+    color: String
+    style: String
+    width: String
 }
 
 type BoxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	x: String
-	y: String
-	blur: String
-	spread: String
-	color: String
-	type: String
-	blendMode: String
+    x: String
+    y: String
+    blur: String
+    spread: String
+    color: String
+    type: String
+    blendMode: String
 }
 
 ## Note this is atomic. You cannot partially update this value
 input BoxShadowInput {
-	x: String
-	y: String
-	blur: String
-	spread: String
-	color: String
-	type: String
-	blendMode: String
+    x: String
+    y: String
+    blur: String
+    spread: String
+    color: String
+    type: String
+    blendMode: String
 }
 
 type ColorValue {
-	raw: String
-	hex: String
-	hsla: [Int]
-	rgba: [Int]
+    raw: String
+    hex: String
+    hsla: [Int]
+    rgba: [Int]
 }
 
 union Entity = User | APIKeyIdentity
 
 input FileInput {
-	name: String!
-	# The extension of the file as a string eg "png"
-	type: String!
-	# Base64 encoded file
-	data: String!
+    name: String!
+    # The extension of the file as a string eg "png"
+    type: String!
+    # Base64 encoded file
+    data: String!
 }
 
 type Generator @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	urn: String
-	name: String
-	description: String
-	createdAt: AWSDateTime
-	updatedAt: AWSDateTime
-	graph: AWSJSON
+    urn: String
+    name: String
+    description: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+    graph: AWSJSON
 }
 
 input GeneratorFilterInput {
-	urn: StringFilterInput
-	name: StringFilterInput
+    urn: StringFilterInput
+    name: StringFilterInput
 }
 
 input GeneratorInput {
-	name: String!
-	description: String
-	graph: AWSJSON
+    name: String!
+    description: String
+    graph: AWSJSON
 }
 
 input GeneratorInputUpdate {
-	name: String
-	description: String
-	graph: AWSJSON
+    name: String
+    description: String
+    graph: AWSJSON
 }
 
 type Group @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	organization: String
-	createdAt: AWSDateTime! @aws_api_key @aws_lambda @aws_cognito_user_pools
-	name: String @aws_api_key @aws_lambda @aws_cognito_user_pools
-	icon: String @aws_api_key @aws_lambda @aws_cognito_user_pools
-	urn: String @aws_api_key @aws_lambda @aws_cognito_user_pools
-	description: String @aws_api_key @aws_lambda @aws_cognito_user_pools
-	members: [Entity] @aws_api_key @aws_lambda @aws_cognito_user_pools
-	policy: Policy @aws_api_key @aws_lambda @aws_cognito_user_pools
+    organization: String
+    createdAt: AWSDateTime! @aws_api_key @aws_lambda @aws_cognito_user_pools
+    name: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    icon: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    urn: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    description: String @aws_api_key @aws_lambda @aws_cognito_user_pools
+    members: [Entity] @aws_api_key @aws_lambda @aws_cognito_user_pools
+    policy: Policy @aws_api_key @aws_lambda @aws_cognito_user_pools
 }
 
 input GroupFilterInput {
-	urn: GroupUrnFilterInput
-	name: GroupStringFilterInput
+    urn: GroupUrnFilterInput
+    name: GroupStringFilterInput
 }
 
 input GroupInput {
-	name: String!
-	description: String
-	icon: String
-	# Policy Urn
-	policy: String
+    name: String!
+    description: String
+    icon: String
+    # Policy Urn
+    policy: String
 }
 
 input GroupStringFilterInput {
-	# Equal to
-	eq: String
+    # Equal to
+    eq: String
 }
 
 input GroupUpdateInput {
-	name: String
-	description: String
-	icon: String
-	# Policy Urn
-	policy: String
+    name: String
+    description: String
+    icon: String
+    # Policy Urn
+    policy: String
 }
 
 input GroupUrnFilterInput {
-	# Equal to
-	eq: String
+    # Equal to
+    eq: String
 }
 
 type Identity @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	# The urn of the underlying identity you are operation as .
-	urn: String
-	# Whether your identity is authenticated or not
-	authenticated: Boolean!
+    # The urn of the underlying identity you are operation as .
+    urn: String
+    # Whether your identity is authenticated or not
+    authenticated: Boolean!
 }
 
 input IntFilterInput {
-	# Equal to
-	eq: Int
-	# Not equal to
-	ne: Int
-	# Less than
-	lt: Int
-	# Greater than
-	gt: Int
-	# less than or equal to
-	le: Int
-	# greater than or equal to
-	ge: Int
+    # Equal to
+    eq: Int
+    # Not equal to
+    ne: Int
+    # Less than
+    lt: Int
+    # Greater than
+    gt: Int
+    # less than or equal to
+    le: Int
+    # greater than or equal to
+    ge: Int
 }
 
 type Invitation @aws_lambda @aws_cognito_user_pools {
-	# Organization urn
-	organization: String!
-	# User urn
-	user: String
-	email: String
-	status: InvitationStatus
-	urn: String!
-	confirmCode: String!
+    # Organization urn
+    organization: String!
+    # User urn
+    user: String
+    email: String
+    status: InvitationStatus
+    urn: String!
+    confirmCode: String!
 }
 
 enum InvitationStatus {
@@ -1267,6 +1267,10 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
         @aws_api_key
         @aws_lambda
         @aws_cognito_user_pools
+    themeOption(urn: String!): ThemeOption
+        @aws_api_key
+        @aws_lambda
+        @aws_cognito_user_pools
 
     ### Admin
     ##### Retrieves all orgs
@@ -1281,39 +1285,35 @@ type Query @aws_api_key @aws_lambda @aws_cognito_user_pools {
     adminOrganization(urn: String!): OrganizationInfo
         @aws_cognito_user_pools
         @aws_auth(cognito_groups: ["admin"])
-    themeOption(urn: String!): ThemeOption
-        @aws_api_key
-        @aws_lambda
-        @aws_cognito_user_pools
 }
 
 type Subscription @aws_api_key @aws_lambda @aws_cognito_user_pools {
-	### Tokens
-	#####  Subscribe to all new tokens created in a token set
-	onCreateToken(setUrn: String!): RawToken
-		@aws_subscribe(mutations: ["createToken"])
-	#  Subscribe to token Changes
-	onUpdateToken(setUrn: String!): RawToken
-		@aws_subscribe(mutations: ["updateToken"])
-	onDeleteToken(setUrn: String!): RawToken
-		@aws_subscribe(mutations: ["deleteToken"])
-	### TokenSets
-	#####  Subscribe to all new tokens sets created by an organization
-	onCreateTokenSet(projectUrn: String!): TokenSet
-		@aws_subscribe(mutations: ["createTokenSet"])
-	#  Subscribe to all new tokens sets created by an organization
-	onUpdateTokenSet(projectUrn: String!): TokenSet
-		@aws_subscribe(mutations: ["updateTokenSet"])
-	#Subscribe to tokenSet deletions
-	onDeleteTokenSet(projectUrn: String!): TokenSet
-		@aws_subscribe(mutations: ["deleteTokenSet"])
-	#  Subscribe to all new groups created for the organization
-	onCreateGroup(organization: String!): Group
-		@aws_subscribe(mutations: ["createGroup"])
+    ### Tokens
+    #####  Subscribe to all new tokens created in a token set
+    onCreateToken(setUrn: String!): RawToken
+        @aws_subscribe(mutations: ["createToken"])
+    #  Subscribe to token Changes
+    onUpdateToken(setUrn: String!): RawToken
+        @aws_subscribe(mutations: ["updateToken"])
+    onDeleteToken(setUrn: String!): RawToken
+        @aws_subscribe(mutations: ["deleteToken"])
+    ### TokenSets
+    #####  Subscribe to all new tokens sets created by an organization
+    onCreateTokenSet(projectUrn: String!): TokenSet
+        @aws_subscribe(mutations: ["createTokenSet"])
+    #  Subscribe to all new tokens sets created by an organization
+    onUpdateTokenSet(projectUrn: String!): TokenSet
+        @aws_subscribe(mutations: ["updateTokenSet"])
+    #Subscribe to tokenSet deletions
+    onDeleteTokenSet(projectUrn: String!): TokenSet
+        @aws_subscribe(mutations: ["deleteTokenSet"])
+    #  Subscribe to all new groups created for the organization
+    onCreateGroup(organization: String!): Group
+        @aws_subscribe(mutations: ["createGroup"])
 }
 
 schema {
-	query: Query
-	mutation: Mutation
-	subscription: Subscription
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
 }
