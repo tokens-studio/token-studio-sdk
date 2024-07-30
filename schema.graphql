@@ -475,267 +475,265 @@ union RawTokenValue =
     | Raw_Token_composition
 
 type RawToken @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    description: String
-    name: String
-    urn: String
-    extensions: AWSJSON
-    setUrn: String
-    metadata: Metadata
-    type: TokenType
-    value: RawTokenValue
+	description: String
+	name: String
+	urn: String
+	extensions: AWSJSON
+	setUrn: String
+	metadata: Metadata
+	type: String
+	value: RawTokenValue
 }
 
 type Raw_Token_border @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    # Use when setting a reference to a another border token
-    value: String
-    border: Border
+	# Use when setting a reference to a another border token
+	value: String
+	border: Border
 }
 
 type Raw_Token_composition @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    value: String
-    composition: Composition
+	value: String
+	composition: Composition
 }
 
 type Raw_Token_boxShadow @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    value: String
-    boxShadow: [BoxShadow]
+	value: String
+	boxShadow: [BoxShadow]
 }
 
 # Scalar raw tokens are those with a simple value output such as a string. The following are all scalar
 ##### assets - Assumes a string output with a URL
 ##### opacity - Assumes a simple numeric output
 type Raw_Token_scalar @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    value: String
+	value: String
 }
 
 type Raw_Token_typography @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    value: String
-    typography: Typography
+	value: String
+	typography: Typography
 }
 
 type Release {
-    urn: String!
-    name: String!
-    download: ReleaseDownload
-    version: String!
-    description: String
-    # Urns of the sets at the time of release
-    tokenSets: [ReleaseFile!]
-    # Urns of the generators at the time of release
-    generators: [ReleaseFile!]
-    createdAt: AWSDateTime
-    releasedBy: Entity
+	urn: String!
+	name: String!
+	download: ReleaseDownload
+	version: String!
+	description: String
+	# Urns of the sets at the time of release
+	tokenSets: [ReleaseFile!]
+	# Urns of the generators at the time of release
+	generators: [ReleaseFile!]
+	createdAt: AWSDateTime
+	releasedBy: Entity
 }
 
 type ReleaseDownload {
-    # The full release as a single url
-    zipUrl: ReleaseFile
-    file(filter: ReleaseDownloadFilter, limit: Int, offset: Int): [ReleaseFile]
-        @aws_api_key
-        @aws_lambda
-        @aws_cognito_user_pools
+	# The full release as a single url
+	zipUrl: ReleaseFile
+	file(filter: ReleaseDownloadFilter, limit: Int, offset: Int): [ReleaseFile]
+		@aws_api_key
+		@aws_lambda
+		@aws_cognito_user_pools
 }
 
 input ReleaseDownloadFilter {
-    name: StringFilterInput
-    type: ReleaseDownloadType
+	name: StringFilterInput
+	type: ReleaseDownloadType
 }
 
 enum ReleaseDownloadType {
-    FULLZIP
-    SET
-    GENERATOR
+	FULLZIP
+	SET
+	GENERATOR
 }
 
 type ReleaseFile {
-    path: String
-    name: String
-    type: String
+	path: String
+	name: String
+	type: String
 }
 
 input ReleaseFilterInput {
-    urn: StringFilterInput
-    name: StringFilterInput
-    version: StringFilterInput
+	urn: StringFilterInput
+	name: StringFilterInput
+	version: StringFilterInput
 }
 
 input ReleaseInput {
-    name: String!
-    description: String
-    # The next version you wish to release. This must be greater than the current version
-    version: String!
-    # Token set urns from the project to freeze
-    tokenSets: [String!]
-    # Generator urns from the project to freeze
-    generators: [String!]
+	name: String!
+	description: String
+	# The next version you wish to release. This must be greater than the current version
+	version: String!
+	# Token set urns from the project to freeze
+	tokenSets: [String!]
+	# Generator urns from the project to freeze
+	generators: [String!]
 }
 
 interface ResolvedTokenInterface {
-    description: String
-    name: String
-    type: TokenType
-    metadata: Metadata
+	description: String
+	name: String
+	type: String
+	metadata: Metadata
 }
 
 type Resolver @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    name: String
-    description: String
-    createdAt: AWSDateTime
-    updatedAt: AWSDateTime
-    urn: String
-    graph: AWSJSON
-    resolverOptions: [ResolverOption]
+	name: String
+	description: String
+	createdAt: AWSDateTime
+	updatedAt: AWSDateTime
+	urn: String
+	graph: AWSJSON
+	resolverOptions: [ResolverOption]
 }
 
 type ResolverOption {
-    name: String!
-    description: String
-    values: [String]
+	name: String!
+	description: String
+	values: [String]
 }
 
 input ResolverFilterInput {
-    urn: StringFilterInput
-    name: StringFilterInput
+	urn: StringFilterInput
+	name: StringFilterInput
 }
 
 input ResolverInput {
-    # Name of the resolver
-    name: String!
-    # Optional description of the resolver
-    description: String
-    # The graph for the resolver. Options will be automatically extracted
-    graph: AWSJSON!
+	# Name of the resolver
+	name: String!
+	# Optional description of the resolver
+	description: String
+	# The graph for the resolver. Options will be automatically extracted
+	graph: AWSJSON!
 }
 
 input ResolverOptionsInput {
-    name: String!
-    value: String!
+	name: String!
+	value: String!
 }
 
 input ResolverUpdateInput {
-    # Name of the resolver
-    name: String
-    # Optional description of the resolver
-    description: String
-    # The graph for the resolver. Options will be automatically extracted
-    graph: AWSJSON
+	# Name of the resolver
+	name: String
+	# Optional description of the resolver
+	description: String
+	# The graph for the resolver. Options will be automatically extracted
+	graph: AWSJSON
 }
 
 type Self {
-    identity: Identity @aws_api_key @aws_lambda @aws_cognito_user_pools
-    # Any invitation of the user when logged in with user auth
-    invitations: [Invitation]
-    # information about the user if logged in with user auth
-    user: User
-    # Organizations that the user owns
-    organizations: [Organization]
-    # Retrieves the applicable permissions for yourself in the context of an organization
-    permissions(orgUrn: String): [PolicyDoc]
+	identity: Identity @aws_api_key @aws_lambda @aws_cognito_user_pools
+	# Any invitation of the user when logged in with user auth
+	invitations: [Invitation]
+	# information about the user if logged in with user auth
+	user: User
+	# Organizations that the user owns
+	organizations: [Organization]
+	# Retrieves the applicable permissions for yourself in the context of an organization
+	permissions(orgUrn: String): [PolicyDoc]
 }
 
 input StringFilterInput {
-    eq: String
-    ne: String
-    beginsWith: String
+	eq: String
+	ne: String
+	beginsWith: String
 }
 
 type SummarizedValue {
-    total: Int!
+	total: Int!
 }
 
 input TokenFilterInput {
-    urn: StringFilterInput
-    name: StringFilterInput
-    type: TokenTypeFilterInput
+	urn: StringFilterInput
+	name: StringFilterInput
+	type: TokenTypeFilterInput
 }
 
 input TokenInput {
-    description: String
-    name: String!
-    type: TokenType!
-    extensions: AWSJSON
-    # Used for references and scalars
-    value: String
-    # Specific types
-    typography: TypographyInput
-    border: BorderInput
-    boxShadow: [BoxShadowInput]
-    composition: CompositionInput
+	description: String
+	name: String!
+	type: String!
+	extensions: AWSJSON
+	# Used for references and scalars
+	value: String
+	# Specific types
+	typography: TypographyInput
+	border: BorderInput
+	boxShadow: [BoxShadowInput]
+	composition: CompositionInput
 }
 
 type TokenSet @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    urn: String
-    metadata: Metadata
-    name: String
-    projectUrn: String
-    type: TokenSetType
-    generatorUrn: String
-    orderIndex: String
-    createdAt: AWSDateTime
-    tokens(
-        filter: TokenFilterInput # Limit of tokens to return
-        limit: Int # offset from the start of tokens
-        offset: Int
-    ): [RawToken!]!
+	urn: String
+	metadata: Metadata
+	name: String
+	projectUrn: String
+	type: TokenSetType
+	generatorUrn: String
+	orderIndex: String
+	createdAt: AWSDateTime
+	tokens(
+		filter: TokenFilterInput # Limit of tokens to return
+		limit: Int # offset from the start of tokens
+		offset: Int
+	): [RawToken!]!
 }
 
 input TokenSetFilterInput {
-    urn: StringFilterInput
-    name: StringFilterInput
+	urn: StringFilterInput
+	name: StringFilterInput
 }
 
 input TokenSetInput {
-    name: String!
-    description: String
-    type: TokenSetType
-    index: String
-    graph: AWSJSON
+	name: String!
+	description: String
+	type: TokenSetType
+	index: String
+	graph: AWSJSON
 }
 
 enum TokenSetType {
-    STATIC
-    DYNAMIC
+	STATIC
+	DYNAMIC
 }
 
 input TokenSetUpdateInput {
-    name: String
-    description: String
+	name: String
+	description: String
 }
 
 input TokenSetOrderUpdateInput {
-    urn: String
-    orderIndex: String
+	urn: String
+	orderIndex: String
 }
 
 input TokenSetsFilterInput {
-    name: StringFilterInput
+	name: StringFilterInput
 }
 
-scalar TokenType
-
 input TokenTypeFilterInput {
-    eq: TokenType
-    ne: TokenType
+	eq: String
+	ne: String
 }
 
 input TokenUpdateInput {
-    description: String
-    name: String
-    type: TokenType
-    extensions: AWSJSON
-    border: BorderInput
-    boxShadow: [BoxShadowInput]
-    typography: TypographyInput
-    composition: CompositionInput
-    ## Use for scalars or references
-    value: String
+	description: String
+	name: String
+	type: String
+	extensions: AWSJSON
+	border: BorderInput
+	boxShadow: [BoxShadowInput]
+	typography: TypographyInput
+	composition: CompositionInput
+	## Use for scalars or references
+	value: String
 }
 
 type ResolvedToken {
-    description: String
-    name: String
-    value: ResolvedTokenValue
-    type: TokenType
+	description: String
+	name: String
+	value: ResolvedTokenValue
+	type: String
 }
 
 union ResolvedTokenValue =
