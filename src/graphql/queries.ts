@@ -665,6 +665,17 @@ export const tokenCount = /* GraphQL */ `
     tokenCount(project: $project)
   }
 `;
+export const themeOption = /* GraphQL */ `
+  query ThemeOption($urn: String!) {
+    themeOption(urn: $urn) {
+      name
+      urn
+      figmaStyleReferences
+      figmaVariableReferences
+      selectedTokenSets
+    }
+  }
+`;
 export const adminOrganizations = /* GraphQL */ `
   query AdminOrganizations(
     $filter: OrganizationFilterInput
@@ -688,17 +699,6 @@ export const adminOrganization = /* GraphQL */ `
       tier
       account
       createdAt
-    }
-  }
-`;
-export const themeOption = /* GraphQL */ `
-  query ThemeOption($urn: String!) {
-    themeOption(urn: $urn) {
-      name
-      urn
-      figmaStyleReferences
-      figmaVariableReferences
-      selectedTokenSets
     }
   }
 `;
