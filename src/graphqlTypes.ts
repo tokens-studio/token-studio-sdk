@@ -3154,6 +3154,21 @@ export type TokenCountQuery = {
   tokenCount?: number | null,
 };
 
+export type ThemeOptionQueryVariables = {
+  urn: string,
+};
+
+export type ThemeOptionQuery = {
+  themeOption?:  {
+    __typename: "ThemeOption",
+    name: string,
+    urn: string,
+    figmaStyleReferences?: string | null,
+    figmaVariableReferences?: string | null,
+    selectedTokenSets?: string | null,
+  } | null,
+};
+
 export type AdminOrganizationsQueryVariables = {
   filter?: OrganizationFilterInput | null,
   limit?: number | null,
@@ -3183,21 +3198,6 @@ export type AdminOrganizationQuery = {
     tier?: OrganizationTier | null,
     account?: string | null,
     createdAt?: string | null,
-  } | null,
-};
-
-export type ThemeOptionQueryVariables = {
-  urn: string,
-};
-
-export type ThemeOptionQuery = {
-  themeOption?:  {
-    __typename: "ThemeOption",
-    name: string,
-    urn: string,
-    figmaStyleReferences?: string | null,
-    figmaVariableReferences?: string | null,
-    selectedTokenSets?: string | null,
   } | null,
 };
 
