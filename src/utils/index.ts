@@ -7,7 +7,7 @@ import {
     Raw_Token_composition,
     Raw_Token_typography,
     ResolvedToken
-} from '../graphqlTypes';
+} from '../graphqlTypes.js';
 import {
     SingleBorderToken,
     SingleBoxShadowToken,
@@ -16,7 +16,7 @@ import {
     SingleTypographyToken,
     TokenTypes
 } from '@tokens-studio/types';
-import { removeNullProperties } from './removeNullProps';
+import { removeNullProperties } from './removeNullProps.js';
 
 export interface ReifiedResolvedToken {
     name: string;

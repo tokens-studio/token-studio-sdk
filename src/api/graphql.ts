@@ -1,6 +1,6 @@
 import { API } from '@aws-amplify/api';
-import { ApiKey } from './apiKey';
-import { Configuration } from './configure';
+import { ApiKey } from './apiKey.js';
+import { Configuration } from './configure.js';
 import { GraphQLOptions, GraphQLResult } from '@aws-amplify/api-graphql';
 
 /**

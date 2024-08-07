@@ -1,6 +1,6 @@
 import { Amplify } from '@aws-amplify/core';
-import { ApiKey } from './apiKey';
-import { devConfig, devOauth, prodConfig, prodOauth } from '../aws-exports';
+import { ApiKey } from './apiKey.js';
+import { devConfig, devOauth, prodConfig, prodOauth } from '../aws-exports.js';
 
 /**
  * There are 3 authentication modes available.

@@ -39,9 +39,9 @@
  * @packageDocumentation
  */
 
-export * from './api';
-export * from './graphqlTypes';
-export * as Mutations from './graphql/mutations';
-export * as Queries from './graphql/queries';
-export * as Subscriptions from './graphql/subscriptions';
-export * from './utils';
+export * from './api/index.js';
+export * from './graphqlTypes.js';
+export * as Mutations from './graphql/mutations.js';
+export * as Queries from './graphql/queries.js';
+export * as Subscriptions from './graphql/subscriptions.js';
+export * from './utils/index.js';
