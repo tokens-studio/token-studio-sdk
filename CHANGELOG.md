@@ -1,5 +1,12 @@
 # @tokens-studio/sdk
 
+## 1.2.1
+
+### Patch Changes
+
+-   9a13552: Change token type to string
+-   7205f25: Allow querying composition properties
+
 ## 1.2.0
 
 ### Minor Changes
