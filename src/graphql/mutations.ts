@@ -137,7 +137,7 @@ export const createOrganization = /* GraphQL */ `
   mutation CreateOrganization($input: OrganizationInput!) {
     createOrganization(input: $input) {
       urn
-      createdAt
+      created
       owner {
         name
         givenName
@@ -430,7 +430,7 @@ export const acceptInvitation = /* GraphQL */ `
   mutation AcceptInvitation($urn: String!, $confirmCode: String!) {
     acceptInvitation(urn: $urn, confirmCode: $confirmCode) {
       urn
-      createdAt
+      created
       owner {
         name
         givenName
@@ -777,7 +777,7 @@ export const updateOrganization = /* GraphQL */ `
   mutation UpdateOrganization($urn: String!, $input: OrganizationUpdateInput!) {
     updateOrganization(urn: $urn, input: $input) {
       urn
-      createdAt
+      created
       owner {
         name
         givenName
@@ -1092,7 +1092,7 @@ export const deleteOrganization = /* GraphQL */ `
   mutation DeleteOrganization($urn: String!) {
     deleteOrganization(urn: $urn) {
       urn
-      createdAt
+      created
       owner {
         name
         givenName
@@ -1291,7 +1291,7 @@ export const adminUpdateOrganization = /* GraphQL */ `
   ) {
     adminUpdateOrganization(urn: $urn, input: $input) {
       urn
-      createdAt
+      created
       owner {
         name
         givenName

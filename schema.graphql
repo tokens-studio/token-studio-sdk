@@ -219,46 +219,47 @@ enum OrderDirection {
 }
 
 type OrganizationInfo {
-    urn: String
-    name: String
-    tier: OrganizationTier
-    account: String
-    createdAt: AWSDateTime
+	urn: String
+	name: String
+	tier: OrganizationTier
+	account: String
+	owner: User
+	created: AWSDateTime
 }
 
 type Organization @aws_api_key @aws_lambda @aws_cognito_user_pools {
-    # Unique id of the organization
-    urn: String
-    # Date that the org was created
-    createdAt: AWSDateTime
-    # The user that created the organization
-    owner: User
-    # Name is not unique
-    name: String
-    # Optional description
-    description: String
-    # Visibility of the org to the public
-    visibility: Visibility
-    # The account id
-    account: String
-    # The stripe account id. Might be null if user is on free tier
-    payment: String
-    # Whether or not SSO is enabled
-    ssoEnabled: Boolean
-    # Optional icon
-    icon: String
-    # The tier associated with the organization
-    tier: OrganizationTier
-    # Projects inside the organization
-    projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
-    # Groups inside the organization
-    groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
-    # Policies inside the organization
-    policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
-    # The api keys owned by the organization
-    apiKeys: [APIKeyWithoutValue]
-    # User of the organization
-    users(filter: UserFilterInput, limit: Int, offset: Int): [User]
+	# Unique id of the organization
+	urn: String
+	# Date that the org was created
+	created: AWSDateTime
+	# The user that created the organization
+	owner: User
+	# Name is not unique
+	name: String
+	# Optional description
+	description: String
+	# Visibility of the org to the public
+	visibility: Visibility
+	# The account id
+	account: String
+	# The stripe account id. Might be null if user is on free tier
+	payment: String
+	# Whether or not SSO is enabled
+	ssoEnabled: Boolean
+	# Optional icon
+	icon: String
+	# The tier associated with the organization
+	tier: OrganizationTier
+	# Projects inside the organization
+	projects(filter: ProjectFilterInput, limit: Int, offset: Int): [Project]
+	# Groups inside the organization
+	groups(filter: GroupFilterInput, limit: Int, offset: Int): [Group]
+	# Policies inside the organization
+	policies(filter: PolicyFilterInput, limit: Int, offset: Int): [Policy]
+	# The api keys owned by the organization
+	apiKeys: [APIKeyWithoutValue]
+	# User of the organization
+	users(filter: UserFilterInput, limit: Int, offset: Int): [User]
 }
 
 input OrganizationFilterInput {
