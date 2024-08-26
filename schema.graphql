@@ -638,6 +638,7 @@ input StringFilterInput {
 	eq: String
 	ne: String
 	beginsWith: String
+    contains: String
 }
 
 type SummarizedValue {
