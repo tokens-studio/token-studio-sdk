@@ -1,5 +1,12 @@
 # @tokens-studio/sdk
 
+## 1.2.2
+
+### Patch Changes
+
+-   ed5786d: Add owner property to OrganizationInfo
+    Add contains property to filter Organizations by partial strings
+
 ## 1.2.1
 
 ### Patch Changes
