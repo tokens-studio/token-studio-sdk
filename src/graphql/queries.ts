@@ -687,6 +687,14 @@ export const adminOrganizations = /* GraphQL */ `
       name
       tier
       account
+      owner {
+        name
+        givenName
+        urn
+        description
+        icon
+        visibility
+      }
       createdAt
     }
   }
@@ -698,6 +706,14 @@ export const adminOrganization = /* GraphQL */ `
       name
       tier
       account
+      owner {
+        name
+        givenName
+        urn
+        description
+        icon
+        visibility
+      }
       createdAt
     }
   }

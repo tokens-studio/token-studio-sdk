@@ -653,6 +653,7 @@ export type StringFilterInput = {
   eq?: string | null,
   ne?: string | null,
   beginsWith?: string | null,
+  contains?: string | null,
 };
 
 export type VisibilityInput = {
@@ -780,6 +781,7 @@ export type OrganizationInfo = {
   name?: string | null,
   tier?: OrganizationTier | null,
   account?: string | null,
+  owner?: User | null,
   createdAt?: string | null,
 };
 
@@ -3182,6 +3184,15 @@ export type AdminOrganizationsQuery = {
     name?: string | null,
     tier?: OrganizationTier | null,
     account?: string | null,
+    owner?:  {
+      __typename: "User",
+      name?: string | null,
+      givenName?: string | null,
+      urn?: string | null,
+      description?: string | null,
+      icon?: string | null,
+      visibility?: Visibility | null,
+    } | null,
     createdAt?: string | null,
   } | null > | null,
 };
@@ -3197,6 +3208,15 @@ export type AdminOrganizationQuery = {
     name?: string | null,
     tier?: OrganizationTier | null,
     account?: string | null,
+    owner?:  {
+      __typename: "User",
+      name?: string | null,
+      givenName?: string | null,
+      urn?: string | null,
+      description?: string | null,
+      icon?: string | null,
+      visibility?: Visibility | null,
+    } | null,
     createdAt?: string | null,
   } | null,
 };
