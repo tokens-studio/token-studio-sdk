@@ -2,4 +2,5 @@
 '@tokens-studio/sdk': patch
 ---
 
-Update Organization to return correct created property
+Add owner property to OrganizationInfo
+Add contains property to filter Organizations by partial strings
