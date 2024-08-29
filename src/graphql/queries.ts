@@ -35,7 +35,7 @@ export const organizations = /* GraphQL */ `
   ) {
     organizations(filter: $filter, limit: $limit, offset: $offset) {
       urn
-      created
+      createdAt
       owner {
         name
         givenName
@@ -470,7 +470,7 @@ export const self = /* GraphQL */ `
       }
       organizations {
         urn
-        created
+        createdAt
         name
         description
         visibility
@@ -695,7 +695,7 @@ export const adminOrganizations = /* GraphQL */ `
         icon
         visibility
       }
-      created
+      createdAt
     }
   }
 `;
@@ -714,7 +714,7 @@ export const adminOrganization = /* GraphQL */ `
         icon
         visibility
       }
-      created
+      createdAt
     }
   }
 `;

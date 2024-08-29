@@ -224,14 +224,14 @@ type OrganizationInfo {
 	tier: OrganizationTier
 	account: String
 	owner: User
-	created: AWSDateTime
+	createdAt: AWSDateTime
 }
 
 type Organization @aws_api_key @aws_lambda @aws_cognito_user_pools {
 	# Unique id of the organization
 	urn: String
 	# Date that the org was created
-	created: AWSDateTime
+	createdAt: AWSDateTime
 	# The user that created the organization
 	owner: User
 	# Name is not unique

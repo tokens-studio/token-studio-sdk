@@ -377,7 +377,7 @@ export type OrganizationInput = {
 export type Organization = {
   __typename: "Organization",
   urn?: string | null,
-  created?: string | null,
+  createdAt?: string | null,
   owner?: User | null,
   name?: string | null,
   description?: string | null,
@@ -653,6 +653,7 @@ export type StringFilterInput = {
   eq?: string | null,
   ne?: string | null,
   beginsWith?: string | null,
+  contains?: string | null,
 };
 
 export type VisibilityInput = {
@@ -781,7 +782,7 @@ export type OrganizationInfo = {
   tier?: OrganizationTier | null,
   account?: string | null,
   owner?: User | null,
-  created?: string | null,
+  createdAt?: string | null,
 };
 
 export type CreateProjectMutationVariables = {
@@ -947,7 +948,7 @@ export type CreateOrganizationMutation = {
   createOrganization?:  {
     __typename: "Organization",
     urn?: string | null,
-    created?: string | null,
+    createdAt?: string | null,
     owner?:  {
       __typename: "User",
       name?: string | null,
@@ -1314,7 +1315,7 @@ export type AcceptInvitationMutation = {
   acceptInvitation?:  {
     __typename: "Organization",
     urn?: string | null,
-    created?: string | null,
+    createdAt?: string | null,
     owner?:  {
       __typename: "User",
       name?: string | null,
@@ -1745,7 +1746,7 @@ export type UpdateOrganizationMutation = {
   updateOrganization?:  {
     __typename: "Organization",
     urn?: string | null,
-    created?: string | null,
+    createdAt?: string | null,
     owner?:  {
       __typename: "User",
       name?: string | null,
@@ -2127,7 +2128,7 @@ export type DeleteOrganizationMutation = {
   deleteOrganization?:  {
     __typename: "Organization",
     urn?: string | null,
-    created?: string | null,
+    createdAt?: string | null,
     owner?:  {
       __typename: "User",
       name?: string | null,
@@ -2365,7 +2366,7 @@ export type AdminUpdateOrganizationMutation = {
   adminUpdateOrganization?:  {
     __typename: "Organization",
     urn?: string | null,
-    created?: string | null,
+    createdAt?: string | null,
     owner?:  {
       __typename: "User",
       name?: string | null,
@@ -2477,7 +2478,7 @@ export type OrganizationsQuery = {
   organizations?:  Array< {
     __typename: "Organization",
     urn?: string | null,
-    created?: string | null,
+    createdAt?: string | null,
     owner?:  {
       __typename: "User",
       name?: string | null,
@@ -2948,7 +2949,7 @@ export type SelfQuery = {
     organizations?:  Array< {
       __typename: "Organization",
       urn?: string | null,
-      created?: string | null,
+      createdAt?: string | null,
       name?: string | null,
       description?: string | null,
       visibility?: Visibility | null,
@@ -3192,7 +3193,7 @@ export type AdminOrganizationsQuery = {
       icon?: string | null,
       visibility?: Visibility | null,
     } | null,
-    created?: string | null,
+    createdAt?: string | null,
   } | null > | null,
 };
 
@@ -3216,7 +3217,7 @@ export type AdminOrganizationQuery = {
       icon?: string | null,
       visibility?: Visibility | null,
     } | null,
-    created?: string | null,
+    createdAt?: string | null,
   } | null,
 };
 
