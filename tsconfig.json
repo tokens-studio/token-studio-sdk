@@ -20,7 +20,17 @@
         "types": [
             "node"
         ],
-        "baseUrl": "."
+        "baseUrl": ".",
+        "plugins": [
+            {
+                "name": "@0no-co/graphqlsp",
+                "schema": "./schema2.graphql"
+            }
+        ]
     },
-    "exclude": ["node_modules", "**/*.test.ts", "cypress/**"]
+    "exclude": [
+        "node_modules",
+        "**/*.test.ts",
+        "cypress/**"
+    ]
 }

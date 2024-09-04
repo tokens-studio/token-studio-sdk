@@ -1,18 +1,7 @@
 import { Amplify } from '@aws-amplify/core';
-import { ApiKey } from './apiKey.js';
 import { devConfig, devOauth, prodConfig, prodOauth } from '../aws-exports.js';
 
-/**
- * There are 3 authentication modes available.
- * 1. User Auth (default)
- * 2. API Keys
- * 3. Public
- *
- * Public interaction has a huge amount of restrictions applied as to which resources it can access and should not be used outside of the Tokens Website as the permissions might change on a whim
- */
 export namespace Configuration {
-    export const PUBLIC_KEY = 'da2-aqavhxqlkzgzjjwt35zyy2xqqy';
-
     /**
      * If you need to externalize session storage you can use the following interface to implement your own
      */
@@ -87,40 +76,4 @@ export namespace Configuration {
      * @returns
      */
     export const get = (): IConfiguration => ({ ...configuration });
-
-    /**
-     * Sets the API to use API Key authentication
-     * @example
-     * ```
-     * sdk.Configuration.setAPIKey('api_key_....');
-     * ```
-     * @param token
-     */
-    export const setAPIKey = (token: string, env: 'dev' | 'prod' = 'prod') => {
-        const { config: selectedConfig, oauth: selectedOauth } = getConfigs(
-            env === 'prod' ? 'production' : 'development'
-        );
-
-        configuration = Amplify.configure({
-            ...selectedConfig,
-            oauth: selectedOauth,
-            // eslint-disable-next-line camelcase
-            aws_appsync_authenticationType: 'AWS_LAMBDA'
-        }) as IConfiguration;
-        ApiKey.set(token);
-    };
-
-    /**
-     * Set to use public mode to access values
-     */
-    export const setPublic = (apikey = PUBLIC_KEY) => {
-        //Take the default config and change the config type
-        configuration = Amplify.configure({
-            ...config,
-            // eslint-disable-next-line camelcase
-            aws_appsync_authenticationType: 'API_KEY',
-            // eslint-disable-next-line camelcase
-            aws_appsync_apiKey: apikey
-        }) as IConfiguration;
-    };
 }
