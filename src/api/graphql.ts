@@ -1,17 +1,18 @@
 import { ApolloClient, InMemoryCache, from } from '@apollo/client/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename';
-
 import { HttpLink, split } from '@apollo/client';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename';
 import { setContext } from '@apollo/client/link/context';
 
 export function create({
     auth = 'Bearer api_key_test',
-    host = 'localhost:4200',
-    secure = true
+    host = 'api.tokens.studio',
+    secure = true,
+    webSocketImpl
 }: {
+    webSocketImpl?: unknown;
     host?: string;
     auth?: string;
     secure: boolean;
@@ -34,6 +35,7 @@ export function create({
 
     const wsLink = new GraphQLWsLink(
         createClient({
+            webSocketImpl,
             url: `ws${secure ? 's' : ''}://${host}/subscriptions`,
             connectionParams: {
                 authToken: auth

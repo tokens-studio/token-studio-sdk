@@ -34,6 +34,19 @@ export type Scalars = {
     JSON: { input: any; output: any };
 };
 
+export type ApiKey = {
+    __typename?: 'APIKey';
+    description?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    value: Scalars['String']['output'];
+};
+
+export type ApiKeyInput = {
+    description?: InputMaybe<Scalars['String']['input']>;
+    name: Scalars['String']['input'];
+};
+
 export type ApiKeyWithoutValue = {
     __typename?: 'APIKeyWithoutValue';
     description?: Maybe<Scalars['String']['output']>;
@@ -45,17 +58,45 @@ export type ApiKeyWithoutValue = {
 export type Branch = {
     __typename?: 'Branch';
     branchedAt?: Maybe<Scalars['DateTimeISO']['output']>;
+    config: SdConfig;
+    configs: PaginatedSdConfigs;
     createdAt: Scalars['DateTimeISO']['output'];
     isDefault: Scalars['Boolean']['output'];
     name: Scalars['String']['output'];
     organizationId: Scalars['String']['output'];
     projectId: Scalars['String']['output'];
-    sets: PaginatedSets;
+    themeGroups: PaginatedThemeGroups;
+    tokenSet: TokensSet;
+    tokensSets: PaginatedSets;
 };
 
-export type BranchSetsArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+export type BranchConfigArgs = {
+    name: Scalars['String']['input'];
+};
+
+export type BranchConfigsArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type BranchThemeGroupsArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type BranchTokenSetArgs = {
+    path: Scalars['String']['input'];
+};
+
+export type BranchTokensSetsArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DeleteSetTransaction = {
+    __typename?: 'DeleteSetTransaction';
+    completed: Scalars['DateTimeISO']['output'];
+    sets: Array<TokensSet>;
 };
 
 export type DeletedSdConfig = {
@@ -78,7 +119,13 @@ export type Group = {
     description?: Maybe<Scalars['String']['output']>;
     icon?: Maybe<Scalars['String']['output']>;
     id: Scalars['ID']['output'];
+    members: PaginatedUsers;
     name: Scalars['String']['output'];
+};
+
+export type GroupMembersArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type GroupInput = {
@@ -97,6 +144,8 @@ export type GroupUpdateInput = {
 export type Invitation = {
     __typename?: 'Invitation';
     confirmCode?: Maybe<Scalars['String']['output']>;
+    /** Only present when invited by email */
+    email?: Maybe<Scalars['String']['output']>;
     id: Scalars['ID']['output'];
     organizationId: Scalars['String']['output'];
     status: InvitationStatus;
@@ -113,24 +162,36 @@ export type Mutation = {
     __typename?: 'Mutation';
     acceptInvitation: Organization;
     addMemberToGroup: Group;
+    createAPIKey: ApiKey;
     createGroup: Group;
     createOrganization: Organization;
     createPolicy: Policy;
     createProject: Project;
+    createRelease: Release;
     createSDConfig: SdConfig;
     createToken: Token;
-    createTokenSet: Set;
+    createTokenSet: TokensSet;
     declineInvitation: Scalars['DateTimeISO']['output'];
+    deleteAPIKey: ApiKeyWithoutValue;
+    deleteAllSets: DeleteSetTransaction;
     deleteGroup: Group;
+    deleteInvitation: Invitation;
+    deleteOrganization: Organization;
+    deletePolicy: Policy;
     deleteProject: Project;
     deleteSDConfig: DeletedSdConfig;
-    deleteSet: Set;
+    deleteSet: TokensSet;
     inviteToOrganization: Invitation;
+    regenerateApiKey: ApiKeyWithoutValue;
+    removeFromOrganization: Transaction;
     removeMemberFromGroup: Group;
+    resendInvitation: Invitation;
     updateGroup: Group;
+    updateOrganization: Organization;
+    updatePolicy: Policy;
     updateProject: Project;
     updateSelf: Scalars['DateTimeISO']['output'];
-    updateTokenSet: Set;
+    updateTokenSet: TokensSet;
 };
 
 export type MutationAcceptInvitationArgs = {
@@ -142,6 +203,10 @@ export type MutationAddMemberToGroupArgs = {
     entity: Scalars['String']['input'];
     group: Scalars['String']['input'];
     organization: Scalars['String']['input'];
+};
+
+export type MutationCreateApiKeyArgs = {
+    input: ApiKeyInput;
 };
 
 export type MutationCreateGroupArgs = {
@@ -161,6 +226,12 @@ export type MutationCreatePolicyArgs = {
 export type MutationCreateProjectArgs = {
     input: ProjectInput;
     organization: Scalars['String']['input'];
+};
+
+export type MutationCreateReleaseArgs = {
+    input: ReleaseInput;
+    organization: Scalars['String']['input'];
+    project: Scalars['String']['input'];
 };
 
 export type MutationCreateSdConfigArgs = {
@@ -185,11 +256,37 @@ export type MutationCreateTokenSetArgs = {
 };
 
 export type MutationDeclineInvitationArgs = {
+    code: Scalars['String']['input'];
     id: Scalars['String']['input'];
 };
 
+export type MutationDeleteApiKeyArgs = {
+    id: Scalars['String']['input'];
+};
+
+export type MutationDeleteAllSetsArgs = {
+    branch: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
+    path: Scalars['String']['input'];
+    project: Scalars['String']['input'];
+};
+
 export type MutationDeleteGroupArgs = {
-    input: GroupInput;
+    id: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
+};
+
+export type MutationDeleteInvitationArgs = {
+    id: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
+};
+
+export type MutationDeleteOrganizationArgs = {
+    organization: Scalars['String']['input'];
+};
+
+export type MutationDeletePolicyArgs = {
+    id: Scalars['String']['input'];
     organization: Scalars['String']['input'];
 };
 
@@ -200,9 +297,9 @@ export type MutationDeleteProjectArgs = {
 
 export type MutationDeleteSdConfigArgs = {
     branch?: InputMaybe<Scalars['String']['input']>;
-    id: Scalars['String']['input'];
     name: Scalars['String']['input'];
     organization: Scalars['String']['input'];
+    project: Scalars['String']['input'];
 };
 
 export type MutationDeleteSetArgs = {
@@ -217,9 +314,23 @@ export type MutationInviteToOrganizationArgs = {
     organization: Scalars['String']['input'];
 };
 
+export type MutationRegenerateApiKeyArgs = {
+    id: Scalars['String']['input'];
+};
+
+export type MutationRemoveFromOrganizationArgs = {
+    organization: Scalars['String']['input'];
+    user: Scalars['String']['input'];
+};
+
 export type MutationRemoveMemberFromGroupArgs = {
     entity: Scalars['String']['input'];
     group: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
+};
+
+export type MutationResendInvitationArgs = {
+    id: Scalars['String']['input'];
     organization: Scalars['String']['input'];
 };
 
@@ -228,9 +339,20 @@ export type MutationUpdateGroupArgs = {
     organization: Scalars['String']['input'];
 };
 
+export type MutationUpdateOrganizationArgs = {
+    input: OrganizationInput;
+    organization: Scalars['String']['input'];
+};
+
+export type MutationUpdatePolicyArgs = {
+    id: Scalars['String']['input'];
+    input: PolicyInput;
+    organization: Scalars['String']['input'];
+};
+
 export type MutationUpdateProjectArgs = {
     id: Scalars['String']['input'];
-    input: ProjectInput;
+    input: UpdateProjectInput;
     organization: Scalars['String']['input'];
 };
 
@@ -256,9 +378,11 @@ export type Organization = {
     __typename?: 'Organization';
     createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
     description?: Maybe<Scalars['String']['output']>;
+    /** Groups of the organization */
+    groups: PaginatedGroups;
     icon?: Maybe<Scalars['String']['output']>;
     id: Scalars['ID']['output'];
-    name?: Maybe<Scalars['String']['output']>;
+    name: Scalars['String']['output'];
     payment?: Maybe<Scalars['String']['output']>;
     /** Projects inside the organization */
     projects: PaginatedProjects;
@@ -269,22 +393,50 @@ export type Organization = {
     visibility?: Maybe<Visibility>;
 };
 
+export type OrganizationGroupsArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type OrganizationProjectsArgs = {
     filter?: InputMaybe<ProjectFilterInput>;
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type OrganizationUsersArgs = {
     filter?: InputMaybe<UserFilterInput>;
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type OrganizationInput = {
     description?: InputMaybe<Scalars['String']['input']>;
+    /** Base64 encoded image data */
+    icon?: InputMaybe<Scalars['String']['input']>;
     name: Scalars['String']['input'];
-    tier?: InputMaybe<OrgTier>;
+};
+
+export type PaginatedApiKeyWithoutValue = {
+    __typename?: 'PaginatedAPIKeyWithoutValue';
+    currentPage: Scalars['Int']['output'];
+    data: Array<ApiKeyWithoutValue>;
+    lastPage: Scalars['Int']['output'];
+    nextPage?: Maybe<Scalars['Int']['output']>;
+    prevPage?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+    totalPages: Scalars['Int']['output'];
+};
+
+export type PaginatedBranches = {
+    __typename?: 'PaginatedBranches';
+    currentPage: Scalars['Int']['output'];
+    data: Array<Branch>;
+    lastPage: Scalars['Int']['output'];
+    nextPage?: Maybe<Scalars['Int']['output']>;
+    prevPage?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+    totalPages: Scalars['Int']['output'];
 };
 
 export type PaginatedGroups = {
@@ -320,6 +472,17 @@ export type PaginatedOrganization = {
     totalPages: Scalars['Int']['output'];
 };
 
+export type PaginatedPolicies = {
+    __typename?: 'PaginatedPolicies';
+    currentPage: Scalars['Int']['output'];
+    data: Array<Policy>;
+    lastPage: Scalars['Int']['output'];
+    nextPage?: Maybe<Scalars['Int']['output']>;
+    prevPage?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+    totalPages: Scalars['Int']['output'];
+};
+
 export type PaginatedProjects = {
     __typename?: 'PaginatedProjects';
     currentPage: Scalars['Int']['output'];
@@ -331,10 +494,43 @@ export type PaginatedProjects = {
     totalPages: Scalars['Int']['output'];
 };
 
+export type PaginatedReleases = {
+    __typename?: 'PaginatedReleases';
+    currentPage: Scalars['Int']['output'];
+    data: Array<Release>;
+    lastPage: Scalars['Int']['output'];
+    nextPage?: Maybe<Scalars['Int']['output']>;
+    prevPage?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+    totalPages: Scalars['Int']['output'];
+};
+
+export type PaginatedSdConfigs = {
+    __typename?: 'PaginatedSDConfigs';
+    currentPage: Scalars['Int']['output'];
+    data: Array<SdConfig>;
+    lastPage: Scalars['Int']['output'];
+    nextPage?: Maybe<Scalars['Int']['output']>;
+    prevPage?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+    totalPages: Scalars['Int']['output'];
+};
+
 export type PaginatedSets = {
     __typename?: 'PaginatedSets';
     currentPage: Scalars['Int']['output'];
-    data: Array<Set>;
+    data: Array<TokensSet>;
+    lastPage: Scalars['Int']['output'];
+    nextPage?: Maybe<Scalars['Int']['output']>;
+    prevPage?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+    totalPages: Scalars['Int']['output'];
+};
+
+export type PaginatedThemeGroups = {
+    __typename?: 'PaginatedThemeGroups';
+    currentPage: Scalars['Int']['output'];
+    data: Array<ThemeGroup>;
     lastPage: Scalars['Int']['output'];
     nextPage?: Maybe<Scalars['Int']['output']>;
     prevPage?: Maybe<Scalars['Int']['output']>;
@@ -382,14 +578,34 @@ export type PolicyStatementInput = {
 export type Project = {
     __typename?: 'Project';
     branch: Branch;
-    branches: Array<Branch>;
+    branches: PaginatedBranches;
     defaultBranchName: Scalars['String']['output'];
     description: Scalars['String']['output'];
     icon?: Maybe<Scalars['String']['output']>;
     id: Scalars['ID']['output'];
     name: Scalars['String']['output'];
     organizationId: Scalars['String']['output'];
+    release: Release;
+    releases: PaginatedReleases;
     visibility: Visibility;
+};
+
+export type ProjectBranchArgs = {
+    name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProjectBranchesArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ProjectReleaseArgs = {
+    version?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProjectReleasesArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ProjectFilterInput = {
@@ -401,7 +617,7 @@ export type ProjectInput = {
     description?: InputMaybe<Scalars['String']['input']>;
     icon?: InputMaybe<FileInput>;
     name: Scalars['String']['input'];
-    visibility: Visibility;
+    visibility?: Visibility;
 };
 
 export type PublicApi = {
@@ -414,20 +630,24 @@ export type PublicApi = {
 
 export type PublicApiOrganizationsArgs = {
     filter?: InputMaybe<Scalars['String']['input']>;
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type PublicApiUsersArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Query = {
     __typename?: 'Query';
+    branch: Branch;
+    group: Group;
     groups: PaginatedGroups;
-    organization: Array<Organization>;
+    organization: Organization;
     organizations: PaginatedOrganization;
+    policies: PaginatedPolicies;
+    policy: Policy;
     project: Project;
     projects: PaginatedProjects;
     public: PublicApi;
@@ -435,11 +655,22 @@ export type Query = {
     userInvitations: PaginatedInvitations;
 };
 
+export type QueryBranchArgs = {
+    id: Scalars['String']['input'];
+    name?: InputMaybe<Scalars['String']['input']>;
+    project: Scalars['String']['input'];
+};
+
+export type QueryGroupArgs = {
+    id: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
+};
+
 export type QueryGroupsArgs = {
     filter?: InputMaybe<Scalars['Float']['input']>;
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
     organization: Scalars['String']['input'];
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryOrganizationArgs = {
@@ -447,25 +678,56 @@ export type QueryOrganizationArgs = {
 };
 
 export type QueryOrganizationsArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryPoliciesArgs = {
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    organization: Scalars['String']['input'];
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryPolicyArgs = {
+    id: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
 };
 
 export type QueryProjectArgs = {
     id: Scalars['String']['input'];
+    organization: Scalars['String']['input'];
 };
 
 export type QueryProjectsArgs = {
     filter?: InputMaybe<Scalars['Float']['input']>;
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
     organization: Scalars['String']['input'];
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryUserInvitationsArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
     organization: Scalars['String']['input'];
+    page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Release = {
+    __typename?: 'Release';
+    createdAt: Scalars['DateTimeISO']['output'];
+    description?: Maybe<Scalars['String']['output']>;
+    modifiedAt?: Maybe<Scalars['Float']['output']>;
+    projectId: Scalars['String']['output'];
+    releasedBy: User;
+    version: Scalars['String']['output'];
+};
+
+export type ReleaseInput = {
+    /** A description of the release in markdown. */
+    description?: InputMaybe<Scalars['String']['input']>;
+    /** An optional human readable name for the release. */
+    name?: InputMaybe<Scalars['String']['input']>;
+    /** The new version of the release. Must be a valid semver version. */
+    version: Scalars['String']['input'];
 };
 
 export type SdConfig = {
@@ -493,9 +755,11 @@ export type Self = {
     /** A single API Key */
     apiKey: ApiKeyWithoutValue;
     /** The api keys owned by the user */
-    apiKeys: Array<ApiKeyWithoutValue>;
+    apiKeys: PaginatedApiKeyWithoutValue;
     id: Scalars['String']['output'];
     invitations: PaginatedInvitations;
+    /** The underlying user */
+    user: User;
 };
 
 export type SelfApiKeyArgs = {
@@ -503,25 +767,13 @@ export type SelfApiKeyArgs = {
 };
 
 export type SelfApiKeysArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SelfInvitationsArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
-};
-
-export type Set = {
-    __typename?: 'Set';
-    createdAt: Scalars['DateTimeISO']['output'];
-    name: Scalars['String']['output'];
-    /** The raw json data of the set */
-    raw: Scalars['JSON']['output'];
-    sha: Scalars['String']['output'];
-    /** The transformed tokens of the set */
-    tokens: Array<Token>;
-    updatedAt: Scalars['DateTimeISO']['output'];
+    limit?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type StringFilterInput = {
@@ -544,6 +796,14 @@ export type SubscriptionOnCreateProjectArgs = {
     organization: Scalars['String']['input'];
 };
 
+export type ThemeGroup = {
+    __typename?: 'ThemeGroup';
+    createdAt: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    updatedAt: Scalars['String']['output'];
+};
+
 export type Token = {
     __typename?: 'Token';
     description?: Maybe<Scalars['String']['output']>;
@@ -555,13 +815,37 @@ export type Token = {
 
 export type TokenSetInput = {
     path: Scalars['String']['input'];
-    raw: Scalars['JSON']['input'];
+    raw?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type TokenSetUpdateInput = {
     newPath?: InputMaybe<Scalars['String']['input']>;
     path: Scalars['String']['input'];
     raw?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type TokensSet = {
+    __typename?: 'TokensSet';
+    createdAt: Scalars['DateTimeISO']['output'];
+    name: Scalars['String']['output'];
+    /** The raw json data of the set */
+    raw: Scalars['JSON']['output'];
+    sha: Scalars['String']['output'];
+    /** The transformed tokens of the set */
+    tokens: Array<Token>;
+    updatedAt: Scalars['DateTimeISO']['output'];
+};
+
+export type Transaction = {
+    __typename?: 'Transaction';
+    id: Scalars['String']['output'];
+};
+
+export type UpdateProjectInput = {
+    description?: InputMaybe<Scalars['String']['input']>;
+    icon?: InputMaybe<FileInput>;
+    name?: InputMaybe<Scalars['String']['input']>;
+    visibility?: InputMaybe<Visibility>;
 };
 
 export type UpdateSelfInput = {
@@ -579,10 +863,11 @@ export type UpdateSelfInput = {
 
 export type User = {
     __typename?: 'User';
+    description?: Maybe<Scalars['String']['output']>;
     /** A preferred name of the user */
     givenName?: Maybe<Scalars['String']['output']>;
     /** Groups the user is part of */
-    groups: PaginatedGroups;
+    groups?: Maybe<PaginatedGroups>;
     /** The icon of the user as html link to an image */
     icon?: Maybe<Scalars['String']['output']>;
     /** The icon of the user as html link to an image */
@@ -592,9 +877,9 @@ export type User = {
 };
 
 export type UserGroupsArgs = {
-    limit?: InputMaybe<Scalars['Float']['input']>;
-    offset?: InputMaybe<Scalars['Float']['input']>;
+    limit?: InputMaybe<Scalars['Int']['input']>;
     organization: Scalars['String']['input'];
+    page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UserFilterInput = {

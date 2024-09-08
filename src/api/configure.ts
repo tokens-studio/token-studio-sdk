@@ -7,7 +7,7 @@ export namespace Configuration {
      */
     export interface Storage {
         // set item with the key
-        setItem(key: string, value: string): string;
+        setItem(key: string, value: string): void;
         // get item with the key
         getItem(key: string): string;
         // remove item with the key
@@ -16,7 +16,7 @@ export namespace Configuration {
         clear(): void;
         // If the storage operations are async(i.e AsyncStorage)
         // Then you need to sync those items into the memory in this method
-        sync(): Promise<void>;
+        sync?(): Promise<void>;
     }
 
     const getConfigs = (stage: 'development' | 'production') => ({

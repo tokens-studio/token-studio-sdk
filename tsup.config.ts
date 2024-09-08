@@ -6,7 +6,7 @@ export default defineConfig({
     entry: ['src/index.ts'],
     dts: true,
     sourcemap: env === 'production', // source map is only available in prod
-    format: 'esm',
+    format: ['esm', 'cjs'],
     skipNodeModulesBundle: true,
     clean: true,
     minify: false,
