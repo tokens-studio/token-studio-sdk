@@ -23,17 +23,22 @@ type APIKeyWithoutValue {
 }
 
 type Branch {
-  branchedAt: DateTimeISO
-  config(name: String!): SDConfig!
-  configs(limit: Int = 25, page: Int = 1): PaginatedSDConfigs!
-  createdAt: DateTimeISO!
-  isDefault: Boolean!
-  name: String!
-  organizationId: String!
-  projectId: String!
-  themeGroups(limit: Int = 25, page: Int = 1): PaginatedThemeGroups!
-  tokenSet(path: String!): TokensSet!
-  tokensSets(limit: Int = 25, page: Int = 1): PaginatedSets!
+	branchedAt: DateTimeISO
+	config(name: String!): SDConfig!
+	configs(limit: Int = 25, page: Int = 1): PaginatedSDConfigs!
+	createdAt: DateTimeISO!
+	icons(name: String!): PaginatedIcons!
+	isDefault: Boolean!
+	name: String!
+	organizationId: String!
+	projectId: String!
+	themeGroups(limit: Int = 25, page: Int = 1): PaginatedThemeGroups!
+	tokenSet(path: String!): TokensSet!
+	tokenSets(
+		filter: TokenSetsFilterInput
+		limit: Int = 25
+		page: Int = 1
+	): PaginatedSets!
 }
 
 """
@@ -42,440 +47,614 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTimeISO
 
 type DeleteSetTransaction {
-  completed: DateTimeISO!
-  sets: [TokensSet!]!
+	completed: DateTimeISO!
+	sets: [TokensSet!]!
 }
 
 type DeletedSDConfig {
-  branch: String!
-  name: String!
-  organizationId: String!
-  projectId: String!
+	branch: String!
+	name: String!
+	organizationId: String!
+	projectId: String!
 }
 
 input FileInput {
-  data: String!
-  name: String!
-  type: String!
+	data: String!
+	name: String!
+	type: String!
 }
 
 type Group {
-  createdAt: DateTimeISO
-  description: String
-  icon: String
-  id: ID!
-  members(limit: Int = 25, page: Int = 1): PaginatedUsers!
-  name: String!
+	createdAt: DateTimeISO
+	description: String
+	icon: String
+	id: ID!
+	members(limit: Int = 25, page: Int = 1): PaginatedUsers!
+	name: String!
 }
 
 input GroupInput {
-  description: String
-  icon: String
-  name: String!
+	description: String
+	icon: String
+	name: String!
 }
 
 input GroupUpdateInput {
-  description: String
-  icon: String
-  id: String!
-  name: String!
+	description: String
+	icon: String
+	id: String!
+	name: String!
+}
+
+type Icon {
+	name: String!
+	path: String!
+	raw: String!
 }
 
 type Invitation {
-  confirmCode: String
+	confirmCode: String
 
-  """Only present when invited by email"""
-  email: String
-  id: ID!
-  organizationId: String!
-  status: InvitationStatus!
+	"""
+	Only present when invited by email
+	"""
+	email: String
+	id: ID!
+	organizationId: String!
+	status: InvitationStatus!
 }
 
-"""The status of the invitation"""
+"""
+The status of the invitation
+"""
 enum InvitationStatus {
-  ACCEPTED
-  DECLINED
-  PENDING
+	ACCEPTED
+	DECLINED
+	PENDING
 }
 
-"""Custom scalar type for JSON objects"""
+"""
+Custom scalar type for JSON objects
+"""
 scalar JSON
 
 type Mutation {
-  acceptInvitation(confirmCode: String!, id: String!): Organization!
-  addMemberToGroup(
-    """The user Id to add to the group"""
-    entity: String!
-    group: String!
-    organization: String!
-  ): Group!
-  createAPIKey(input: APIKeyInput!): APIKey!
-  createGroup(input: GroupInput!, organization: String!): Group!
-  createOrganization(input: OrganizationInput!): Organization!
-  createPolicy(input: PolicyInput!, organization: String!): Policy!
-  createProject(input: ProjectInput!, organization: String!): Project!
-  createRelease(input: ReleaseInput!, organization: String!, project: String!): Release!
-  createSDConfig(branch: String, id: String!, input: SDConfigInput!, organization: String!): SDConfig!
-  createToken(branch: String!, organization: String!, path: String!, project: String!): Token!
-  createTokenSet(branch: String, input: TokenSetInput!, organization: String!, project: String!): TokensSet!
-  declineInvitation(code: String!, id: String!): DateTimeISO!
-  deleteAPIKey(id: String!): APIKeyWithoutValue!
-  deleteAllSets(branch: String!, organization: String!, path: String!, project: String!): DeleteSetTransaction!
-  deleteGroup(id: String!, organization: String!): Group!
-  deleteInvitation(id: String!, organization: String!): Invitation!
-  deleteOrganization(organization: String!): Organization!
-  deletePolicy(id: String!, organization: String!): Policy!
-  deleteProject(id: String!, organization: String!): Project!
-  deleteSDConfig(branch: String, name: String!, organization: String!, project: String!): DeletedSDConfig!
-  deleteSet(branch: String!, organization: String!, path: String!, project: String!): TokensSet!
-  inviteToOrganization(email: String!, organization: String!): Invitation!
-  regenerateApiKey(id: String!): APIKeyWithoutValue!
-  removeFromOrganization(organization: String!, user: String!): Transaction!
-  removeMemberFromGroup(
-    """The user Id to add to the group"""
-    entity: String!
-    group: String!
-    organization: String!
-  ): Group!
-  resendInvitation(id: String!, organization: String!): Invitation!
-  updateGroup(input: GroupUpdateInput!, organization: String!): Group!
-  updateOrganization(input: OrganizationInput!, organization: String!): Organization!
-  updatePolicy(id: String!, input: PolicyInput!, organization: String!): Policy!
-  updateProject(id: String!, input: UpdateProjectInput!, organization: String!): Project!
-  updateSelf(input: UpdateSelfInput!): DateTimeISO!
-  updateTokenSet(branch: String, input: TokenSetUpdateInput!, organization: String!, project: String!): TokensSet!
+	acceptInvitation(confirmCode: String!, id: String!): Organization!
+	addMemberToGroup(
+		"""
+		The user Id to add to the group
+		"""
+		entity: String!
+		group: String!
+		organization: String!
+	): Group!
+	createAPIKey(input: APIKeyInput!): APIKey!
+	createGroup(input: GroupInput!, organization: String!): Group!
+	createOrganization(input: OrganizationInput!): Organization!
+	createPolicy(input: PolicyInput!, organization: String!): Policy!
+	createProject(input: ProjectInput!, organization: String!): Project!
+	createRelease(
+		input: ReleaseInput!
+		organization: String!
+		project: String!
+	): Release!
+	createSDConfig(
+		branch: String
+		id: String!
+		input: SDConfigInput!
+		organization: String!
+	): SDConfig!
+	createThemeGroup(
+		branch: String
+		input: ThemeGroupInput!
+		organization: String!
+		project: String!
+	): ThemeGroup!
+	createThemeOption(
+		branch: String
+		input: ThemeOptionInput!
+		organization: String!
+		project: String!
+		theme: String!
+	): ThemeOption!
+	createToken(
+		branch: String!
+		organization: String!
+		path: String!
+		project: String!
+	): Token!
+	createTokenSet(
+		branch: String
+		input: TokenSetInput!
+		organization: String!
+		project: String!
+	): TokensSet!
+	declineInvitation(code: String!, id: String!): DateTimeISO!
+	deleteAPIKey(id: String!): APIKeyWithoutValue!
+	deleteAllSets(
+		branch: String!
+		organization: String!
+		path: String!
+		project: String!
+	): DeleteSetTransaction!
+	deleteGroup(id: String!, organization: String!): Group!
+	deleteInvitation(id: String!, organization: String!): Invitation!
+	deleteOrganization(organization: String!): Organization!
+	deletePolicy(id: String!, organization: String!): Policy!
+	deleteProject(id: String!, organization: String!): Project!
+	deleteSDConfig(
+		branch: String
+		name: String!
+		organization: String!
+		project: String!
+	): DeletedSDConfig!
+	deleteSet(
+		branch: String!
+		organization: String!
+		path: String!
+		project: String!
+	): TokensSet!
+	inviteToOrganization(email: String!, organization: String!): Invitation!
+	regenerateApiKey(id: String!): APIKeyWithoutValue!
+	removeFromOrganization(organization: String!, user: String!): Transaction!
+	removeMemberFromGroup(
+		"""
+		The user Id to add to the group
+		"""
+		entity: String!
+		group: String!
+		organization: String!
+	): Group!
+	resendInvitation(id: String!, organization: String!): Invitation!
+	updateGroup(input: GroupUpdateInput!, organization: String!): Group!
+	updateOrganization(
+		input: OrganizationInput!
+		organization: String!
+	): Organization!
+	updatePolicy(id: String!, input: PolicyInput!, organization: String!): Policy!
+	updateProject(
+		id: String!
+		input: UpdateProjectInput!
+		organization: String!
+	): Project!
+	updateSelf(input: UpdateSelfInput!): DateTimeISO!
+	updateTokenSet(
+		branch: String
+		input: TokenSetUpdateInput!
+		organization: String!
+		project: String!
+	): TokensSet!
 }
 
 enum OrgTier {
-  ENTERPRISE
-  FREE
-  HOBBY
-  STUDIO
+	ENTERPRISE
+	FREE
+	HOBBY
+	STUDIO
 }
 
 type Organization {
-  createdAt: DateTimeISO
-  description: String
+	createdAt: DateTimeISO
+	description: String
 
-  """Groups of the organization"""
-  groups(limit: Int = 25, page: Int = 1): PaginatedGroups!
-  icon: String
-  id: ID!
-  name: String!
-  payment: String
+	"""
+	Groups of the organization
+	"""
+	groups(limit: Int = 25, page: Int = 1): PaginatedGroups!
+	icon: String
+	id: ID!
+	name: String!
+	payment: String
 
-  """Projects inside the organization"""
-  projects(filter: ProjectFilterInput, limit: Int = 25, page: Int = 1): PaginatedProjects!
-  ssoEnabled: Boolean
-  tier: OrgTier!
+	"""
+	Projects inside the organization
+	"""
+	projects(
+		filter: ProjectFilterInput
+		limit: Int = 25
+		page: Int = 1
+	): PaginatedProjects!
+	ssoEnabled: Boolean
+	tier: OrgTier!
 
-  """Users of the organization"""
-  users(filter: UserFilterInput, limit: Int = 25, page: Int = 1): PaginatedUsers!
-  visibility: Visibility
+	"""
+	Users of the organization
+	"""
+	users(
+		filter: UserFilterInput
+		limit: Int = 25
+		page: Int = 1
+	): PaginatedUsers!
+	visibility: Visibility
 }
 
 input OrganizationInput {
-  description: String
+	description: String
 
-  """Base64 encoded image data"""
-  icon: String
-  name: String!
+	"""
+	Base64 encoded image data
+	"""
+	icon: String
+	name: String!
 }
 
 type PaginatedAPIKeyWithoutValue {
-  currentPage: Int!
-  data: [APIKeyWithoutValue!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [APIKeyWithoutValue!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedBranches {
-  currentPage: Int!
-  data: [Branch!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Branch!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedGroups {
-  currentPage: Int!
-  data: [Group!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Group!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
+}
+
+type PaginatedIcons {
+	currentPage: Int!
+	data: [Icon!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedInvitations {
-  currentPage: Int!
-  data: [Invitation!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Invitation!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedOrganization {
-  currentPage: Int!
-  data: [Organization!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Organization!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedPolicies {
-  currentPage: Int!
-  data: [Policy!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Policy!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedProjects {
-  currentPage: Int!
-  data: [Project!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Project!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedReleases {
-  currentPage: Int!
-  data: [Release!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [Release!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedSDConfigs {
-  currentPage: Int!
-  data: [SDConfig!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [SDConfig!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedSets {
-  currentPage: Int!
-  data: [TokensSet!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [TokensSet!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedThemeGroups {
-  currentPage: Int!
-  data: [ThemeGroup!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [ThemeGroup!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type PaginatedUsers {
-  currentPage: Int!
-  data: [User!]!
-  lastPage: Int!
-  nextPage: Int
-  prevPage: Int
-  total: Int!
-  totalPages: Int!
+	currentPage: Int!
+	data: [User!]!
+	lastPage: Int!
+	nextPage: Int
+	prevPage: Int
+	total: Int!
+	totalPages: Int!
 }
 
 type Policy {
-  createdAt: DateTimeISO!
-  description: String
-  id: ID!
-  name: String!
-  value: JSON!
+	createdAt: DateTimeISO!
+	description: String
+	id: ID!
+	name: String!
+	value: JSON!
 }
 
 input PolicyDocInput {
-  statement: [PolicyStatementInput!]!
-  version: String!
+	statement: [PolicyStatementInput!]!
+	version: String!
 }
 
 input PolicyInput {
-  description: String
-  name: String!
-  value: PolicyDocInput!
+	description: String
+	name: String!
+	value: PolicyDocInput!
 }
 
 input PolicyStatementInput {
-  action: [String!]!
-  effect: String!
-  resource: [String!]
+	action: [String!]!
+	effect: String!
+	resource: [String!]
 }
 
 type Project {
-  branch(name: String): Branch!
-  branches(limit: Int = 25, page: Int = 1): PaginatedBranches!
-  defaultBranchName: String!
-  description: String!
-  icon: String
-  id: ID!
-  name: String!
-  organizationId: String!
-  release(version: String): Release!
-  releases(limit: Int = 25, page: Int = 1): PaginatedReleases!
-  visibility: Visibility!
+	branch(name: String): Branch!
+	branches(limit: Int = 25, page: Int = 1): PaginatedBranches!
+	defaultBranchName: String!
+	description: String!
+	icon: String
+	id: ID!
+	name: String!
+	organizationId: String!
+	release(version: String): Release!
+	releases(limit: Int = 25, page: Int = 1): PaginatedReleases!
+	visibility: Visibility!
 }
 
 input ProjectFilterInput {
-  name: StringFilterInput
-  visibility: VisibilityInput
+	name: StringFilterInput
+	visibility: VisibilityInput
 }
 
 input ProjectInput {
-  description: String
-  icon: FileInput
-  name: String!
-  visibility: Visibility! = PRIVATE
+	description: String
+	icon: FileInput
+	name: String!
+	visibility: Visibility! = PRIVATE
 }
 
 type PublicApi {
-  """Public organizations"""
-  organizations(filter: String, limit: Int = 25, page: Int = 1): PaginatedOrganization!
+	"""
+	Public organizations
+	"""
+	organizations(
+		filter: String
+		limit: Int = 25
+		page: Int = 1
+	): PaginatedOrganization!
 
-  """Public users"""
-  users(limit: Int = 25, page: Int = 1): PaginatedUsers!
+	"""
+	Public users
+	"""
+	users(limit: Int = 25, page: Int = 1): PaginatedUsers!
 }
 
 type Query {
-  branch(id: String!, name: String, project: String!): Branch!
-  group(id: String!, organization: String!): Group!
-  groups(filter: Float, limit: Int = 25, organization: String!, page: Int = 1): PaginatedGroups!
-  organization(id: String!): Organization!
-  organizations(limit: Int = 25, page: Int = 1): PaginatedOrganization!
-  policies(limit: Int = 25, organization: String!, page: Int = 1): PaginatedPolicies!
-  policy(id: String!, organization: String!): Policy!
-  project(id: String!, organization: String!): Project!
-  projects(filter: Float, limit: Int = 25, organization: String!, page: Int = 1): PaginatedProjects!
-  public: PublicApi!
-  self: Self!
-  userInvitations(limit: Int = 25, organization: String!, page: Int = 1): PaginatedInvitations!
+	branch(id: String!, name: String, project: String!): Branch!
+	group(id: String!, organization: String!): Group!
+	groups(
+		filter: Float
+		limit: Int = 25
+		organization: String!
+		page: Int = 1
+	): PaginatedGroups!
+	organization(id: String!): Organization!
+	organizations(limit: Int = 25, page: Int = 1): PaginatedOrganization!
+	policies(
+		limit: Int = 25
+		organization: String!
+		page: Int = 1
+	): PaginatedPolicies!
+	policy(id: String!, organization: String!): Policy!
+	project(id: String!, organization: String!): Project!
+	projects(
+		filter: Float
+		limit: Int = 25
+		organization: String!
+		page: Int = 1
+	): PaginatedProjects!
+	public: PublicApi!
+	self: Self!
+	userInvitations(
+		limit: Int = 25
+		organization: String!
+		page: Int = 1
+	): PaginatedInvitations!
 }
 
 type Release {
-  createdAt: DateTimeISO!
-  description: String
-  modifiedAt: Float
-  projectId: String!
-  releasedBy: User!
-  version: String!
+	createdAt: DateTimeISO!
+	description: String
+	modifiedAt: Float
+	projectId: String!
+	releasedBy: User!
+	version: String!
 }
 
 input ReleaseInput {
-  """A description of the release in markdown."""
-  description: String
+	"""
+	A description of the release in markdown.
+	"""
+	description: String
 
-  """An optional human readable name for the release."""
-  name: String
+	"""
+	An optional human readable name for the release.
+	"""
+	name: String
 
-  """The new version of the release. Must be a valid semver version."""
-  version: String!
+	"""
+	The new version of the release. Must be a valid semver version.
+	"""
+	version: String!
 }
 
 type SDConfig {
-  branch: String!
-  config: JSON!
-  functions: String!
-  isDefault: Boolean!
-  name: String!
-  organizationId: String!
-  projectId: String!
+	branch: String!
+	config: JSON!
+	functions: String!
+	name: String!
+	organizationId: String!
+	projectId: String!
 }
 
 input SDConfigInput {
-  config: JSON!
-  description: String
-  functions: String!
-  isDefault: Boolean!
-  name: String!
-  themeOptions: JSON!
+	config: JSON!
+	description: String
+	functions: String!
+	name: String!
+	themeOptions: JSON!
 }
 
 type Self {
-  """A single API Key"""
-  apiKey(id: String!): APIKeyWithoutValue!
+	"""
+	A single API Key
+	"""
+	apiKey(id: String!): APIKeyWithoutValue!
 
-  """The api keys owned by the user"""
-  apiKeys(limit: Int = 25, page: Int = 1): PaginatedAPIKeyWithoutValue!
-  id: String!
-  invitations(limit: Int = 25, page: Int = 1): PaginatedInvitations!
+	"""
+	The api keys owned by the user
+	"""
+	apiKeys(limit: Int = 25, page: Int = 1): PaginatedAPIKeyWithoutValue!
+	id: String!
+	invitations(limit: Int = 25, page: Int = 1): PaginatedInvitations!
 
-  """The underlying user"""
-  user: User!
+	"""
+	The underlying user
+	"""
+	user: User!
 }
 
 input StringFilterInput {
-  beginsWith: String
-  eq: String
-  ne: String
+	eq: String
+	ne: String
+	startsWith: String
 }
 
 type Subscription {
-  onCreateGroup(organization: String!): Group!
-  onCreateProject(organization: String!): Project!
+	onCreateGroup(organization: String!): Group!
+	onCreateProject(organization: String!): Project!
 }
 
 type ThemeGroup {
-  createdAt: String!
-  id: ID!
-  name: String!
-  updatedAt: String!
+	createdAt: DateTimeISO!
+	id: String!
+	name: String!
+	options: [ThemeOption!]!
+	updatedAt: DateTimeISO!
+}
+
+input ThemeGroupInput {
+	name: String!
+	options: [ThemeOptionInput!]!
+}
+
+type ThemeOption {
+	figmaStyleReferences: JSON!
+	figmaVariableReferences: JSON!
+	name: String!
+	selectedTokenSets: JSON!
+}
+
+input ThemeOptionInput {
+	figmaStyleReferences: JSON!
+	figmaVariableReferences: JSON!
+	name: String!
+	selectedTokenSets: JSON!
 }
 
 type Token {
-  description: String
-  extensions: JSON
-  name: String!
-  type: String!
-  value: JSON!
+	description: String
+	extensions: JSON
+	name: String!
+	type: String!
+	value: JSON!
 }
 
 input TokenSetInput {
-  path: String!
-  raw: JSON
+	path: String!
+	raw: JSON
+	type: TokenSetType
+}
+
+enum TokenSetType {
+	Dynamic
+	Static
 }
 
 input TokenSetUpdateInput {
-  newPath: String
-  path: String!
-  raw: JSON
+	newPath: String
+	path: String!
+	raw: JSON
+	type: TokenSetType
+}
+
+input TokenSetsFilterInput {
+	name: StringFilterInput
 }
 
 type TokensSet {
-  createdAt: DateTimeISO!
-  name: String!
+	createdAt: DateTimeISO!
+	id: String!
+	name: String!
 
-  """The raw json data of the set"""
-  raw: JSON!
-  sha: String!
+	"""
+	The raw json data of the set
+	"""
+	raw: JSON
+	sha: String!
 
-  """The transformed tokens of the set"""
-  tokens: [Token!]!
-  updatedAt: DateTimeISO!
+	"""
+	The transformed tokens of the set
+	"""
+	tokens: [Token!]!
+	type: TokenSetType!
+	updatedAt: DateTimeISO!
 }
 
 type Transaction {
