@@ -218,12 +218,31 @@ type Mutation {
 		organization: String!
 	): Project!
 	updateSelf(input: UpdateSelfInput!): DateTimeISO!
+	updateThemeGroup(
+		branch: String
+		input: ThemeGroupInput!
+		organization: String!
+		project: String!
+	): ThemeGroup!
+	updateThemeOption(
+		branch: String
+		input: ThemeOptionInput!
+		organization: String!
+		project: String!
+		theme: String!
+	): ThemeOption!
 	updateTokenSet(
 		branch: String
 		input: TokenSetUpdateInput!
 		organization: String!
 		project: String!
 	): TokensSet!
+	updateTokenSetsOrder(
+		branch: String
+		organization: String!
+		project: String!
+		updates: [TokenSetOrderInput!]!
+	): [TokensSet!]!
 }
 
 enum OrgTier {
@@ -617,9 +636,15 @@ type Token {
 }
 
 input TokenSetInput {
+	orderIndex: Int
 	path: String!
 	raw: JSON
 	type: TokenSetType
+}
+
+input TokenSetOrderInput {
+	orderIndex: Float!
+	path: String!
 }
 
 enum TokenSetType {
@@ -629,6 +654,7 @@ enum TokenSetType {
 
 input TokenSetUpdateInput {
 	newPath: String
+	orderIndex: Int
 	path: String!
 	raw: JSON
 	type: TokenSetType
@@ -640,8 +666,10 @@ input TokenSetsFilterInput {
 
 type TokensSet {
 	createdAt: DateTimeISO!
+	generatorId: String!
 	id: String!
 	name: String!
+	orderIndex: Int!
 
 	"""
 	The raw json data of the set

@@ -110,17 +110,6 @@ export type FileInput = {
   type: Scalars['String']['input'];
 };
 
-export type Generator = {
-  __typename?: 'Generator';
-  createdAt: Scalars['DateTimeISO']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  graph: Scalars['JSON']['output'];
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  projectId: Scalars['String']['output'];
-  updatedAt: Scalars['DateTimeISO']['output'];
-};
-
 export type Group = {
   __typename?: 'Group';
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
@@ -209,7 +198,10 @@ export type Mutation = {
   updatePolicy: Policy;
   updateProject: Project;
   updateSelf: Scalars['DateTimeISO']['output'];
+  updateThemeGroup: ThemeGroup;
+  updateThemeOption: ThemeOption;
   updateTokenSet: TokensSet;
+  updateTokenSetsOrder: Array<TokensSet>;
 };
 
 
@@ -427,11 +419,36 @@ export type MutationUpdateSelfArgs = {
 };
 
 
+export type MutationUpdateThemeGroupArgs = {
+  branch?: InputMaybe<Scalars['String']['input']>;
+  input: ThemeGroupInput;
+  organization: Scalars['String']['input'];
+  project: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateThemeOptionArgs = {
+  branch?: InputMaybe<Scalars['String']['input']>;
+  input: ThemeOptionInput;
+  organization: Scalars['String']['input'];
+  project: Scalars['String']['input'];
+  theme: Scalars['String']['input'];
+};
+
+
 export type MutationUpdateTokenSetArgs = {
   branch?: InputMaybe<Scalars['String']['input']>;
   input: TokenSetUpdateInput;
   organization: Scalars['String']['input'];
   project: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateTokenSetsOrderArgs = {
+  branch?: InputMaybe<Scalars['String']['input']>;
+  organization: Scalars['String']['input'];
+  project: Scalars['String']['input'];
+  updates: Array<TokenSetOrderInput>;
 };
 
 export enum OrgTier {
@@ -935,9 +952,15 @@ export type Token = {
 };
 
 export type TokenSetInput = {
+  orderIndex?: InputMaybe<Scalars['Int']['input']>;
   path: Scalars['String']['input'];
   raw?: InputMaybe<Scalars['JSON']['input']>;
   type?: InputMaybe<TokenSetType>;
+};
+
+export type TokenSetOrderInput = {
+  orderIndex: Scalars['Float']['input'];
+  path: Scalars['String']['input'];
 };
 
 export enum TokenSetType {
@@ -947,6 +970,7 @@ export enum TokenSetType {
 
 export type TokenSetUpdateInput = {
   newPath?: InputMaybe<Scalars['String']['input']>;
+  orderIndex?: InputMaybe<Scalars['Int']['input']>;
   path: Scalars['String']['input'];
   raw?: InputMaybe<Scalars['JSON']['input']>;
   type?: InputMaybe<TokenSetType>;
@@ -959,10 +983,10 @@ export type TokenSetsFilterInput = {
 export type TokensSet = {
   __typename?: 'TokensSet';
   createdAt: Scalars['DateTimeISO']['output'];
-  generator?: Maybe<Generator>;
   generatorId: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  orderIndex: Scalars['Int']['output'];
   /** The raw json data of the set */
   raw?: Maybe<Scalars['JSON']['output']>;
   sha: Scalars['String']['output'];
