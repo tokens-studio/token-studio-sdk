@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Build dist
         run: npm run build
@@ -82,7 +82,7 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         id: deployment
         uses: actions/deploy-pages@v1
-  techdocs: 
+  techdocs:
     name: Techdocs
     runs-on: ubuntu-latest
     env:
@@ -119,5 +119,4 @@ jobs:
       - name: Copy files to the production website with the AWS CLI
         run: |
              aws s3 sync ./techdocs s3://537243810878-prod-rkgdoji661a-s3/${ENTITY_NAMESPACE}/${ENTITY_KIND}/${ENTITY_NAME}/ --delete
-     
-      
+

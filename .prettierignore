@@ -1,9 +1,11 @@
-package.json
 package-lock.json
 dist
 coverage
 docs
-jest-coverage
 site
 techdocs
 types
+src/__generated__
+
+# done by prettier-package-json
+package.json

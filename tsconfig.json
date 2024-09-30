@@ -1,36 +1,15 @@
 {
-    "compilerOptions": {
-        "sourceMap": true,
-        "declaration": true,
-        "declarationMap": true,
-        "noEmit": true,
-        "jsx": "react",
-        "target": "ESNext",
-        "outDir": "./types",
-        "preserveConstEnums": true,
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "rootDir": ".",
-        "noImplicitAny": false,
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-        "types": [
-            "node"
-        ],
-        "baseUrl": ".",
-        "plugins": [
-            {
-                "name": "@0no-co/graphqlsp",
-                "schema": "./schema2.graphql"
-            }
-        ]
-    },
-    "exclude": [
-        "node_modules",
-        "**/*.test.ts",
-        "cypress/**"
-    ]
+	"extends": "@tokens-studio/configs/typescript",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"skipLibCheck": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"plugins": [
+			{
+				"name": "@0no-co/graphqlsp",
+				"schema": "./schema2.graphql"
+			}
+		]
+	},
+	"exclude": ["node_modules", "**/*.test.ts", "cypress/**", "src/__generated__"]
 }

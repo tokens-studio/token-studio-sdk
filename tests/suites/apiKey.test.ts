@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as lib from '../../src';
-import { Graphql, SelfQuery } from '../../src';
-import { expect } from '@jest/globals';
+import * as lib from '../../src/index.js';
+import { Graphql, SelfQuery } from '../../src/index.js';
+import { expect } from 'vitest';
 
 const TEST_API_KEY = process.env.TEST_API_KEY!;
 
 describe('API Key', () => {
-    it('retrieves the self identity', async () => {
-        lib.Configuration.setAPIKey(TEST_API_KEY);
-        const result = await lib.Graphql.exec<SelfQuery>(
-            Graphql.op(`
+	it('retrieves the self identity', async () => {
+		lib.Configuration.setAPIKey(TEST_API_KEY);
+		const result = await lib.Graphql.exec<SelfQuery>(
+			Graphql.op(`
         query Self {
                 self{
                     identity{
@@ -18,11 +17,11 @@ describe('API Key', () => {
                     }
                 }
             }
-        `)
-        );
-        expect(result).toBeTruthy();
+        `),
+		);
+		expect(result).toBeTruthy();
 
-        //We should show as unauthenticated
-        expect(result.data?.self?.identity?.authenticated).toEqual(false);
-    });
+		//We should show as unauthenticated
+		expect(result.data?.self?.identity?.authenticated).toEqual(false);
+	});
 });

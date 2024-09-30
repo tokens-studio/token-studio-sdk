@@ -1,27 +1,26 @@
-/* eslint-disable camelcase */
 //TODO change this to prod when ready
 export const devConfig = {
-    aws_user_pools_id: 'eu-central-1_ni60xbUBe',
-    aws_user_pools_web_client_id: '4sp4dlvarnslglg2feth8b07qh'
+	aws_user_pools_id: 'eu-central-1_ni60xbUBe',
+	aws_user_pools_web_client_id: '4sp4dlvarnslglg2feth8b07qh',
 };
 
 export const prodConfig = {
-    aws_user_pools_id: 'eu-central-1_3wNrQGcBd',
-    aws_user_pools_web_client_id: '6im7dll0n7d359o3vlmbl4tgjs'
+	aws_user_pools_id: 'eu-central-1_3wNrQGcBd',
+	aws_user_pools_web_client_id: '6im7dll0n7d359o3vlmbl4tgjs',
 };
 
 export const devOauth = {
-    domain: 'dev-tokensstudio.auth.eu-central-1.amazoncognito.com',
-    redirectSignIn: 'https://dev.tokens.studio/signin',
-    redirectSignOut: 'https://dev.tokens.studio/signout',
-    scope: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
-    responseType: 'code'
+	domain: 'dev-tokensstudio.auth.eu-central-1.amazoncognito.com',
+	redirectSignIn: 'https://dev.tokens.studio/signin',
+	redirectSignOut: 'https://dev.tokens.studio/signout',
+	scope: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
+	responseType: 'code',
 };
 
 export const prodOauth = {
-    domain: 'tokensstudio.auth.eu-central-1.amazoncognito.com',
-    redirectSignIn: 'https://tokens.studio/signin',
-    redirectSignOut: 'https://tokens.studio/signout',
-    scope: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
-    responseType: 'code'
+	domain: 'tokensstudio.auth.eu-central-1.amazoncognito.com',
+	redirectSignIn: 'https://tokens.studio/signin',
+	redirectSignOut: 'https://tokens.studio/signout',
+	scope: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
+	responseType: 'code',
 };
