@@ -24,11 +24,11 @@ const username = 'MyUserName';
 const password = 'SomeSecurePassword1!';
 
 const signup = await UserAuth.signUp({
-    username,
-    password,
-    attributes: {
-        email: 'my@email.com'
-    }
+	username,
+	password,
+	attributes: {
+		email: 'my@email.com',
+	},
 });
 
 // ...

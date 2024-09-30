@@ -1,9 +1,0 @@
-dist/**
-coverage/**
-storybook-static/**
-docs
-site
-cypress
-# Built artifacts
-techdocs
-types

@@ -1,23 +1,25 @@
-import { execFile } from 'child_process';
-import { expect } from '@jest/globals';
-import path from 'path';
+import { execFile } from 'node:child_process';
+import { expect } from 'vitest';
+import path from 'node:path';
+import { promisify } from 'node:util';
+
+const execFileAsync = promisify(execFile);
 
 const binPath = path.resolve(__dirname, '../../bin/cli.js');
 
 describe('CLI', () => {
-    test('cli creates correctly', done => {
-        execFile(
-            'node',
-            [binPath, 'create'],
-            {
-                cwd: process.cwd()
-            },
-            (error, stdout, stderr) => {
-                expect(error).toBeNull();
-                expect(stderr).toBe('');
-                expect(stdout).toContain('Successfully wrote config file');
-                done();
-            }
-        );
-    });
+	test('cli creates correctly', async () => {
+		let err = null;
+		let res;
+		try {
+			res = await execFileAsync('node', [binPath, 'create'], {
+				cwd: process.cwd(),
+			});
+		} catch (e) {
+			err = e;
+		}
+		expect(err).toBeNull();
+		expect(res.stderr).toBe('');
+		expect(res.stdout).toContain('Successfully wrote config file');
+	});
 });
