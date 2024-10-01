@@ -77,3 +77,7 @@ docs/**
 site/**
 
 .turbo
+
+# do not commit it for now since this repo is used as a submodule in studio app monorepo
+# and we don't want this local lockfile to influence how NPM installs dependencies there
+package-lock.json

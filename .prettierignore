@@ -9,3 +9,6 @@ src/__generated__
 
 # done by prettier-package-json
 package.json
+
+# auto-generated
+src/schema.graphql
