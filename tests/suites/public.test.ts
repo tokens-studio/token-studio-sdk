@@ -1,10 +1,10 @@
+import { Configuration } from '../../src/index.js';
+import { expect } from 'vitest';
 import type {
 	Graphql,
 	OrganizationsQuery,
 	SelfQuery,
 } from '../../src/index.js';
-import { Configuration } from '../../src/index.js';
-import { expect } from 'vitest';
 
 describe('Public', () => {
 	beforeAll(() => {

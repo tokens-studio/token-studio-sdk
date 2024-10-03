@@ -1,5 +1,5 @@
-import { devConfig, devOauth, prodConfig, prodOauth } from '../aws-exports.js';
 import { Amplify } from '@aws-amplify/core';
+import { devConfig, devOauth, prodConfig, prodOauth } from '../aws-exports.js';
 
 export namespace Configuration {
 	/**

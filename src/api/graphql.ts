@@ -1,13 +1,13 @@
 import { ApolloClient, InMemoryCache, from } from '@apollo/client/core';
-import { HttpLink, split } from '@apollo/client';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { HttpLink, split } from '@apollo/client';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename';
 import { setContext } from '@apollo/client/link/context';
 
 export function create({
-	auth = 'Bearer api_key_test',
+	auth,
 	host = 'api.tokens.studio',
 	secure = true,
 	webSocketImpl,
@@ -22,7 +22,7 @@ export function create({
 		return {
 			headers: {
 				...headers,
-				authorization: auth,
+				...(auth ? { authorization: auth } : {}),
 			},
 		};
 	});
