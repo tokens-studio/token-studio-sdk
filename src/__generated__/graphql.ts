@@ -20,7 +20,6 @@ export type Scalars = {
 };
 
 export type ApiKey = {
-  __typename?: 'APIKey';
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
@@ -33,7 +32,6 @@ export type ApiKeyInput = {
 };
 
 export type ApiKeyWithoutValue = {
-  __typename?: 'APIKeyWithoutValue';
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastUsed?: Maybe<Scalars['DateTimeISO']['output']>;
@@ -41,7 +39,6 @@ export type ApiKeyWithoutValue = {
 };
 
 export type Branch = {
-  __typename?: 'Branch';
   branchedAt?: Maybe<Scalars['DateTimeISO']['output']>;
   config: SdConfig;
   configs: PaginatedSdConfigs;
@@ -91,13 +88,11 @@ export type BranchTokenSetsArgs = {
 };
 
 export type DeleteSetTransaction = {
-  __typename?: 'DeleteSetTransaction';
   completed: Scalars['DateTimeISO']['output'];
   sets: Array<TokensSet>;
 };
 
 export type DeletedSdConfig = {
-  __typename?: 'DeletedSDConfig';
   branch: Scalars['String']['output'];
   name: Scalars['String']['output'];
   organizationId: Scalars['String']['output'];
@@ -111,7 +106,6 @@ export type FileInput = {
 };
 
 export type Group = {
-  __typename?: 'Group';
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Scalars['String']['output']>;
@@ -140,14 +134,12 @@ export type GroupUpdateInput = {
 };
 
 export type Icon = {
-  __typename?: 'Icon';
   name: Scalars['String']['output'];
   path: Scalars['String']['output'];
   raw: Scalars['String']['output'];
 };
 
 export type Invitation = {
-  __typename?: 'Invitation';
   confirmCode?: Maybe<Scalars['String']['output']>;
   /** Only present when invited by email */
   email?: Maybe<Scalars['String']['output']>;
@@ -164,7 +156,6 @@ export enum InvitationStatus {
 }
 
 export type Mutation = {
-  __typename?: 'Mutation';
   acceptInvitation: Organization;
   addMemberToGroup: Group;
   createAPIKey: ApiKey;
@@ -459,7 +450,6 @@ export enum OrgTier {
 }
 
 export type Organization = {
-  __typename?: 'Organization';
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   /** Groups of the organization */
@@ -505,7 +495,6 @@ export type OrganizationInput = {
 };
 
 export type PaginatedApiKeyWithoutValue = {
-  __typename?: 'PaginatedAPIKeyWithoutValue';
   currentPage: Scalars['Int']['output'];
   data: Array<ApiKeyWithoutValue>;
   lastPage: Scalars['Int']['output'];
@@ -516,7 +505,6 @@ export type PaginatedApiKeyWithoutValue = {
 };
 
 export type PaginatedBranches = {
-  __typename?: 'PaginatedBranches';
   currentPage: Scalars['Int']['output'];
   data: Array<Branch>;
   lastPage: Scalars['Int']['output'];
@@ -527,7 +515,6 @@ export type PaginatedBranches = {
 };
 
 export type PaginatedGroups = {
-  __typename?: 'PaginatedGroups';
   currentPage: Scalars['Int']['output'];
   data: Array<Group>;
   lastPage: Scalars['Int']['output'];
@@ -538,7 +525,6 @@ export type PaginatedGroups = {
 };
 
 export type PaginatedIcons = {
-  __typename?: 'PaginatedIcons';
   currentPage: Scalars['Int']['output'];
   data: Array<Icon>;
   lastPage: Scalars['Int']['output'];
@@ -549,7 +535,6 @@ export type PaginatedIcons = {
 };
 
 export type PaginatedInvitations = {
-  __typename?: 'PaginatedInvitations';
   currentPage: Scalars['Int']['output'];
   data: Array<Invitation>;
   lastPage: Scalars['Int']['output'];
@@ -560,7 +545,6 @@ export type PaginatedInvitations = {
 };
 
 export type PaginatedOrganization = {
-  __typename?: 'PaginatedOrganization';
   currentPage: Scalars['Int']['output'];
   data: Array<Organization>;
   lastPage: Scalars['Int']['output'];
@@ -571,7 +555,6 @@ export type PaginatedOrganization = {
 };
 
 export type PaginatedPolicies = {
-  __typename?: 'PaginatedPolicies';
   currentPage: Scalars['Int']['output'];
   data: Array<Policy>;
   lastPage: Scalars['Int']['output'];
@@ -582,7 +565,6 @@ export type PaginatedPolicies = {
 };
 
 export type PaginatedProjects = {
-  __typename?: 'PaginatedProjects';
   currentPage: Scalars['Int']['output'];
   data: Array<Project>;
   lastPage: Scalars['Int']['output'];
@@ -593,7 +575,6 @@ export type PaginatedProjects = {
 };
 
 export type PaginatedReleases = {
-  __typename?: 'PaginatedReleases';
   currentPage: Scalars['Int']['output'];
   data: Array<Release>;
   lastPage: Scalars['Int']['output'];
@@ -604,7 +585,6 @@ export type PaginatedReleases = {
 };
 
 export type PaginatedSdConfigs = {
-  __typename?: 'PaginatedSDConfigs';
   currentPage: Scalars['Int']['output'];
   data: Array<SdConfig>;
   lastPage: Scalars['Int']['output'];
@@ -615,7 +595,6 @@ export type PaginatedSdConfigs = {
 };
 
 export type PaginatedSets = {
-  __typename?: 'PaginatedSets';
   currentPage: Scalars['Int']['output'];
   data: Array<TokensSet>;
   lastPage: Scalars['Int']['output'];
@@ -626,7 +605,6 @@ export type PaginatedSets = {
 };
 
 export type PaginatedThemeGroups = {
-  __typename?: 'PaginatedThemeGroups';
   currentPage: Scalars['Int']['output'];
   data: Array<ThemeGroup>;
   lastPage: Scalars['Int']['output'];
@@ -637,7 +615,6 @@ export type PaginatedThemeGroups = {
 };
 
 export type PaginatedUsers = {
-  __typename?: 'PaginatedUsers';
   currentPage: Scalars['Int']['output'];
   data: Array<User>;
   lastPage: Scalars['Int']['output'];
@@ -648,7 +625,6 @@ export type PaginatedUsers = {
 };
 
 export type Policy = {
-  __typename?: 'Policy';
   createdAt: Scalars['DateTimeISO']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -674,7 +650,6 @@ export type PolicyStatementInput = {
 };
 
 export type Project = {
-  __typename?: 'Project';
   branch: Branch;
   branches: PaginatedBranches;
   defaultBranchName: Scalars['String']['output'];
@@ -723,7 +698,6 @@ export type ProjectInput = {
 };
 
 export type PublicApi = {
-  __typename?: 'PublicApi';
   /** Public organizations */
   organizations: PaginatedOrganization;
   /** Public users */
@@ -744,7 +718,6 @@ export type PublicApiUsersArgs = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   branch: Branch;
   group: Group;
   groups: PaginatedGroups;
@@ -826,7 +799,6 @@ export type QueryUserInvitationsArgs = {
 };
 
 export type Release = {
-  __typename?: 'Release';
   createdAt: Scalars['DateTimeISO']['output'];
   description?: Maybe<Scalars['String']['output']>;
   modifiedAt?: Maybe<Scalars['Float']['output']>;
@@ -845,7 +817,6 @@ export type ReleaseInput = {
 };
 
 export type SdConfig = {
-  __typename?: 'SDConfig';
   branch: Scalars['String']['output'];
   config: Scalars['JSON']['output'];
   functions: Scalars['String']['output'];
@@ -863,7 +834,6 @@ export type SdConfigInput = {
 };
 
 export type Self = {
-  __typename?: 'Self';
   /** A single API Key */
   apiKey: ApiKeyWithoutValue;
   /** The api keys owned by the user */
@@ -898,7 +868,6 @@ export type StringFilterInput = {
 };
 
 export type Subscription = {
-  __typename?: 'Subscription';
   onCreateGroup: Group;
   onCreateProject: Project;
 };
@@ -914,7 +883,6 @@ export type SubscriptionOnCreateProjectArgs = {
 };
 
 export type ThemeGroup = {
-  __typename?: 'ThemeGroup';
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
@@ -928,7 +896,6 @@ export type ThemeGroupInput = {
 };
 
 export type ThemeOption = {
-  __typename?: 'ThemeOption';
   figmaStyleReferences: Scalars['JSON']['output'];
   figmaVariableReferences: Scalars['JSON']['output'];
   name: Scalars['String']['output'];
@@ -943,7 +910,6 @@ export type ThemeOptionInput = {
 };
 
 export type Token = {
-  __typename?: 'Token';
   description?: Maybe<Scalars['String']['output']>;
   extensions?: Maybe<Scalars['JSON']['output']>;
   name: Scalars['String']['output'];
@@ -981,7 +947,6 @@ export type TokenSetsFilterInput = {
 };
 
 export type TokensSet = {
-  __typename?: 'TokensSet';
   createdAt: Scalars['DateTimeISO']['output'];
   generatorId: Scalars['String']['output'];
   id: Scalars['String']['output'];
@@ -997,7 +962,6 @@ export type TokensSet = {
 };
 
 export type Transaction = {
-  __typename?: 'Transaction';
   id: Scalars['String']['output'];
 };
 
@@ -1022,7 +986,6 @@ export type UpdateSelfInput = {
 };
 
 export type User = {
-  __typename?: 'User';
   description?: Maybe<Scalars['String']['output']>;
   /** A preferred name of the user */
   givenName?: Maybe<Scalars['String']['output']>;

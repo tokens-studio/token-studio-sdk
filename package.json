@@ -56,7 +56,7 @@
     "@graphql-codegen/near-operation-file-preset": "^3.0.0",
     "@graphql-codegen/typescript-apollo-client-helpers": "^3.0.0",
     "@graphql-codegen/typescript-generic-sdk": "^4.0.1",
-    "@tokens-studio/configs": "^0.2.2",
+    "@tokens-studio/configs": "^0.2.3",
     "@types/mocha": "^10.0.8",
     "eslint": "^9.11.1",
     "html-webpack-plugin": "^5.5.0",
