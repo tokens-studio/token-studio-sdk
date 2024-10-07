@@ -1,4 +1,9 @@
+import type { ClientPresetConfig } from '@graphql-codegen/client-preset';
 import type { CodegenConfig } from '@graphql-codegen/cli';
+
+const presetConfig = {
+	gqlTagName: 'gql',
+} as ClientPresetConfig;
 
 const config: CodegenConfig = {
 	schema: './src/schema.graphql',
@@ -6,14 +11,12 @@ const config: CodegenConfig = {
 	generates: {
 		'./src/__generated__/': {
 			preset: 'client',
-
-			presetConfig: {
-				gqlTagName: 'gql',
-				namingConvention: 'camelCase',
-				useTypeImports: true,
-				skipTypename: true,
-			},
+			presetConfig: presetConfig,
 		},
+	},
+	config: {
+		useTypeImports: true,
+		skipTypename: true,
 	},
 	ignoreNoDocuments: true,
 };
