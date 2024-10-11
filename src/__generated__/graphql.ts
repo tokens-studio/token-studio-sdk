@@ -166,7 +166,6 @@ export type Mutation = {
   createRelease: Release;
   createSDConfig: SdConfig;
   createThemeGroup: ThemeGroup;
-  createThemeOption: ThemeOption;
   createToken: Token;
   createTokenSet: TokensSet;
   declineInvitation: Scalars['DateTimeISO']['output'];
@@ -179,6 +178,7 @@ export type Mutation = {
   deleteProject: Project;
   deleteSDConfig: DeletedSdConfig;
   deleteSet: TokensSet;
+  deleteThemeGroup: ThemeGroup;
   inviteToOrganization: Invitation;
   regenerateApiKey: ApiKeyWithoutValue;
   removeFromOrganization: Transaction;
@@ -190,7 +190,6 @@ export type Mutation = {
   updateProject: Project;
   updateSelf: Scalars['DateTimeISO']['output'];
   updateThemeGroup: ThemeGroup;
-  updateThemeOption: ThemeOption;
   updateTokenSet: TokensSet;
   updateTokenSetsOrder: Array<TokensSet>;
 };
@@ -257,15 +256,6 @@ export type MutationCreateThemeGroupArgs = {
   input: ThemeGroupInput;
   organization: Scalars['String']['input'];
   project: Scalars['String']['input'];
-};
-
-
-export type MutationCreateThemeOptionArgs = {
-  branch?: InputMaybe<Scalars['String']['input']>;
-  input: ThemeOptionInput;
-  organization: Scalars['String']['input'];
-  project: Scalars['String']['input'];
-  theme: Scalars['String']['input'];
 };
 
 
@@ -349,6 +339,14 @@ export type MutationDeleteSetArgs = {
 };
 
 
+export type MutationDeleteThemeGroupArgs = {
+  branch: Scalars['String']['input'];
+  organization: Scalars['String']['input'];
+  project: Scalars['String']['input'];
+  themeGroupName: Scalars['String']['input'];
+};
+
+
 export type MutationInviteToOrganizationArgs = {
   email: Scalars['String']['input'];
   organization: Scalars['String']['input'];
@@ -412,18 +410,9 @@ export type MutationUpdateSelfArgs = {
 
 export type MutationUpdateThemeGroupArgs = {
   branch?: InputMaybe<Scalars['String']['input']>;
-  input: ThemeGroupInput;
+  input: ThemeGroupUpdateInput;
   organization: Scalars['String']['input'];
   project: Scalars['String']['input'];
-};
-
-
-export type MutationUpdateThemeOptionArgs = {
-  branch?: InputMaybe<Scalars['String']['input']>;
-  input: ThemeOptionInput;
-  organization: Scalars['String']['input'];
-  project: Scalars['String']['input'];
-  theme: Scalars['String']['input'];
 };
 
 
@@ -886,7 +875,7 @@ export type ThemeGroup = {
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  options: Array<ThemeOption>;
+  options?: Maybe<Array<ThemeOption>>;
   updatedAt: Scalars['DateTimeISO']['output'];
 };
 
@@ -895,18 +884,24 @@ export type ThemeGroupInput = {
   options: Array<ThemeOptionInput>;
 };
 
+export type ThemeGroupUpdateInput = {
+  name: Scalars['String']['input'];
+  newName?: InputMaybe<Scalars['String']['input']>;
+  options: Array<ThemeOptionInput>;
+};
+
 export type ThemeOption = {
-  figmaStyleReferences: Scalars['JSON']['output'];
-  figmaVariableReferences: Scalars['JSON']['output'];
+  figmaStyleReferences?: Maybe<Scalars['JSON']['output']>;
+  figmaVariableReferences?: Maybe<Scalars['JSON']['output']>;
   name: Scalars['String']['output'];
-  selectedTokenSets: Scalars['JSON']['output'];
+  selectedTokenSets?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type ThemeOptionInput = {
-  figmaStyleReferences: Scalars['JSON']['input'];
-  figmaVariableReferences: Scalars['JSON']['input'];
+  figmaStyleReferences?: InputMaybe<Scalars['JSON']['input']>;
+  figmaVariableReferences?: InputMaybe<Scalars['JSON']['input']>;
   name: Scalars['String']['input'];
-  selectedTokenSets: Scalars['JSON']['input'];
+  selectedTokenSets?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type Token = {

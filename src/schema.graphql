@@ -150,13 +150,6 @@ type Mutation {
 		organization: String!
 		project: String!
 	): ThemeGroup!
-	createThemeOption(
-		branch: String
-		input: ThemeOptionInput!
-		organization: String!
-		project: String!
-		theme: String!
-	): ThemeOption!
 	createToken(
 		branch: String!
 		organization: String!
@@ -194,6 +187,12 @@ type Mutation {
 		path: String!
 		project: String!
 	): TokensSet!
+	deleteThemeGroup(
+		branch: String!
+		organization: String!
+		project: String!
+		themeGroupName: String!
+	): ThemeGroup!
 	inviteToOrganization(email: String!, organization: String!): Invitation!
 	regenerateApiKey(id: String!): APIKeyWithoutValue!
 	removeFromOrganization(organization: String!, user: String!): Transaction!
@@ -220,17 +219,10 @@ type Mutation {
 	updateSelf(input: UpdateSelfInput!): DateTimeISO!
 	updateThemeGroup(
 		branch: String
-		input: ThemeGroupInput!
+		input: ThemeGroupUpdateInput!
 		organization: String!
 		project: String!
 	): ThemeGroup!
-	updateThemeOption(
-		branch: String
-		input: ThemeOptionInput!
-		organization: String!
-		project: String!
-		theme: String!
-	): ThemeOption!
 	updateTokenSet(
 		branch: String
 		input: TokenSetUpdateInput!
@@ -604,7 +596,7 @@ type ThemeGroup {
 	createdAt: DateTimeISO!
 	id: String!
 	name: String!
-	options: [ThemeOption!]!
+	options: [ThemeOption!]
 	updatedAt: DateTimeISO!
 }
 
@@ -613,18 +605,24 @@ input ThemeGroupInput {
 	options: [ThemeOptionInput!]!
 }
 
-type ThemeOption {
-	figmaStyleReferences: JSON!
-	figmaVariableReferences: JSON!
+input ThemeGroupUpdateInput {
 	name: String!
-	selectedTokenSets: JSON!
+	newName: String
+	options: [ThemeOptionInput!]!
+}
+
+type ThemeOption {
+	figmaStyleReferences: JSON
+	figmaVariableReferences: JSON
+	name: String!
+	selectedTokenSets: JSON
 }
 
 input ThemeOptionInput {
-	figmaStyleReferences: JSON!
-	figmaVariableReferences: JSON!
+	figmaStyleReferences: JSON
+	figmaVariableReferences: JSON
 	name: String!
-	selectedTokenSets: JSON!
+	selectedTokenSets: JSON
 }
 
 type Token {
